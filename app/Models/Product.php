@@ -40,4 +40,8 @@ public function size()
 {
     return $this->belongsTo(Size::class);
 }
+public function voucher()
+    {
+        return $this->belongsTo(Voucher::class);
+    }
 }
