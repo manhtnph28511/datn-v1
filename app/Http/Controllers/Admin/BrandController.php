@@ -67,4 +67,12 @@ class BrandController extends Controller
         return checkEndDisplayMsg($isSuccess, 'success', 'Success', 'Xóa thành công', 'admin.brand.trash');
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $brands = Brand::where('name', 'LIKE', "%{$query}%")->paginate(10);
+
+        return view('admin.pages.brands.index', compact('brands'));
+    }
+
 }

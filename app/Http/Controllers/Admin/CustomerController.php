@@ -10,23 +10,38 @@ use Illuminate\Http\Request;
 class CustomerController extends Controller
 {
     public function index() {
-        $customers = User::paginate(5);
+        $customers = User::get();
         return view('admin.pages.customers.index',compact('customers'));
     }
 
 
-    public function update(Request $request,$id) {
-        $customer = User::find($id);
-        $roles = [
-            'Người dùng',
-            'Quản trị viên'
-        ];
-        if($request->method() === 'POST') {
-            $isSuccess = User::where('id',$id)->update([
-                'role' => $request->role
-            ]);
-            return checkEndDisplayMsg($isSuccess,'success','Success','Cập nhật thông tin thành công','admin.customer.index');
-        }
-        return view('admin.pages.customers.edit-form',['customer' => $customer,'roles' => $roles]);
+    public function activate($id) {
+        $user = User::findOrFail($id);
+        $user->status = 1; // Giả sử 1 là trạng thái active
+        $user->save();
+
+        return redirect()->route('admin.customer.index')->with('success', 'Người dùng đã được kích hoạt.');
     }
-}
+
+    public function deactivate($id) {
+        $user = User::findOrFail($id);
+        $user->status = 0; // Giả sử 0 là trạng thái inactive
+        $user->save();
+
+        return redirect()->route('admin.customer.index')->with('success', 'Người dùng đã bị hủy kích hoạt.');
+    }
+
+    public function search(Request $request) {
+        $query = $request->input('query');
+    
+        $customers = User::where(function($q) use ($query) {
+            if ($query) {
+                $q->where('name', 'LIKE', "%$query%")
+                  ->orWhere('email', 'LIKE', "%$query%")
+                  ->orWhereDate('created_at', $query);
+            }
+        })->get();
+    
+        return view('admin.pages.customers.index', compact('customers'));
+    }
+} 

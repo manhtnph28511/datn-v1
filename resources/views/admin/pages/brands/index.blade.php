@@ -13,6 +13,16 @@
                         <i class="fa-solid fa-trash"></i>
                     </a>
                 </div>
+
+                  {{-- Form tìm kiếm --}}
+                  <h3>Tìm kiếm thương hiệu</h3>
+                  <form action="{{ route('admin.brand.search') }}" method="GET" class="flex mb-4">
+                      <input type="text" name="query" placeholder="Tìm kiếm theo tên..." class="border border-gray-300 p-2 rounded-md">
+                      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md ml-2">
+                          Tìm kiếm
+                      </button>
+                  </form>
+                  
                 <div class="relative overflow-x-auto">
                     @if (count($brands) > 0)
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">

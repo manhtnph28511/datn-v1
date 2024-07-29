@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\Clients\AuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Clients\HomeController;
+
+
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BrandController;
@@ -10,16 +11,21 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\ManageController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Clients\OrderPlacedController;
+use App\Http\Controllers\Admin\OrderDetailController;
 use App\Http\Controllers\Admin\SubCateController;
+
+
+use App\Http\Controllers\Clients\HomeController;
 use App\Http\Controllers\Clients\SiteController;
 use App\Http\Controllers\Clients\Users\ProfileController;
 use App\Http\Controllers\Clients\CartController;
 use App\Http\Controllers\Clients\RatingController;
 use App\Http\Controllers\Clients\HomeProductController;
 use App\Http\Controllers\Clients\HomeCategoryController;
+use App\Http\Controllers\Clients\OrderPlacedController;
 
 
 /*
@@ -62,6 +68,7 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::delete('xoa-mem/{id}', 'softDelete')->name('product.softDelete');
         Route::delete('xoa/{id}', 'destroy')->name('product.destroy');
         Route::get('khoi-khuc/{id}', 'restore')->name('product.restore');
+        Route::get('search', 'search')->name('product.search');
     });
 
     //Brand Module
@@ -73,6 +80,7 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::get('khoi-phuc/{id}', 'restore')->name('brand.restore');
         Route::delete('xoa-mem/{id}', 'softDelete')->name('brand.softDelete');
         Route::delete('xoa/{id}', 'destroy')->name('brand.destroy');
+        Route::get('search', 'search')->name('brand.search');
     });
 
     // Categories Module
@@ -102,9 +110,20 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
 
     // Order Module
     Route::name('admin.')->prefix('order')->controller(OrderController::class)->group(function () {
-        Route::get('/', 'index')->name('order.index');
-        Route::get('/{id}', 'show')->name('order.show');
+        
+            Route::get('/', 'index')->name('order.index');
+            Route::get('{id}', 'show')->name('order.show');
+            Route::get('dashboard/order/search', [OrderController::class, 'search'])->name('order.search');
     });
+
+  // OrderDetail Module
+    Route::name('admin.')->prefix('orderdetail')->controller(OrderDetailController::class)->group(function () {
+            Route::get('order-details', 'index')->name('orderdetail.index');
+            Route::get('order-details/{id}', 'show')->name('orderdetail.show');
+            Route::post('order-details/{id}/update-type', 'updateType')->name('orderdetail.updateType');
+    });
+
+
 
     //Attribute Module
     Route::name('admin.')->prefix('attribute')->group(function () {
@@ -126,11 +145,36 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
             Route::delete('xoa/{id}', 'destroy')->name('att.color.destroy');
         });
     });
+
+
+    //User - Admin
+    Route::prefix('manage')->controller(ManageController::class)->group(function () {
+        Route::get('/', 'index')->name('admin.manage.index');
+        Route::get('/create', 'create')->name('admin.manage.create');
+        Route::post('/', 'store')->name('admin.manage.store');
+        Route::get('/search', 'search')->name('admin.manage.search');
+        Route::delete('/{id}', 'destroy')->name('admin.manage.destroy');
+        Route::get('/trashed', 'trashed')->name('admin.manage.trashed');// Route để xem các tài khoản đã bị xóa
+        Route::patch('/restore/{id}', 'restore')->name('admin.manage.restore'); // Route để khôi phục tài khoản
+        Route::get('manage/{id}/edit', 'edit')->name('admin.manage.edit');
+        Route::put('manage/{id}', 'update')->name('admin.manage.update');
+    });
+
     Route::prefix('customer')->controller(CustomerController::class)->group(function () {
         Route::get('/', 'index')->name('admin.customer.index');
-        Route::match(['GET', 'POST'], 'edit/{id}', 'update')->name('admin.customer.update');
-    });
+        Route::get('search', 'search')->name('admin.customer.search');
+        Route::get('activate/{id}', 'activate')->name('admin.customer.activate');
+        Route::get('deactivate/{id}', 'deactivate')->name('admin.customer.deactivate');
+     
+   });
+   
+    
 });
+
+
+
+
+
 
 
 // Clients
@@ -183,6 +227,7 @@ Route::middleware('addToCart')->prefix('cart')->controller(CartController::class
 
 // Profile
 Route::middleware('auth')->prefix('profile')->controller(ProfileController::class)->group(function () {
-    Route::match(['GET', 'POST'], '/', 'profile')->name('clients.profile');
+    Route::match(['GET', 'POST'],'/', 'profile')->name('clients.profile');
+    Route::get('/index', [ProfileController::class, 'index'])->name('clients.index');
 });
-//
+

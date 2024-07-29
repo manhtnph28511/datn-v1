@@ -27,14 +27,22 @@
                     <i class="fa-solid fa-industry"></i>
                     <span class="link-name">Thuộc Tính</span>
                 </a></li>
-            <li><a href="{{ route('admin.customer.index') }}">
+            <li><a href="{{ route('admin.manage.index') }}">
                     <i class="fa-solid fa-user-tie"></i>
-                    <span class="link-name">Người Dùng</span>
+                    <span class="link-name">Tài Khoản Admin</span>
                 </a></li>
-            {{-- <li><a href="{{ route('admin.order.index') }}">
+                <li><a href="{{ route('admin.customer.index') }}">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span class="link-name">Tài Khoản User</span>
+                </a></li>
+            <li><a href="{{ route('admin.order.index') }}">
                     <i class="fa-solid fa-thumbtack"></i>
                     <span class="link-name">Quản Lý Đơn Hàng</span>
-                </a></li> --}}
+                </a></li>
+            <li><a href="{{ route('admin.orderdetail.index') }}">
+                <i class="fa-solid fa-thumbtack"></i>
+                <span class="link-name">Thông tin vận chuyển</span>
+            </a></li>
         </ul>
 
         <ul class="logout-mode">

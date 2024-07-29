@@ -13,6 +13,7 @@ use Alert;
 use App\Http\Requests\Admin\ProductRequest;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -116,5 +117,14 @@ class ProductController extends Controller
 //        $product = Product::onlyTrashed()->where('id',$id)->first();
         $isSuccess = Product::where('id',$id)->forceDelete();
         return checkEndDisplayMsg($isSuccess, 'success', 'Thành công', 'Xóa thành công', 'admin.product.index');
+    }
+
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $products = Product::where('name', 'LIKE', "%{$query}%")->paginate(10);
+
+        return view('admin.pages.products.index', compact('products'));
     }
 }

@@ -28,5 +28,8 @@ class ProfileController extends Controller
         }
         return view('clients.pages.users.profile');
     }
+    public function index(){
+          return view('clients.pages.users.index');
+    }
 
 }
