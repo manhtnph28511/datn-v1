@@ -11,7 +11,9 @@
                         {{ session('error') }}
                     </div>
                 @endif
-
+                
+                
+               
                 {{-- Form tìm kiếm theo trạng thái --}}
                 <form action="{{ route('admin.orderdetail.index') }}" method="GET" class="flex items-center gap-x-4">
                     <input type="text" name="search" placeholder="Tìm kiếm theo tên người đặt hàng" class="border px-4 py-2 rounded-lg" value="{{ request('search') }}">

@@ -4,12 +4,20 @@
         {{-- Form tìm kiếm --}}
         <div class="mb-4">
             <form action="{{ route('admin.order.search') }}" method="GET">
-                <input type="text" name="query" placeholder="Tìm kiếm theo tên người dùng..."
-                    class="border rounded py-2 px-4">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                    Tìm kiếm
-                </button>
+                <input type="text" name="search" placeholder="Tìm kiếm theo tên, số điện thoại, hoặc email" value="{{ request('search') }}">
+                
+                <select name="note" class="border px-4 py-2 rounded-lg">
+                    <option value="all">Tất cả trạng thái</option>
+                    <option value="hoàn thành" {{ request('note') == 'hoàn thành' ? 'selected' : '' }}>hoàn thành</option>
+                    <option value="đã hủy" {{ request('note') == 'đã hủy' ? 'selected' : '' }}>đã hủy</option>
+                </select>
+                
+                <input type="date" name="start_date" value="{{ request('start_date') }}">
+                <input type="date" name="end_date" value="{{ request('end_date') }}">
+                
+                <button type="submit">Tìm kiếm</button>
             </form>
+            
         </div>
         <div class="activity">
             <div class="py-20">
@@ -22,6 +30,9 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Tên người dùng
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Email
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Số điện thoại
@@ -45,6 +56,7 @@
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <td class="px-6 py-4">{{ $order->id }}</td>
                                     <td class="px-6 py-4">{{ $order->username }}</td>
+                                    <td class="px-6 py-4">{{ $order->email}}</td>
                                     <td class="px-6 py-4">{{ $order->phone }}</td>
                                     <td class="px-6 py-4">{{ $order->address }}</td>
                                     <td class="px-6 py-4">{{ $order->note }}</td>

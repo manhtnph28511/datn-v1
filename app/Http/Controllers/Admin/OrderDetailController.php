@@ -53,6 +53,7 @@ class OrderDetailController extends Controller
             $orderDetail->order->update(['note' => $orderDetail->type]);
         }
 
+
         return redirect()->route('admin.orderdetail.index')->with('success', 'Trạng thái đơn hàng đã được cập nhật thành công.');
     }
 
