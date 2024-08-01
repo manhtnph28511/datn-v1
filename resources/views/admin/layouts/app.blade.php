@@ -23,6 +23,7 @@
 @yield('app')
 @include('sweetalert::alert')
 @stack('script')
+@yield('js')
 @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
 <script src="{{ asset('assets/js/admin/dashboard.js')  }}"></script>
 {{-- Sweet alert --}}

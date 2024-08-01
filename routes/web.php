@@ -25,6 +25,7 @@ use App\Http\Controllers\Clients\CartController;
 use App\Http\Controllers\Clients\RatingController;
 use App\Http\Controllers\Clients\HomeProductController;
 use App\Http\Controllers\Clients\HomeCategoryController;
+use App\Http\Controllers\Clients\OrderController as ClientsOrderController;
 use App\Http\Controllers\Clients\OrderPlacedController;
 
 
@@ -44,12 +45,12 @@ use App\Http\Controllers\Clients\OrderPlacedController;
 Route::name('account.')->prefix('tai-khoan')->controller(AuthController::class)->group(function () {
     //Login
     Route::match(['GET', 'POST'], 'dang-nhap', 'login')->name('login');
-    
+
     Route::get('dang-nhap-form', 'showLoginForm')->name('loginForm'); // Thay đổi auth.loginForm thành account.loginForm
 
     //Register
     Route::match(['GET', 'POST'], 'dang-ky', 'register')->name('register');
-    
+
     // Logout
     Route::get('dang-xuat', 'logout')->name('logout');
 });
@@ -110,17 +111,20 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
 
     // Order Module
     Route::name('admin.')->prefix('order')->controller(OrderController::class)->group(function () {
-        
-            Route::get('/', 'index')->name('order.index');
-            Route::get('{id}', 'show')->name('order.show');
-            Route::get('dashboard/order/search', [OrderController::class, 'search'])->name('order.search');
+
+        Route::get('/', 'index')->name('order.index');
+        Route::get('{id}', 'show')->name('order.show');
+        Route::get('dashboard/order/search', [OrderController::class, 'search'])->name('order.search');
+        Route::post('/update-delivery-status', 'updateDeliveryStatus')->name('orders.update_delivery_status');
+        Route::get('/invoice-download/{id}', 'downloadInvoice')->name('orders.downloadInvoice');
+        Route::post('/update-payment-status', 'updatePaymentStatus')->name('orders.update_payment_status');
     });
 
-  // OrderDetail Module
+    // OrderDetail Module
     Route::name('admin.')->prefix('orderdetail')->controller(OrderDetailController::class)->group(function () {
-            Route::get('order-details', 'index')->name('orderdetail.index');
-            Route::get('order-details/{id}', 'show')->name('orderdetail.show');
-            Route::post('order-details/{id}/update-type', 'updateType')->name('orderdetail.updateType');
+        Route::get('order-details', 'index')->name('orderdetail.index');
+        Route::get('order-details/{id}', 'show')->name('orderdetail.show');
+        Route::post('order-details/{id}/update-type', 'updateType')->name('orderdetail.updateType');
     });
 
 
@@ -154,7 +158,7 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::post('/', 'store')->name('admin.manage.store');
         Route::get('/search', 'search')->name('admin.manage.search');
         Route::delete('/{id}', 'destroy')->name('admin.manage.destroy');
-        Route::get('/trashed', 'trashed')->name('admin.manage.trashed');// Route để xem các tài khoản đã bị xóa
+        Route::get('/trashed', 'trashed')->name('admin.manage.trashed'); // Route để xem các tài khoản đã bị xóa
         Route::patch('/restore/{id}', 'restore')->name('admin.manage.restore'); // Route để khôi phục tài khoản
         Route::get('manage/{id}/edit', 'edit')->name('admin.manage.edit');
         Route::put('manage/{id}', 'update')->name('admin.manage.update');
@@ -165,10 +169,7 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::get('search', 'search')->name('admin.customer.search');
         Route::get('activate/{id}', 'activate')->name('admin.customer.activate');
         Route::get('deactivate/{id}', 'deactivate')->name('admin.customer.deactivate');
-     
-   });
-   
-    
+    });
 });
 
 
@@ -218,16 +219,21 @@ Route::middleware('addToCart')->prefix('cart')->controller(CartController::class
     Route::get('checkout', 'checkout')->name('home.cart.checkout');
     Route::post('checkout-step', 'checkoutStep')->name('home.cart.checkout-step');
     Route::get('delete/{id}', 'destroy')->name('home.cart.destroy');
-    Route::get('order-success', 'success')->name('home.cart.order-success');    
+    Route::get('order-success', 'success')->name('home.cart.order-success');
     Route::view('success', 'clients.pages.orders.order-success')->name('order-success');
-    
-  
 });
 
 
 // Profile
 Route::middleware('auth')->prefix('profile')->controller(ProfileController::class)->group(function () {
-    Route::match(['GET', 'POST'],'/', 'profile')->name('clients.profile');
+    Route::match(['GET', 'POST'], '/', 'profile')->name('clients.profile');
     Route::get('/index', [ProfileController::class, 'index'])->name('clients.index');
 });
 
+// Order History
+Route::middleware('auth')->name('order.')->prefix('order')->controller(ClientsOrderController::class)->group(function () {
+    Route::get('/history', 'history')->name('history');
+    # order tracking
+    Route::get('/track', 'track')->name('track');
+    #review
+});
