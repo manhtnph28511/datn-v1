@@ -38,12 +38,12 @@ use App\Http\Controllers\Clients\HomeCategoryController;
 Route::name('account.')->prefix('tai-khoan')->controller(AuthController::class)->group(function () {
     //Login
     Route::match(['GET', 'POST'], 'dang-nhap', 'login')->name('login');
-    
+
     Route::get('dang-nhap-form', 'showLoginForm')->name('loginForm'); // Thay đổi auth.loginForm thành account.loginForm
 
     //Register
     Route::match(['GET', 'POST'], 'dang-ky', 'register')->name('register');
-    
+
     // Logout
     Route::get('dang-xuat', 'logout')->name('logout');
 });
@@ -174,10 +174,8 @@ Route::middleware('addToCart')->prefix('cart')->controller(CartController::class
     Route::get('checkout', 'checkout')->name('home.cart.checkout');
     Route::post('checkout-step', 'checkoutStep')->name('home.cart.checkout-step');
     Route::get('delete/{id}', 'destroy')->name('home.cart.destroy');
-    Route::get('order-success', 'success')->name('home.cart.order-success');    
+    Route::get('order-success', 'success')->name('home.cart.order-success');
     Route::view('success', 'clients.pages.orders.order-success')->name('order-success');
-    
-  
 });
 
 

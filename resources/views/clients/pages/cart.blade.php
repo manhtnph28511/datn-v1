@@ -17,8 +17,8 @@
                         <td>Xóa</td>
                         <td>Ảnh</td>
                         <td>Sản phẩm</td>
-                        <td>Size</td> 
-                        <td>Màu</td> 
+                        <td>Size</td>
+                        <td>Màu</td>
                         <td>Giá</td>
                         <td>Số lượng</td>
                         <td>Tổng giá</td>
@@ -78,7 +78,7 @@
                         <td><strong>{{ number_format($total) }}</strong></td>
                     </tr>
                 </table>
-                <a class="btn btn-success" href="{{ route('home.cart.checkout') }}">Proceed to checkout</a>
+                <a class="btn btn-success" href="{{ route('home.cart.checkout') }}">Tiến hàng thanh toán</a>
             </div>
         </section>
     @else

@@ -57,7 +57,7 @@
                     <input type="text" name="phone" value="{{ Auth::user()->phone }}" class=""
                         placeholder="Số điện thoại">
                 </div>
-               
+
             </div>
             <div id="subtotal">
                 <h3>Tổng giá giỏ hàng</h3>
@@ -125,14 +125,23 @@
                     <input type="text" name="username" value="{{ old('username', Auth::user()->name) }}" class=""
                         placeholder="Tên của bạn">
                 </div>
+                @error('user_name')
+                    <p class="my-2 text-red-400">{{ $message }}</p>
+                @enderror
                 <div class="mt-2">
                     <input type="text" name="address" value="{{ old('address', Auth::user()->address) }}" class=""
                         placeholder="Địa chỉ nhận hàng của bạn">
                 </div>
+                @error('address')
+                    <p class="my-2 text-red-400">{{ $message }}</p>
+                @enderror
                 <div class="mt-2">
                     <input type="text" name="phone" value="{{ old('phone', Auth::user()->phone) }}" class=""
                         placeholder="Số điện thoại">
                 </div>
+                @error('phone')
+                    <p class="my-2 text-red-400">{{ $message }}</p>
+                @enderror
                 <div class="mt-2">
                     <textarea name="note" class="" placeholder="Ghi chú (nếu có)">{{ old('note') }}</textarea>
                 </div>
@@ -149,9 +158,20 @@
                         <td><strong>{{ number_format($total) }}</strong></td>
                     </tr>
                 </table>
+                <select name="type_order" id=""
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="0">Chọn phương thức thanh toán</option>
+                    <option value="1" {{ old('type_order') === '1' ? 'selected' : false }}>Thanh toán online
+                    </option>
+                    <option value="2" {{ old('type_order') === '2' ? 'selected' : false }}>Thanh toán khi nhận hàng
+                    </option>
+                </select>
+                @error('type_order')
+                    <p class="my-2 text-red-400">{{ $message }}</p>
+                @enderror
+                <br>
                 <button type="submit" class="btn btn-success">Hoàn tất đặt hàng</button>
             </div>
         </section>
     </form>
 @endsection
-
