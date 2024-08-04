@@ -146,7 +146,7 @@
                     </table>
                 </div>
             @endisset
-
+<a href="{{route('clients.index')}}">quay lại</a>
 
         </div>
     </section>

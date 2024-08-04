@@ -11,7 +11,8 @@
                 <li><a href="{{route('clients.profile')}}">Cập nhật tài khoản</a></li>
                 <li><a href="">Quên mật khẩu</a></li>
                 <li><a href="">Danh sách yêu thích</a></li>
-                <li><a href="">lịch sử mua hàng</a></li>
+                <li><a href="{{route('order.history')}}">lịch sử mua hàng</a></li>
+                <li><a href="{{route('order.track')}}">theo dõi đơn hàng</a></li>
                 <li><a href="">giỏ hàng</a></li>
                 <li><a href="{{ route('account.logout') }}">Đăng xuất</a></li>
             </ul>

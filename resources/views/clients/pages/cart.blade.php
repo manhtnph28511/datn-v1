@@ -79,6 +79,7 @@
                     </tr>
                 </table>
                 <a class="btn btn-success" href="{{ route('home.cart.checkout') }}">Tiến hàng thanh toán</a>
+                
             </div>
         </section>
     @else

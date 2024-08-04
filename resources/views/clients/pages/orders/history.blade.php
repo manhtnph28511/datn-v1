@@ -33,6 +33,7 @@
                         </td>
                     </tr>
                 @endforeach
+                <a href="{{route('clients.index')}}">quay lại</a>
             </tbody>
         </table>
     </section>
