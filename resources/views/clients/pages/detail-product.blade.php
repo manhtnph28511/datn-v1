@@ -20,7 +20,7 @@
                         <option value="{{ $size->id  }}">{{ $size->name  }}</option>
                     @endforeach
                 </select>
-                
+
                 <select name="color_id" id="color" class="border">
                     <option value="">Select color</option>
                     @foreach($colors as $color)
@@ -28,7 +28,7 @@
                     @endforeach
                 </select>
                 <input type="number" value="1" min="1" class="border" name="quantity">
-                <button class="normal">Add To Cart</button>
+                <button class="normal" type="submit">Add To Cart</button>
             </form>
             <h4>Product Details</h4>
             <span>{!! $product->description !!}   </span>

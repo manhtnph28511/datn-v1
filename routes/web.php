@@ -128,7 +128,7 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
     Route::name('admin.')->prefix('orderdetail')->controller(OrderDetailController::class)->group(function () {
         Route::get('order-details', 'index')->name('orderdetail.index');
         Route::get('order-details/{id}', 'show')->name('orderdetail.show');
-       
+
     });
 
 
@@ -181,7 +181,7 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::get('/', 'showNotifications')->name('notifications.index');
         Route::post('/notifications/{notification}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');
         Route::delete('/notifications/{notification}', [NotificationController::class, 'delete'])->name('notifications.delete');
-       
+
     });
 
 
@@ -227,7 +227,7 @@ Route::controller(RatingController::class)->middleware('rating')->group(function
 });
 
 // Cart Module
-Route::middleware('addToCart')->prefix('cart')->controller(CartController::class)->group(function () {
+Route::middleware('auth')->prefix('cart')->controller(CartController::class)->group(function () {
     Route::get('/', 'cart')->name('home.cart');
     Route::post('add-to-card', 'addToCart')->name('home.cart.addToCart');
     Route::post('update-card', 'updateCart')->name('home.cart.updateCart');
