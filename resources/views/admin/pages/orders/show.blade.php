@@ -18,7 +18,7 @@
                             <span class="text-muted">Thời gian tạo: {{ \Carbon\Carbon::parse($order->created_at) }}</span>
                         </div>
 
-                        <div class="flex flex-col lg:flex-row space-y-3 lg:space-y-0 lg:space-x-3">
+                        {{-- <div class="flex flex-col lg:flex-row space-y-3 lg:space-y-0 lg:space-x-3">
                             <div>
                                 <label class="form-label">Trạng thái thanh toán</label>
                                 <div class="input-group">
@@ -32,34 +32,10 @@
                                         </option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div>
-                                <label class="form-label">Trạng thái vận chuyển</label>
-                                <div class="input-group">
-                                    <select class="form-select select2" name="delivery_status" id="update_delivery_status">
-                                        <option value="" disabled>Trạng thái vận chuyển</option>
-                                        <option value="ORDERPLACE" @if ($order->shipment_status == 'ORDERPLACE') selected @endif>Đã được
-                                            tạo</option>
-                                        <option value="PACKED" @if ($order->shipment_status == 'PACKED') selected @endif>Đã nhận và
-                                            đang đóng gói</option>
-                                        <option value="SHIPPED" @if ($order->shipment_status == 'SHIPPED') selected @endif>Đã được
-                                            vận chuyển</option>
-                                        <option value="INTRANSIT" @if ($order->shipment_status == 'INTRANSIT') selected @endif>Đang
-                                            trên đường đến chỗ bạn</option>
-                                        <option value="OUTFORDELIVERY" @if ($order->shipment_status == 'OUTFORDELIVERY') selected @endif>Đã
-                                            giao cho người nhận</option>
-                                        <option value="DELAYED" @if ($order->shipment_status == 'DELAYED') selected @endif>Trễ hẹn
-                                            trong quá trình vận chuyển</option>
-                                        <option value="EXCEPTION" @if ($order->shipment_status == 'EXCEPTION') selected @endif>Gặp vấn
-                                            đề khác</option>
-                                        <option value="DELIVERED" @if ($order->shipment_status == 'DELIVERED') selected @endif>Giao
-                                            hàng thành công</option>
-                                        <option value="RETURNED" @if ($order->shipment_status == 'RETURNED') selected @endif>Hoàn
-                                            trả về người gửi</option>
-                                    </select>
-                                </div>
-                            </div>
+                            {{-- <div> --}}
+                               
                         </div>
                     </div>
                     <script>
@@ -85,7 +61,33 @@
                     <p><strong>Số điện thoại:</strong> {{ $order->phone }}</p>
                     <p><strong>Địa chỉ:</strong> {{ $order->address }}</p>
                     <p><strong>Ghi chú:</strong> {{ $order->note }}</p>
+                    <p><strong>PTTT:</strong> {{ $order->payment_method }}</p>
                     <p><strong>Ngày tạo:</strong> {{ $order->created_at->format('d/m/Y H:i') }}</p>
+                    <label class="form-label">Trạng thái vận chuyển</label>
+                    <div class="input-group">
+                        <select class="form-select select2" name="delivery_status" id="update_delivery_status">
+                            <option value="" disabled>Trạng thái vận chuyển</option>
+                            <option value="ORDERPLACE" @if ($order->shipment_status == 'ORDERPLACE') selected @endif>Đã được
+                                tạo</option>
+                            <option value="PACKED" @if ($order->shipment_status == 'PACKED') selected @endif>Đã nhận và
+                                đang đóng gói</option>
+                            <option value="SHIPPED" @if ($order->shipment_status == 'SHIPPED') selected @endif>Đã được
+                                vận chuyển</option>
+                            <option value="INTRANSIT" @if ($order->shipment_status == 'INTRANSIT') selected @endif>Đang
+                                trên đường đến chỗ bạn</option>
+                            <option value="OUTFORDELIVERY" @if ($order->shipment_status == 'OUTFORDELIVERY') selected @endif>Đang
+                                giao cho người nhận</option>
+                            <option value="DELAYED" @if ($order->shipment_status == 'DELAYED') selected @endif>Trễ hẹn
+                                trong quá trình vận chuyển</option>
+                            <option value="EXCEPTION" @if ($order->shipment_status == 'EXCEPTION') selected @endif>Gặp vấn
+                                đề khác</option>
+                            <option value="RETURNED" @if ($order->shipment_status == 'RETURNED') selected @endif>Hoàn
+                                trả về người gửi</option>
+                            <option value="DELIVERED" @if ($order->shipment_status == 'DELIVERED') selected @endif>Giao
+                                hàng thành công</option>
+                        </select>
+                    </div>
+                </div>
                     <a href="{{ route('admin.order.index') }}"
                         class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full">
                         Trở về
@@ -101,23 +103,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        $('#update_payment_status').on('change', function() {
-            var order_id = {{ $order->id }};
-            var status = $('#update_payment_status').val();
-            $.post('{{ route('admin.orders.update_payment_status') }}', {
-                _token: '{{ @csrf_token() }}',
-                order_id: order_id,
-                status: status
-            }, function(data) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Thanh toán được cập nhật thành công',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                window.location.reload();
-            });
-        });
+       
         $('#update_delivery_status').on('change', function() {
             var order_id = {{ $order->id }};
             var status = $('#update_delivery_status').val();

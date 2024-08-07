@@ -139,6 +139,10 @@
                     <input type="text" name="phone" value="{{ old('phone', Auth::user()->phone) }}" class=""
                         placeholder="Số điện thoại">
                 </div>
+                <div class="mt-2">
+                    <input type="text" name="email" value="{{ old('email', Auth::user()->email) }}" class=""
+                        placeholder="Email">
+                </div>
                 @error('phone')
                     <p class="my-2 text-red-400">{{ $message }}</p>
                 @enderror

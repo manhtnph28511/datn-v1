@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\OrderDetailController;
 use App\Http\Controllers\Admin\SubCateController;
+use App\Http\Controllers\Admin\NotificationController;
 
 
 use App\Http\Controllers\Clients\HomeController;
@@ -27,7 +28,8 @@ use App\Http\Controllers\Clients\HomeProductController;
 use App\Http\Controllers\Clients\HomeCategoryController;
 use App\Http\Controllers\Clients\OrderController as ClientsOrderController;
 use App\Http\Controllers\Clients\OrderPlacedController;
-
+use Illuminate\Notifications\Notification;
+use App\Http\Controllers\Clients\NotificationController as ClientsNotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +67,8 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::get('/', 'index')->name('product.index');
         Route::get('danh-sach-san-pham-da-xoa', 'trash')->name('product.trash');
         Route::match(['GET', 'POST'], 'them-moi', 'store')->name('product.store');
+        // Route::get('admin/products/create', [ProductController::class, 'create'])->name('admin.product.create');
+        // Route::post('admin/products', [ProductController::class, 'store'])->name('admin.product.store');
         Route::match(['GET', 'POST'], 'cap-nhat/{id}', 'update')->name('product.update');
         Route::delete('xoa-mem/{id}', 'softDelete')->name('product.softDelete');
         Route::delete('xoa/{id}', 'destroy')->name('product.destroy');
@@ -117,14 +121,14 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::get('dashboard/order/search', [OrderController::class, 'search'])->name('order.search');
         Route::post('/update-delivery-status', 'updateDeliveryStatus')->name('orders.update_delivery_status');
         Route::get('/invoice-download/{id}', 'downloadInvoice')->name('orders.downloadInvoice');
-        Route::post('/update-payment-status', 'updatePaymentStatus')->name('orders.update_payment_status');
+        // Route::post('/update-payment-status', 'updatePaymentStatus')->name('orders.update_payment_status');
     });
 
     // OrderDetail Module
     Route::name('admin.')->prefix('orderdetail')->controller(OrderDetailController::class)->group(function () {
         Route::get('order-details', 'index')->name('orderdetail.index');
         Route::get('order-details/{id}', 'show')->name('orderdetail.show');
-        Route::post('order-details/{id}/update-type', 'updateType')->name('orderdetail.updateType');
+       
     });
 
 
@@ -170,6 +174,17 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::get('activate/{id}', 'activate')->name('admin.customer.activate');
         Route::get('deactivate/{id}', 'deactivate')->name('admin.customer.deactivate');
     });
+
+
+
+    Route::name('admin.')->prefix('notifications')->controller(NotificationController::class)->group(function () {
+        Route::get('/', 'showNotifications')->name('notifications.index');
+        Route::post('/notifications/{notification}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');
+        Route::delete('/notifications/{notification}', [NotificationController::class, 'delete'])->name('notifications.delete');
+       
+    });
+
+
 });
 
 
@@ -236,4 +251,10 @@ Route::middleware('auth')->name('order.')->prefix('order')->controller(ClientsOr
     # order tracking
     Route::get('/track', 'track')->name('track');
     #review
+});
+Route::name('clients.')->prefix('notification')->controller(ClientsNotificationController::class)->group(function () {
+    Route::get('/notifications', 'index')->name('notifications.index');
+    Route::post('/notifications/{id}/read', 'markAsRead')->name('notifications.markAsRead');
+    Route::delete('/notifications/{id}', 'delete')->name('notifications.delete');
+    Route::post('/notifications/{id}/confirm-received', [ClientsNotificationController::class, 'confirmReceived'])->name('notifications.confirmReceived');
 });

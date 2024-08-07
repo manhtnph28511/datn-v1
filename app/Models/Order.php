@@ -27,4 +27,8 @@ class Order extends Model
     {
         return $this->hasMany(OrderUpdate::class, 'order_id', 'id');
     }
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
 }

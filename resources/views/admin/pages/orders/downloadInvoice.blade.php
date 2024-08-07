@@ -74,9 +74,9 @@
                 style="width: 300px; text-align: right; padding-left: 50px; line-height: 1.5; color: #323232;">
                 <h3>{{ env('APP_NAME') }}</h3>
                 <p style="font-size: 12px;font-weight: bold; color: #5b5b5b; line-height: 1; vertical-align: top; ">
-                    Thanh Xuân</p>
-                <p style="font-size: 12px; color: #5b5b5b; line-height: 24px; vertical-align: top;">
+                    Nam Từ Liêm</p>
                     Hà Nội<br>
+                <p style="font-size: 12px; color: #5b5b5b; line-height: 24px; vertical-align: top;">
                     Số điện thoại: 0888888888
                 </p>
             </td>
@@ -100,9 +100,23 @@
                 <td colspan="4" style="width: 300px;">
                     <p
                         style="font-size: 12px; font-weight: bold; color: #5b5b5b; line-height: 1; vertical-align: top; ">
-                        Địa chỉ khách hàng</p>
+                    Tên khách hàng :{{$order->username}}</p>
+                        <p
+                        style="font-size: 12px; font-weight: bold; color: #5b5b5b; line-height: 1; vertical-align: top; ">
+                       Số điện thoại :{{$order->phone}}</p>
+                        <p
+                        style="font-size: 12px; font-weight: bold; color: #5b5b5b; line-height: 1; vertical-align: top; ">
+                        Email:{{$order->email}}</p>
+                        <p
+                        style="font-size: 12px; font-weight: bold; color: #5b5b5b; line-height: 1; vertical-align: top; ">
+                        Ghi chú: {{$order->note}}</p>
+                        <p
+                        style="font-size: 12px; font-weight: bold; color: #5b5b5b; line-height: 1; vertical-align: top; ">
+                        PTTT:{{$order->payment_method}}</p>
+                        
+
                     <p style="font-size: 12px; color: #5b5b5b; line-height: 24px; vertical-align: top;">
-                        {{ $order->address }},
+                        Địa chỉ:{{ $order->address }},
                     <p class="mb-0">Trạng thái chuyển:
                         {!! getStatusOrderShip($order->shipment_status) !!}
                     </p>
@@ -248,9 +262,9 @@
     {{-- item total end --}}
 
     {{-- Note --}}
-    @if ($order->note)
+    {{-- @if ($order->note)
         <p style="text-align:center;margin:10px 0"><b>Ghi chú:</b> {{ $order->note }}</p>
-    @endif
+    @endif --}}
 
 
 </body>

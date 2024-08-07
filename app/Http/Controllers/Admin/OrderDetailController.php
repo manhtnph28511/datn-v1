@@ -10,9 +10,16 @@ class OrderDetailController extends Controller
 {
     public function index(Request $request)
     {
+        $query = Order::query();
         $search = $request->input('search');
         $status = $request->input('status');
-        
+
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
         $orderDetails = OrderDetail::with('order', 'product', 'size', 'color')
             ->when($search, function ($query, $search) {
                 $query->whereHas('order', function ($q) use ($search) {
@@ -20,42 +27,22 @@ class OrderDetailController extends Controller
                 });
             })
             ->when($status && $status !== 'all', function ($query) use ($status) {
-                $query->where('type', $status);
+                $query->where('status', $status);
             })
             ->paginate(10);
     
         return view('admin.pages.orderdetails.index', compact('orderDetails'));
-    }
-    public function show($id)
+    }    public function show($id)
     {
-        $orderDetail = OrderDetail::with('order', 'product', 'size', 'color')->findOrFail($id);
-        return view('admin.pages.orderdetails.show', compact('orderDetail'));
+        $orderDetails = OrderDetail::with('order', 'product', 'size', 'color')
+            ->where('order_id', $id)
+            ->get(); // Sử dụng get() thay vì paginate()
+    
+        return view('admin.pages.orderdetails.show', compact('orderDetails'));
     }
+    
+    
 
-
-    public function updateType(Request $request, $id)
-    {
-        $request->validate([
-            'type' => 'required|string',
-        ]);
-
-        $orderDetail = OrderDetail::findOrFail($id);
-
-        // Kiểm tra nếu trạng thái hiện tại là "đã hủy" hoặc "hoàn thành"
-        if ($orderDetail->type === 'đã hủy' || $orderDetail->type === 'hoàn thành') {
-            return redirect()->route('admin.orderdetail.index')->with('error', 'Không thể cập nhật trạng thái khi đơn hàng đã bị hủy hoặc hoàn thành.');
-        }
-
-        $orderDetail->type = $request->type;
-        $orderDetail->save();
-
-        if (in_array($orderDetail->type, ['đã hủy', 'hoàn thành'])) {
-            $orderDetail->order->update(['note' => $orderDetail->type]);
-        }
-
-
-        return redirect()->route('admin.orderdetail.index')->with('success', 'Trạng thái đơn hàng đã được cập nhật thành công.');
-    }
-
+   
    
 }

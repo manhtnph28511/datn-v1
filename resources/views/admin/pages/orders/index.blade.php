@@ -6,10 +6,11 @@
             <form action="{{ route('admin.order.search') }}" method="GET">
                 <input type="text" name="search" placeholder="Tìm kiếm theo tên, số điện thoại, hoặc email" value="{{ request('search') }}">
                 
-                <select name="note" class="border px-4 py-2 rounded-lg">
+                <select name="order_status" class="border px-4 py-2 rounded-lg">
                     <option value="all">Tất cả trạng thái</option>
-                    <option value="hoàn thành" {{ request('note') == 'hoàn thành' ? 'selected' : '' }}>hoàn thành</option>
-                    <option value="đã hủy" {{ request('note') == 'đã hủy' ? 'selected' : '' }}>đã hủy</option>
+                    <option value="pending" {{ request('order_status') == 'pending' ? 'selected' : '' }}>Chờ xử lý</option>
+                    <option value="success" {{ request('order_status') == 'success' ? 'selected' : '' }}>Hoàn thành</option>
+                    <option value="cancel" {{ request('order_status') == 'cancel' ? 'selected' : '' }}>Đã hủy</option>
                 </select>
                 
                 <input type="date" name="start_date" value="{{ request('start_date') }}">
@@ -17,8 +18,8 @@
                 
                 <button type="submit">Tìm kiếm</button>
             </form>
-            
         </div>
+        
         <div class="activity">
             <div class="py-20">
                 <div class="relative overflow-x-auto mb-8">
@@ -44,7 +45,13 @@
                                     Ghi chú
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    PTTT
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Ngày tạo
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Trạng thái
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Hành động
@@ -60,11 +67,13 @@
                                     <td class="px-6 py-4">{{ $order->phone }}</td>
                                     <td class="px-6 py-4">{{ $order->address }}</td>
                                     <td class="px-6 py-4">{{ $order->note }}</td>
+                                    <td class="px-6 py-4">{{ $order->payment_method }}</td>
                                     <td class="px-6 py-4">{{ $order->created_at->format('d/m/Y H:i') }}</td>
+                                    <td class="px-6 py-4">{{ $order->order_status }}</td>
                                     <td class="px-6 py-4 flex gap-x-4">
                                         <a href="{{ route('admin.order.show', $order->id) }}"
                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                                            Chi tiết
+                                            Cập nhật trạng thái đơn hàng
                                             <i class="fa-solid fa-eye"></i>
                                         </a>
                                     </td>

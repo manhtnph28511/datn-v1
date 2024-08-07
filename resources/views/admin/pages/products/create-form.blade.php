@@ -1,10 +1,10 @@
-@extends('admin.layouts.app')
+ @extends('admin.layouts.app')
 @section('app')
     <div class="dash-content">
-        <div class="activity">
+        <div class="activity"> 
             <div class="py-20">
-                <h3 class="text-gray-400 mb-4">Thêm mới sản phẩm</h3>
-                <form method="POST" action="{{ route('admin.product.store') }}" enctype="multipart/form-data">
+                <h3 class="text-gray-400 mb-4">Thêm mới sản phẩm</h3> 
+                 <form method="POST" action="{{ route('admin.product.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="grid grid-cols-2 gap-x-6">
                         <div>
@@ -115,12 +115,12 @@
                                     <select name="color_id" id="">
                                         @foreach ($colors as $color)
                                             <option value="{{ $color->id }}">{{ $color->name }}</option>
-                                            {{-- <div class="w-[35px] h-[35px] bg-[{{ $color->code }}] cursor-pointer" onclick="chooseColor(`{{ $color->id }}`)"></div> --}}
-                                        @endforeach
+                                            <div class="w-[35px] h-[35px] bg-[{{ $color->code }}] cursor-pointer" onclick="chooseColor(`{{ $color->id }}`)"></div> 
+                                       @endforeach
                                     </select>
-                                </div>
-                                {{-- <input type="hidden" name="color_id" id="color"> --}}
-                                <div>
+                                </div> 
+                                 <input type="hidden" name="color_id" id="color"> 
+                                 <div>
                                     @error('color_id')
                                         <p class="my-2 text-red-400">{{ $message }}</p>
                                     @enderror
@@ -148,8 +148,8 @@
     </div>
 @endsection
 @push('script')
-    <script>
-        // get input value color
+    <script> 
+        get input value color
         function chooseColor(color) {
             console.log(document.querySelector(`input[name="color_id"]`).value = color);
         }
@@ -175,3 +175,5 @@
             });
     </script>
 @endpush
+
+

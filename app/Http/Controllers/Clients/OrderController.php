@@ -16,6 +16,7 @@ class OrderController extends Controller
         $orders = Order::with('orderDetails')->where('user_id', $user->id)->get()->map(function ($order) {
             $order->total_price = $order->orderDetails->sum('price');
             $order->total_quantity = $order->orderDetails->sum('quantity');
+            $order->payment=$order->payment_method;
             return $order;
         });
         return view('clients.pages.orders.history', ['orders' => $orders]);

@@ -37,14 +37,19 @@
                 </a></li>
             <li><a href="{{ route('admin.order.index') }}">
                     <i class="fa-solid fa-thumbtack"></i>
-                    <span class="link-name">Quản Lý Đơn Hàng</span>
+                    <span class="link-name">Trạng thái Đơn Hàng</span>
                 </a></li>
             <li><a href="{{ route('admin.orderdetail.index') }}">
                 <i class="fa-solid fa-thumbtack"></i>
-                <span class="link-name">Thông tin vận chuyển</span>
+                <span class="link-name">Quản lí đơn hàng</span>
+            </a></li>
+            <li><a href="{{ route('admin.notifications.index') }}">
+                <i class="uil uil-bell"></i>
+                <span class="link-name">Thông Báo</span>
+                <span class="notification-count">{{ $unreadNotificationsCount }}</span>
             </a></li>
         </ul>
-
+        
         <ul class="logout-mode">
             <li><a href="{{ route('account.logout') }}">
                     <i class="uil uil-signout"></i>
@@ -52,10 +57,10 @@
                 </a></li>
 
             <li class="mode">
-                <a href="#">
+                {{-- <a href="#">
                     <i class="uil uil-moon"></i>
                     <span class="link-name">Dark Mode</span>
-                </a>
+                </a> --}}
 
                 <div class="mode-toggle">
                     <span class="switch"></span>
@@ -64,3 +69,13 @@
         </ul>
     </div>
 </nav>
+<style>
+    .notification-count {
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 12px;
+        margin-left: 5px;
+    }
+</style>

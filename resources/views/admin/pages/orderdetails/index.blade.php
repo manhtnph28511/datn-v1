@@ -17,13 +17,15 @@
                 {{-- Form tìm kiếm theo trạng thái --}}
                 <form action="{{ route('admin.orderdetail.index') }}" method="GET" class="flex items-center gap-x-4">
                     <input type="text" name="search" placeholder="Tìm kiếm theo tên người đặt hàng" class="border px-4 py-2 rounded-lg" value="{{ request('search') }}">
+
+                    <input type="date" name="start_date" class="border px-4 py-2 rounded-lg" value="{{ request('start_date') }}">
+                    <input type="date" name="end_date" class="border px-4 py-2 rounded-lg" value="{{ request('end_date') }}">
+                    
                     <select name="status" class="border px-4 py-2 rounded-lg">
-                        <option value="all">Tất cả trạng thái</option>
-                        <option value="đang chờ xác nhận" {{ request('status') == 'đang chờ xác nhận' ? 'selected' : '' }}>đang chờ xác nhận</option>
-                        <option value="đang xử lí" {{ request('status') == 'đang xử lí' ? 'selected' : '' }}>đang xử lí</option>
-                        <option value="đang giao" {{ request('status') == 'đang giao' ? 'selected' : '' }}>đang giao</option>
-                        <option value="hoàn thành" {{ request('status') == 'hoàn thành' ? 'selected' : '' }}>hoàn thành</option>
-                        <option value="đã hủy" {{ request('status') == 'đã hủy' ? 'selected' : '' }}>đã hủy</option>
+                        <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Tất cả trạng thái</option>
+                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>đang chờ xác nhận</option>
+                        <option value="success" {{ request('status') == 'success' ? 'selected' : '' }}>hoàn thành</option>
+                        <option value="cancel" {{ request('status') == 'cancel' ? 'selected' : '' }}>đã hủy</option>
                     </select>
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Tìm kiếm</button>
                 </form>
@@ -53,6 +55,9 @@
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Tổng giá
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Thời gian đặt hàng
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Trạng thái
@@ -87,22 +92,15 @@
                                             {{ $detail->total_price }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $detail->type }}
+                                            {{ $detail->created_at }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $detail->status }}
                                         </td>
                                           <!-- Form để cập nhật trạng thái -->
                                           <td class="px-6 py-4 flex gap-x-4">
-                                          <form action="{{ route('admin.orderdetail.updateType', $detail->id) }}" method="POST">
-                                            @csrf
-                                            <select name="type" class="form-select" required>
-                                                <option value="đang chờ xác nhận" {{ $detail->type === 'đang chờ xác nhận ' ? 'selected' : '' }}>Đang chờ xác nhận</option>
-                                                <option value="đang xử lí" {{ $detail->type === 'đang xử lí' ? 'selected' : '' }}>Đang xử lý</option>
-                                                <option value="đang giao" {{ $detail->type === 'đang giao' ? 'selected' : '' }}>Đang giao</option>
-                                                <option value="hoàn thành" {{ $detail->type === 'hoàn thành' ? 'selected' : '' }}>Hoàn thành</option>
-                                                <option value="đã hủy" {{ $detail->type === 'đã hủy' ? 'selected' : '' }}>Đã hủy</option>
-                                            </select>
-                                            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">Cập nhật</button>
-                                        </form>
-                                    </td>
+                                            <a href="{{ route('admin.orderdetail.show', $detail->order_id) }}" class="text-blue-500 hover:text-blue-700">Chi tiết</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

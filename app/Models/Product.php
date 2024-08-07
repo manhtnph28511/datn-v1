@@ -40,6 +40,10 @@ public function size()
 {
     return $this->belongsTo(Size::class);
 }
+public function variants()
+{
+    return $this->hasMany(ProductVariation::class);
+}
 public function voucher()
     {
         return $this->belongsTo(Voucher::class);
