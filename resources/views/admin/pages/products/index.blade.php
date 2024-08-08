@@ -81,6 +81,10 @@
                                             Cập nhật
                                             <i class="fa-solid fa-pen"></i>
                                         </a>
+                                        
+                                            <!-- Nút để đến trang quản lý biến thể -->
+                                            <a href="{{ route('admin.variant.index', ['product_id' => $pro->id]) }}" class="text-blue-500">Quản lý biến thể</a>
+                                        
                                         <form action="{{ route('admin.product.softDelete', $pro->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')

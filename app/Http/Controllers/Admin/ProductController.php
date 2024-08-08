@@ -9,7 +9,7 @@ use App\Models\Product;
 use App\Models\Size;
 use App\Models\StatusProduct;
 use App\Models\SubCategory;
-use App\Models\ProductVariation;
+use App\Models\ProductVariant;
 use Alert;
 use App\Http\Requests\Admin\ProductRequest;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
@@ -74,78 +74,23 @@ class ProductController extends Controller
             'sttProduct' => $sttProduct
         ]);
     }
-//    public function createOrStore(Request $request)
-// public function Store(Request $request)
-// {
-//     if ($request->isMethod('post')) {
-//         $data = $request->except('image', 'variants');
-//         $data['slug'] = Str::slug($request->get('name'));
-
-//         if (empty($data['name'])) {
-//                       return redirect()->back()->withErrors(['name' => 'Tên sản phẩm là bắt buộc']);
-//                    }
-//         if ($request->hasFile('image')) {
-//             $data['image'] = Cloudinary::upload($request->file('image')->getRealPath(), [
-//                 'folder' => 'Cara/Products',
-//                 'overwrite' => TRUE,
-//                 'resource_type' => 'image'
-//             ])->getSecurePath();
-//         }
-
-//         // Đảm bảo rằng color_id được cung cấp
-//         $product = Product::create($data);
-
-//         // Lưu các biến thể (nếu có)
-//         $variants = $request->input('variants', []);
-//         foreach ($variants as $variant) {
-//             $product->variants()->create($variant);
-//         }
-
-//         return redirect()->route('admin.product.createOrStore')->with('message', 'Thêm mới sản phẩm và biến thể thành công');
-//     }
-
-//     // Hiển thị form cho GET request
-//     $brands = Brand::all();
-//     $cates = SubCategory::all();
-//     $colors = Color::all();
-//     $sizes = Size::all();
-//     $sttProduct = StatusProduct::all();
-
-//     return view('admin.pages.products.create-form', [
-//         'brands' => $brands,
-//         'cates' => $cates,
-//         'colors' => $colors,
-//         'sizes' => $sizes,
-//         'sttProduct' => $sttProduct
-//     ]);
-// }
-
-
-
-
-
-
-
     
-
-// //    
-
-
-
-    
-    
-
     // public function store(ProductRequest $request)
     // {
+    //     // Lấy danh sách các tùy chọn cho form
     //     $brands = Brand::all();
     //     $cates = SubCategory::all();
     //     $colors = Color::all();
     //     $sizes = Size::all();
     //     $sttProduct = StatusProduct::all();
+        
     //     if ($request->method() === 'POST') {
-
-    //         $data = $request->except('image');
+    
+    //         // Lấy dữ liệu từ request
+    //         $data = $request->except('image', 'variant_product_id', 'image_variant', 'color_id', 'size_id', 'price_variant');
     //         $data['slug'] = Str::slug($request->get('name'));
+    
+    //         // Xử lý hình ảnh sản phẩm
     //         if($request->hasFile('image')) {
     //             $data['image'] = Cloudinary::upload($request->file('image')->getRealPath(), array(
     //                 'folder' => 'Cara/Products',
@@ -153,10 +98,49 @@ class ProductController extends Controller
     //                 'resource_type' => 'image'
     //             ))->getSecurePath();
     //         }
+    
+    //         // Tạo sản phẩm
     //         $product = Product::create($data);
-
-    //         return checkEndDisplayMsg($product, 'success', 'Thành công', 'Thêm mới thành công', 'admin.product.index');
+    
+    //         if ($product) {
+    //             // Xử lý các biến thể sản phẩm
+    //             if ($request->has('variant_product_id')) {
+    //                 foreach ($request->input('variant_product_id') as $index => $variantProductId) {
+    //                     if ($variantProductId) {
+    //                         $variantImagePath = null;
+    //                         if ($request->hasFile('image_variant.' . $index)) {
+    //                             $imageVariant = $request->file('image_variant.' . $index);
+    //                             $variantImagePath = Cloudinary::upload($imageVariant->getRealPath(), array(
+    //                                 'folder' => 'Cara/ProductVariants',
+    //                                 'overwrite' => TRUE,
+    //                                 'resource_type' => 'image'
+    //                             ))->getSecurePath();
+    //                         }
+    
+    //                         ProductVariant::create([
+    //                             'product_id' => $product->id,
+    //                             'variant_product_id' => $variantProductId,
+    //                             'image_variant' => $variantImagePath,
+    //                             'color_id' => $request->input('color_id.' . $index),
+    //                             'size_id' => $request->input('size_id.' . $index),
+    //                             'price' => $request->input('price_variant.' . $index),
+    //                         ]);
+    //                     }
+    //                 }
+    //             }
+    //         } else {
+    //             // Xóa hình ảnh nếu không tạo được sản phẩm
+    //             if ($data['image']) {
+    //                 $publicId = $this->getPublicId($data['image']);
+    //                 Cloudinary::destroy($publicId);
+    //             }
+    //         }
+    
+    //         // Hiển thị thông báo thành công hoặc thất bại
+    //         return checkEndDisplayMsg('success', 'Thành công', 'Thêm mới thành công', 'admin.product.index');
     //     }
+    
+    //     // Trả về view để thêm sản phẩm mới
     //     return view('admin.pages.products.create-form', [
     //         'brands' => $brands,
     //         'cates' => $cates,
@@ -165,6 +149,10 @@ class ProductController extends Controller
     //         'sttProduct' => $sttProduct
     //     ]);
     // }
+    
+    
+
+
 
     public function update(ProductRequest $request, $id)
     {

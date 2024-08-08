@@ -40,9 +40,9 @@ public function size()
 {
     return $this->belongsTo(Size::class);
 }
-public function variants()
+public function product_variants()
 {
-    return $this->hasMany(ProductVariation::class);
+    return $this->hasMany(ProductVariant::class, 'product_id');
 }
 public function voucher()
     {

@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductVariation extends Model
+class ProductVariant extends Model
 {
     use HasFactory;
-    protected $fillable = ['product_id', 'size_id', 'color_id', 'price', 'quantity'];
+    protected $fillable = ['product_id','image_variant', 'size_id', 'color_id', 'price', 'quantity'];
 
     public function product()
     {

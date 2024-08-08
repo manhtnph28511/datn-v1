@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SizeController;
@@ -75,6 +76,18 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::get('khoi-khuc/{id}', 'restore')->name('product.restore');
         Route::get('search', 'search')->name('product.search');
     });
+
+   
+        //Variant
+        Route::name('admin.')->prefix('variant')->controller(ProductVariantController::class)->group(function () {
+            Route::get('product_variants/{product_id}', [ProductVariantController::class, 'index'])->name('variant.index');
+            Route::get('product_variants/{product_id}/create', [ProductVariantController::class, 'create'])->name('variant.create');
+            Route::post('product_variants/{product_id}', [ProductVariantController::class, 'store'])->name('variant.store');
+            Route::delete('product_variants/{product_id}', [ProductVariantController::class, 'destroy'])->name('variant.destroy');
+            Route::get('product_variants/{product_id}/edit/{variant_id}', [ProductVariantController::class, 'edit'])->name('variant.edit');
+            Route::put('product_variants/{product_id}/update/{variant_id}', [ProductVariantController::class, 'update'])->name('variant.update');
+        });
+       
 
     //Brand Module
     Route::name('admin.')->prefix('thuong-hieu')->controller(BrandController::class)->group(function () {
