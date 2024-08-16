@@ -1,16 +1,60 @@
 @extends('clients.layouts.app')
 
 @section('app')
-<section id="prodetails" class="section-p1">
-    <div class="single-pro-image">
-        <img src="{{ $product->image }}" width="100%" id="mainImg" alt="">
-    </div>
-    <div class="single-pro-detail">
-        <form action="{{ route('home.cart.addToCart') }}" method="POST" id="product-form">
-            @csrf
-            <h6><a href="{{ route('home-client') }}" class="text-gray-700">Home</a> / {{ $product->subCate->name }}</h6>
-            <h4>{{ $product->name }}</h4>
-            <input type="hidden" value="{{ $product->id }}" name="pro_id">
+    <section id="prodetails" class="section-p1">
+        <div class="single-pro-image">
+            <img src="{{ $product->image }}" width="100%" id="mainImg"
+                 alt="">
+        </div>
+        <div class="single-pro-detail">
+            <form action="{{ route('home.cart.addToCart') }}" method="POST">
+                @csrf
+                <h6><a href="{{ route('home-client')  }}" class="text-gray-700">Home</a>
+                    / {{ $product->subCate->name  }}</h6>
+                <h4>{{ $product->name  }}</h4>
+                <input type="hidden" value="{{ $product->id }}" name="pro_id">
+                <h2>{{ number_format($product->price) }}</h2>
+                <select name="size_id" id="" class="border">
+                    <option>Select size</option>
+                    @foreach($sizes as $size)
+                        <option value="{{ $size->id  }}">{{ $size->name  }}</option>
+                    @endforeach
+                </select>
+
+                <select name="color_id" id="color" class="border">
+                    <option value="">Select color</option>
+                    @foreach($colors as $color)
+                        <option value="{{ $color->id }}">{{ $color->name }}</option>
+                    @endforeach
+                </select>
+                <input type="number" value="1" min="1" class="border" name="quantity">
+                <button class="normal" type="submit">Add To Cart</button>
+            </form>
+            <h4>Product Details</h4>
+            <span>{!! $product->description !!}   </span>
+        </div>
+    </section>
+    <section id="comment" class="section-p1">
+        <div>
+            <form action="{{ route('home.rating.store')  }}" method="POST">
+                @csrf
+                <label for="">
+                    Đánh giá của bạn về sản phẩm
+                    <div id="rateYo" class="my-2"></div>
+                    <input type="hidden" name="rating" id="rating">
+                    <input type="hidden" name="product_id" value="{{ $product?->id  }}">
+                </label>
+                <textarea name="review" id="review" cols="30" rows="4" class="block w-full px-2 py-2 text-sm
+                text-gray-800 bg-white border-1 dark:bg-gray-800 focus:ring-0
+                dark:text-white dark:placeholder-gray-400 rounded"></textarea>
+                <button type="submit"
+                        class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none
+                        bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700
+                        focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800
+                        dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 my-2">
+                    Post
+                </button>
+            </form>
 
             <!-- Hiển thị giá cơ bản -->
             {{-- <p id="product-price">Giá: {{ number_format($product->price) }}</p> --}}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
+use App\Mail\InvoiceMail;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -24,7 +25,7 @@ class CartController extends Controller
     // Cart
     public function cart()
     {
-        if (Auth::check()) {
+        if (auth()->check()) {
             $userId = Auth::user()->id;
             $carts = DB::table('carts')
                 ->leftJoin('users', 'users.id', '=', 'carts.user_id')
@@ -55,7 +56,7 @@ class CartController extends Controller
         }
     
         if (Auth::check()) {
-            if (Auth::user()->role !== 1) {
+            // if (Auth::user()->role !== 1) {
                 $proId = $request->get('pro_id');
                 $productToCart = Product::find($proId);
     
@@ -90,7 +91,7 @@ class CartController extends Controller
                 } catch (\Throwable $th) {
                     return $th->getMessage();
                 }
-            }
+            // }
             return back();
         }
         return back();
@@ -333,9 +334,8 @@ class CartController extends Controller
             $order->email = $validatedData['email'];
             $order->note = $validatedData['note'] ?? '';
             $order->payment_method =  'Credit_card' ;
-           
-           
-
+            $order->shipment_status = 'PACKED';
+            $order->order_status = "PENDING";
             $order->save();
 
             foreach ($carts as $cart) {
@@ -350,6 +350,8 @@ class CartController extends Controller
                      'status' => 'pending',
                 ]);
             }
+
+            Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
 
 
             Notification::create([
@@ -367,7 +369,7 @@ class CartController extends Controller
                 ]),
                 'is_read' => false,
             ]);
-    
+
             session()->put('order_id', $order->id);
             DB::table('carts')->where('user_id', auth()->user()->id)->delete();
 
@@ -386,6 +388,8 @@ class CartController extends Controller
         $order->email = $validatedData['email'];
         $order->note = $validatedData['note'] ?? '';
         $order->payment_method = 'COD';
+        $order->order_status = "PENDING";
+        $order->shipment_status = 'ORDERPLACE';
         $order->save();
 
         foreach ($carts as $cart) {
@@ -400,6 +404,9 @@ class CartController extends Controller
                 'status' => 'pending',
             ]);
         }
+
+        Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
+
 
         Notification::create([
             'type' => 'đã đặt hàng',
@@ -430,5 +437,3 @@ class CartController extends Controller
 
 
 
-    
-}
