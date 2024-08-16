@@ -54,28 +54,28 @@ class CartController extends Controller
             toast()->error('Lỗi');
             return back();
         }
-    
+
         if (Auth::check()) {
             // if (Auth::user()->role !== 1) {
                 $proId = $request->get('pro_id');
                 $productToCart = Product::find($proId);
-    
+
                 if (!$productToCart) {
                     toast()->error('Sản phẩm không tồn tại');
                     return back();
                 }
-    
+
                 if ($request->quantity > $productToCart->quantity) {
                     toast()->error('Số lượng sản phẩm không hợp lệ');
                     return back();
                 }
-    
+
                 // Lấy giá từ yêu cầu
                 $price = $request->input('price');
                 if (is_null($price)) {
                     $price = $productToCart->price;
                 }
-    
+
                 try {
                     $isSuccess = Cart::create([
                         'pro_id' => $proId,
@@ -86,7 +86,7 @@ class CartController extends Controller
                         'quantity' => $request->input('quantity'),
                         'total_price' => ($price * $request->input('quantity'))
                     ]);
-    
+
                     return checkEndDisplayMsg('success', $isSuccess, 'Thành công', 'Thêm giỏ hàng thành công', 'home.cart');
                 } catch (\Throwable $th) {
                     return $th->getMessage();
@@ -96,8 +96,8 @@ class CartController extends Controller
         }
         return back();
     }
-    
-  
+
+
 
     public function updateCart(Request $request)
 {
@@ -135,8 +135,8 @@ class CartController extends Controller
                     toast('Số lượng biến thể yêu cầu vượt quá số lượng có sẵn', 'warning');
                     return back();
                 }
-                
-               
+
+
             } else {
                 // Xử lý khi không có biến thể
                 if ($quantity > $product->quantity) {
@@ -244,18 +244,18 @@ class CartController extends Controller
     //         'success' => 'Voucher đã được áp dụng thành công.'
     //     ]);
     // }
-    
-
-
-
-    
-    
 
 
 
 
 
-    
+
+
+
+
+
+
+
     // Check out
     public function checkout()
     {
@@ -351,7 +351,7 @@ class CartController extends Controller
                 ]);
             }
 
-            // Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
+            Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
 
 
             Notification::create([
@@ -405,7 +405,7 @@ class CartController extends Controller
             ]);
         }
 
-        // Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
+        Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
 
 
         Notification::create([

@@ -57,6 +57,11 @@ Route::name('account.')->prefix('tai-khoan')->controller(AuthController::class)-
 
     // Logout
     Route::get('dang-xuat', 'logout')->name('logout');
+
+    Route::match(['GET', 'POST'], 'forgotpassword', 'forgot')->name('forgotpassword');
+    Route::match(['GET', 'POST'], 'resetpassword', 'reset')->name('password.reset');
+
+
 });
 
 // Admin
@@ -78,7 +83,7 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::get('search', 'search')->name('product.search');
     });
 
-   
+
         //Variant
         Route::name('admin.')->prefix('variant')->controller(ProductVariantController::class)->group(function () {
             Route::get('product_variants/{product_id}', [ProductVariantController::class, 'index'])->name('variant.index');
@@ -88,7 +93,7 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
             Route::get('product_variants/{product_id}/edit/{variant_id}', [ProductVariantController::class, 'edit'])->name('variant.edit');
             Route::put('product_variants/{product_id}/update/{variant_id}', [ProductVariantController::class, 'update'])->name('variant.update');
         });
-       
+
 
     //Brand Module
     Route::name('admin.')->prefix('thuong-hieu')->controller(BrandController::class)->group(function () {
@@ -260,7 +265,7 @@ Route::middleware('auth')->prefix('cart')->controller(CartController::class)->gr
     Route::get('delete/{id}', 'destroy')->name('home.cart.destroy');
     Route::get('order-success', 'success')->name('home.cart.order-success');
     Route::view('success', 'clients.pages.orders.order-success')->name('order-success');
-   
+
 });
 
 
