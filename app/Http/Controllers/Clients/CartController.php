@@ -347,11 +347,11 @@ class CartController extends Controller
                     'price' => $cart->price,
                     'quantity' => $cart->quantity,
                     'total_price' => $cart->price * $cart->quantity,
-                     'status' => 'pending',
+
                 ]);
             }
 
-            Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
+            // Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
 
 
             Notification::create([
@@ -401,11 +401,11 @@ class CartController extends Controller
                 'price' => $cart->price,
                 'quantity' => $cart->quantity,
                 'total_price' => $cart->price * $cart->quantity,
-                'status' => 'pending',
+
             ]);
         }
 
-        Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
+        // Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
 
 
         Notification::create([
@@ -433,6 +433,7 @@ class CartController extends Controller
 
         return redirect()->route('order-success');
     }
+}
 }
 
 
