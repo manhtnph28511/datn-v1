@@ -6,8 +6,8 @@
 
 @section('app')
     <section id="page-header" class="about-header">
-        <h2>#let's_talk</h2>
-        <p>LEAVE A MESSAGE, We love to hear from you!</p>
+        <h2>#Xin chào</h2>
+        <p>Đây là giỏ hàng của bạn</p>
     </section>
     @if (count($carts) > 0)
         <section id="cart" class="section-p1">
@@ -22,14 +22,21 @@
                         <td>Giá</td>
                         <td>Số lượng</td>
                         <td>Tổng giá</td>
+                        {{-- <td>Voucher</td>
+                        <td>Giá sau khi sử dụng voucher</td> --}}
                     </tr>
                 </thead>
                 @php
                     $total = 0;
-                    $sumTotal = 0;
                 @endphp
                 <tbody class="cart-box">
                     @foreach ($carts as $cart)
+                        @php
+                            $price = floatval($cart->price);
+                            $quantity = intval($cart->quantity);
+                            $itemTotal = $quantity * $price;
+                            $total += $itemTotal;
+                        @endphp
                         <tr class="pro-box">
                             <td>
                                 <a href="{{ route('home.cart.destroy', $cart->id) }}"
@@ -39,15 +46,17 @@
                             </td>
                             <td><img src="{{ $cart->image }}" alt=""></td>
                             <td>{{ $cart->proName }}</td>
-                            <td>{{ $cart->sizeName ?? 'N/A' }}</td> <!-- Hiển thị tên kích cỡ -->
-                            <td>{{ $cart->colorName ?? 'N/A' }}</td> <!-- Hiển thị tên màu sắc -->
-                            <td>{{ number_format($cart->price) }}</td>
+                            <td>{{ $cart->sizeName ?? 'N/A' }}</td>
+                            <td>{{ $cart->colorName ?? 'N/A' }}</td>
+                            <td>{{ number_format($price) }}</td>
                             <td>
                                 <form action="{{ route('home.cart.updateCart') }}" method="post">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $cart->id }}">
                                     <input type="hidden" name="pro_id" value="{{ $cart->pro_id }}">
-                                    <input type="number" value="{{ $cart->quantity }}"
+                                    <input type="hidden" name="size_id" value="{{ $cart->size_id }}">
+                                    <input type="hidden" name="color_id" value="{{ $cart->color_id }}">
+                                    <input type="number" value="{{ $quantity }}"
                                         class="border w-[40px] h-[40px] text-center" name="quantity">
                                     <button
                                         class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-3 py-2 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
@@ -55,10 +64,20 @@
                                     </button>
                                 </form>
                             </td>
-                            <td>{{ number_format($cart->quantity * $cart->price) }}</td>
-                            @php
-                                $total = $total += $cart->quantity * $cart->price;
-                            @endphp
+                             <td>{{ number_format($itemTotal) }}</td>
+                            {{-- <td>
+                                <form action="{{ route('applyVoucher') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="pro_id" value="{{ $cart->pro_id }}">
+                                    <input type="text" name="voucher_code" placeholder="Nhập mã voucher">
+                                    <button type="submit" class="btn btn-primary">Sử dụng</button>
+                                </form>
+                            </td>
+                            <td>
+                              
+                                <h3>Tổng tiền sau giảm giá: {{ number_format($cart->discounted_total_price, 2) }} VND</h3>
+                           
+                            </td>  --}}
                         </tr>
                     @endforeach
                 </tbody>
@@ -68,6 +87,7 @@
         <section id="cart-add" class="section-p1 justify-content-end">
             <div id="subtotal">
                 <h3>Cart totals</h3>
+                <h3 style="color: red">Freeship toàn quốc</h3>
                 <table>
                     <tr>
                         <td>Shipping</td>
@@ -79,7 +99,6 @@
                     </tr>
                 </table>
                 <a class="btn btn-success" href="{{ route('home.cart.checkout') }}">Tiến hàng thanh toán</a>
-                
             </div>
         </section>
     @else

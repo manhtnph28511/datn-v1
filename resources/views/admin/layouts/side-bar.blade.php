@@ -43,6 +43,10 @@
                 <i class="fa-solid fa-thumbtack"></i>
                 <span class="link-name">Quản lí đơn hàng</span>
             </a></li>
+            <li><a href="{{ route('admin.vouchers.index') }}">
+                <i class="fa-solid fa-thumbtack"></i>
+                <span class="link-name">Voucher</span>
+            </a></li>
             <li><a href="{{ route('admin.notifications.index') }}">
                 <i class="uil uil-bell"></i>
                 <span class="link-name">Thông Báo</span>

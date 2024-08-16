@@ -159,42 +159,17 @@ class OrderController extends Controller
         
         $order->save();
 
-        $orderDetails = $order->orderDetails; // Lấy tất cả chi tiết đơn hàng
-        foreach ($orderDetails as $detail) {
-            $detail->status = $order->order_status;
-            $detail->save();
-        }
+        // $orderDetails = $order->orderDetails; // Lấy tất cả chi tiết đơn hàng
+        // foreach ($orderDetails as $detail) {
+        //     $detail->status = $order->order_status;
+        //     $detail->save();
+        // }
         return true;
 
     }
 
 
-//     public function sendShippingNotification($order, $status)
-// {
-//     // Tạo thông báo cho người dùng
-//     Notification::create([
-//         'user_id' => $order->user_id, // Đảm bảo bạn có user_id trong đơn hàng
-//         'type' => 'shipping_update',
-//         'data' => json_encode([
-//             'order_id' => $order->id,
-//             'message' => 'Trạng thái đơn hàng của bạn đã được cập nhật: ' . $status,
-//         ]),
-//         'is_read' => false,
-//     ]);
-// }
-    // public function downloadInvoice($id)
-    // {
-    //     $font_family = "'Roboto','sans-serif'";
-    //     $order = Order::findOrFail((int)$id);
 
-    //     return Pdf::loadView('admin.pages.orders.downloadInvoice', [
-    //         'order' => $order,
-    //         'font_family' => $font_family,
-    //         'direction' => 'ltr',
-    //         'default_text_align' => 'left',
-    //         'reverse_text_align' => 'right'
-    //     ], [], [])->download('INV' . $order->id . '.pdf');
-    // }
     public function downloadInvoice($id)
 {
     $font_family = "'Roboto','sans-serif'";

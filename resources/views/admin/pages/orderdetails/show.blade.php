@@ -21,6 +21,7 @@
                                     <th scope="col" class="px-6 py-3">Số lượng</th>
                                     <th scope="col" class="px-6 py-3">Giá</th>
                                     <th scope="col" class="px-6 py-3">Tổng giá</th>
+                                    <th scope="col" class="px-6 py-3">PTTT</th>
                                     <th scope="col" class="px-6 py-3">Trạng thái</th>
                                     <th scope="col" class="px-6 py-3">Thời gian đặt hàng</th>
                                 </tr>
@@ -45,7 +46,8 @@
                                         <td class="px-6 py-4">{{ $detail->quantity ?? 'N/A' }}</td>
                                         <td class="px-6 py-4">{{ $detail->price ?? 'N/A' }}</td>
                                         <td class="px-6 py-4">{{ $detail->total_price ?? 'N/A' }}</td>
-                                        <td class="px-6 py-4">{{ $detail->status ?? 'N/A' }}</td>
+                                        <td class="px-6 py-4">{{ $detail->order->payment_method ?? 'N/A' }}</td>
+                                        <td class="px-6 py-4">{{ $detail->order->order_status ?? 'N/A' }}</td>
                                         <td class="px-6 py-4">{{ $detail->created_at->format('d-m-Y H:i:s') ?? 'N/A' }}</td>
                                     </tr>
                                 @endforeach

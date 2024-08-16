@@ -39,62 +39,7 @@ class HomeProductController extends Controller
     //     toast('Lỗi', 'error');
     //     return back();
     // }
-//     public function showProduct($id, $slug, Request $request)
-// {
-//     $product = Product::with('product_variants')->find($id);
-//     $sizes = Size::all();
-//     $colors = Color::all();
-//     $variantPrice = $product->price; // Mặc định là giá của sản phẩm chính
-//     $variantError = null;
-
-//     // Kiểm tra nếu có size và màu được chọn trong request
-//     $selectedSizeId = $request->get('size_id');
-//     $selectedColorId = $request->get('color_id');
-
-//     // Lấy tất cả các biến thể của sản phẩm
-//     $variants = $product->product_variants;
-
-//     if ($selectedSizeId && $selectedColorId) {
-//         $variant = $variants->first(function ($variant) use ($selectedSizeId, $selectedColorId) {
-//             return $variant->size_id == $selectedSizeId && $variant->color_id == $selectedColorId;
-//         });
-
-//         if ($variant) {
-//             $variantPrice = $variant->price;
-//         } else {
-//             $variantError = 'Biến thể không tồn tại';
-//         }
-//     }
-
-//     return view('clients.pages.detail-product', [
-//         'product' => $product,
-//         'sizes' => $sizes,
-//         'colors' => $colors,
-//         'variantPrice' => $variantPrice,
-//         'variantError' => $variantError,
-//         'variants' => $variants, // Truyền thông tin về các biến thể đến view
-//     ]);
-// }
-// public function showProduct($id, $slug, Request $request)
-// {
-//     $product = Product::with('product_variants')->find($id);
-//     $sizes = Size::all();
-//     $colors = Color::all();
-//     $variantPrice = $product->price; // Giá mặc định của sản phẩm chính
-//     $variantError = null;
-
-//     // Lấy tất cả các biến thể của sản phẩm
-//     $variants = $product->product_variants;
-
-//     return view('clients.pages.detail-product', [
-//         'product' => $product,
-//         'sizes' => $sizes,
-//         'colors' => $colors,
-//         'variantPrice' => $variantPrice,
-//         'variantError' => $variantError,
-//         'variants' => $variants
-//     ]);
-// }
+    //
 public function showProduct($id, $slug, Request $request)
 {
     $product = Product::with('product_variants')->find($id);

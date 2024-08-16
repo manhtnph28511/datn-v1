@@ -10,13 +10,17 @@ class Voucher extends Model
     use HasFactory;
 
     protected $fillable = [
-        'code',
-        'discount',
-        'expires_at',
+        'code', 'discount', 'discount_type', 'starts_at', 'expires_at', 'product_id', 'category_id'
+    ];
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+    protected $casts = [
+        'starts_at' => 'datetime',
+        'expires_at' => 'datetime',
     ];
 
-    public function products()
-    {
-        return $this->hasMany(Product::class);
-    }
+
+
 }

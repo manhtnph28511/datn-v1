@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\OrderDetailController;
 use App\Http\Controllers\Admin\SubCateController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\VoucherController;
 
 
 use App\Http\Controllers\Clients\HomeController;
@@ -197,6 +198,16 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
        
     });
 
+    Route::name('admin.')->prefix('vouchers')->controller(VoucherController::class)->group(function () {
+        Route::get('/', 'index')->name('vouchers.index');
+        Route::get('/create', 'create')->name('vouchers.create');
+        Route::post('/', 'store')->name('vouchers.store');
+        Route::get('vouchers/{id}/edit', 'edit')->name('vouchers.edit');
+        Route::put('vouchers/{id}', 'update')->name('vouchers.update');
+        Route::delete('vouchers/{id}', 'destroy')->name('vouchers.destroy');
+    });
+
+
 
 });
 
@@ -249,6 +260,7 @@ Route::middleware('addToCart')->prefix('cart')->controller(CartController::class
     Route::get('delete/{id}', 'destroy')->name('home.cart.destroy');
     Route::get('order-success', 'success')->name('home.cart.order-success');
     Route::view('success', 'clients.pages.orders.order-success')->name('order-success');
+   
 });
 
 

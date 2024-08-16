@@ -13,7 +13,8 @@
             <input type="hidden" value="{{ $product->id }}" name="pro_id">
 
             <!-- Hiển thị giá cơ bản -->
-            <p id="product-price">Giá: {{ number_format($product->price) }}</p>
+            {{-- <p id="product-price">Giá: {{ number_format($product->price) }}</p> --}}
+            <input id="product-price" name="price" value="{{ number_format($product->price) }}" style="width:100px">
 
             <!-- Hiển thị thông báo lỗi nếu có -->
             @if ($variantError)
@@ -45,68 +46,45 @@
     </div>
 </section>
 
-
-{{-- <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const sizeSelect = document.getElementById('size-select');
-    const colorSelect = document.getElementById('color-select');
-    const priceElement = document.getElementById('product-price');
-    let basePrice = {{ $product->price }};
-    let variants = @json($product->product_variants);
-
-    function updatePrice() {
-        let selectedSizeId = sizeSelect.value;
-        let selectedColorId = colorSelect.value;
-
-        let matchingVariant = variants.find(variant => 
-            variant.size_id == selectedSizeId && variant.color_id == selectedColorId
-        );
-
-        if (matchingVariant) {
-            priceElement.textContent = 'Giá: ' + matchingVariant.price;
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sizeSelect = document.getElementById('size-select');
+            const colorSelect = document.getElementById('color-select');
+            const priceInput = document.getElementById('product-price'); // Lấy ô input giá
+            const errorMessage = document.getElementById('error-message');
+            let basePrice = {{ $product->price }};
+            let variants = @json($product->product_variants);
+        
+            function updatePrice() {
+                let selectedSizeId = sizeSelect.value;
+                let selectedColorId = colorSelect.value;
+        
+                let matchingVariant = variants.find(variant => 
+                    variant.size_id == selectedSizeId && variant.color_id == selectedColorId
+                );
+        
+                if (matchingVariant) {
+                    priceInput.value = matchingVariant.price; // Cập nhật giá trong ô input
+                    errorMessage.style.display = 'none'; // Ẩn thông báo lỗi
+                } else if (selectedSizeId == '{{ $product->size_id }}' && selectedColorId == '{{ $product->color_id }}') {
+            priceInput.value = basePrice; // Đặt giá cơ bản vào ô input
             errorMessage.style.display = 'none'; // Ẩn thông báo lỗi
-        } else {
-            priceElement.textContent = 'Giá: ' + basePrice;
-            errorMessage.textContent = 'Sản phẩm đã hết hàng';
-            errorMessage.style.display = 'block'; // Hiển thị thông báo lỗi
-        }
-    }
 
-    sizeSelect.addEventListener('change', updatePrice);
-    colorSelect.addEventListener('change', updatePrice);
-});
-</script> --}}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const sizeSelect = document.getElementById('size-select');
-        const colorSelect = document.getElementById('color-select');
-        const priceElement = document.getElementById('product-price');
-        const errorMessage = document.getElementById('error-message');
-        let basePrice = {{ $product->price }};
-        let variants = @json($product->product_variants);
-    
-        function updatePrice() {
-            let selectedSizeId = sizeSelect.value;
-            let selectedColorId = colorSelect.value;
-    
-            let matchingVariant = variants.find(variant => 
-                variant.size_id == selectedSizeId && variant.color_id == selectedColorId
-            );
-    
-            if (matchingVariant) {
-                priceElement.textContent = 'Giá: ' + matchingVariant.price;
-                errorMessage.style.display = 'none'; // Ẩn thông báo lỗi
-            } else {
-                priceElement.textContent = 'Giá: ' + basePrice;
+        // Nếu không có biến thể khớp và không khớp với sản phẩm chính
+        } else {
+            priceInput.value = basePrice; // Đặt giá cơ bản vào ô input
+            if (selectedSizeId && selectedColorId) {
                 errorMessage.textContent = 'Sản phẩm đã hết hàng';
                 errorMessage.style.display = 'block'; // Hiển thị thông báo lỗi
+            } else {
+                errorMessage.style.display = 'none'; // Ẩn thông báo lỗi
             }
         }
-    
-        sizeSelect.addEventListener('change', updatePrice);
-        colorSelect.addEventListener('change', updatePrice);
-    });
+            }
+        
+            sizeSelect.addEventListener('change', updatePrice);
+            colorSelect.addEventListener('change', updatePrice);
+        });
     </script>
     
-
 @endsection

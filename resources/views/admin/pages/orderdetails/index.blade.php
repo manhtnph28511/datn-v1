@@ -36,6 +36,9 @@
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
+                                        ID hóa đơn
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
                                         Người đặt hàng
                                     </th>
                                     <th scope="col" class="px-6 py-3">
@@ -51,13 +54,10 @@
                                         Số lượng
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Giá
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
                                         Tổng giá
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Thời gian đặt hàng
+                                       PTTT
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Trạng thái
@@ -70,6 +70,9 @@
                             <tbody>
                                 @foreach ($orderDetails as $detail)
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-4">
+                                            {{ $detail->order->id }}
+                                        </td>
                                         <td class="px-6 py-4">
                                             {{ $detail->order->username }}
                                         </td>
@@ -85,14 +88,12 @@
                                         <td class="px-6 py-4">
                                             {{ $detail->quantity }}
                                         </td>
-                                        <td class="px-6 py-4">
-                                            {{ $detail->price }}
-                                        </td>
+                                      
                                         <td class="px-6 py-4">
                                             {{ $detail->total_price }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ $detail->created_at }}
+                                            {{ $detail->order->payment_method }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $detail->status }}
