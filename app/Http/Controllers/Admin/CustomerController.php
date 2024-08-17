@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Notification;
 
 class CustomerController extends Controller
 {
@@ -28,8 +29,21 @@ class CustomerController extends Controller
         $user->status = 0; // Giả sử 0 là trạng thái inactive
         $user->save();
 
+        $chatUrl = route('clients.chats.index', ['userId' => $id]);
+
+        Notification::create([
+            'order_id' => null, // Nếu không sử dụng order_id, để null hoặc bỏ qua
+            'type' => 'account_update',
+            'data' => json_encode([
+                'message' => 'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ qua trang chat: <a href="' . $chatUrl . '" style="font-weight: bold; text-decoration: underline;">Đến trang chat</a>.',
+            ]),
+            'is_read' => false,
+        ]);
         return redirect()->route('admin.customer.index')->with('success', 'Người dùng đã bị hủy kích hoạt.');
+        // return redirect()->route('clients.chats.index', ['userId' => $id])
+        //                  ->with('success', 'Người dùng đã bị hủy kích hoạt và thông báo đã được gửi.');
     }
+    
 
     public function search(Request $request) {
         $query = $request->input('query');

@@ -59,3 +59,73 @@
         </table>
     </div>
 @endsection
+<style>
+    .dash-content {
+        padding: 20px;
+        background-color: #f8f9fa;
+    }
+    
+    h1 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #343a40;
+    }
+    
+    .btn {
+        margin-bottom: 15px;
+    }
+    
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    
+    .table-bordered {
+        border: 1px solid #dee2e6;
+    }
+    
+    .table thead th {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        text-align: left;
+    }
+    
+    .table tbody td {
+        padding: 10px;
+        vertical-align: middle;
+    }
+    
+    .table img {
+        border-radius: 4px;
+    }
+    
+    .table img[alt="Variant Image"] {
+        max-width: 100px; /* Điều chỉnh kích thước hình ảnh biến thể */
+    }
+    
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border-color: #c3e6cb;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+    }
+    
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+    
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+    
+    form {
+        display: inline;
+    }
+    
+</style>

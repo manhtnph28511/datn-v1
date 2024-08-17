@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('cart', function (Blueprint $table) {
-            // Thêm trường discounted_total_price
-            $table->decimal('discounted_total_price', 8, 2)->nullable()->after('total_price');
-            
-            // Cập nhật trường total_price
-            $table->decimal('total_price', 8, 2)->change();
+        Schema::table('product_variants', function (Blueprint $table) {
+            $table->integer('price')->change();
         });
-
     }
 
     /**
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('product_variants', function (Blueprint $table) {
+            $table->decimal('price', 8, 2)->change();
+        });
     }
 };

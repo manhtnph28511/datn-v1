@@ -34,7 +34,7 @@ class ProductVariantController extends Controller
         $request->validate([
             'size_id' => 'required|exists:sizes,id',   // Thay đổi để xác thực theo size_id
             'color_id' => 'required|exists:colors,id', // Thay đổi để xác thực theo color_id
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|integer|min:0',
             'quantity' => 'required|integer|min:0',
         ]);
     

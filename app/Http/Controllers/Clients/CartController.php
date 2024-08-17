@@ -48,56 +48,293 @@ class CartController extends Controller
         return back();
     }
 
-    public function addToCart(Request $request)
-    {
-        if (!$request->has('pro_id')) {
-            toast()->error('Lỗi');
-            return back();
-        }
+    // public function addToCart(Request $request)
+    // {
+    //     if (!$request->has('pro_id')) {
+    //         toast()->error('Lỗi');
+    //         return back();
+    //     }
     
-        if (Auth::check()) {
-            // if (Auth::user()->role !== 1) {
-                $proId = $request->get('pro_id');
-                $productToCart = Product::find($proId);
+    //     if (Auth::check()) {
+    //         // if (Auth::user()->role !== 1) {
+    //             $proId = $request->get('pro_id');
+    //             $productToCart = Product::find($proId);
     
-                if (!$productToCart) {
-                    toast()->error('Sản phẩm không tồn tại');
-                    return back();
-                }
+    //             if (!$productToCart) {
+    //                 toast()->error('Sản phẩm không tồn tại');
+    //                 return back();
+    //             }
     
-                if ($request->quantity > $productToCart->quantity) {
-                    toast()->error('Số lượng sản phẩm không hợp lệ');
-                    return back();
-                }
+    //             if ($request->quantity > $productToCart->quantity) {
+    //                 toast()->error('Số lượng sản phẩm không hợp lệ');
+    //                 return back();
+    //             }
     
-                // Lấy giá từ yêu cầu
-                $price = $request->input('price');
-                if (is_null($price)) {
-                    $price = $productToCart->price;
-                }
+    //             // Lấy giá từ yêu cầu
+    //             $price = $request->input('price');
+    //             if (is_null($price)) {
+    //                 $price = $productToCart->price;
+    //             }
     
-                try {
-                    $isSuccess = Cart::create([
-                        'pro_id' => $proId,
-                        'user_id' => Auth::user()->id,
-                        'size_id' => $request->input('size_id'),
-                        'color_id' => $request->input('color_id'),
-                        'price' => $price,
-                        'quantity' => $request->input('quantity'),
-                        'total_price' => ($price * $request->input('quantity'))
-                    ]);
+    //             try {
+    //                 $isSuccess = Cart::create([
+    //                     'pro_id' => $proId,
+    //                     'user_id' => Auth::user()->id,
+    //                     'size_id' => $request->input('size_id'),
+    //                     'color_id' => $request->input('color_id'),
+    //                     'price' => $price,
+    //                     'quantity' => $request->input('quantity'),
+    //                     'total_price' => ($price * $request->input('quantity'))
+    //                 ]);
     
-                    return checkEndDisplayMsg('success', $isSuccess, 'Thành công', 'Thêm giỏ hàng thành công', 'home.cart');
-                } catch (\Throwable $th) {
-                    return $th->getMessage();
-                }
-            // }
-            return back();
-        }
+    //                 return checkEndDisplayMsg('success', $isSuccess, 'Thành công', 'Thêm giỏ hàng thành công', 'home.cart');
+    //             } catch (\Throwable $th) {
+    //                 return $th->getMessage();
+    //             }
+    //         // }
+    //         return back();
+    //     }
+    //     return back();
+    // }
+    
+//     public function addToCart(Request $request)
+// {
+//     // Kiểm tra xem yêu cầu có chứa 'pro_id' không
+//     if (!$request->has('pro_id')) {
+//         toast()->error('Lỗi');
+//         return back();
+//     }
+
+//     // Kiểm tra xem người dùng đã đăng nhập chưa
+//     if (Auth::check()) {
+//         $proId = $request->get('pro_id');
+//         $colorId = $request->get('color_id');
+//         $sizeId = $request->get('size_id');
+
+//         // Kiểm tra sự tồn tại của sản phẩm với color_id và size_id
+//         $productToCart = Product::where('id', $proId)
+//                                 ->where('color_id', $colorId)
+//                                 ->where('size_id', $sizeId)
+//                                 ->first();
+
+//         if (!$productToCart) {
+//             toast()->error('Sản phẩm với biến thể này không tồn tại');
+//             return back();
+//         }
+
+//         // Kiểm tra số lượng yêu cầu có hợp lệ không
+//         if ($request->quantity > $productToCart->quantity) {
+//             toast()->error('Số lượng sản phẩm không hợp lệ');
+//             return back();
+//         }
+
+//         // Lấy giá từ yêu cầu, nếu không có thì lấy giá của sản phẩm
+//         $price = $request->input('price');
+//         if (is_null($price)) {
+//             $price = $productToCart->price;
+//         }
+
+//         try {
+//             // Thêm sản phẩm vào giỏ hàng
+//             $isSuccess = Cart::create([
+//                 'pro_id' => $proId,
+//                 'user_id' => Auth::user()->id,
+//                 'size_id' => $sizeId,
+//                 'color_id' => $colorId,
+//                 'price' => $price,
+//                 'quantity' => $request->input('quantity'),
+//                 'total_price' => ($price * $request->input('quantity'))
+//             ]);
+
+//             // Hiển thị thông báo thành công
+//             return checkEndDisplayMsg('success', $isSuccess, 'Thành công', 'Thêm giỏ hàng thành công', 'home.cart');
+//         } catch (\Throwable $th) {
+//             return $th->getMessage();
+//         }
+//     }
+    
+//     // Nếu người dùng chưa đăng nhập, trả về trang trước
+//     return back();
+// }
+
+// public function addToCart(Request $request)
+// {
+//     // Kiểm tra xem yêu cầu có chứa 'pro_id' không
+//     if (!$request->has('pro_id')) {
+//         toast()->error('Lỗi');
+//         return back();
+//     }
+
+//     // Kiểm tra xem người dùng đã đăng nhập chưa
+//     if (Auth::check()) {
+//         $proId = $request->get('pro_id');
+//         $colorId = $request->get('color_id');
+//         $sizeId = $request->get('size_id');
+//         $quantity = $request->input('quantity', 1);
+
+//         // Lấy sản phẩm và biến thể của sản phẩm
+//         $product = Product::with('product_variants')->find($proId);
+
+//         if (!$product) {
+//             toast()->error('Sản phẩm không tồn tại');
+//             return back();
+//         }
+
+//         if (!$colorId || !$sizeId) {
+//             return redirect()->back()->withErrors(['error' => 'Vui lòng chọn kích thước và màu sắc.']);
+//         }
+
+//         // Kiểm tra nếu người dùng chọn kích thước và màu sắc
+//         if ($sizeId && $colorId) {
+//             // Kiểm tra biến thể
+//             $variant = $product->product_variants->first(function ($variant) use ($sizeId, $colorId) {
+//                 return $variant->size_id == $sizeId && $variant->color_id == $colorId;
+//             });
+
+//             if ($variant) {
+//                 // Kiểm tra số lượng biến thể
+//                 if ($quantity > $variant->quantity) {
+//                     toast()->error('Số lượng yêu cầu vượt quá số lượng có sẵn');
+//                     return back();
+//                 }
+
+//                 // Lấy giá biến thể nếu có
+//                 $price = $variant->price;
+//             } else {
+//                 toast()->error('Biến thể sản phẩm không tồn tại');
+//                 return back();
+//             }
+//         } else {
+//             // Kiểm tra sản phẩm chính nếu không có biến thể
+//             if ($product->size_id == $sizeId && $product->color_id == $colorId) {
+//                 if ($quantity > $product->quantity) {
+//                     toast()->error('Số lượng yêu cầu vượt quá số lượng có sẵn');
+//                     return back();
+//                 }
+
+//                 // Lấy giá sản phẩm chính
+//                 $price = $product->price;
+//             } else {
+//                 toast()->error('Sản phẩm không tồn tại với kích thước và màu sắc này');
+//                 return back();
+//             }
+//         }
+
+//         try {
+//             // Thêm sản phẩm vào giỏ hàng
+//             $isSuccess = Cart::create([
+//                 'pro_id' => $proId,
+//                 'user_id' => Auth::user()->id,
+//                 'size_id' => $sizeId,
+//                 'color_id' => $colorId,
+//                 'price' => $price,
+//                 'quantity' => $quantity,
+//                 'total_price' => ($price * $quantity)
+//             ]);
+
+//             // Hiển thị thông báo thành công
+//             return checkEndDisplayMsg('success', $isSuccess, 'Thành công', 'Thêm giỏ hàng thành công', 'home.cart');
+//         } catch (\Throwable $th) {
+//             toast()->error('Đã xảy ra lỗi: ' . $th->getMessage());
+//             return back();
+//         }
+//     }
+    
+//     // Nếu người dùng chưa đăng nhập, trả về trang trước
+//     return back();
+// }
+
+public function addToCart(Request $request)
+{
+    // Kiểm tra xem yêu cầu có chứa 'pro_id' không
+    if (!$request->has('pro_id')) {
+        toast()->error('Lỗi');
         return back();
     }
+
+    // Kiểm tra xem người dùng đã đăng nhập chưa
+    if (Auth::check()) {
+        $proId = $request->get('pro_id');
+        $colorId = $request->get('color_id');
+        $sizeId = $request->get('size_id');
+        $quantity = $request->input('quantity', 1);
+
+        // Lấy sản phẩm và biến thể của sản phẩm
+        $product = Product::with('product_variants')->find($proId);
+
+        if (!$product) {
+            toast()->error('Sản phẩm không tồn tại');
+            return back();
+        }
+
+        // Nếu chưa chọn kích thước hoặc màu sắc, hiển thị thông báo lỗi
+        if (!$colorId || !$sizeId) {
+            return redirect()->back()->withErrors(['error' => 'Vui lòng chọn kích thước và màu sắc.']);
+        }
+
+        // Kiểm tra nếu người dùng chọn kích thước và màu sắc
+        if ($sizeId && $colorId) {
+            // Kiểm tra biến thể
+            $variant = $product->product_variants->first(function ($variant) use ($sizeId, $colorId) {
+                return $variant->size_id == $sizeId && $variant->color_id == $colorId;
+            });
+
+            if ($variant) {
+                // Kiểm tra số lượng biến thể
+                if ($quantity > $variant->quantity) {
+                    toast()->error('Số lượng yêu cầu vượt quá số lượng có sẵn');
+                    return back();
+                }
+
+                // Lấy giá biến thể nếu có
+                $price = $variant->price;
+            } else {
+                // Nếu không có biến thể phù hợp, kiểm tra giá của sản phẩm chính
+                if ($product->size_id == $sizeId && $product->color_id == $colorId) {
+                    if ($quantity > $product->quantity) {
+                        toast()->error('Số lượng yêu cầu vượt quá số lượng có sẵn');
+                        return back();
+                    }
+
+                    // Lấy giá sản phẩm chính
+                    $price = $product->price;
+                } else {
+                    toast()->error('Biến thể sản phẩm không tồn tại');
+                    return back();
+                }
+            }
+        } else {
+            // Nếu chưa chọn kích thước và màu sắc
+            toast()->error('Vui lòng chọn kích thước và màu sắc.');
+            return back();
+        }
+
+        try {
+            // Thêm sản phẩm vào giỏ hàng
+            $isSuccess = Cart::create([
+                'pro_id' => $proId,
+                'user_id' => Auth::user()->id,
+                'size_id' => $sizeId,
+                'color_id' => $colorId,
+                'price' => $price,
+                'quantity' => $quantity,
+                'total_price' => ($price * $quantity)
+            ]);
+
+            // Hiển thị thông báo thành công
+            return checkEndDisplayMsg('success', $isSuccess, 'Thành công', 'Thêm giỏ hàng thành công', 'home.cart');
+        } catch (\Throwable $th) {
+            toast()->error('Đã xảy ra lỗi: ' . $th->getMessage());
+            return back();
+        }
+    }
     
-  
+    // Nếu người dùng chưa đăng nhập, trả về trang trước
+    return back();
+}
+
+
+
 
     public function updateCart(Request $request)
 {

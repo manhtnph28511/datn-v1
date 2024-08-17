@@ -128,7 +128,7 @@ class OrderController extends Controller
                     'message' => 'Đơn hàng đã được giao cho người nhận. Vui lòng xác nhận đã nhận hàng.',
                 ]),
                 'is_read' => false,
-                'order_id' => $order->id,
+                // 'order_id' => $order->id,
             ]);
         }
 
@@ -144,7 +144,7 @@ class OrderController extends Controller
                     'message' => 'Đơn hàng của bạn đã được giao thành công. Hãy đánh giá và cho ý kiến về đơn hàng!',
                 ]),
                 'is_read' => false,
-                'order_id' => $order->id,
+                // 'order_id' => $order->id,
             ]);
         }
     

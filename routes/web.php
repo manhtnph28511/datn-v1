@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\OrderDetailController;
 use App\Http\Controllers\Admin\SubCateController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\VoucherController;
+use App\Http\Controllers\Admin\ChatController;
 
 
 use App\Http\Controllers\Clients\HomeController;
@@ -32,6 +33,7 @@ use App\Http\Controllers\Clients\OrderController as ClientsOrderController;
 use App\Http\Controllers\Clients\OrderPlacedController;
 use Illuminate\Notifications\Notification;
 use App\Http\Controllers\Clients\NotificationController as ClientsNotificationController;
+use App\Http\Controllers\Clients\ChatController as ClientsChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -207,7 +209,10 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::delete('vouchers/{id}', 'destroy')->name('vouchers.destroy');
     });
 
-
+    Route::name('admin.')->prefix('chats')->controller(ChatController::class)->group(function () {
+        Route::get('/', 'index')->name('chats.index');
+        Route::post('/{userId}', 'sendMessage')->name('chats.sendMessage');
+    });
 
 });
 
@@ -282,4 +287,10 @@ Route::name('clients.')->prefix('notification')->controller(ClientsNotificationC
     Route::post('/notifications/{id}/read', 'markAsRead')->name('notifications.markAsRead');
     Route::delete('/notifications/{id}', 'delete')->name('notifications.delete');
     Route::post('/notifications/{id}/confirm-received', [ClientsNotificationController::class, 'confirmReceived'])->name('notifications.confirmReceived');
+});
+
+
+Route::prefix('clients')->name('clients.')->controller(ClientsChatController::class)->group(function () {
+    Route::get('/chats/{userId?}', [ClientsChatController::class, 'index'])->name('chats.index');
+    Route::post('/chats/send', [ClientsChatController::class, 'send'])->name('chats.send');
 });

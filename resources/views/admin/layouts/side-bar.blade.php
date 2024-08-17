@@ -47,11 +47,16 @@
                 <i class="fa-solid fa-thumbtack"></i>
                 <span class="link-name">Voucher</span>
             </a></li>
+            <li><a href="{{ route('admin.chats.index') }}">
+                <i class="uil uil-bell"></i>
+                <span class="link-name">Chat</span>
+            </a></li>
             <li><a href="{{ route('admin.notifications.index') }}">
                 <i class="uil uil-bell"></i>
                 <span class="link-name">Thông Báo</span>
                 <span class="notification-count">{{ $unreadNotificationsCount }}</span>
             </a></li>
+            
         </ul>
         
         <ul class="logout-mode">
