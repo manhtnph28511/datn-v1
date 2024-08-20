@@ -98,7 +98,7 @@
                         <td><strong>{{ number_format($total) }}</strong></td>
                     </tr>
                 </table>
-                <a class="btn btn-success" href="{{ route('home.cart.checkout') }}">Tiến hàng đặt hàng</a>
+                <a class="btn btn-success" href="{{ route('home.cart.voucher') }}">Tiến hàng đặt hàng</a>
             </div>
         </section>
     @else

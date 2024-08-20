@@ -16,30 +16,6 @@ use Illuminate\Support\Facades\DB;
 
 class HomeProductController extends Controller
 {
-    // detail product
-
-    // public function showProduct($id, $slug, Request $request)
-    // {
-    //     if ($request->has('cate')) {
-    //         $cate_id = $request->get('cate');
-    //         $similarProductByCate = Product::where('cate_id', '=', $cate_id)->where('id', '<>', $id)->limit(4)->get();
-    //         $product = Product::find($id);
-    //         $sizes = Size::all();
-    //         $colors=Color::all();
-    //         $ratings = Rating::query()->leftJoin('users', 'users.id', '=', 'ratings.user_id')
-    //             ->leftJoin('products', 'products.id', '=', 'ratings.product_id')
-    //             ->select('ratings.*', 'users.name as username', 'users.avatar as user_avatar', 'products.name as product_name')
-    //             ->where('product_id', $id)
-    //             ->paginate(5);
-    //         Product::where('id', $id)->update([
-    //             'view' => $product->view + 1
-    //         ]);
-    //         return view('clients.pages.detail-product', compact('product', 'sizes','colors', 'similarProductByCate', 'ratings'));
-    //     }
-    //     toast('Lỗi', 'error');
-    //     return back();
-    // }
-    //
 // public function showProduct($id, $slug, Request $request)
 // {
 //     $product = Product::with('product_variants')->find($id);

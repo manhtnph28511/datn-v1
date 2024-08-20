@@ -13,6 +13,8 @@
                     <th>Loại giảm giá</th>
                     <th>Thời gian bắt đầu</th>
                     <th>Thời gian kết thúc</th>
+                    <th>số lần đã sửu dụng</th>
+                    <th>số lượng </th>
                     <th>Sản phẩm</th>
                     <th>Hành động</th>
                 </tr>
@@ -22,7 +24,7 @@
                     <tr>
                         <td>{{$voucher->id}}</td>
                         <td>{{ $voucher->code }}</td>
-                        <td>{{ number_format($voucher->discount, 2) }}</td>
+                        <td>{{ number_format($voucher->discount) }}</td>
                         {{-- <td>{{ ucfirst($voucher->discount_type) }}</td> --}}
                         <td>
                             @if($voucher->discount_type == 'percentage')
@@ -34,9 +36,12 @@
                             @endif
                           
                         </td>
+                       
                         
                         <td>{{ \Carbon\Carbon::parse($voucher->starts_at)->format('d/m/Y') }}</td>
                         <td>{{ \Carbon\Carbon::parse($voucher->expires_at)->format('d/m/Y') }}</td>
+                        <td>{{$voucher->usage_count}}</td>
+                        <td>{{$voucher->quantity}}</td>
                         <td> @if($voucher->product_id)
                             {{ $voucher->product->name }}
                         @elseif($voucher->product_id===null)

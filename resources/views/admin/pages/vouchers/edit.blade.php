@@ -41,6 +41,16 @@
             </div>
 
             <div class="form-group">
+                <label for="usage_count">Usage Count</label>
+                <input type="number" name="usage_count" id="usage_count" class="form-control" value="{{ old('usage_count', $voucher->usage_count ?? 0) }}">
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <input type="number" name="quantity" id="quantity" class="form-control"  value="{{ old('quantity', $voucher->quantity) }}" required>
+            </div>
+
+            <div class="form-group">
                 <label for="product_id">Product:</label>
                 <select name="product_id" id="product_id" class="form-control">
                     <option value="">Select a product (optional)</option>

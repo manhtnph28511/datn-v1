@@ -18,6 +18,9 @@ class Cart extends Model
         'price',
         'quantity',
         'total_price',
+        'discounted_total_price',
+        'final_price'
+
     ];
 
     public function size()

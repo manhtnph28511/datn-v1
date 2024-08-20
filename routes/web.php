@@ -265,7 +265,10 @@ Route::middleware('auth')->prefix('cart')->controller(CartController::class)->gr
     Route::get('delete/{id}', 'destroy')->name('home.cart.destroy');
     Route::get('order-success', 'success')->name('home.cart.order-success');
     Route::view('success', 'clients.pages.orders.order-success')->name('order-success');
-   
+    Route::get('voucher', 'voucher')->name('home.cart.voucher');
+    Route::post('applyVoucher', [CartController::class, 'applyVoucher'])->name('applyVoucher');
+
+
 });
 
 

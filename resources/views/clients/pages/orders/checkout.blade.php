@@ -102,16 +102,18 @@
                     @php
                         $total = 0;
                     @endphp
+                   
                     @foreach ($carts as $cart)
                         <tr class="pro-box">
                             <td><img src="{{ $cart->image }}" alt="" class="mx-auto"></td>
                             <td class="w-[222px]">{{ $cart->proName }}</td>
                             <td>{{ number_format($cart->price) }} VNĐ</td>
                             <td>{{ $cart->quantity }}</td>
-                            <td>{{ number_format($cart->quantity * $cart->price) }} VNĐ</td>
+                            <td>{{ number_format($cart->discounted_total_price ?? $cart->price * $cart->quantity) }} VNĐ</td>
                         </tr>
+                        
                         @php
-                            $total += $cart->quantity * $cart->price;
+                            $total +=$cart->discounted_total_price ?? $cart->price * $cart->quantity ;
                         @endphp
                     @endforeach
                 </tbody>

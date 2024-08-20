@@ -380,13 +380,13 @@ public function addToCart(Request $request)
                     toast('Số lượng sản phẩm yêu cầu vượt quá số lượng có sẵn', 'warning');
                     return back();
                 }
-
             }
 
             try {
 
                 Cart::where('id', $cartId)->update([
                     'quantity' => $quantity,
+                    'total_price'=>$quantity*$price,
                 ]);
 
                 toast('Cập nhật thành công', 'success');
@@ -510,10 +510,274 @@ public function addToCart(Request $request)
         return back();
     }
 
+    public function voucher()
+    {
+        if (Auth::check()) {
+            $userId = Auth::user()->id;
+            $carts = DB::table('carts')
+                ->leftJoin('users', 'users.id', '=', 'carts.user_id')
+                ->leftJoin('products', 'products.id', '=', 'carts.pro_id')
+                ->leftJoin('sizes', 'sizes.id', '=', 'carts.size_id')
+                ->leftJoin('colors', 'colors.id', '=', 'carts.color_id')
+                ->where('user_id', '=', $userId)
+                ->select('carts.*', 'products.id as pro_id', 'products.name as proName', 'products.image', 'users.name as username')->get();
+            return view('clients.pages.orders.voucher', compact('carts'));
+        }
+        return back();
+    }
+
+
+    public function applyVoucher(Request $request)
+    {
+        $request->validate([
+            'voucher_code' => 'required|string',
+            'pro_id' => 'sometimes|nullable|integer|exists:products,id',
+        ]);
+    
+        // Lấy voucher từ mã voucher
+        $voucher = Voucher::where('code', $request->input('voucher_code'))->first();
+    
+        if (!$voucher) {
+            return back()->withErrors(['voucher_code' => 'Voucher không hợp lệ.']);
+        }
+    
+        if ($voucher->expires_at < now()) {
+            return back()->withErrors(['voucher_code' => 'Voucher đã hết hạn.']);
+        }
+    
+        if ($voucher->quantity <= 0) {
+            return back()->withErrors(['voucher_code' => 'Voucher đã được sử dụng hết.']);
+        }
+    
+        // Lấy giỏ hàng của người dùng
+        $user_id = auth()->id();
+        $carts = Cart::where('user_id', $user_id)->get();
+    
+        // Kiểm tra xem voucher đã được áp dụng cho đơn hàng này chưa
+        $voucherUsed = $carts->pluck('voucher_code')->contains($voucher->code);
+        if ($voucherUsed) {
+            return back()->withErrors(['voucher_code' => 'Voucher đã được sử dụng cho sản phẩm trong giỏ hàng này.']);
+        }
+    
+        // Áp dụng voucher cho toàn bộ giỏ hàng hoặc sản phẩm cụ thể
+        if ($voucher->product_id === null) {
+            // Cập nhật giá cho từng sản phẩm trong giỏ hàng
+            foreach ($carts as $cart) {
+                $discountAmount = 0;
+    
+                if ($voucher->discount_type == 'percentage') {
+                    // Tính giảm giá cho sản phẩm dựa trên giá của sản phẩm
+                    $discountAmount = ($cart->total_price * $voucher->discount) / 100;
+                } else {
+                    // Nếu giảm giá cố định, áp dụng số tiền giảm giá cố định
+                    $discountAmount = min($voucher->discount, $cart->total_price);
+                }
+    
+                $cart->discounted_total_price = max($cart->total_price - $discountAmount, 0);
+                $cart->voucher_code = $voucher->code; // Ghi nhận mã voucher áp dụng
+                $cart->save();
+            }
+    
+            // Cập nhật số lượng voucher
+            $voucher->quantity--;
+            $voucher->usage_count++;
+            $voucher->save();
+    
+            return redirect()->back()->with('success', 'Voucher đã được áp dụng cho toàn bộ giỏ hàng!');
+        } else {
+            // Giảm giá cho sản phẩm cụ thể
+            $cart = Cart::where('user_id', $user_id)->where('pro_id', $request->input('pro_id'))->first();
+    
+            if (!$cart) {
+                return back()->withErrors(['error' => 'Sản phẩm không có trong giỏ hàng.']);
+            }
+    
+            if ($voucher->discount_type == 'percentage') {
+                $discountAmount = ($cart->total_price * $voucher->discount) / 100;
+            } else {
+                $discountAmount = $voucher->discount;
+            }
+    
+            $cart->discounted_total_price = max($cart->total_price - $discountAmount, 0);
+            $cart->voucher_code = $voucher->code; // Ghi nhận mã voucher áp dụng
+            $cart->save();
+    
+            $voucher->quantity--;
+            $voucher->usage_count++;
+            $voucher->save();
+    
+            return redirect()->back()->with('success', 'Voucher đã được áp dụng cho sản phẩm!');
+        }
+    }
+    
+
+
+    
+
+    
 
 
 
-    public function checkoutStep(Request $request)
+
+//     public function checkoutStep(Request $request)
+// {
+//     $validatedData = $request->validate([
+//         'username' => 'required|string|max:255',
+//         'address' => 'required|string|max:255',
+//         'phone' => 'required|string|max:20',
+//         'email' => 'required|string|max:100',
+//         'note' => 'nullable|string|max:1000',
+//         'type_order' => ['required', Rule::in(1, 2)],
+//     ], [
+//         'username.required' => 'Họ tên không được để trống',
+//         'address.required' => 'Địa chỉ không được để trống',
+//         'phone.required' => 'Số điện thoại không được để trống',
+//         'email.required' => 'Email không được để trống',
+//         'type_order.in' => 'Chưa chọn phương thức thanh toán',
+//     ]);
+
+//     $carts = DB::table('carts')
+//         ->leftJoin('products', 'products.id', '=', 'carts.pro_id')
+//         ->where('carts.user_id', auth()->user()->id)
+//         ->select('carts.*', 'products.id as pro_id', 'products.name as proName', 'products.image', 'carts.price')
+//         ->get();
+
+//     if ($request->type_order === '1') {
+//         $stripe = new \Stripe\StripeClient('sk_test_51OCaeXJEiz1nZ8wauNXZTuCnNk3n6JOPOeucvWgKw0mYqTY6UswavZHHhoa9PKzzz02KnfRVrAPq4vAPAWgWuNls002uS07q7Z');
+//         $line_items = [];
+
+//         foreach ($carts as $item) {
+//             $line_items[] = [
+//                 'price_data' => [
+//                     'currency' => 'vnd',
+//                     'product_data' => [
+//                         'name' => $item->proName,
+//                         'images' => [$item->image],
+//                     ],
+//                     'unit_amount' => $item->discounted_total_price * 1,
+//                 ],
+//                 'quantity' => $item->quantity,
+//             ];
+//         }
+
+//         try {
+//             $session = $stripe->checkout->sessions->create([
+//                 'payment_method_types' => ['card'],
+//                 'line_items' => $line_items,
+//                 'mode' => 'payment',
+//                 'success_url' => route('order-success'),
+//                 'cancel_url' => route('home.cart'),
+//             ]);
+
+//             $order = new Order();
+//             $order->user_id = auth()->user()->id;
+//             $order->username = $validatedData['username'];
+//             $order->address = $validatedData['address'];
+//             $order->phone = $validatedData['phone'];
+//             $order->email = $validatedData['email'];
+//             $order->note = $validatedData['note'] ?? '';
+//             $order->payment_method =  'Credit_card' ;
+//             $order->shipment_status = 'PACKED';
+//             $order->order_status = "PENDING";
+//             $order->save();
+
+//             foreach ($carts as $cart) {
+//                 OrderDetail::create([
+//                     'order_id' => $order->id,
+//                     'pro_id' => $cart->pro_id,
+//                     'size_id' => $cart->size_id ?? null,
+//                     'color_id' => $cart->color_id ?? null,
+//                     'price' => $cart->price,
+//                     'quantity' => $cart->quantity,
+//                     'total_price' => $cart->discounted_total_price ?? $cart->price * $cart->quantity,
+
+//                 ]);
+//             }
+
+//             // Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
+
+
+//             Notification::create([
+//                 'type' => 'đã đặt hàng',
+//                 'order_id' =>  $order->id,
+//                 'data' => json_encode([
+//                     'message' => 'Có đơn hàng mới! Đơn hàng #' . $order->id,
+//                     'order_details' => [
+//                         'username' => $order->username,
+//                         'address' => $order->address,
+//                         'phone' => $order->phone,
+//                         'email' => $order->email,
+//                         'note' => $order->note,
+//                     ]
+//                 ]),
+//                 'is_read' => false,
+//             ]);
+
+//             session()->put('order_id', $order->id);
+//             DB::table('carts')->where('user_id', auth()->user()->id)->delete();
+
+//             return redirect($session->url);
+//         } catch (\Exception $e) {
+//             return redirect()->back()->with('error', 'Đã xảy ra lỗi khi tạo phiên thanh toán. Vui lòng thử lại.');
+//         }
+//     }
+
+//     if ($request->type_order === '2') {
+//         $order = new Order();
+//         $order->user_id = auth()->user()->id;
+//         $order->username = $validatedData['username'];
+//         $order->address = $validatedData['address'];
+//         $order->phone = $validatedData['phone'];
+//         $order->email = $validatedData['email'];
+//         $order->note = $validatedData['note'] ?? '';
+//         $order->payment_method = 'COD';
+//         $order->order_status = "PENDING";
+//         $order->shipment_status = 'ORDERPLACE';
+//         $order->save();
+
+//         foreach ($carts as $cart) {
+//             OrderDetail::create([
+//                 'order_id' => $order->id,
+//                 'pro_id' => $cart->pro_id,
+//                 'size_id' => $cart->size_id ?? null,
+//                 'color_id' => $cart->color_id ?? null,
+//                 'price' => $cart->price,
+//                 'quantity' => $cart->quantity,
+//                 'total_price' => $cart->discounted_total_price ?? $cart->price * $cart->quantity,
+
+//             ]);
+//         }
+
+//         // Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
+
+
+//         Notification::create([
+//             'type' => 'đã đặt hàng',
+//             'order_id' =>  $order->id,
+//             'data' => json_encode([
+//                 'message' => 'Có đơn hàng mới! Đơn hàng #' . $order->id,
+//                 'order_details' => [
+//                     'username' => $order->username,
+//                     'address' => $order->address,
+//                     'phone' => $order->phone,
+//                     'email' => $order->email,
+//                     'note' => $order->note,
+//                 ]
+//             ]),
+//             'is_read' => false,
+//         ]);
+
+
+
+//         DB::table('carts')->where('user_id', auth()->user()->id)->delete();
+
+
+//         // $this->sendOrderNotification($order);
+
+//         return redirect()->route('order-success');
+//     }
+// }
+public function checkoutStep(Request $request)
 {
     $validatedData = $request->validate([
         'username' => 'required|string|max:255',
@@ -530,13 +794,20 @@ public function addToCart(Request $request)
         'type_order.in' => 'Chưa chọn phương thức thanh toán',
     ]);
 
+    // Lấy danh sách sản phẩm trong giỏ hàng
     $carts = DB::table('carts')
         ->leftJoin('products', 'products.id', '=', 'carts.pro_id')
         ->where('carts.user_id', auth()->user()->id)
-        ->select('carts.*', 'products.id as pro_id', 'products.name as proName', 'products.image', 'carts.price')
+        ->select('carts.*', 'products.id as pro_id', 'products.name as proName', 'products.image', 'carts.price', 'carts.discounted_total_price')
         ->get();
 
+    // Tính tổng giá trị của giỏ hàng
+    $totalPrice = $carts->sum(function ($item) {
+        return $item->discounted_total_price ?? ($item->price * $item->quantity);
+    });
+
     if ($request->type_order === '1') {
+        // Thanh toán online
         $stripe = new \Stripe\StripeClient('sk_test_51OCaeXJEiz1nZ8wauNXZTuCnNk3n6JOPOeucvWgKw0mYqTY6UswavZHHhoa9PKzzz02KnfRVrAPq4vAPAWgWuNls002uS07q7Z');
         $line_items = [];
 
@@ -548,7 +819,7 @@ public function addToCart(Request $request)
                         'name' => $item->proName,
                         'images' => [$item->image],
                     ],
-                    'unit_amount' => $item->price * 1,
+                    'unit_amount' => $item->discounted_total_price ?? ($item->price * $item->quantity),
                 ],
                 'quantity' => $item->quantity,
             ];
@@ -570,9 +841,9 @@ public function addToCart(Request $request)
             $order->phone = $validatedData['phone'];
             $order->email = $validatedData['email'];
             $order->note = $validatedData['note'] ?? '';
-            $order->payment_method =  'Credit_card' ;
+            $order->payment_method = 'Credit_card';
             $order->shipment_status = 'PACKED';
-            $order->order_status = "PENDING";
+            $order->order_status = 'PENDING';
             $order->save();
 
             foreach ($carts as $cart) {
@@ -583,17 +854,29 @@ public function addToCart(Request $request)
                     'color_id' => $cart->color_id ?? null,
                     'price' => $cart->price,
                     'quantity' => $cart->quantity,
-                    'total_price' => $cart->price * $cart->quantity,
-
+                    'total_price' => $cart->discounted_total_price ?? ($cart->price * $cart->quantity),
                 ]);
             }
 
-            // Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
+           
+            //cập nhật lại só lượng sau khi thanh toán thành công
+            if ($cart->size_id && $cart->color_id) {
+                // Nếu có biến thể (size_id và color_id)
+                DB::table('product_variants')
+                    ->where('id', $cart->size_id)
+                    ->decrement('quantity', $cart->quantity);
+            } else {
+                // Nếu không có size_id, chỉ giảm số lượng sản phẩm
+                DB::table('products')
+                    ->where('id', $cart->pro_id)
+                    ->decrement('quantity', $cart->quantity);
+            }
+
 
 
             Notification::create([
                 'type' => 'đã đặt hàng',
-                'order_id' =>  $order->id,
+                'order_id' => $order->id,
                 'data' => json_encode([
                     'message' => 'Có đơn hàng mới! Đơn hàng #' . $order->id,
                     'order_details' => [
@@ -608,15 +891,14 @@ public function addToCart(Request $request)
             ]);
 
             session()->put('order_id', $order->id);
-            DB::table('carts')->where('user_id', auth()->user()->id)->delete();
+            // DB::table('carts')->where('user_id', auth()->user()->id)->delete();
 
             return redirect($session->url);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Đã xảy ra lỗi khi tạo phiên thanh toán. Vui lòng thử lại.');
         }
-    }
-
-    if ($request->type_order === '2') {
+    } elseif ($request->type_order === '2') {
+        // Thanh toán khi nhận hàng
         $order = new Order();
         $order->user_id = auth()->user()->id;
         $order->username = $validatedData['username'];
@@ -625,7 +907,7 @@ public function addToCart(Request $request)
         $order->email = $validatedData['email'];
         $order->note = $validatedData['note'] ?? '';
         $order->payment_method = 'COD';
-        $order->order_status = "PENDING";
+        $order->order_status = 'PENDING';
         $order->shipment_status = 'ORDERPLACE';
         $order->save();
 
@@ -637,17 +919,26 @@ public function addToCart(Request $request)
                 'color_id' => $cart->color_id ?? null,
                 'price' => $cart->price,
                 'quantity' => $cart->quantity,
-                'total_price' => $cart->price * $cart->quantity,
-
+                'total_price' => $cart->discounted_total_price ?? ($cart->price * $cart->quantity),
             ]);
         }
-
-        // Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
-
+ 
+        //cập nhật số lượng sau khi đặt hàng thành công
+        if ($cart->size_id && $cart->color_id) {
+            // Nếu có biến thể (size_id và color_id)
+            DB::table('product_variants')
+                ->where('id', $cart->size_id)
+                ->decrement('quantity', $cart->quantity);
+        } else {
+            // Nếu không có size_id, chỉ giảm số lượng sản phẩm
+            DB::table('products')
+                ->where('id', $cart->pro_id)
+                ->decrement('quantity', $cart->quantity);
+        }
 
         Notification::create([
             'type' => 'đã đặt hàng',
-            'order_id' =>  $order->id,
+            'order_id' => $order->id,
             'data' => json_encode([
                 'message' => 'Có đơn hàng mới! Đơn hàng #' . $order->id,
                 'order_details' => [
@@ -661,16 +952,12 @@ public function addToCart(Request $request)
             'is_read' => false,
         ]);
 
-
-
         DB::table('carts')->where('user_id', auth()->user()->id)->delete();
-
-
-        // $this->sendOrderNotification($order);
 
         return redirect()->route('order-success');
     }
 }
+
 }
 
 
