@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 16, 2024 at 05:30 AM
+-- Generation Time: Aug 23, 2024 at 11:45 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.2.20
 
@@ -63,24 +63,15 @@ CREATE TABLE `carts` (
   `user_id` int NOT NULL,
   `size_id` int NOT NULL,
   `color_id` int NOT NULL,
-  `price` double(8,2) NOT NULL,
+  `price` int NOT NULL,
   `quantity` int NOT NULL,
-  `total_price` decimal(8,2) NOT NULL,
-  `discounted_total_price` decimal(8,2) DEFAULT NULL,
+  `total_price` int NOT NULL,
+  `discounted_total_price` int DEFAULT NULL,
+  `voucher_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `carts`
---
-
-INSERT INTO `carts` (`id`, `pro_id`, `user_id`, `size_id`, `color_id`, `price`, `quantity`, `total_price`, `discounted_total_price`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 1, 3000.00, 1, '3000.00', NULL, NULL, '2024-07-24 17:10:24', '2024-07-24 17:10:24'),
-(4, 10, 6, 1, 1, 230000.00, 1, '230000.00', NULL, NULL, '2024-07-24 17:14:54', '2024-07-24 17:14:54'),
-(13, 17, 6, 1, 1, 69999.00, 1, '69999.00', NULL, NULL, '2024-07-24 17:10:24', '2024-07-24 17:10:24'),
-(14, 10, 6, 1, 1, 230000.00, 1, '230000.00', NULL, NULL, '2024-07-24 17:14:54', '2024-07-24 17:14:54');
 
 -- --------------------------------------------------------
 
@@ -106,6 +97,86 @@ INSERT INTO `categories` (`id`, `name`, `slug`, `description`, `deleted_at`, `cr
 (1, 'Thời trang', 'thoi-trang', '', NULL, '2023-07-26 13:37:08', '2023-07-26 13:37:08'),
 (2, 'Giày Dép', 'giay-dep', '', NULL, '2023-07-26 13:37:17', '2023-07-28 21:57:13'),
 (5, 'tên danh mục', 'ten-danh-muc', '', '2023-08-03 20:33:41', '2023-08-03 20:33:36', '2023-08-03 20:33:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chats`
+--
+
+CREATE TABLE `chats` (
+  `id` int UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL,
+  `is_admin` tinyint(1) NOT NULL DEFAULT '0',
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `chats`
+--
+
+INSERT INTO `chats` (`id`, `user_id`, `is_admin`, `message`, `created_at`, `updated_at`) VALUES
+(1, 19, 0, 'hêlo', '2024-08-23 10:44:36', '2024-08-23 10:44:36'),
+(2, 19, 1, 'ok', '2024-08-23 11:23:05', '2024-08-23 11:23:05');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clients_notifications`
+--
+
+CREATE TABLE `clients_notifications` (
+  `id` int UNSIGNED NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_read` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `clients_notifications`
+--
+
+INSERT INTO `clients_notifications` (`id`, `type`, `data`, `is_read`, `created_at`, `updated_at`) VALUES
+(1, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #125\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-22 08:27:34', '2024-08-22 08:31:01'),
+(2, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #126\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-22 08:40:48', '2024-08-22 08:45:03'),
+(3, 'đã đặt hàng', '{\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #127\",\"0\":\"Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-22 08:44:42', '2024-08-22 08:45:09'),
+(4, 'order_delivered', '{\"order_id\":5,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao th\\u00e0nh c\\u00f4ng. H\\u00e3y \\u0111\\u00e1nh gi\\u00e1 v\\u00e0 cho \\u00fd ki\\u1ebfn v\\u1ec1 \\u0111\\u01a1n h\\u00e0ng!\"}', 0, '2024-08-22 09:11:11', '2024-08-22 09:11:11'),
+(5, 'order_delivered', '{\"order_id\":9,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao th\\u00e0nh c\\u00f4ng. H\\u00e3y \\u0111\\u00e1nh gi\\u00e1 v\\u00e0 cho \\u00fd ki\\u1ebfn v\\u1ec1 \\u0111\\u01a1n h\\u00e0ng!\"}', 0, '2024-08-22 09:17:56', '2024-08-22 09:17:56'),
+(6, 'shipping_update', '{\"order_id\":10,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111ang g\\u1eb7p v\\u1ea5n \\u0111\\u1ec1 trong qua tr\\u00ecnh v\\u1eadn chuy\\u1ec3n\"}', 0, '2024-08-22 09:20:13', '2024-08-22 09:20:13'),
+(7, 'shipping_update', '{\"order_id\":11,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn. Vui l\\u00f2ng x\\u00e1c nh\\u1eadn \\u0111\\u00e3 nh\\u1eadn h\\u00e0ng.\"}', 0, '2024-08-22 09:24:17', '2024-08-22 09:24:17'),
+(8, 'shipping_update', '{\"order_id\":11,\"message\":\"\\u0110\\u01a1n h\\u00e0ng tr\\u1ea1ng th\\u00e1i kh\\u00f4ng h\\u1ee3p l\\u1ec7.\"}', 0, '2024-08-22 09:28:59', '2024-08-22 09:28:59'),
+(9, 'shipping_update', '{\"order_id\":11,\"message\":\"\\u0110\\u01a1n h\\u00e0ng tr\\u1ea1ng th\\u00e1i kh\\u00f4ng h\\u1ee3p l\\u1ec7.\"}', 0, '2024-08-22 09:29:02', '2024-08-22 09:29:02'),
+(10, 'shipping_update', '{\"order_id\":11,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn.\"}', 0, '2024-08-22 09:29:06', '2024-08-22 09:29:06'),
+(11, 'shipping_update', '{\"order_id\":11,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c ho\\u00e0n tr\\u1ea3 l\\u1ea1i cho ng\\u01b0\\u1eddi g\\u1eedi.\"}', 0, '2024-08-22 09:32:34', '2024-08-22 09:32:34'),
+(12, 'shipping_update', '{\"order_id\":10,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c ho\\u00e0n tr\\u1ea3 l\\u1ea1i cho ng\\u01b0\\u1eddi g\\u1eedi.\"}', 0, '2024-08-22 09:32:52', '2024-08-22 09:32:52'),
+(13, 'order_delivered', '{\"order_id\":11,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao th\\u00e0nh c\\u00f4ng. H\\u00e3y \\u0111\\u00e1nh gi\\u00e1 v\\u00e0 cho \\u00fd ki\\u1ebfn v\\u1ec1 \\u0111\\u01a1n h\\u00e0ng!\"}', 0, '2024-08-22 09:38:38', '2024-08-22 09:38:38'),
+(14, 'order_delivered', '{\"order_id\":10,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao th\\u00e0nh c\\u00f4ng. H\\u00e3y \\u0111\\u00e1nh gi\\u00e1 v\\u00e0 cho \\u00fd ki\\u1ebfn v\\u1ec1 \\u0111\\u01a1n h\\u00e0ng!\"}', 0, '2024-08-22 09:38:52', '2024-08-22 09:38:52'),
+(15, 'shipping_update', '{\"order_id\":35,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y\"}', 0, '2024-08-22 09:39:14', '2024-08-22 09:39:14'),
+(16, 'order_delivered', '{\"order_id\":35,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao th\\u00e0nh c\\u00f4ng. H\\u00e3y \\u0111\\u00e1nh gi\\u00e1 v\\u00e0 cho \\u00fd ki\\u1ebfn v\\u1ec1 \\u0111\\u01a1n h\\u00e0ng!\"}', 0, '2024-08-22 09:40:09', '2024-08-22 09:40:09'),
+(17, 'shipping_update', '{\"order_id\":127,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y\"}', 0, '2024-08-22 09:44:42', '2024-08-22 09:44:42'),
+(18, 'shipping_update', '{\"order_id\":126,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y\"}', 0, '2024-08-22 09:49:36', '2024-08-22 09:49:36'),
+(19, 'shipping_update', '{\"order_id\":98,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y.\"}', 0, '2024-08-22 09:52:30', '2024-08-22 09:52:30'),
+(20, 'shipping_update', '{\"order_id\":54,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y.\"}', 0, '2024-08-22 10:17:08', '2024-08-22 10:17:08'),
+(21, 'đã đặt hàng', '{\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #128Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-22 10:20:27', '2024-08-22 10:21:02'),
+(22, 'shipping_update', '{\"order_id\":128,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 b\\u1ecb tr\\u1ec5 h\\u1eb9n trong qu\\u00e1 tr\\u00ecnh v\\u1eadn chuy\\u1ec3n.\"}', 0, '2024-08-22 10:21:23', '2024-08-22 10:21:23'),
+(23, 'shipping_update', '{\"order_id\":128,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y.\"}', 0, '2024-08-22 10:21:39', '2024-08-22 10:21:39'),
+(24, 'shipping_update', '{\"order_id\":125,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn.\"}', 1, '2024-08-22 10:39:14', '2024-08-22 11:05:56'),
+(25, 'shipping_update', '{\"order_id\":125,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 b\\u1ecb tr\\u1ec5 h\\u1eb9n trong qu\\u00e1 tr\\u00ecnh v\\u1eadn chuy\\u1ec3n.\"}', 0, '2024-08-22 10:39:30', '2024-08-22 10:39:30'),
+(26, 'order_received_confirmation', '{\"order_id\":125,\"message\":\"Ng\\u01b0\\u1eddi d\\u00f9ng \\u0111\\u00e3 nh\\u1eadn h\\u00e0ng cho \\u0111\\u01a1n h\\u00e0ng #125\"}', 0, '2024-08-22 11:02:34', '2024-08-22 11:02:34'),
+(27, 'order_received_confirmation', '{\"order_id\":125,\"message\":\"Ng\\u01b0\\u1eddi d\\u00f9ng \\u0111\\u00e3 nh\\u1eadn h\\u00e0ng cho \\u0111\\u01a1n h\\u00e0ng #125\"}', 0, '2024-08-22 11:02:57', '2024-08-22 11:02:57'),
+(28, 'đã đặt hàng', '{\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #129Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-22 11:11:58', '2024-08-22 11:13:53'),
+(29, 'đã đặt hàng', '{\"order_id\":130,\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #130Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-23 09:45:01', '2024-08-23 09:46:02'),
+(30, 'order_cancel_request', '{\"order_id\":130,\"message\":\"B\\u1ea1n \\u0111\\u00e3 y\\u00eau c\\u1ea7u h\\u1ee7y \\u0111\\u01a1n h\\u00e0ng #130.\"}', 1, '2024-08-23 09:45:52', '2024-08-23 09:46:03'),
+(31, 'shipping_update', '{\"order_id\":130,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y.\"}', 0, '2024-08-23 09:46:58', '2024-08-23 09:46:58'),
+(32, 'account_update', '{\"user_id\":19,\"message\":\"T\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 b\\u1ecb kh\\u00f3a. Vui l\\u00f2ng li\\u00ean h\\u1ec7 qua trang chat.\"}', 0, '2024-08-23 09:59:18', '2024-08-23 09:59:18'),
+(33, 'account_update', '{\"user_id\":19,\"message\":\"T\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 b\\u1ecb kh\\u00f3a. Vui l\\u00f2ng li\\u00ean h\\u1ec7 qua trang chat\"}', 0, '2024-08-23 10:09:13', '2024-08-23 10:09:13'),
+(34, 'new_message', '{\"user_id\":\"19\",\"message\":\"C\\u00f3 tin nh\\u1eafn m\\u1edbi t\\u1eeb admin.\"}', 0, '2024-08-23 11:23:05', '2024-08-23 11:23:05'),
+(35, 'account_update', '{\"user_id\":19,\"message\":\"Ch\\u00fang t\\u00f4i \\u0111\\u00e3 m\\u1edf l\\u1ea1i t\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n\"}', 0, '2024-08-23 11:26:40', '2024-08-23 11:26:40'),
+(36, 'account_update', '{\"user_id\":19,\"message\":\"Ch\\u00fang t\\u00f4i \\u0111\\u00e3 nh\\u1eadn th\\u1ea5y 1 s\\u1ed1 h\\u00e0nh \\u0111\\u1ed9ng l\\u1ea1i t\\u1eeb t\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n n\\u00ean \\u0111\\u00e3 t\\u1ea1m th\\u1eddi kh\\u00f3a n\\u00f3 . Vui l\\u00f2ng li\\u00ean h\\u1ec7 qua trang chat\"}', 0, '2024-08-23 11:26:55', '2024-08-23 11:26:55');
 
 -- --------------------------------------------------------
 
@@ -218,7 +289,27 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (35, '2024_08_12_173011_create_vouchers_table', 4),
 (36, '2024_08_15_100921_update_discount_type_in_vouchers', 5),
 (37, '2024_08_15_102516_remove_category_id_from_vouchers_table', 6),
-(38, '2024_08_16_095605_update_carts_table', 7);
+(38, '2024_08_16_095605_update_carts_table', 7),
+(39, '2024_08_16_142650_create_chats_table', 8),
+(40, '2024_08_07_194111_update_orders_mail_table', 9),
+(41, '2024_08_16_155359_remove_order_id_from_notifications_table', 10),
+(42, '2024_08_17_182123_change_price_column_type_in_product_variants_table', 11),
+(43, '2024_08_17_182330_change_price_column_type_in_order_details_table', 12),
+(44, '2024_08_17_182427_change_total_price_column_type_in_order_details_table', 13),
+(45, '2024_08_18_154724_update_carts_price_columns', 14),
+(46, '2024_08_18_155544_update_carts_discounted_total_price_columns', 15),
+(47, '2024_08_18_171556_change_discount_column_type_in_vouchers_table', 16),
+(48, '2024_08_19_083942_update_carts_table', 17),
+(49, '2024_08_19_084211_update_carts_final_price_table', 18),
+(50, '2024_08_19_084648_update_final_price_in_carts_table', 19),
+(51, '2024_08_19_090952_add_columns_to_vouchers_table', 20),
+(52, '2024_08_19_092001_dropcolumn_quantity_to_vouchers_table', 21),
+(53, '2024_08_19_092847_add_columns_to_vouchers_table', 22),
+(54, '2024_08_20_152247_add_voucher_code_to_carts_table', 23),
+(55, '2024_08_20_174627_remove_final_price_from_carts_table', 24),
+(56, '2024_08_21_172816_create_admin_notifications_table', 25),
+(57, '2024_08_22_151610_create_client_notifications_table', 26),
+(58, '2024_08_22_152459_create_clients_notifications_table', 27);
 
 -- --------------------------------------------------------
 
@@ -228,7 +319,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `notifications` (
   `id` int UNSIGNED NOT NULL,
-  `order_id` bigint UNSIGNED DEFAULT NULL,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_read` tinyint(1) NOT NULL DEFAULT '0',
@@ -240,24 +330,74 @@ CREATE TABLE `notifications` (
 -- Dumping data for table `notifications`
 --
 
-INSERT INTO `notifications` (`id`, `order_id`, `type`, `data`, `is_read`, `created_at`, `updated_at`) VALUES
-(3, NULL, 'order_placed', '{\"order_id\":62,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #62\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-06 03:41:55', '2024-08-07 02:12:19'),
-(5, NULL, 'order_placed', '{\"order_id\":19,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #64\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-06 03:45:51', '2024-08-07 02:12:42'),
-(10, NULL, 'shipping_update', '{\"order_id\":61,\"message\":\"Tr\\u1ea1ng th\\u00e1i \\u0111\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c c\\u1eadp nh\\u1eadt: \\u0111ang \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn\"}', 1, '2024-08-07 02:30:04', '2024-08-07 03:12:40'),
-(11, NULL, 'order_received_confirmation', '{\"order_id\":61,\"message\":\"Ng\\u01b0\\u1eddi d\\u00f9ng \\u0111\\u00e3 nh\\u1eadn h\\u00e0ng cho \\u0111\\u01a1n h\\u00e0ng #61\"}', 1, '2024-08-07 03:12:40', '2024-08-07 03:13:15'),
-(12, NULL, 'order_delivered', '{\"order_id\":61,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao th\\u00e0nh c\\u00f4ng. H\\u00e3y \\u0111\\u00e1nh gi\\u00e1 v\\u00e0 cho \\u00fd ki\\u1ebfn v\\u1ec1 \\u0111\\u01a1n h\\u00e0ng!\"}', 1, '2024-08-07 03:21:51', '2024-08-07 03:24:24'),
-(13, NULL, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #69\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-07 05:27:44', '2024-08-07 05:28:46'),
-(15, NULL, 'shipping_update', '{\"order_id\":70,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn. Vui l\\u00f2ng x\\u00e1c nh\\u1eadn \\u0111\\u00e3 nh\\u1eadn h\\u00e0ng.\"}', 1, '2024-08-08 19:13:00', '2024-08-08 19:13:03'),
-(17, NULL, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #72\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-08 21:26:37', '2024-08-08 21:34:29'),
-(18, NULL, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #73\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-08 21:30:35', '2024-08-08 21:34:29'),
-(19, NULL, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #74\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-08 21:33:35', '2024-08-08 21:34:29'),
-(20, NULL, 'shipping_update', '{\"order_id\":74,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn. Vui l\\u00f2ng x\\u00e1c nh\\u1eadn \\u0111\\u00e3 nh\\u1eadn h\\u00e0ng.\"}', 1, '2024-08-08 21:36:42', '2024-08-08 21:36:53'),
-(21, NULL, 'order_received_confirmation', '{\"order_id\":74,\"message\":\"Ng\\u01b0\\u1eddi d\\u00f9ng \\u0111\\u00e3 nh\\u1eadn h\\u00e0ng cho \\u0111\\u01a1n h\\u00e0ng #74\"}', 1, '2024-08-08 21:36:53', '2024-08-08 21:37:03'),
-(22, NULL, 'order_delivered', '{\"order_id\":74,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao th\\u00e0nh c\\u00f4ng. H\\u00e3y \\u0111\\u00e1nh gi\\u00e1 v\\u00e0 cho \\u00fd ki\\u1ebfn v\\u1ec1 \\u0111\\u01a1n h\\u00e0ng!\"}', 1, '2024-08-08 21:37:44', '2024-08-08 21:37:46'),
-(23, NULL, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #75\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-12 10:18:29', '2024-08-12 10:18:41'),
-(24, NULL, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #76\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-12 10:19:54', '2024-08-15 02:47:16'),
-(25, NULL, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #83\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-16 05:25:25', '2024-08-16 05:27:38'),
-(26, NULL, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #84\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-16 05:26:01', '2024-08-16 05:27:38');
+INSERT INTO `notifications` (`id`, `type`, `data`, `is_read`, `created_at`, `updated_at`) VALUES
+(15, 'shipping_update', '{\"order_id\":70,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn. Vui l\\u00f2ng x\\u00e1c nh\\u1eadn \\u0111\\u00e3 nh\\u1eadn h\\u00e0ng.\"}', 1, '2024-08-08 19:13:00', '2024-08-08 19:13:03'),
+(17, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #72\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-08 21:26:37', '2024-08-08 21:34:29'),
+(19, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #74\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-08 21:33:35', '2024-08-08 21:34:29'),
+(20, 'shipping_update', '{\"order_id\":74,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn. Vui l\\u00f2ng x\\u00e1c nh\\u1eadn \\u0111\\u00e3 nh\\u1eadn h\\u00e0ng.\"}', 1, '2024-08-08 21:36:42', '2024-08-08 21:36:53'),
+(21, 'order_received_confirmation', '{\"order_id\":74,\"message\":\"Ng\\u01b0\\u1eddi d\\u00f9ng \\u0111\\u00e3 nh\\u1eadn h\\u00e0ng cho \\u0111\\u01a1n h\\u00e0ng #74\"}', 1, '2024-08-08 21:36:53', '2024-08-08 21:37:03'),
+(22, 'order_delivered', '{\"order_id\":74,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao th\\u00e0nh c\\u00f4ng. H\\u00e3y \\u0111\\u00e1nh gi\\u00e1 v\\u00e0 cho \\u00fd ki\\u1ebfn v\\u1ec1 \\u0111\\u01a1n h\\u00e0ng!\"}', 1, '2024-08-08 21:37:44', '2024-08-08 21:37:46'),
+(23, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #75\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-12 10:18:29', '2024-08-12 10:18:41'),
+(24, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #76\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-12 10:19:54', '2024-08-15 02:47:16'),
+(26, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #84\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-16 05:26:01', '2024-08-16 05:27:38'),
+(37, 'account_update', '{\"message\":\"T\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 b\\u1ecb kh\\u00f3a. Vui l\\u00f2ng li\\u00ean h\\u1ec7 qua trang chat: .<a href=\\\"clients.chats.index\\\"><\\/a>\"}', 1, '2024-08-16 08:33:28', '2024-08-16 08:33:55'),
+(38, 'account_update', '{\"message\":\"T\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 b\\u1ecb kh\\u00f3a. Vui l\\u00f2ng li\\u00ean h\\u1ec7 qua trang chat: .<a href=\\\"clients.chats.index\\\"><\\/a>\"}', 1, '2024-08-16 08:33:53', '2024-08-16 08:33:55'),
+(39, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #85\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-17 11:25:54', '2024-08-17 11:27:48'),
+(40, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #86\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-20 09:45:48', '2024-08-21 10:19:18'),
+(41, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #87\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-20 09:52:13', '2024-08-21 10:19:18'),
+(42, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #88\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-20 10:01:15', '2024-08-21 10:19:18'),
+(43, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #89\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-20 10:11:25', '2024-08-21 10:19:18'),
+(44, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #90\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-20 10:18:54', '2024-08-21 10:19:18'),
+(45, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #91\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-20 10:21:20', '2024-08-21 10:19:18'),
+(46, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #92\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-20 10:22:53', '2024-08-21 10:19:18'),
+(47, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #93\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-20 10:29:07', '2024-08-21 08:19:05'),
+(48, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #94\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-20 10:38:07', '2024-08-21 08:19:03'),
+(49, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #95\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-20 10:38:08', '2024-08-21 08:19:00'),
+(50, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #96\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 08:29:13', '2024-08-21 10:19:18'),
+(51, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #97\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 08:29:38', '2024-08-21 10:19:18'),
+(52, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #98\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 08:36:20', '2024-08-21 10:19:18'),
+(53, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #99\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 08:37:29', '2024-08-21 10:19:18'),
+(54, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #100\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 08:39:06', '2024-08-21 10:19:18'),
+(55, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #101\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 08:43:20', '2024-08-21 10:19:18'),
+(56, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #102\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 08:45:32', '2024-08-21 10:19:18'),
+(57, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #103\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 08:48:24', '2024-08-21 10:19:18'),
+(58, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #104\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 08:51:36', '2024-08-21 10:19:18'),
+(59, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #105\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:02:09', '2024-08-21 10:19:18'),
+(60, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #106\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:03:12', '2024-08-21 10:19:18'),
+(61, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #107\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:09:04', '2024-08-21 10:19:18'),
+(62, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #108\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:09:50', '2024-08-21 10:19:18'),
+(63, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #109\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:13:24', '2024-08-21 10:19:18'),
+(64, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #110\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:13:39', '2024-08-21 10:19:18'),
+(65, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #111\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:17:24', '2024-08-21 10:19:18'),
+(66, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #112\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:18:12', '2024-08-21 10:19:18'),
+(67, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #113\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:18:26', '2024-08-21 10:19:18'),
+(68, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #114\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:21:26', '2024-08-21 10:19:18'),
+(69, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #115\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:21:50', '2024-08-21 10:19:18'),
+(70, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #116\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:23:26', '2024-08-21 10:19:18'),
+(71, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #117\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:25:31', '2024-08-21 10:19:18'),
+(72, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #118\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:28:03', '2024-08-21 10:19:18'),
+(73, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #119\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:32:50', '2024-08-21 10:19:18'),
+(74, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #120\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:37:23', '2024-08-21 10:19:18'),
+(75, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #121\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:47:44', '2024-08-21 10:19:18'),
+(76, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #122\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:50:53', '2024-08-21 10:19:18'),
+(77, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #123\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 09:54:37', '2024-08-21 10:19:18'),
+(78, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #124\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-21 10:05:27', '2024-08-21 10:19:18'),
+(79, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #125\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-22 08:27:34', '2024-08-22 08:30:29'),
+(80, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #126\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-22 08:40:48', '2024-08-22 08:46:42'),
+(81, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #127\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-22 08:44:42', '2024-08-22 08:46:42'),
+(82, 'shipping_update', '{\"order_id\":35,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y\"}', 1, '2024-08-22 09:39:14', '2024-08-22 10:15:22'),
+(83, 'shipping_update', '{\"order_id\":127,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y\"}', 1, '2024-08-22 09:44:42', '2024-08-22 10:15:22'),
+(84, 'shipping_update', '{\"order_id\":126,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y\"}', 1, '2024-08-22 09:49:36', '2024-08-22 10:15:22'),
+(85, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #128\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-22 10:20:27', '2024-08-22 11:02:42'),
+(86, 'order_received_confirmation', '{\"order_id\":125,\"message\":\"Ng\\u01b0\\u1eddi d\\u00f9ng \\u0111\\u00e3 nh\\u1eadn h\\u00e0ng cho \\u0111\\u01a1n h\\u00e0ng #125\"}', 1, '2024-08-22 11:05:56', '2024-08-22 11:06:08'),
+(87, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #129\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-22 11:11:58', '2024-08-22 11:24:33'),
+(88, 'đã đặt hàng', '{\"order_id\":130,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #130\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-23 09:45:01', '2024-08-23 09:46:28'),
+(89, 'order_cancel_request', '{\"order_id\":130,\"message\":\"Ng\\u01b0\\u1eddi d\\u00f9ng y\\u00eau c\\u1ea7u h\\u1ee7y \\u0111\\u01a1n h\\u00e0ng #130.\"}', 1, '2024-08-23 09:45:52', '2024-08-23 09:46:28'),
+(90, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 19\"}', 1, '2024-08-23 09:59:18', '2024-08-23 09:59:21'),
+(91, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 19\"}', 1, '2024-08-23 10:09:13', '2024-08-23 10:09:26'),
+(92, 'new_message', '{\"user_id\":\"19\",\"message\":\"C\\u00f3 tin nh\\u1eafn t\\u1eeb ng\\u01b0\\u1eddi d\\u00f9ng #19\"}', 1, '2024-08-23 10:44:36', '2024-08-23 10:44:44'),
+(93, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 m\\u1edf kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 19\"}', 1, '2024-08-23 11:26:40', '2024-08-23 11:26:42'),
+(94, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 19\"}', 1, '2024-08-23 11:26:55', '2024-08-23 11:26:57');
 
 -- --------------------------------------------------------
 
@@ -269,8 +409,8 @@ CREATE TABLE `orders` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` int NOT NULL,
   `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `note` text COLLATE utf8mb4_unicode_ci,
   `order_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'PENDING' COMMENT 'PENDING, SUCCESS, CANCEL',
@@ -284,64 +424,110 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `username`, `email`, `phone`, `address`, `note`, `order_status`, `shipment_status`, `payment_method`, `created_at`, `updated_at`) VALUES
-(2, 6, 'tran manh', NULL, '0987184285', 'tan phong bx vp', '', 'PENDING', 'DELIVERED', 'COD', '2024-07-24 13:39:45', '2024-08-05 19:13:22'),
-(3, 6, 'tran manh', NULL, '0987184285', 'tan phong bx vp', '', 'PENDING', 'RETURNED', 'COD', '2024-07-24 13:56:04', '2024-08-05 19:11:52'),
-(4, 6, 'tran manh', NULL, '0987184285', 'tan phong bx vp', '', 'PENDING', 'DELIVERED', 'COD', '2024-07-24 14:03:13', '2024-08-05 19:13:01'),
-(5, 6, 'tran manh', NULL, '0987184285', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-07-24 14:07:26', '2024-07-24 14:07:26'),
-(6, 6, 'tran manh', NULL, '0987184285', 'tan phong bx vp', '', 'success', 'DELIVERED', 'COD', '2024-07-24 14:10:04', '2024-08-05 19:14:19'),
-(7, 6, 'tran manh', NULL, '0987184285', 'tan phong bx vp', '', 'cancel', 'RETURNED', 'COD', '2024-07-24 14:12:49', '2024-08-05 19:14:49'),
-(8, 6, 'tran manh', NULL, '0987184285', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-07-24 14:16:21', '2024-07-24 14:16:21'),
-(9, 6, 'tran manh', NULL, '0987184285', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-07-24 14:20:32', '2024-07-24 14:20:32'),
-(10, 6, 'tran manh', NULL, '0987184285', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-07-24 16:53:16', '2024-07-24 16:53:16'),
-(11, 6, 'tran manh', NULL, '0987184285', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-07-24 16:56:12', '2024-07-24 16:56:12'),
-(12, 6, 'tran manh', NULL, '0987184285', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-07-24 16:58:57', '2024-07-24 16:58:57'),
-(13, 6, 'tran manh', NULL, '0987184285', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-07-24 17:02:52', '2024-07-24 17:02:52'),
-(14, 6, 'tran manh', NULL, '0987184285', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-07-24 17:10:30', '2024-07-24 17:10:30'),
-(15, 6, 'tran manh', NULL, '0987184285', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-07-24 17:15:03', '2024-07-24 17:15:03'),
-(25, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', 'ko co', 'PENDING', 'SHIPPED', 'COD', '2024-08-04 02:28:20', '2024-08-04 02:37:54'),
-(26, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'null', '2024-08-04 02:58:07', '2024-08-04 02:58:07'),
-(27, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-04 02:58:43', '2024-08-04 02:58:43'),
-(33, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-04 03:01:41', '2024-08-04 03:01:41'),
-(34, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-04 03:02:00', '2024-08-04 03:02:00'),
-(35, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'null', '2024-08-04 03:02:08', '2024-08-04 03:02:08'),
-(38, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'RETURNED', 'COD', '2024-08-04 03:07:07', '2024-08-05 19:11:31'),
-(40, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'null', '2024-08-04 03:08:02', '2024-08-04 03:08:02'),
-(41, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-04 03:08:55', '2024-08-04 03:08:55'),
-(42, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-04 03:10:07', '2024-08-04 03:10:07'),
-(44, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-04 03:11:05', '2024-08-04 03:11:05'),
-(48, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-04 03:20:23', '2024-08-04 03:20:23'),
-(54, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-04 03:35:26', '2024-08-04 03:35:26'),
-(55, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-04 03:35:56', '2024-08-04 03:35:56'),
-(56, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'RETURNED', 'Credit_card', '2024-08-04 03:38:31', '2024-08-05 19:09:02'),
-(57, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-04 03:39:14', '2024-08-04 03:39:14'),
-(58, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'success', 'DELIVERED', 'Credit_card', '2024-08-05 20:27:54', '2024-08-05 20:29:07'),
-(59, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-06 03:29:36', '2024-08-06 03:29:36'),
-(60, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-06 03:30:37', '2024-08-06 03:30:37'),
-(61, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'success', 'DELIVERED', 'COD', '2024-08-06 03:41:08', '2024-08-07 03:21:51'),
-(62, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-06 03:41:55', '2024-08-06 03:41:55'),
-(63, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-06 03:42:33', '2024-08-06 03:42:33'),
-(64, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-06 03:45:51', '2024-08-06 03:45:51'),
-(65, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-06 03:47:47', '2024-08-06 03:47:47'),
-(66, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-06 03:51:59', '2024-08-06 03:51:59'),
-(67, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-06 03:52:06', '2024-08-06 03:52:06'),
-(68, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-06 03:53:02', '2024-08-06 03:53:02'),
-(69, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-07 05:27:44', '2024-08-07 05:27:44'),
-(70, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'OUTFORDELIVERY', 'COD', '2024-08-08 04:32:41', '2024-08-08 19:13:00'),
-(71, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-08 19:29:37', '2024-08-08 19:29:37'),
-(72, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-08 21:26:37', '2024-08-08 21:26:37'),
-(73, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-08 21:30:35', '2024-08-08 21:30:35'),
-(74, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'success', 'DELIVERED', 'Credit_card', '2024-08-08 21:33:35', '2024-08-08 21:37:44'),
-(75, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-12 10:18:29', '2024-08-12 10:18:29'),
-(76, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-12 10:19:54', '2024-08-12 10:19:54'),
-(77, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-16 05:14:11', '2024-08-16 05:14:11'),
-(78, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-16 05:14:18', '2024-08-16 05:14:18'),
-(79, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-16 05:15:09', '2024-08-16 05:15:09'),
-(80, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-16 05:16:40', '2024-08-16 05:16:40'),
-(81, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-16 05:24:02', '2024-08-16 05:24:02'),
-(82, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-16 05:24:23', '2024-08-16 05:24:23'),
-(83, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-16 05:25:25', '2024-08-16 05:25:25'),
-(84, 19, 'tran manh', 'minh29122003@gmail.com', '0987654321', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-16 05:26:01', '2024-08-16 05:26:01');
+INSERT INTO `orders` (`id`, `user_id`, `username`, `phone`, `email`, `address`, `note`, `order_status`, `shipment_status`, `payment_method`, `created_at`, `updated_at`) VALUES
+(2, 6, 'tran manh', '0987184285', '', 'tan phong bx vp', '', 'PENDING', 'DELIVERED', 'COD', '2024-07-24 13:39:45', '2024-08-05 19:13:22'),
+(3, 6, 'tran manh', '0987184285', '', 'tan phong bx vp', '', 'PENDING', 'RETURNED', 'COD', '2024-07-24 13:56:04', '2024-08-05 19:11:52'),
+(4, 6, 'tran manh', '0987184285', '', 'tan phong bx vp', '', 'PENDING', 'DELIVERED', 'COD', '2024-07-24 14:03:13', '2024-08-05 19:13:01'),
+(5, 6, 'tran manh', '0987184285', '', 'tan phong bx vp', '', 'success', 'DELIVERED', 'COD', '2024-07-24 14:07:26', '2024-08-22 09:11:11'),
+(6, 6, 'tran manh', '0987184285', '', 'tan phong bx vp', '', 'success', 'DELIVERED', 'COD', '2024-07-24 14:10:04', '2024-08-05 19:14:19'),
+(7, 6, 'tran manh', '0987184285', '', 'tan phong bx vp', '', 'cancel', 'RETURNED', 'COD', '2024-07-24 14:12:49', '2024-08-05 19:14:49'),
+(8, 6, 'tran manh', '0987184285', '', 'tan phong bx vp', '', 'PENDING', 'EXCEPTION', 'COD', '2024-07-24 14:16:21', '2024-08-22 09:18:03'),
+(9, 6, 'tran manh', '0987184285', '', 'tan phong bx vp', '', 'success', 'DELIVERED', 'COD', '2024-07-24 14:20:32', '2024-08-22 09:17:56'),
+(10, 6, 'tran manh', '0987184285', '', 'tan phong bx vp', '', 'success', 'DELIVERED', 'COD', '2024-07-24 16:53:16', '2024-08-22 09:38:52'),
+(11, 6, 'tran manh', '0987184285', '', 'tan phong bx vp', '', 'success', 'DELIVERED', 'COD', '2024-07-24 16:56:12', '2024-08-22 09:38:38'),
+(12, 6, 'tran manh', '0987184285', '', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-07-24 16:58:57', '2024-07-24 16:58:57'),
+(13, 6, 'tran manh', '0987184285', '', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-07-24 17:02:52', '2024-07-24 17:02:52'),
+(14, 6, 'tran manh', '0987184285', '', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-07-24 17:10:30', '2024-07-24 17:10:30'),
+(15, 6, 'tran manh', '0987184285', '', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-07-24 17:15:03', '2024-07-24 17:15:03'),
+(25, 19, 'tran manh', '0987654321', '', 'ha noi', 'ko co', 'PENDING', 'SHIPPED', 'COD', '2024-08-04 02:28:20', '2024-08-04 02:37:54'),
+(26, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'null', '2024-08-04 02:58:07', '2024-08-04 02:58:07'),
+(27, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-04 02:58:43', '2024-08-04 02:58:43'),
+(33, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-04 03:01:41', '2024-08-04 03:01:41'),
+(34, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-04 03:02:00', '2024-08-04 03:02:00'),
+(35, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'success', 'DELIVERED', 'null', '2024-08-04 03:02:08', '2024-08-22 09:40:09'),
+(38, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'RETURNED', 'COD', '2024-08-04 03:07:07', '2024-08-05 19:11:31'),
+(40, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'null', '2024-08-04 03:08:02', '2024-08-04 03:08:02'),
+(41, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-04 03:08:55', '2024-08-04 03:08:55'),
+(42, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-04 03:10:07', '2024-08-04 03:10:07'),
+(44, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-04 03:11:05', '2024-08-04 03:11:05'),
+(48, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-04 03:20:23', '2024-08-04 03:20:23'),
+(54, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'cancel', 'CANCEL', 'Credit_card', '2024-08-04 03:35:26', '2024-08-22 10:17:08'),
+(55, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-04 03:35:56', '2024-08-04 03:35:56'),
+(56, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'RETURNED', 'Credit_card', '2024-08-04 03:38:31', '2024-08-05 19:09:02'),
+(57, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-04 03:39:14', '2024-08-04 03:39:14'),
+(58, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'success', 'DELIVERED', 'Credit_card', '2024-08-05 20:27:54', '2024-08-05 20:29:07'),
+(59, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-06 03:29:36', '2024-08-06 03:29:36'),
+(60, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-06 03:30:37', '2024-08-06 03:30:37'),
+(61, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'success', 'DELIVERED', 'COD', '2024-08-06 03:41:08', '2024-08-07 03:21:51'),
+(62, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-06 03:41:55', '2024-08-06 03:41:55'),
+(63, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-06 03:42:33', '2024-08-06 03:42:33'),
+(64, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-06 03:45:51', '2024-08-06 03:45:51'),
+(65, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-06 03:47:47', '2024-08-06 03:47:47'),
+(66, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-06 03:51:59', '2024-08-06 03:51:59'),
+(67, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-06 03:52:06', '2024-08-06 03:52:06'),
+(68, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-06 03:53:02', '2024-08-06 03:53:02'),
+(69, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-07 05:27:44', '2024-08-07 05:27:44'),
+(70, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'OUTFORDELIVERY', 'COD', '2024-08-08 04:32:41', '2024-08-08 19:13:00'),
+(71, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-08 19:29:37', '2024-08-08 19:29:37'),
+(72, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-08 21:26:37', '2024-08-08 21:26:37'),
+(73, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-08 21:30:35', '2024-08-08 21:30:35'),
+(74, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'success', 'DELIVERED', 'Credit_card', '2024-08-08 21:33:35', '2024-08-08 21:37:44'),
+(75, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-12 10:18:29', '2024-08-12 10:18:29'),
+(76, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-08-12 10:19:54', '2024-08-12 10:19:54'),
+(77, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-16 05:14:11', '2024-08-16 05:14:11'),
+(78, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-16 05:14:18', '2024-08-16 05:14:18'),
+(79, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-16 05:15:09', '2024-08-16 05:15:09'),
+(80, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-16 05:16:40', '2024-08-16 05:16:40'),
+(81, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-16 05:24:02', '2024-08-16 05:24:02'),
+(82, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-16 05:24:23', '2024-08-16 05:24:23'),
+(83, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-16 05:25:25', '2024-08-16 05:25:25'),
+(84, 19, 'tran manh', '0987654321', '', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-16 05:26:01', '2024-08-16 05:26:01'),
+(85, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-17 11:25:54', '2024-08-17 11:25:54'),
+(86, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-20 09:45:48', '2024-08-20 09:45:48'),
+(87, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-20 09:52:13', '2024-08-20 09:52:13'),
+(88, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-20 10:01:15', '2024-08-20 10:01:15'),
+(89, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-20 10:11:25', '2024-08-20 10:11:25'),
+(90, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-20 10:18:54', '2024-08-20 10:18:54'),
+(91, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-20 10:21:20', '2024-08-20 10:21:20'),
+(92, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-20 10:22:53', '2024-08-20 10:22:53'),
+(93, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-20 10:29:07', '2024-08-20 10:29:07'),
+(94, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-20 10:38:07', '2024-08-20 10:38:07'),
+(95, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-20 10:38:08', '2024-08-20 10:38:08'),
+(96, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 08:29:13', '2024-08-21 08:29:13'),
+(97, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 08:29:38', '2024-08-21 08:29:38'),
+(98, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'cancel', 'CANCEL', 'Credit_card', '2024-08-21 08:36:20', '2024-08-22 09:52:30'),
+(99, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 08:37:29', '2024-08-21 08:37:29'),
+(100, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 08:39:06', '2024-08-21 08:39:06'),
+(101, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 08:43:20', '2024-08-21 08:43:20'),
+(102, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 08:45:32', '2024-08-21 08:45:32'),
+(103, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 08:48:24', '2024-08-21 08:48:24'),
+(104, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 08:51:36', '2024-08-21 08:51:36'),
+(105, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:02:09', '2024-08-21 09:02:09'),
+(106, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:03:12', '2024-08-21 09:03:12'),
+(107, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:09:04', '2024-08-21 09:09:04'),
+(108, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:09:50', '2024-08-21 09:09:50'),
+(109, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:13:24', '2024-08-21 09:13:24'),
+(110, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:13:39', '2024-08-21 09:13:39'),
+(111, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:17:24', '2024-08-21 09:17:24'),
+(112, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:18:12', '2024-08-21 09:18:12'),
+(113, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:18:26', '2024-08-21 09:18:26'),
+(114, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:21:26', '2024-08-21 09:21:26'),
+(115, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:21:50', '2024-08-21 09:21:50'),
+(116, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:23:26', '2024-08-21 09:23:26'),
+(117, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:25:31', '2024-08-21 09:25:31'),
+(118, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:28:03', '2024-08-21 09:28:03'),
+(119, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:32:50', '2024-08-21 09:32:50'),
+(120, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:37:23', '2024-08-21 09:37:23'),
+(121, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:47:44', '2024-08-21 09:47:44'),
+(122, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:50:53', '2024-08-21 09:50:53'),
+(123, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-21 09:54:37', '2024-08-21 09:54:37'),
+(124, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-08-21 10:05:27', '2024-08-21 10:05:27'),
+(125, 19, 'tran manh', '0987654321', 'manhtnph28511@fpt.edu.vn', 'ha noi', '', 'PENDING', 'DELAYED', 'Credit_card', '2024-08-22 08:27:24', '2024-08-22 10:39:30'),
+(126, 19, 'tran manh', '0987654321', 'manhtnph28511@fpt.edu.vn', 'ha noi', '', 'cancel', 'DELIVERED', 'Credit_card', '2024-08-22 08:40:39', '2024-08-22 09:49:38'),
+(127, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'cancel', 'DELIVERED', 'Credit_card', '2024-08-22 08:44:35', '2024-08-22 09:44:44'),
+(128, 19, 'tran manh', '0987654321', 'manhtnph28511@fpt.edu.vn', 'ha noi', '', 'cancel', 'CANCEL', 'Credit_card', '2024-08-22 10:20:17', '2024-08-22 10:21:39'),
+(129, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-22 11:11:53', '2024-08-22 11:11:53'),
+(130, 19, 'tran manh', '0987654321', 'manhtnph28511@fpt.edu.vn', 'ha noi', '', 'cancel', 'CANCEL', 'Credit_card', '2024-08-23 09:44:54', '2024-08-23 09:46:58');
 
 -- --------------------------------------------------------
 
@@ -355,9 +541,9 @@ CREATE TABLE `order_details` (
   `pro_id` bigint UNSIGNED NOT NULL,
   `size_id` bigint UNSIGNED DEFAULT NULL,
   `color_id` bigint UNSIGNED DEFAULT NULL,
-  `price` decimal(8,2) NOT NULL,
+  `price` int NOT NULL,
   `quantity` int NOT NULL,
-  `total_price` decimal(10,2) NOT NULL,
+  `total_price` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -367,45 +553,105 @@ CREATE TABLE `order_details` (
 --
 
 INSERT INTO `order_details` (`id`, `order_id`, `pro_id`, `size_id`, `color_id`, `price`, `quantity`, `total_price`, `created_at`, `updated_at`) VALUES
-(5, 25, 3, 2, 2, '480000.00', 1, '480000.00', '2024-08-04 02:28:20', '2024-08-04 02:28:20'),
-(6, 26, 3, 2, 2, '480000.00', 1, '480000.00', '2024-08-04 02:58:07', '2024-08-04 02:58:07'),
-(8, 35, 3, 1, 2, '480000.00', 1, '480000.00', '2024-08-04 03:02:08', '2024-08-04 03:02:08'),
-(10, 40, 2, 3, 2, '141234.00', 1, '141234.00', '2024-08-04 03:08:02', '2024-08-04 03:08:02'),
-(11, 41, 10, 1, 1, '230000.00', 1, '230000.00', '2024-08-04 03:08:55', '2024-08-04 03:08:55'),
-(13, 44, 8, 1, 2, '320000.00', 1, '320000.00', '2024-08-04 03:11:05', '2024-08-04 03:11:05'),
-(17, 48, 3, 1, 2, '480000.00', 1, '480000.00', '2024-08-04 03:20:23', '2024-08-04 03:20:23'),
-(23, 54, 3, 2, 2, '480000.00', 1, '480000.00', '2024-08-04 03:35:26', '2024-08-04 03:35:26'),
-(24, 55, 10, 1, 3, '230000.00', 1, '230000.00', '2024-08-04 03:35:56', '2024-08-04 03:35:56'),
-(25, 56, 15, 2, 1, '141234.00', 1, '141234.00', '2024-08-04 03:38:31', '2024-08-04 03:38:31'),
-(26, 57, 15, 2, 1, '141234.00', 1, '141234.00', '2024-08-04 03:39:14', '2024-08-04 03:39:14'),
-(27, 58, 3, 2, 1, '480000.00', 1, '480000.00', '2024-08-05 20:27:54', '2024-08-05 20:29:07'),
-(28, 59, 13, 1, 2, '900000.00', 1, '900000.00', '2024-08-06 03:29:36', '2024-08-06 03:29:36'),
-(29, 60, 13, 1, 2, '900000.00', 1, '900000.00', '2024-08-06 03:30:37', '2024-08-06 03:30:37'),
-(30, 61, 13, 1, 2, '900000.00', 1, '900000.00', '2024-08-06 03:41:08', '2024-08-07 03:21:51'),
-(31, 62, 13, 1, 2, '900000.00', 1, '900000.00', '2024-08-06 03:41:55', '2024-08-06 03:41:55'),
-(32, 64, 15, 2, 1, '141234.00', 1, '141234.00', '2024-08-06 03:45:51', '2024-08-06 03:45:51'),
-(33, 65, 6, 1, 1, '530000.00', 1, '530000.00', '2024-08-06 03:47:47', '2024-08-06 03:47:47'),
-(34, 66, 15, 2, 2, '141234.00', 1, '141234.00', '2024-08-06 03:51:59', '2024-08-06 03:51:59'),
-(35, 67, 15, 2, 2, '141234.00', 1, '141234.00', '2024-08-06 03:52:06', '2024-08-06 03:52:06'),
-(36, 68, 15, 2, 2, '141234.00', 1, '141234.00', '2024-08-06 03:53:03', '2024-08-06 03:53:03'),
-(37, 69, 3, 2, 1, '480000.00', 1, '480000.00', '2024-08-07 05:27:44', '2024-08-07 05:27:44'),
-(38, 70, 21, 2, 4, '300.00', 1, '300.00', '2024-08-08 04:32:41', '2024-08-08 19:12:32'),
-(39, 70, 21, 2, 4, '300.00', 1, '300.00', '2024-08-08 04:32:41', '2024-08-08 19:12:32'),
-(40, 71, 21, 3, 3, '300.00', 1, '300.00', '2024-08-08 19:29:37', '2024-08-08 19:29:37'),
-(41, 71, 21, 3, 3, '300.00', 1, '300.00', '2024-08-08 19:29:37', '2024-08-08 19:29:37'),
-(42, 72, 13, 3, 3, '900000.00', 1, '900000.00', '2024-08-08 21:26:37', '2024-08-08 21:26:37'),
-(43, 72, 21, 2, 4, '300000.00', 2, '600000.00', '2024-08-08 21:26:37', '2024-08-08 21:26:37'),
-(44, 73, 21, 2, 4, '300000.00', 1, '300000.00', '2024-08-08 21:30:35', '2024-08-08 21:30:35'),
-(45, 73, 6, 5, 1, '530000.00', 2, '1060000.00', '2024-08-08 21:30:35', '2024-08-08 21:30:35'),
-(46, 74, 13, 1, 1, '900000.00', 1, '900000.00', '2024-08-08 21:33:35', '2024-08-08 21:37:44'),
-(47, 74, 21, 3, 3, '500.00', 1, '500.00', '2024-08-08 21:33:35', '2024-08-08 21:37:44'),
-(48, 75, 21, 2, 4, '150.00', 1, '150.00', '2024-08-12 10:18:29', '2024-08-12 10:18:29'),
-(49, 76, 17, 2, 3, '69999.00', 1, '69999.00', '2024-08-12 10:19:54', '2024-08-12 10:19:54'),
-(50, 80, 21, 2, 4, '300000.00', 2, '600000.00', '2024-08-16 05:16:40', '2024-08-16 05:16:40'),
-(51, 81, 21, 2, 4, '300000.00', 2, '600000.00', '2024-08-16 05:24:02', '2024-08-16 05:24:02'),
-(52, 82, 21, 2, 4, '300000.00', 2, '600000.00', '2024-08-16 05:24:23', '2024-08-16 05:24:23'),
-(53, 83, 21, 2, 4, '300000.00', 2, '600000.00', '2024-08-16 05:25:25', '2024-08-16 05:25:25'),
-(54, 84, 21, 2, 4, '300000.00', 2, '600000.00', '2024-08-16 05:26:01', '2024-08-16 05:26:01');
+(5, 25, 3, 2, 2, 480000, 1, 480000, '2024-08-04 02:28:20', '2024-08-04 02:28:20'),
+(6, 26, 3, 2, 2, 480000, 1, 480000, '2024-08-04 02:58:07', '2024-08-04 02:58:07'),
+(8, 35, 3, 1, 2, 480000, 1, 480000, '2024-08-04 03:02:08', '2024-08-04 03:02:08'),
+(10, 40, 2, 3, 2, 141234, 1, 141234, '2024-08-04 03:08:02', '2024-08-04 03:08:02'),
+(11, 41, 10, 1, 1, 230000, 1, 230000, '2024-08-04 03:08:55', '2024-08-04 03:08:55'),
+(13, 44, 8, 1, 2, 320000, 1, 320000, '2024-08-04 03:11:05', '2024-08-04 03:11:05'),
+(17, 48, 3, 1, 2, 480000, 1, 480000, '2024-08-04 03:20:23', '2024-08-04 03:20:23'),
+(23, 54, 3, 2, 2, 480000, 1, 480000, '2024-08-04 03:35:26', '2024-08-04 03:35:26'),
+(24, 55, 10, 1, 3, 230000, 1, 230000, '2024-08-04 03:35:56', '2024-08-04 03:35:56'),
+(25, 56, 15, 2, 1, 141234, 1, 141234, '2024-08-04 03:38:31', '2024-08-04 03:38:31'),
+(26, 57, 15, 2, 1, 141234, 1, 141234, '2024-08-04 03:39:14', '2024-08-04 03:39:14'),
+(27, 58, 3, 2, 1, 480000, 1, 480000, '2024-08-05 20:27:54', '2024-08-05 20:29:07'),
+(28, 59, 13, 1, 2, 900000, 1, 900000, '2024-08-06 03:29:36', '2024-08-06 03:29:36'),
+(29, 60, 13, 1, 2, 900000, 1, 900000, '2024-08-06 03:30:37', '2024-08-06 03:30:37'),
+(30, 61, 13, 1, 2, 900000, 1, 900000, '2024-08-06 03:41:08', '2024-08-07 03:21:51'),
+(31, 62, 13, 1, 2, 900000, 1, 900000, '2024-08-06 03:41:55', '2024-08-06 03:41:55'),
+(32, 64, 15, 2, 1, 141234, 1, 141234, '2024-08-06 03:45:51', '2024-08-06 03:45:51'),
+(33, 65, 6, 1, 1, 530000, 1, 530000, '2024-08-06 03:47:47', '2024-08-06 03:47:47'),
+(34, 66, 15, 2, 2, 141234, 1, 141234, '2024-08-06 03:51:59', '2024-08-06 03:51:59'),
+(35, 67, 15, 2, 2, 141234, 1, 141234, '2024-08-06 03:52:06', '2024-08-06 03:52:06'),
+(36, 68, 15, 2, 2, 141234, 1, 141234, '2024-08-06 03:53:03', '2024-08-06 03:53:03'),
+(37, 69, 3, 2, 1, 480000, 1, 480000, '2024-08-07 05:27:44', '2024-08-07 05:27:44'),
+(38, 70, 21, 2, 4, 300, 1, 300, '2024-08-08 04:32:41', '2024-08-08 19:12:32'),
+(39, 70, 21, 2, 4, 300, 1, 300, '2024-08-08 04:32:41', '2024-08-08 19:12:32'),
+(40, 71, 21, 3, 3, 300, 1, 300, '2024-08-08 19:29:37', '2024-08-08 19:29:37'),
+(41, 71, 21, 3, 3, 300, 1, 300, '2024-08-08 19:29:37', '2024-08-08 19:29:37'),
+(42, 72, 13, 3, 3, 900000, 1, 900000, '2024-08-08 21:26:37', '2024-08-08 21:26:37'),
+(43, 72, 21, 2, 4, 300000, 2, 600000, '2024-08-08 21:26:37', '2024-08-08 21:26:37'),
+(44, 73, 21, 2, 4, 300000, 1, 300000, '2024-08-08 21:30:35', '2024-08-08 21:30:35'),
+(45, 73, 6, 5, 1, 530000, 2, 1060000, '2024-08-08 21:30:35', '2024-08-08 21:30:35'),
+(46, 74, 13, 1, 1, 900000, 1, 900000, '2024-08-08 21:33:35', '2024-08-08 21:37:44'),
+(47, 74, 21, 3, 3, 500, 1, 500, '2024-08-08 21:33:35', '2024-08-08 21:37:44'),
+(48, 75, 21, 2, 4, 150, 1, 150, '2024-08-12 10:18:29', '2024-08-12 10:18:29'),
+(49, 76, 17, 2, 3, 69999, 1, 69999, '2024-08-12 10:19:54', '2024-08-12 10:19:54'),
+(50, 80, 21, 2, 4, 300000, 2, 600000, '2024-08-16 05:16:40', '2024-08-16 05:16:40'),
+(51, 81, 21, 2, 4, 300000, 2, 600000, '2024-08-16 05:24:02', '2024-08-16 05:24:02'),
+(52, 82, 21, 2, 4, 300000, 2, 600000, '2024-08-16 05:24:23', '2024-08-16 05:24:23'),
+(53, 83, 21, 2, 4, 300000, 2, 600000, '2024-08-16 05:25:25', '2024-08-16 05:25:25'),
+(54, 84, 21, 2, 4, 300000, 2, 600000, '2024-08-16 05:26:01', '2024-08-16 05:26:01'),
+(55, 85, 21, 3, 3, 500, 1, 500, '2024-08-17 11:25:54', '2024-08-17 11:25:54'),
+(56, 85, 21, 1, 1, 300000, 1, 300000, '2024-08-17 11:25:54', '2024-08-17 11:25:54'),
+(57, 85, 3, 2, 4, 480000, 1, 480000, '2024-08-17 11:25:54', '2024-08-17 11:25:54'),
+(58, 85, 21, 1, 1, 300000, 1, 300000, '2024-08-17 11:25:54', '2024-08-17 11:25:54'),
+(59, 86, 3, 2, 4, 480000, 1, 480000, '2024-08-20 09:45:48', '2024-08-20 09:45:48'),
+(60, 86, 21, 1, 1, 300000, 2, 600000, '2024-08-20 09:45:48', '2024-08-20 09:45:48'),
+(61, 87, 3, 2, 4, 480000, 1, 384000, '2024-08-20 09:52:13', '2024-08-20 09:52:13'),
+(62, 87, 21, 2, 4, 150, 1, 0, '2024-08-20 09:52:13', '2024-08-20 09:52:13'),
+(63, 88, 3, 2, 4, 480000, 2, 960000, '2024-08-20 10:01:15', '2024-08-20 10:01:15'),
+(64, 88, 21, 1, 1, 300000, 1, 300000, '2024-08-20 10:01:15', '2024-08-20 10:01:15'),
+(65, 89, 3, 2, 4, 480000, 1, 480000, '2024-08-20 10:11:25', '2024-08-20 10:11:25'),
+(66, 89, 21, 2, 4, 150, 1, 150, '2024-08-20 10:11:25', '2024-08-20 10:11:25'),
+(67, 90, 3, 2, 4, 480000, 1, 480000, '2024-08-20 10:18:54', '2024-08-20 10:18:54'),
+(68, 90, 21, 3, 3, 500, 2, 1000, '2024-08-20 10:18:54', '2024-08-20 10:18:54'),
+(69, 91, 3, 2, 4, 480000, 1, 480000, '2024-08-20 10:21:20', '2024-08-20 10:21:20'),
+(70, 91, 21, 2, 4, 150, 1, 150, '2024-08-20 10:21:20', '2024-08-20 10:21:20'),
+(71, 92, 3, 2, 4, 480000, 1, 480000, '2024-08-20 10:22:53', '2024-08-20 10:22:53'),
+(72, 92, 21, 2, 4, 150, 1, 150, '2024-08-20 10:22:53', '2024-08-20 10:22:53'),
+(73, 93, 3, 2, 4, 480000, 1, 480000, '2024-08-20 10:29:07', '2024-08-20 10:29:07'),
+(74, 94, 3, 2, 4, 480000, 1, 480000, '2024-08-20 10:38:07', '2024-08-20 10:38:07'),
+(75, 95, 3, 2, 4, 480000, 1, 480000, '2024-08-20 10:38:08', '2024-08-20 10:38:08'),
+(76, 96, 3, 2, 4, 480000, 1, 480000, '2024-08-21 08:29:13', '2024-08-21 08:29:13'),
+(77, 96, 21, 3, 3, 500, 1, 500, '2024-08-21 08:29:13', '2024-08-21 08:29:13'),
+(78, 97, 3, 2, 4, 480000, 1, 480000, '2024-08-21 08:29:38', '2024-08-21 08:29:38'),
+(79, 97, 21, 3, 3, 500, 1, 500, '2024-08-21 08:29:38', '2024-08-21 08:29:38'),
+(80, 98, 3, 2, 4, 480000, 1, 480000, '2024-08-21 08:36:20', '2024-08-21 08:36:20'),
+(81, 98, 21, 3, 3, 500, 1, 500, '2024-08-21 08:36:20', '2024-08-21 08:36:20'),
+(82, 99, 3, 2, 4, 480000, 2, 768000, '2024-08-21 08:37:29', '2024-08-21 08:37:29'),
+(83, 100, 3, 2, 4, 480000, 2, 959600, '2024-08-21 08:39:06', '2024-08-21 08:39:06'),
+(84, 101, 3, 2, 4, 480000, 2, 959600, '2024-08-21 08:43:20', '2024-08-21 08:43:20'),
+(85, 102, 3, 2, 4, 480000, 2, 959600, '2024-08-21 08:45:32', '2024-08-21 08:45:32'),
+(86, 103, 3, 2, 4, 480000, 2, 959600, '2024-08-21 08:48:24', '2024-08-21 08:48:24'),
+(87, 104, 3, 2, 4, 480000, 2, 959600, '2024-08-21 08:51:36', '2024-08-21 08:51:36'),
+(88, 105, 3, 2, 4, 480000, 2, 960000, '2024-08-21 09:02:09', '2024-08-21 09:02:09'),
+(89, 106, 3, 2, 4, 480000, 2, 960000, '2024-08-21 09:03:12', '2024-08-21 09:03:12'),
+(90, 107, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:09:04', '2024-08-21 09:09:04'),
+(91, 108, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:09:50', '2024-08-21 09:09:50'),
+(92, 109, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:13:24', '2024-08-21 09:13:24'),
+(93, 110, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:13:39', '2024-08-21 09:13:39'),
+(94, 111, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:17:24', '2024-08-21 09:17:24'),
+(95, 112, 3, 2, 4, 480000, 2, 960000, '2024-08-21 09:18:12', '2024-08-21 09:18:12'),
+(96, 113, 3, 2, 4, 480000, 2, 960000, '2024-08-21 09:18:26', '2024-08-21 09:18:26'),
+(97, 114, 3, 2, 4, 480000, 2, 960000, '2024-08-21 09:21:26', '2024-08-21 09:21:26'),
+(98, 115, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:21:50', '2024-08-21 09:21:50'),
+(99, 116, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:23:26', '2024-08-21 09:23:26'),
+(100, 117, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:25:31', '2024-08-21 09:25:31'),
+(101, 118, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:28:03', '2024-08-21 09:28:03'),
+(102, 119, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:32:50', '2024-08-21 09:32:50'),
+(103, 120, 3, 2, 4, 480000, 1, 480000, '2024-08-21 09:37:23', '2024-08-21 09:37:23'),
+(104, 121, 21, 1, 1, 300000, 1, 300000, '2024-08-21 09:47:44', '2024-08-21 09:47:44'),
+(105, 122, 21, 1, 1, 300000, 2, 600000, '2024-08-21 09:50:53', '2024-08-21 09:50:53'),
+(106, 123, 21, 1, 1, 300000, 2, 600000, '2024-08-21 09:54:37', '2024-08-21 09:54:37'),
+(107, 124, 3, 2, 4, 480000, 2, 864000, '2024-08-21 10:05:27', '2024-08-21 10:05:27'),
+(108, 125, 21, 1, 1, 300000, 1, 300000, '2024-08-22 08:27:24', '2024-08-22 08:27:24'),
+(109, 126, 3, 2, 4, 480000, 1, 480000, '2024-08-22 08:40:39', '2024-08-22 08:40:39'),
+(110, 127, 3, 2, 4, 480000, 1, 480000, '2024-08-22 08:44:35', '2024-08-22 08:44:35'),
+(111, 128, 21, 2, 4, 150, 1, 150, '2024-08-22 10:20:17', '2024-08-22 10:20:17'),
+(112, 128, 3, 2, 4, 480000, 1, 480000, '2024-08-22 10:20:17', '2024-08-22 10:20:17'),
+(113, 129, 3, 2, 4, 480000, 1, 480000, '2024-08-22 11:11:53', '2024-08-22 11:11:53'),
+(114, 130, 3, 2, 4, 480000, 1, 480000, '2024-08-23 09:44:54', '2024-08-23 09:44:54');
 
 -- --------------------------------------------------------
 
@@ -446,7 +692,32 @@ INSERT INTO `order_updates` (`id`, `order_id`, `user_id`, `note`, `created_at`, 
 (16, 70, 17, 'Đơn hàng đã nhận và đang đóng gói.', '2024-08-08 19:12:32', '2024-08-08 19:12:32', NULL),
 (17, 70, 17, 'Đơn hàng đã được giao cho người nhận.', '2024-08-08 19:13:00', '2024-08-08 19:13:00', NULL),
 (18, 74, 17, 'Đơn hàng đã được giao cho người nhận.', '2024-08-08 21:36:42', '2024-08-08 21:36:42', NULL),
-(19, 74, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-08-08 21:37:44', '2024-08-08 21:37:44', NULL);
+(19, 74, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-08-08 21:37:44', '2024-08-08 21:37:44', NULL),
+(20, 5, 17, 'Đơn hàng đã gặp vấn đề hoặc ngoại lệ trong quá trình vận chuyển.', '2024-08-22 09:11:04', '2024-08-22 09:11:04', NULL),
+(21, 5, 17, 'Đơn hàng đã được hoàn trả lại cho người gửi.', '2024-08-22 09:11:07', '2024-08-22 09:11:07', NULL),
+(22, 5, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-08-22 09:11:11', '2024-08-22 09:11:11', NULL),
+(23, 9, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-08-22 09:17:56', '2024-08-22 09:17:56', NULL),
+(24, 10, 17, 'Đơn hàng đã bị trễ hẹn trong quá trình vận chuyển.', '2024-08-22 09:20:13', '2024-08-22 09:20:13', NULL),
+(25, 11, 17, 'Đơn hàng đã được giao cho người nhận.', '2024-08-22 09:24:17', '2024-08-22 09:24:17', NULL),
+(26, 11, 17, 'Đơn hàng đã bị trễ hẹn trong quá trình vận chuyển.', '2024-08-22 09:26:12', '2024-08-22 09:26:12', NULL),
+(27, 11, 17, 'Đơn hàng trạng thái không hợp lệ.', '2024-08-22 09:28:59', '2024-08-22 09:28:59', NULL),
+(28, 11, 17, 'Đơn hàng trạng thái không hợp lệ.', '2024-08-22 09:29:02', '2024-08-22 09:29:02', NULL),
+(29, 11, 17, 'Đơn hàng đã được giao cho người nhận.', '2024-08-22 09:29:06', '2024-08-22 09:29:06', NULL),
+(30, 11, 17, 'Đơn hàng đã được hoàn trả lại cho người gửi.', '2024-08-22 09:32:34', '2024-08-22 09:32:34', NULL),
+(31, 10, 17, 'Đơn hàng đã được hoàn trả lại cho người gửi.', '2024-08-22 09:32:52', '2024-08-22 09:32:52', NULL),
+(32, 11, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-08-22 09:38:38', '2024-08-22 09:38:38', NULL),
+(33, 10, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-08-22 09:38:52', '2024-08-22 09:38:52', NULL),
+(34, 35, 17, 'Đơn hàng đơn hàng đã bị hủy.', '2024-08-22 09:39:14', '2024-08-22 09:39:14', NULL),
+(35, 35, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-08-22 09:40:09', '2024-08-22 09:40:09', NULL),
+(36, 127, 17, 'Đơn hàng đơn hàng đã bị hủy.', '2024-08-22 09:44:42', '2024-08-22 09:44:42', NULL),
+(37, 126, 17, 'Đơn hàng đơn hàng đã bị hủy.', '2024-08-22 09:49:36', '2024-08-22 09:49:36', NULL),
+(38, 98, 17, 'Đơn hàng đơn hàng đã bị hủy.', '2024-08-22 09:52:30', '2024-08-22 09:52:30', NULL),
+(39, 54, 17, 'Đơn hàng đơn hàng đã bị hủy.', '2024-08-22 10:17:08', '2024-08-22 10:17:08', NULL),
+(40, 128, 17, 'Đơn hàng đã bị trễ hẹn trong quá trình vận chuyển.', '2024-08-22 10:21:23', '2024-08-22 10:21:23', NULL),
+(41, 128, 17, 'Đơn hàng đơn hàng đã bị hủy.', '2024-08-22 10:21:39', '2024-08-22 10:21:39', NULL),
+(42, 125, 17, 'Đơn hàng đã được giao cho người nhận.', '2024-08-22 10:39:14', '2024-08-22 10:39:14', NULL),
+(43, 125, 17, 'Đơn hàng đã bị trễ hẹn trong quá trình vận chuyển.', '2024-08-22 10:39:30', '2024-08-22 10:39:30', NULL),
+(44, 130, 17, 'Đơn hàng đơn hàng đã bị hủy.', '2024-08-23 09:46:58', '2024-08-23 09:46:58', NULL);
 
 -- --------------------------------------------------------
 
@@ -511,7 +782,7 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `name`, `image`, `price`, `quantity`, `description`, `view`, `slug`, `cate_id`, `brand_id`, `color_id`, `size_id`, `status_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'Cartoon Astronaut T-Shirts', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637576/Cara/Products/jxmoqrh37yknvwnufeou.jpg', 141234.00, 10, '<p><strong>Form Dáng</strong>: Regular Fit.</p><p><strong>Chất liệu:</strong></p><blockquote><ul><li>Định lượng: 330gsm (Dày dặn, xốp, phồng đứng form)</li><li>Thành phần: 35% Cotton - 65% Polyester</li></ul></blockquote><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 25, 'cartoon-astronaut-t-shirts', 1, 1, 5, 1, 1, NULL, '2024-07-27 20:34:56', '2024-08-04 01:58:56'),
 (2, 'Cartoon Astronaut T-Shirts', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637548/Cara/Products/olkj6gj7e7kflny40axq.jpg', 141234.00, 23, '<p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 67, 'cartoon-astronaut-t-shirts', 1, 1, 5, 3, 1, NULL, '2024-07-27 20:52:33', '2024-08-08 02:52:59'),
-(3, 'TOBI Regular Raincoat', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637530/Cara/Products/qxxwuol3emz4fahronqf.jpg', 480000.00, 17, '<p><strong>Form Dáng</strong>: Oversize</p><p><strong>Chất liệu</strong>: Dù trượt nước - 100 % Polyester</p><p><strong>Chi tiết sản phẩm</strong>:</p><blockquote><ul><li>Hình in đa dạng</li><li>Phần lai áo được may xẻ tà và có nút bấm.</li></ul></blockquote><p>&nbsp;</p>', 60, 'tobi-ragular-raincoat', 1, 2, 4, 2, 1, NULL, '2024-07-28 21:22:53', '2024-08-07 05:27:22'),
+(3, 'TOBI Regular Raincoat', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637530/Cara/Products/qxxwuol3emz4fahronqf.jpg', 480000.00, 9, '<p><strong>Form Dáng</strong>: Oversize</p><p><strong>Chất liệu</strong>: Dù trượt nước - 100 % Polyester</p><p><strong>Chi tiết sản phẩm</strong>:</p><blockquote><ul><li>Hình in đa dạng</li><li>Phần lai áo được may xẻ tà và có nút bấm.</li></ul></blockquote><p>&nbsp;</p>', 60, 'tobi-ragular-raincoat', 1, 2, 4, 2, 1, NULL, '2024-07-28 21:22:53', '2024-08-07 05:27:22'),
 (4, 'Waffle Stripped Polo - Grude', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637506/Cara/Products/mds4i02ts76eg5stpirj.jpg', 430000.00, 10, '<p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 31, 'waffle-stripped-polo-grude', 1, 2, 3, 4, 2, NULL, '2024-07-28 21:24:38', '2024-07-23 21:41:26'),
 (5, 'Regular Typo Cuban Shirt', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637486/Cara/Products/zshiefnor5oyupnn7lhl.jpg', 450000.00, 32, '<p><strong>Form Dáng:</strong>&nbsp;Boxy Fit.</p><ul><li>Chất liệu: 70% Cotton 30% Nylon</li><li>Định lượng: 161GSM</li></ul><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Form dáng Boxy chia tỉ lệ cơ thể 1/3 giúp tôn dáng người mặc</li><li>In vân đá</li></ul></blockquote>', 2, 'tegular-typo-cuban-shirt', 7, 7, 3, 4, 2, NULL, '2024-07-28 21:44:37', '2024-07-23 21:33:30'),
 (6, 'Highclass Cuban Shirt', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699682825/Cara/Products/rbjjn6krrfs0dxs8z1ph.jpg', 530000.00, 22, '<p><strong>Form dáng:</strong> Boxy Fit.</p><p><strong>Chất liệu:</strong> Lụa D100</p><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Form dáng Boxy chia tỉ lệ cơ thể 1/3 giúp tôn dáng người mặc&nbsp;</li><li>Áo được in overprinted toàn bộ áo</li><li>Hoạ tiết trên áo mang hơi hướng summer vibe&nbsp;</li></ul></blockquote>', 23, 'highclass-cuban-shirt', 10, 4, 1, 5, 1, NULL, '2024-07-28 21:46:46', '2024-08-06 03:47:36'),
@@ -526,7 +797,7 @@ INSERT INTO `products` (`id`, `name`, `image`, `price`, `quantity`, `description
 (15, 'Quần jean nam rách gối', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637230/Cara/Products/mum0grnh1m0ndbcqr3cq.jpg', 141234.00, 21, '<p>✔️ Loại : quần jeans nam, quần rach gối nam,quần bò rách gối</p><p>✔️ Màu sắc: quần jean nam đen, quần jean nam xanh, quần jean nam xám, quần jean nam trắng ( màu theo mã trên hình )</p><p>✔️ Thích hợp : quần jean nam ống suông gối thích hợp cho Đi Chơi, Công Sở, Đời Thường</p><p>✔️Chất liệu : quần rin nam được làm từ chất jeans</p><p>✔️kiểu dáng: skinny jean nam, quần jean nam slimfit,quần jean nam ống đứng</p>', 125, 'quan-jean-nam-rach-goi', 11, 6, 1, 4, 1, NULL, '2024-07-29 20:34:20', '2024-08-06 03:51:47'),
 (17, 'Sandal Nữ', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637209/Cara/Products/ibueiu32mw9pwckonpba.jpg', 69999.00, 8, '<p>✔️𝐌𝐎̂ 𝐓𝐀̉ 𝐒𝐀̉𝐍 𝐏𝐇𝐀̂̉𝐌&nbsp;</p><p>- Chất liệu: da mềm&nbsp;</p><p>- Màu sắc: đen&nbsp;</p><p>-kiểu dáng thời trang&nbsp;</p><p>- phù hợp với mọi lứa tuổi&nbsp;</p><p>- Kích thước: 35,36,37,38,39</p>', 6, 'sandal-nu', 22, 2, 3, 2, 2, NULL, '2024-07-29 20:42:14', '2024-07-24 17:10:19'),
 (20, 'PAULWEEKEND Áo Sơ Mi Dài Tay Form Rộng Phong Cách retro Nhật Bản Cho Nam', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637126/Cara/Products/c5gd2n5z5nrea9wjm8f5.jpg', 158000.00, 32, NULL, 0, NULL, 7, 8, 4, 3, 3, NULL, '2024-11-09 20:25:26', '2024-11-10 09:51:34'),
-(21, 'áo thể thao', 'https://res.cloudinary.com/denxdub1l/image/upload/v1722853863/Cara/Products/f0guuvvtcr6n7eftyjm2.jpg', 300000.00, 2, NULL, 13, 'ao-the-thao', 1, 1, 1, 1, 1, NULL, '2024-08-05 03:30:51', '2024-08-08 21:14:14');
+(21, 'áo thể thao', 'https://res.cloudinary.com/denxdub1l/image/upload/v1722853863/Cara/Products/f0guuvvtcr6n7eftyjm2.jpg', 300000.00, 15, NULL, 13, 'ao-the-thao', 1, 1, 1, 1, 1, NULL, '2024-08-05 03:30:51', '2024-08-17 04:32:30');
 
 -- --------------------------------------------------------
 
@@ -541,7 +812,7 @@ CREATE TABLE `product_variants` (
   `color_id` int UNSIGNED NOT NULL,
   `size_id` int UNSIGNED NOT NULL,
   `quantity` int NOT NULL DEFAULT '0',
-  `price` decimal(8,2) NOT NULL,
+  `price` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -551,10 +822,10 @@ CREATE TABLE `product_variants` (
 --
 
 INSERT INTO `product_variants` (`id`, `product_id`, `image_variant`, `color_id`, `size_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
-(1, 20, NULL, 1, 1, 3, '300.00', '2024-08-07 21:25:22', '2024-08-07 21:25:22'),
-(2, 20, NULL, 3, 4, 4, '300.00', '2024-08-07 21:26:50', '2024-08-07 21:26:50'),
-(5, 21, 'images/product_variants/VmcuL0E5VpK8CVCsvC4e0ARwP99OxlyqwLkqclza.jpg', 4, 2, 3, '150.00', '2024-08-07 21:33:14', '2024-08-08 03:17:12'),
-(6, 21, 'images/product_variants/YIKS94x5PNlGN4OKHkokTXcQAWjbPlH0mzzhkZ6w.jpg', 3, 3, 4, '500.00', '2024-08-07 21:46:57', '2024-08-08 04:35:41');
+(1, 20, NULL, 1, 1, 0, 300, '2024-08-07 21:25:22', '2024-08-07 21:25:22'),
+(2, 20, NULL, 3, 4, -41, 300, '2024-08-07 21:26:50', '2024-08-07 21:26:50'),
+(5, 21, 'images/product_variants/VmcuL0E5VpK8CVCsvC4e0ARwP99OxlyqwLkqclza.jpg', 4, 2, 3, 150, '2024-08-07 21:33:14', '2024-08-17 11:18:09'),
+(6, 21, 'images/product_variants/YIKS94x5PNlGN4OKHkokTXcQAWjbPlH0mzzhkZ6w.jpg', 3, 3, 2, 500, '2024-08-07 21:46:57', '2024-08-17 11:16:30');
 
 -- --------------------------------------------------------
 
@@ -687,11 +958,11 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `avatar`, `email`, `email_verified_at`, `password`, `address`, `phone`, `role`, `deleted_at`, `remember_token`, `created_at`, `updated_at`, `status`) VALUES
 (1, 'Quản trị viên', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'admin@gmail.com', NULL, '$2y$10$WTUHCBKX30LtFY0egvP98ue9Ae6rod4NJz9eAAlt0ErPimfoy21zu', NULL, NULL, 1, NULL, NULL, '2024-06-26 20:35:16', '2024-07-23 20:35:16', 1),
-(2, 'buingocphi', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'phibnph29465@fpt.edu.vn', NULL, '$2y$10$JOtPaOdf04C4gy985Lw8hOD1pr02cDpSDywImGArglptRY8jAoX96', NULL, NULL, 0, NULL, NULL, '2024-06-28 01:56:52', '2024-07-29 00:23:16', 1),
+(2, 'buingocphi', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'phibnph29465@fpt.edu.vn', NULL, '$2y$10$JOtPaOdf04C4gy985Lw8hOD1pr02cDpSDywImGArglptRY8jAoX96', NULL, NULL, 0, NULL, NULL, '2024-06-28 01:56:52', '2024-08-16 08:22:30', 1),
 (3, 'Bùi Fee', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699687947/Cara/Profile/kpvg3fzzm3evjydhhnkf.png', 'buingocphinn@gmail.com', NULL, '$2y$10$rQOdhXnOK/3tKOwKYn.3auDLOzdkafHHRNNwDDfWqeJlTeC0BRTT6', 'Kim Sơn - Ninh Bình', '0377674930', 0, NULL, NULL, '2024-06-03 02:08:02', '2024-07-10 17:50:11', 1),
 (17, 'tran manh', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'manutd@gmail.com', NULL, '$2y$10$jwW4mLYi/7.L7ekzAGrS4eiQD87eJkOBJA/9QCLVArAjSxQV9JzbG', NULL, NULL, 1, NULL, NULL, '2024-07-28 20:54:41', '2024-07-28 20:55:08', 1),
 (18, 'tran manh', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'manhtnph28511@fpt.edu.vn', NULL, '$2y$10$8.22KjCyJfiorzo/LLnsiOJcnLi14ZA4BReeIGuDQyHaZ9NU8/6C.', 'ha noi', NULL, 1, NULL, NULL, '2024-07-28 21:26:46', '2024-07-29 00:16:25', 1),
-(19, 'tran manh', 'https://res.cloudinary.com/denxdub1l/image/upload/v1722249803/Cara/Profile/aovxgnserrpty9awcjzs.jpg', 'minh29122003@gmail.com', NULL, '$2y$10$Qpo/Kan2Tlh3EHd1kFdyceVOdhBnf26f8x65DmEwxN6I9UuDpKtDm', 'ha noi', '0987654321', 0, NULL, NULL, '2024-07-29 01:45:09', '2024-07-29 03:43:15', 1);
+(19, 'tran manh', 'https://res.cloudinary.com/denxdub1l/image/upload/v1722249803/Cara/Profile/aovxgnserrpty9awcjzs.jpg', 'minh29122003@gmail.com', NULL, '$2y$10$Qpo/Kan2Tlh3EHd1kFdyceVOdhBnf26f8x65DmEwxN6I9UuDpKtDm', 'ha noi', '0987654321', 0, NULL, NULL, '2024-07-29 01:45:09', '2024-08-23 11:26:55', 0);
 
 -- --------------------------------------------------------
 
@@ -702,10 +973,12 @@ INSERT INTO `users` (`id`, `name`, `avatar`, `email`, `email_verified_at`, `pass
 CREATE TABLE `vouchers` (
   `id` int UNSIGNED NOT NULL,
   `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `discount` decimal(8,2) NOT NULL,
+  `discount` int NOT NULL,
   `discount_type` enum('percentage','fixed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'percentage',
   `starts_at` date NOT NULL,
   `expires_at` date NOT NULL,
+  `usage_count` int NOT NULL DEFAULT '0',
+  `quantity` int NOT NULL DEFAULT '0',
   `product_id` int UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -715,12 +988,15 @@ CREATE TABLE `vouchers` (
 -- Dumping data for table `vouchers`
 --
 
-INSERT INTO `vouchers` (`id`, `code`, `discount`, `discount_type`, `starts_at`, `expires_at`, `product_id`, `created_at`, `updated_at`) VALUES
-(1, 'mm23', '30.00', 'fixed', '2024-08-15', '2024-08-16', 1, '2024-08-15 03:10:32', '2024-08-15 04:01:06'),
-(2, 'mo01', '10.00', 'percentage', '2024-08-16', '2024-08-17', NULL, '2024-08-15 03:34:22', '2024-08-15 03:34:22'),
-(4, 'sp', '400.00', 'fixed', '2024-08-17', '2024-08-23', NULL, '2024-08-15 03:53:42', '2024-08-15 03:53:42'),
-(5, 'santo', '555.00', 'fixed', '2024-08-16', '2024-08-17', NULL, '2024-08-16 02:39:29', '2024-08-16 02:39:29'),
-(6, 'm66686', '100.00', 'fixed', '2024-08-16', '2024-08-17', 21, '2024-08-16 03:03:03', '2024-08-16 03:03:03');
+INSERT INTO `vouchers` (`id`, `code`, `discount`, `discount_type`, `starts_at`, `expires_at`, `usage_count`, `quantity`, `product_id`, `created_at`, `updated_at`) VALUES
+(1, 'mm23', 30, 'fixed', '2024-08-15', '2024-08-16', 0, 0, 1, '2024-08-15 03:10:32', '2024-08-15 04:01:06'),
+(2, 'mo01', 10, 'percentage', '2024-08-16', '2024-08-31', 1, 9, NULL, '2024-08-15 03:34:22', '2024-08-21 10:02:41'),
+(4, 'sp', 400, 'fixed', '2024-08-17', '2024-08-23', 10, 0, NULL, '2024-08-15 03:53:42', '2024-08-21 09:21:42'),
+(5, 'santo', 555, 'fixed', '2024-08-16', '2024-08-31', 2, -2, NULL, '2024-08-16 02:39:29', '2024-08-20 08:27:03'),
+(6, 'm66686', 100000, 'fixed', '2024-08-16', '2024-08-25', 4, 7, 21, '2024-08-16 03:03:03', '2024-08-20 09:52:04'),
+(7, 'hihi', 20, 'percentage', '2024-08-20', '2024-08-22', 1, -1, NULL, '2024-08-19 02:25:35', '2024-08-19 02:39:10'),
+(8, 'premier league', 20, 'percentage', '2024-08-19', '2024-08-30', 11, 0, NULL, '2024-08-19 02:34:13', '2024-08-21 08:37:20'),
+(9, 'asd', 20, 'percentage', '2024-08-20', '2024-08-31', 1, 9, 21, '2024-08-20 09:20:29', '2024-08-20 09:20:46');
 
 --
 -- Indexes for dumped tables
@@ -742,6 +1018,19 @@ ALTER TABLE `carts`
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `chats`
+--
+ALTER TABLE `chats`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `chats_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `clients_notifications`
+--
+ALTER TABLE `clients_notifications`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -775,8 +1064,7 @@ ALTER TABLE `migrations`
 -- Indexes for table `notifications`
 --
 ALTER TABLE `notifications`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `notifications_order_id_foreign` (`order_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `orders`
@@ -879,13 +1167,25 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `chats`
+--
+ALTER TABLE `chats`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `clients_notifications`
+--
+ALTER TABLE `clients_notifications`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `colors`
@@ -909,31 +1209,31 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `order_updates`
 --
 ALTER TABLE `order_updates`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -987,11 +1287,17 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `vouchers`
 --
 ALTER TABLE `vouchers`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `chats`
+--
+ALTER TABLE `chats`
+  ADD CONSTRAINT `chats_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `comments`
@@ -999,12 +1305,6 @@ ALTER TABLE `vouchers`
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `notifications`
---
-ALTER TABLE `notifications`
-  ADD CONSTRAINT `notifications_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `order_details`
