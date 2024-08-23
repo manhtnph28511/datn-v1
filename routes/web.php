@@ -32,7 +32,7 @@ use App\Http\Controllers\Clients\HomeCategoryController;
 use App\Http\Controllers\Clients\OrderController as ClientsOrderController;
 use App\Http\Controllers\Clients\OrderPlacedController;
 use Illuminate\Notifications\Notification;
-use App\Http\Controllers\Clients\NotificationController as ClientsNotificationController;
+use App\Http\Controllers\Clients\ClientsNotificationController;
 use App\Http\Controllers\Clients\ChatController as ClientsChatController;
 
 /*
@@ -211,7 +211,8 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
 
     Route::name('admin.')->prefix('chats')->controller(ChatController::class)->group(function () {
         Route::get('/', 'index')->name('chats.index');
-        Route::post('/{userId}', 'sendMessage')->name('chats.sendMessage');
+        Route::get('/{userId}', 'show')->name('chats.show'); // Hiển thị chat với một người dùng cụ thể
+        Route::post('/send/{userId}', 'sendMessage')->name('chats.sendMessage'); 
     });
 
 });
@@ -267,6 +268,8 @@ Route::middleware('auth')->prefix('cart')->controller(CartController::class)->gr
     Route::view('success', 'clients.pages.orders.order-success')->name('order-success');
     Route::get('voucher', 'voucher')->name('home.cart.voucher');
     Route::post('applyVoucher', [CartController::class, 'applyVoucher'])->name('applyVoucher');
+    Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+    // Route::post('/stripe/webhook', [CartController::class, 'handleStripeWebhook']);
 
 
 });
@@ -285,15 +288,18 @@ Route::middleware('auth')->name('order.')->prefix('order')->controller(ClientsOr
     Route::get('/track', 'track')->name('track');
     #review
 });
+
 Route::name('clients.')->prefix('notification')->controller(ClientsNotificationController::class)->group(function () {
     Route::get('/notifications', 'index')->name('notifications.index');
     Route::post('/notifications/{id}/read', 'markAsRead')->name('notifications.markAsRead');
     Route::delete('/notifications/{id}', 'delete')->name('notifications.delete');
-    Route::post('/notifications/{id}/confirm-received', [ClientsNotificationController::class, 'confirmReceived'])->name('notifications.confirmReceived');
+    Route::post('/notifications/{id}/confirm-received', 'confirmReceived')->name('notifications.confirmReceived');
+    Route::post('/notifications/{id}/cancel-order', 'cancelOrder')->name('notifications.cancelOrder');
 });
 
 
-Route::prefix('clients')->name('clients.')->controller(ClientsChatController::class)->group(function () {
+Route::prefix('clients')->name('clients.')->namespace('Clients')->controller(ClientsChatController::class)->group(function () {
     Route::get('/chats/{userId?}', [ClientsChatController::class, 'index'])->name('chats.index');
     Route::post('/chats/send', [ClientsChatController::class, 'send'])->name('chats.send');
 });
+

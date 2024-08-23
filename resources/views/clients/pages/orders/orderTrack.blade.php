@@ -112,8 +112,9 @@
                                 $order->shipment_status == 'DELAYED' ||
                                 $order->shipment_status == 'EXCEPTION' ||
                                 $order->shipment_status == 'OUTFORDELIVERY' ||
-                                $order->shipment_status == 'DELIVERED' ||
-                                $order->shipment_status == 'RETURNED') tt-step-done @elseif ($order->shipment_status == 'SHIPPED') active @endif">
+                                $order->shipment_status == 'DELIVERED' 
+                                // $order->shipment_status == 'RETURNED'
+                                ) tt-step-done @elseif ($order->shipment_status == 'SHIPPED') active @endif">
                         Đã được vận chuyển</li>
                     <li class="fs-xs tt-step @if ($order->shipment_status == 'DELIVERED') tt-step-done @endif">
                         Giao hàng thành công</li>

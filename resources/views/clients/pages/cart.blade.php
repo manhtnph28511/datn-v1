@@ -9,6 +9,8 @@
         <h2>#Xin chào</h2>
         <p>Đây là giỏ hàng của bạn</p>
     </section>
+
+       
     @if (count($carts) > 0)
         <section id="cart" class="section-p1">
             <table width="100%">
@@ -26,6 +28,19 @@
                         <td>Giá sau khi sử dụng voucher</td> --}}
                     </tr>
                 </thead>
+
+                @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
                 @php
                     $total = 0;
                 @endphp
@@ -65,19 +80,7 @@
                                 </form>
                             </td>
                              <td>{{ number_format($itemTotal) }}</td>
-                            {{-- <td>
-                                <form action="{{ route('applyVoucher') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="pro_id" value="{{ $cart->pro_id }}">
-                                    <input type="text" name="voucher_code" placeholder="Nhập mã voucher">
-                                    <button type="submit" class="btn btn-primary">Sử dụng</button>
-                                </form>
-                            </td>
-                            <td>
-                              
-                                <h3>Tổng tiền sau giảm giá: {{ number_format($cart->discounted_total_price, 2) }} VND</h3>
-                           
-                            </td>  --}}
+                            
                         </tr>
                     @endforeach
                 </tbody>
@@ -111,3 +114,24 @@
         </div>
     @endif
 @endsection
+
+<style>
+    .alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+</style>

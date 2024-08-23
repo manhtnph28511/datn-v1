@@ -12,8 +12,8 @@ class NotificationController extends Controller
         // Cập nhật tất cả thông báo là đã đọc
         Notification::where('is_read', false)->update(['is_read' => true]);
 
-        // Lấy tất cả thông báo
-        $notifications = Notification::all();
+        // Lấy tất thông báo
+        $notifications = Notification::orderBy('created_at', 'desc')->get();
 
         // Lấy số lượng thông báo chưa đọc
         $unreadNotificationsCount = Notification::where('is_read', false)->count();

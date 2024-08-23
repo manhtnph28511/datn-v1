@@ -40,6 +40,9 @@
                                 <th scope="col" class="px-6 py-3 w-[150px]">
                                     Size
                                 </th>
+                                <th scope="col" class="px-6 py-3 w-[150px]">
+                                    Số lượng
+                                </th>
                                 <th scope="col" class="px-6 py-3">
                                     Hành động
                                 </th>
@@ -63,6 +66,11 @@
                                 <th scope="row"
                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white truncate">
                                 {{ $pro->size->name  }}
+                            </th>
+                            <th scope="row"
+                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white truncate">
+                            {{ $pro->quantity  }}
+                        </th>
                                 
 {{--                         
                             </th>

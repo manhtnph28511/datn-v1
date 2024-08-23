@@ -42,12 +42,12 @@
                     {{-- Hiển thị nút "Bạn có mã giảm giá?" --}}
                     <button type="button" class="btn btn-primary show-voucher-form" data-index="{{ $index }}">Bạn có mã giảm giá?</button>
                 </td>
-                <td>
+                <td class="discounted-price" style="display: none;">
                     @php
                         $discounted_price = $cart->discounted_total_price ?? ($cart->quantity * $cart->price);
                         $final_price += $discounted_price;
                     @endphp
-                    {{ number_format($cart->discounted_total_price) }} VNĐ
+                    {{ number_format($discounted_price) }} VNĐ
                 </td>
             </tr>
         
@@ -89,8 +89,12 @@
         button.addEventListener('click', function() {
             var index = button.getAttribute('data-index');
             var voucherForm = document.getElementById('voucher-form-' + index);
+            var discountedPriceCell = button.closest('tr').querySelector('.discounted-price');
 
             voucherForm.style.display = 'table-row'; // Hiển thị form tương ứng
+            discountedPriceCell.style.display = 'table-cell'; 
+
+
             button.style.display = 'none'; // Ẩn nút sau khi nhấn
         });
     });

@@ -12,6 +12,12 @@
                     <button type="submit">Tìm kiếm</button>
                 </form>
 
+                @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+                @endif
+                
                 <h3>Người dùng</h3>
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">

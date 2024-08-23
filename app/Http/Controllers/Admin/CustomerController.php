@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\ClientsNotification;
 use App\Models\Notification;
 
 class CustomerController extends Controller
@@ -21,6 +22,26 @@ class CustomerController extends Controller
         $user->status = 1; // Giả sử 1 là trạng thái active
         $user->save();
 
+
+        ClientsNotification::create([
+            'type' => 'account_update',
+            'data' => json_encode([
+                'user_id' => $user->id,
+                'message' => 'Chúng tôi đã mở lại tài khoản của bạn',
+            ]),
+            'is_read' => false,
+        ]);
+    
+        // Tạo thông báo cho admin về việc khóa tài khoản người dùng
+        Notification::create([
+            'type' => 'account_update',
+            'data' => json_encode([
+                'user_id' => auth()->user()->id,
+                'message' => 'Bạn đã mở khóa tài khoản người dùng với ID: ' . $user->id,
+            ]),
+            'is_read' => false,
+        ]);
+
         return redirect()->route('admin.customer.index')->with('success', 'Người dùng đã được kích hoạt.');
     }
 
@@ -28,21 +49,30 @@ class CustomerController extends Controller
         $user = User::findOrFail($id);
         $user->status = 0; // Giả sử 0 là trạng thái inactive
         $user->save();
-
-        $chatUrl = route('clients.chats.index', ['userId' => $id]);
-
-        Notification::create([
-            'order_id' => null, // Nếu không sử dụng order_id, để null hoặc bỏ qua
+    
+        // Tạo thông báo cho người dùng bị khóa tài khoản
+        ClientsNotification::create([
             'type' => 'account_update',
             'data' => json_encode([
-                'message' => 'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ qua trang chat: <a href="' . $chatUrl . '" style="font-weight: bold; text-decoration: underline;">Đến trang chat</a>.',
+                'user_id' => $user->id,
+                'message' => 'Chúng tôi đã nhận thấy 1 số hành động lại từ tài khoản của bạn nên đã tạm thời khóa nó . Vui lòng liên hệ qua trang chat',
             ]),
             'is_read' => false,
         ]);
+    
+        // Tạo thông báo cho admin về việc khóa tài khoản người dùng
+        Notification::create([
+            'type' => 'account_update',
+            'data' => json_encode([
+                'user_id' => auth()->user()->id,
+                'message' => 'Bạn đã khóa tài khoản người dùng với ID: ' . $user->id,
+            ]),
+            'is_read' => false,
+        ]);
+    
         return redirect()->route('admin.customer.index')->with('success', 'Người dùng đã bị hủy kích hoạt.');
-        // return redirect()->route('clients.chats.index', ['userId' => $id])
-        //                  ->with('success', 'Người dùng đã bị hủy kích hoạt và thông báo đã được gửi.');
     }
+    
     
 
     public function search(Request $request) {

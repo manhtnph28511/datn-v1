@@ -58,9 +58,15 @@
         <p>We received your purchase request;<br/> we'll be in touch shortly! </p>
         <div class="order-details">
             <div class="order-image py-4">
-                <a href="{{ route('home-client') }}"
+                {{-- <a href="{{ route('home-client') }}"
                    class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">Go
-                    Back</a>
+                    Back</a> --}}
+                    <form action="{{ route('cart.clear') }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"  class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
+                        Trở về trang chủ</button>
+                    </form>
             </div>
         </div>
     </div>

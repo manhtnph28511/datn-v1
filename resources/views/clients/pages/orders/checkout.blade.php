@@ -102,7 +102,19 @@
                     @php
                         $total = 0;
                     @endphp
+
+
                    
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     @foreach ($carts as $cart)
                         <tr class="pro-box">
                             <td><img src="{{ $cart->image }}" alt="" class="mx-auto"></td>
