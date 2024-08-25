@@ -48,4 +48,12 @@ public function voucher()
     {
         return $this->belongsTo(Voucher::class);
     }
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'product_id');
+    }
 }

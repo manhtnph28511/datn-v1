@@ -510,7 +510,7 @@
                                                                 <td align="center"><p>Ngày tạo hóa đơn: {{ \Carbon\Carbon::parse($order->created_at)->format('d-m-Y H:i:s') }}</p></td>
                                                             </tr>
                                                             <tr>
-                                                                <td align="center"><p><b>Trạng thái hóa đơn:</b>{{ $order->order_status == "PENDING" ? ' Chưa thanh toán' : ' Đã thanh toán' }}</p></td>
+                                                                <td align="center"><p><b>Trạng thái hóa đơn:</b>{{ $order->payment_method== "Credit_card" ? ' Đã thanh toán' : ' Chưa thanh toán' }}</p></td>
                                                             </tr>
                                                         </table>
                                                     </td>

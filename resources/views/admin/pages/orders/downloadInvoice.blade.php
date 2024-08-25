@@ -114,10 +114,9 @@
                         style="font-size: 12px; font-weight: bold; color: #5b5b5b; line-height: 1; vertical-align: top; ">
                         PTTT:{{$order->payment_method}}</p>
                         
-
-                    <p style="font-size: 12px; color: #5b5b5b; line-height: 24px; vertical-align: top;">
+                        <p style="font-size: 12px; font-weight: bold; color: #5b5b5b; line-height: 24px; vertical-align: top;">
                         Địa chỉ:{{ $order->address }},
-                    <p class="mb-0">Trạng thái chuyển:
+                    <p class="mb-0" style="font-size: 12px; font-weight: bold; color: #5b5b5b; line-height: 24px; vertical-align: top;">Trạng thái chuyển:
                         {!! getStatusOrderShip($order->shipment_status) !!}
                     </p>
                     </p>

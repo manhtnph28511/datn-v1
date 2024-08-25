@@ -17,23 +17,54 @@ class AuthController extends Controller
     {
         return view('clients.pages.auth.login');
     }
+    // public function login(AuthRequest $request)
+    // {
+    //     if ($request->getMethod() === 'POST') {
+    //         $credentials = $request->only('email', 'password');
+    //         if (Auth::attempt($credentials)) {
+    //             if (Auth::user()->role === 1) {
+    //                 toast('Đăng nhập thành công!', 'success');
+    //                 return redirect()->route('admin');
+    //             }
+    //             toast('Đăng nhập thành công!', 'success');
+    //             return redirect()->route('home-client');
+    //         }
+    //         toast('Đăng nhập không thành công', 'info');
+    //         return back();
+    //     }
+    //     return view('clients.pages.auth.login');
+    // }
     public function login(AuthRequest $request)
-    {
-        if ($request->getMethod() === 'POST') {
-            $credentials = $request->only('email', 'password');
-            if (Auth::attempt($credentials)) {
-                if (Auth::user()->role === 1) {
-                    toast('Đăng nhập thành công!', 'success');
-                    return redirect()->route('admin');
-                }
-                toast('Đăng nhập thành công!', 'success');
-                return redirect()->route('home-client');
+{
+    // Chỉ xử lý yêu cầu POST
+    if ($request->isMethod('post')) {
+        $credentials = $request->only('email', 'password');
+        
+        if (Auth::attempt($credentials)) {
+            // Đăng nhập thành công
+            $user = Auth::user();
+            
+            // Kiểm tra vai trò của người dùng
+            if ($user->role === 1) {
+                // Đăng nhập thành công với vai trò admin
+                toast('Đăng nhập thành công với quyền admin!', 'success');
+                return redirect()->route('admin');
             }
-            toast('Đăng nhập không thành công', 'info');
-            return back();
+            
+            // Đăng nhập thành công với vai trò user
+            toast('Đăng nhập thành công!', 'success');
+            return redirect()->route('home-client');
         }
-        return view('clients.pages.auth.login');
+
+        // Đăng nhập không thành công
+        toast('Thông tin đăng nhập không chính xác.', 'error');
+        return back()->withInput();
     }
+    
+    // Hiển thị trang đăng nhập
+    return view('clients.pages.auth.login');
+}
+
 
 
     public function register(AuthRequest $request)
@@ -60,10 +91,18 @@ class AuthController extends Controller
     }
     
 
+    // public function logout()
+    // {
+    //     Auth::logout();
+    //     toast('Logout successfully', 'success');
+    //     return redirect()->route('account.login');
+    // }
     public function logout()
-    {
-        Auth::logout();
-        toast('Logout successfully', 'success');
-        return redirect()->route('account.login');
-    }
+{
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    toast('Logout successfully', 'success');
+    return redirect()->route('account.login');
+}
 }

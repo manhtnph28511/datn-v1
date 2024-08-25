@@ -21,5 +21,6 @@ class SiteController extends Controller
     public function contact() {
         return view('clients.pages.contact');
     }
+    // 
 
 }

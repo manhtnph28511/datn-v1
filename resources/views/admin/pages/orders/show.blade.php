@@ -51,7 +51,7 @@
                             <option value="ORDERPLACE" @if ($order->shipment_status == 'ORDERPLACE') selected @endif>Đã được
                                 tạo</option>
                             <option value="PACKED" @if ($order->shipment_status == 'PACKED') selected @endif>Đã nhận và
-                                đang đóng gói</option>
+                                đang xử lí</option>
                             <option value="SHIPPED" @if ($order->shipment_status == 'SHIPPED') selected @endif>Đã được
                                 vận chuyển</option>
                             <option value="INTRANSIT" @if ($order->shipment_status == 'INTRANSIT') selected @endif>Đang

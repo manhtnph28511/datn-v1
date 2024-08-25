@@ -20,4 +20,8 @@ class ClientsNotification extends Model
         $this->is_read = true;
         $this->save();
     }
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

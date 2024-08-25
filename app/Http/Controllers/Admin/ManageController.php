@@ -82,8 +82,15 @@ class ManageController extends Controller
         $user->restore(); // Khôi phục tài khoản
         return redirect()->route('admin.manage.trashed')->with('success', 'Khôi phục tài khoản thành công');
     }
-   
-
+    
+    public function forceDelete($id)
+{
+    // Logic để xóa vĩnh viễn tài khoản
+    $user = User::onlyTrashed()->findOrFail($id);
+    $user->forceDelete(); // Xóa vĩnh viễn tài khoản
+    return redirect()->route('admin.manage.trashed')
+    ->with('success', 'Xóa vĩnh viễn tài khoản thành công');
+}
     public function edit($id)
     {
         $user = User::findOrFail($id);

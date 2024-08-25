@@ -253,7 +253,7 @@ class OrderController extends Controller
             $statusMessage = 'đã được tạo';
             break;
         case 'PACKED':
-            $statusMessage = 'đã nhận và đang đóng gói';
+            $statusMessage = 'đã nhận và đang đang xử lí';
             break;
         case 'SHIPPED':
             $statusMessage = 'đã được vận chuyển';

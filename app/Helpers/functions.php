@@ -36,47 +36,47 @@ function getStatusOrderShip($text, $type = "default")
     switch ($text) {
         case 'ORDERPLACE':
             $status = "<span class='badge rounded-pill bg-primary-light text-primary fw-medium p-0' style='text-align:left;font-size:16px'>
-                            $title Đã được tạo
+                            $title đã được tạo
                         </span>";
             break;
         case 'PACKED':
             $status = "<span class='badge rounded-pill bg-primary-light text-primary fw-medium p-0' style='text-align:left;font-size:16px'>
-                            $title Đã nhận và đang đóng gói
+                            $title đã nhận và đang xử lí
                         </span>";
             break;
         case 'SHIPPED':
             $status = "<span class='badge rounded-pill bg-primary-light text-primary fw-medium p-0' style='text-align:left;font-size:16px'>
-                            $title Đã được chuyển giao
+                            $title đã được chuyển giao
                         </span>";
             break;
         case 'INTRANSIT':
             $status = "<span class='badge rounded-pill bg-primary-light text-primary fw-medium p-0' style='text-align:left;font-size:16px'>
-                            $title Đang trên đường đến điểm đến
+                            $title đang trên đường đến điểm đến
                         </span>";
             break;
         case 'OUTFORDELIVERY':
             $status = "<span class='badge rounded-pill bg-primary-light text-primary fw-medium p-0' style='text-align:left;font-size:16px'>
-                            $title Đang được giao cho người nhận
+                            $title đang được giao cho người nhận
                         </span>";
             break;
         case 'DELIVERED':
             $status = "<span class='badge rounded-pill bg-primary-light text-primary fw-medium p-0' style='text-align:left;font-size:16px'>
-                            $title Đã được giao thành công
+                            $title đã được giao thành công
                         </span>";
             break;
         case 'DELAYED':
             $status = "<span class='badge rounded-pill bg-primary-light text-primary fw-medium p-0' style='text-align:left;font-size:16px'>
-                            $title Gặp trễ hẹn trong quá trình vận chuyển
+                            $title gặp vấn đề trong quá trình vận chuyển
                         </span>";
             break;
-        case 'EXCEPTION':
+        // case 'EXCEPTION':
+        //     $status = "<span class='badge rounded-pill bg-primary-light text-primary fw-medium p-0' style='text-align:left;font-size:16px'>
+        //                     $title gặp vấn đề hoặc ngoại lệ trong quá trình vận chuyển
+        //                 </span>";
+        //     break;
+        case 'CANCEL':
             $status = "<span class='badge rounded-pill bg-primary-light text-primary fw-medium p-0' style='text-align:left;font-size:16px'>
-                            $title Gặp vấn đề hoặc ngoại lệ trong quá trình vận chuyển
-                        </span>";
-            break;
-        case 'RETURNED':
-            $status = "<span class='badge rounded-pill bg-primary-light text-primary fw-medium p-0' style='text-align:left;font-size:16px'>
-                            $title Đã được trả lại cho người gửi
+                            $title đã huỷ
                         </span>";
             break;
         default:

@@ -47,6 +47,10 @@
                 <i class="fa-solid fa-thumbtack"></i>
                 <span class="link-name">Voucher</span>
             </a></li>
+            <li><a href="{{ route('admin.ratings.index') }}">
+                <i class="fa-solid fa-thumbtack"></i>
+                <span class="link-name">Quản lí comment</span>
+            </a></li>
             <li><a href="{{ route('admin.chats.index') }}">
                 <i class="uil uil-bell"></i>
                 <span class="link-name">Chat</span>

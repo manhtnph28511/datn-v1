@@ -9,7 +9,17 @@
         <h2>#Xin chào</h2>
         <p>Đây là giỏ hàng của bạn</p>
     </section>
+    @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
 
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
        
     @if (count($carts) > 0)
         <section id="cart" class="section-p1">
@@ -29,17 +39,7 @@
                     </tr>
                 </thead>
 
-                @if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
-
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+   
 
                 @php
                     $total = 0;

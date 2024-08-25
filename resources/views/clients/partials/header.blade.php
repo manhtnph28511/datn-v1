@@ -7,7 +7,11 @@
             <li><a href="{{ route('home.site.blog')  }}">Blog</a></li>
             <li><a href="{{ route('home.site.about')  }}">About</a></li>
             <li><a href="{{ route('home.site.contact')  }}">Contact</a></li>
+            <li><a href="{{ route('clients.vouchers.index') }}">Xem Voucher</a>
+            </li>
+            @auth
             <li><a href="{{ route('clients.chats.index', ['userId' => auth()->user()->id]) }}">Chat với admin</a></li>
+           @endauth
 
         </ul>
     </div>

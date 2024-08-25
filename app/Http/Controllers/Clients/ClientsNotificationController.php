@@ -6,15 +6,56 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ClientsNotification;
 use App\Models\Notification;
+use App\Models\Product;
+use App\Models\OrderDetail;
 
 class ClientsNotificationController extends Controller
 {
+    // public function index()
+    // {
+    //     $notifications = ClientsNotification::orderBy('created_at', 'desc')->get();
+
+    //     foreach ($notifications as $notification) {
+    //         $data = json_decode($notification->data);
+    //         $orderId = $data->order_id ?? null;
+            
+    //         if ($orderId) {
+    //             // Lấy các sản phẩm trong đơn hàng
+    //             $orderDetails = OrderDetail::where('order_id', $orderId)->get();
+    //             $productIds = $orderDetails->pluck('pro_id')->unique(); // Danh sách product_id của sản phẩm trong đơn hàng
+    //             $notification->productIds = $productIds;
+    //         } else {
+    //             $notification->productIds = collect(); // Gán giá trị mặc định nếu không có orderId
+    //         }
+    //     }
+    //     return view('clients.pages.notifications.index', compact('notifications'));
+    // }
+
     public function index()
-    {
-        $notifications = ClientsNotification::orderBy('created_at', 'desc')->get();
-        return view('clients.pages.notifications.index', compact('notifications'));
+{
+    $notifications = ClientsNotification::orderBy('created_at', 'desc')->get();
+
+    // Xử lý từng thông báo để lấy danh sách các sản phẩm liên quan
+    foreach ($notifications as $notification) {
+        $data = json_decode($notification->data);
+        $orderId = $data->order_id ?? null;
+
+        if ($orderId) {
+            // Lấy các sản phẩm từ chi tiết đơn hàng
+            $orderDetails = OrderDetail::where('order_id', $orderId)->get();
+            $productIds = $orderDetails->pluck('pro_id')->unique(); // Danh sách các product_id
+
+            // Gán danh sách productIds cho thông báo
+            $notification->productIds = $productIds;
+        } else {
+            // Gán giá trị mặc định nếu không có orderId
+            $notification->productIds = collect();
+        }
     }
 
+    // Trả về view với các thông báo
+    return view('clients.pages.notifications.index', compact('notifications'));
+}
     public function markAsRead($id)
     {
         $notification = ClientsNotification::find($id);
@@ -100,6 +141,20 @@ class ClientsNotificationController extends Controller
             return redirect()->back()->with('error', 'Thông tin đơn hàng không tồn tại.');
         }
      }
+
+     public function showProduct($id)
+     {
+         // Tìm sản phẩm theo ID
+         $product = Product::find($id);
+         
+         if (!$product) {
+             return redirect()->route('clients.notifications.index')->with('error', 'Sản phẩm không tìm thấy.');
+         }
+     
+         // Hiển thị trang chi tiết sản phẩm
+         return view('clients.pages.detail-product', compact('product'));
+     }
+     
     
 
 }
