@@ -62,6 +62,9 @@ Route::name('account.')->prefix('tai-khoan')->controller(AuthController::class)-
 
     // Logout
     Route::get('dang-xuat', 'logout')->name('logout');
+
+    Route::match(['GET', 'POST'], 'forgotpassword', 'forgot')->name('forgotpassword');
+    Route::match(['GET', 'POST'], 'resetpassword', 'reset')->name('password.reset');
 });
 
 // Admin

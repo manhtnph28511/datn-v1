@@ -45,7 +45,9 @@
         {{--            <span class="text-danger error password-error"></span>--}}
         <button class="normal text-white">Đăng nhập</button>
     </form>
-    <a href="#" class="text-decoration-none forget_pass">Quên mật khẩu?</a>
+    <div class="d-flex flex-col">
+        <a href="{{ route('account.forgotpassword') }}">Quên mật khẩu?</a>
+    </div>
 </div>
 @include('sweetalert::alert')
 @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
