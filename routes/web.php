@@ -37,6 +37,7 @@ use App\Http\Controllers\Clients\ClientsNotificationController;
 use App\Http\Controllers\Clients\ChatController as ClientsChatController;
 use App\Http\Controllers\Clients\VoucherController as ClientsVoucherController;  //trang chủ
 use App\Http\Controllers\Clients\UserVoucherController ; //trang người dùng
+use App\Http\Controllers\Clients\WishlistsController ;
 
 /*
 |--------------------------------------------------------------------------
@@ -284,6 +285,9 @@ Route::middleware('auth')->prefix('cart')->controller(CartController::class)->gr
     Route::get('voucher', 'voucher')->name('home.cart.voucher');
     Route::post('applyVoucher', [CartController::class, 'applyVoucher'])->name('applyVoucher');
     Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+
+    // Route::get('clients/search-vouchers', [CartController::class, 'searchVouchers'])->name('clients.search-vouchers');
+    Route::get('search-vouchers', 'searchVouchers')->name('clients.search-vouchers');
     // Route::post('/stripe/webhook', [CartController::class, 'handleStripeWebhook']);
 
 
@@ -304,25 +308,36 @@ Route::middleware('auth')->name('order.')->prefix('order')->controller(ClientsOr
     #review
 });
 
+
+
+//thông báo
 Route::name('clients.')->prefix('notification')->controller(ClientsNotificationController::class)->group(function () {
     Route::get('/notifications', 'index')->name('notifications.index');
     Route::post('/notifications/{id}/read', 'markAsRead')->name('notifications.markAsRead');
     Route::delete('/notifications/{id}', 'delete')->name('notifications.delete');
     Route::post('/notifications/{id}/confirm-received', 'confirmReceived')->name('notifications.confirmReceived');
     Route::post('/notifications/{id}/cancel-order', 'cancelOrder')->name('notifications.cancelOrder');
-    Route::get('/product/{id}', 'showProduct')->name('product.show');
+   // Route để hiển thị form đánh giá sản phẩm
+   Route::get('product/{orderId}/review', 'review')->name('product.review');
 });
 
 
+
+//chat
 Route::prefix('clients')->name('clients.')->namespace('Clients')->controller(ClientsChatController::class)->group(function () {
     Route::get('/chats/{userId?}', [ClientsChatController::class, 'index'])->name('chats.index');
     Route::post('/chats/send', [ClientsChatController::class, 'send'])->name('chats.send');
 });
 
+
+
+//voucher
 Route::prefix('clients')->name('clients.')->group(function () {
     Route::get('/voucher', [ClientsVoucherController::class, 'index'])->name('vouchers.index');
     Route::post('/voucher/{voucherId}/save/{id}', [ClientsVoucherController::class, 'saveVoucher'])->name('vouchers.save');
 });
+
+
 
 
 Route::prefix('clients')->name('clients.')->group(function () {
@@ -331,93 +346,12 @@ Route::prefix('clients')->name('clients.')->group(function () {
 
 
 
-// Route::middleware('user')->group(function () {
-//     Route::get('/', [HomeController::class, 'home'])->name('home-client');
-
-//     Route::controller(SiteController::class)->group(function () {
-//         // About page
-//         Route::get('about', 'about')->name('home.site.about');
-//         // Blog page
-//         Route::get('blog', 'blog')->name('home.site.blog');
-//         // Contact page
-//         Route::get('contact', 'contact')->name('home.site.contact');
-//     });
-
-//     // Product
-//     Route::controller(HomeProductController::class)->group(function () {
-//         Route::get('product/{id}/{slug?}', 'showProduct')->name('home.site.product.show');
-//         Route::get('shop-page', 'shop')->name('home.site.product.shop');
-//         Route::get('product-from-sub-cate/{id}', 'productFromSubCate')->name('home.site.product.proFromSubCate');
-//         // Search product
-//         Route::post('search-query', 'searchProductHome')->name('home.site.product.search');
-//     });
-
-//     // Category
-//     Route::controller(HomeCategoryController::class)->group(function () {
-//         Route::get('cate-detail/{id}', 'detailCate')->name('home.site.cate.detail');
-//     });
-
-//     // Rating
-//     Route::controller(RatingController::class)->middleware('rating')->group(function () {
-//         Route::post('rating', 'rating')->name('home.rating.store');
-//         Route::delete('delete/{rating}', 'destroy')->name('home.rating.destroy');
-//     });
-
-//     // Cart Module
-//     Route::middleware('auth')->prefix('cart')->controller(CartController::class)->group(function () {
-//         Route::get('/', 'cart')->name('home.cart');
-//         Route::post('add-to-card', 'addToCart')->name('home.cart.addToCart');
-//         Route::post('update-card', 'updateCart')->name('home.cart.updateCart');
-//         Route::get('checkout', 'checkout')->name('home.cart.checkout');
-//         Route::post('checkout-step', 'checkoutStep')->name('home.cart.checkout-step');
-//         Route::get('delete/{id}', 'destroy')->name('home.cart.destroy');
-//         Route::get('order-success', 'success')->name('home.cart.order-success');
-//         Route::view('success', 'clients.pages.orders.order-success')->name('order-success');
-//         Route::get('voucher', 'voucher')->name('home.cart.voucher');
-//         Route::post('applyVoucher', [CartController::class, 'applyVoucher'])->name('applyVoucher');
-//         Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
-//         // Route::post('/stripe/webhook', [CartController::class, 'handleStripeWebhook']);
-//     });
-
-//     // Profile
-//     Route::middleware('auth')->prefix('profile')->controller(ProfileController::class)->group(function () {
-//         Route::match(['GET', 'POST'], '/', 'profile')->name('clients.profile');
-//         Route::get('/index', [ProfileController::class, 'index'])->name('clients.index');
-//     });
-
-//     // Order History
-//     Route::middleware('auth')->name('order.')->prefix('order')->controller(ClientsOrderController::class)->group(function () {
-//         Route::get('/history', 'history')->name('history');
-//         // Order tracking
-//         Route::get('/track', 'track')->name('track');
-//         // Review
-//     });
-
-//     Route::name('clients.')->prefix('notification')->controller(ClientsNotificationController::class)->group(function () {
-//         Route::get('/notifications', 'index')->name('notifications.index');
-//         Route::post('/notifications/{id}/read', 'markAsRead')->name('notifications.markAsRead');
-//         Route::delete('/notifications/{id}', 'delete')->name('notifications.delete');
-//         Route::post('/notifications/{id}/confirm-received', 'confirmReceived')->name('notifications.confirmReceived');
-//         Route::post('/notifications/{id}/cancel-order', 'cancelOrder')->name('notifications.cancelOrder');
-//     });
-
-//     Route::prefix('clients')->name('clients.')->namespace('Clients')->controller(ClientsChatController::class)->group(function () {
-//         Route::get('/chats/{userId?}', [ClientsChatController::class, 'index'])->name('chats.index');
-//         Route::post('/chats/send', [ClientsChatController::class, 'send'])->name('chats.send');
-//     });
+//sp yêu thích
+Route::name('clients.')->prefix('wishlists')->group(function () {
+    Route::get('/wishlist', [WishlistsController::class, 'show'])->name('users.wishlists');
+    Route::post('/wishlist/add', [WishlistsController::class, 'addToWishlist'])->name('wishlists.add');
+    Route::post('/wishlist/remove/{id}', [WishlistsController::class, 'removeFromWishlist'])->name('remove');
+});
 
 
-//     // Route::prefix('clients')->name('clients.')->namespace('Clients')->controller(ClientsVoucherController::class)->group(function () {
-//     //     Route::get('/voucher', [ClientsVoucherController::class, 'index'])->name('vouchers.index');
-//     //     Route::post('voucher/{voucherId}/save', [ClientsVoucherController::class, 'saveVoucher'])->name('clients.vouchers.save');
-//     // });
-//     // web.php
-
-// Route::prefix('clients')->name('clients.')->namespace('Clients')->controller(ClientsVoucherController::class)->group(function () {
-//     Route::get('/voucher', [ClientsVoucherController::class, 'index'])->name('vouchers.index');
-//     Route::post('/voucher/{voucherId}/save', [ClientsVoucherController::class, 'saveVoucher'])->name('vouchers.save');
-// });
-
-    
-// });
 

@@ -8,6 +8,13 @@
         <img src="{{ $product->image }}" width="100%" id="mainImg" alt="">
     </div>
     <div class="single-pro-detail">
+        <form action="{{ route('clients.wishlists.add') }}" method="POST">
+            @csrf
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <input type="hidden" name="size_id" value="{{ $selectedSizeId }}">
+            <input type="hidden" name="color_id" value="{{ $selectedColorId }}">
+            <button type="submit" class="normal">Yêu thích</button>
+        </form>
         <form action="{{ route('home.cart.addToCart') }}" method="POST" id="product-form">
             @csrf
 
@@ -66,6 +73,8 @@
             <input type="number" value="1" min="1" class="border" name="quantity">
             <button class="normal">Thêm vào giỏ hàng</button>
         </form>
+
+        
         <h4>Chi tiết sản phẩm</h4>
         <span>{!! $product->description !!}</span>
 

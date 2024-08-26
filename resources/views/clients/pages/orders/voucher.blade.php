@@ -1,6 +1,15 @@
 @extends('clients.layouts.app')
 @section('app')
 <section id="cart" class="section-p1">
+
+    <div class="mb-4">
+        <form action="{{ route('clients.search-vouchers') }}" method="GET">
+            @csrf
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary mt-2">Tìm Voucher</button>
+            </div>
+        </form>
+    </div>
     <table width="100%">
         <thead>
             <tr>
@@ -58,11 +67,14 @@
                         @csrf
                         <input type="hidden" name="pro_id" value="{{ $cart->pro_id }}">
                         <input type="text" name="voucher_code" placeholder="Nhập mã voucher">
+                        {{-- <button type="submit" class="btn btn-primary">Tìm Voucher</button> --}}
                         <button type="submit" class="btn btn-primary">Sử dụng</button>
                     </form>
                 </td>
             </tr>
             @endforeach
+
+
         </tbody>
         <tfoot>
             <tr>
@@ -76,13 +88,72 @@
     <div class="checkout">
         <a href="{{ route('home.cart.checkout') }}" class="btn btn-primary">Tiến hành thanh toán</a>
     </div>
+    <!-- Bảng hiển thị voucher -->
+    @if(isset($userVouchers) && $userVouchers->count() > 0)
+        <table>
+            <thead>
+                <tr>
+                    <th>Mã Voucher</th>
+                    <th>Giảm Giá</th>
+                    <th>Thời Gian Bắt Đầu</th>
+                    <th>Thời Gian Kết Thúc</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($userVouchers as $userVoucher)
+                    <tr>
+                        <td>{{ $userVoucher->voucher->code }}</td>
+                        <td>
+                            @if($userVoucher->voucher->discount_type === 'percentage')
+                                {{ $userVoucher->voucher->discount }}%
+                            @else
+                                {{ number_format($userVoucher->voucher->discount) }} VND
+                            @endif
+                        </td>
+                        <td>{{ $userVoucher->voucher->starts_at->format('d-m-Y H:i:s') }}</td>
+                        <td>{{ $userVoucher->voucher->expires_at->format('d-m-Y H:i:s') }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @elseif(isset($allVouchers) && $allVouchers->count() > 0)
+        <p>Dưới đây là các voucher có sẵn:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Mã Voucher</th>
+                    <th>Giảm Giá</th>
+                    <th>Thời Gian Bắt Đầu</th>
+                    <th>Thời Gian Kết Thúc</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($allVouchers as $voucher)
+                    <tr>
+                        <td>{{ $voucher->code }}</td>
+                        <td>
+                            @if($voucher->discount_type === 'percentage')
+                                {{ $voucher->discount }}%
+                            @else
+                                {{ number_format($voucher->discount) }} VND
+                            @endif
+                        </td>
+                        <td>{{ $voucher->starts_at->format('d-m-Y H:i:s') }}</td>
+                        <td>{{ $voucher->expires_at->format('d-m-Y H:i:s') }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <p>Không có voucher nào.</p>
+    @endif
 </section>
 @endsection
 
 
 
 <script>
-   document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     var showVoucherButtons = document.querySelectorAll('.show-voucher-form');
 
     showVoucherButtons.forEach(function(button) {
@@ -94,12 +165,11 @@
             voucherForm.style.display = 'table-row'; // Hiển thị form tương ứng
             discountedPriceCell.style.display = 'table-cell'; 
 
-
             button.style.display = 'none'; // Ẩn nút sau khi nhấn
         });
     });
 });
-</script>
+ </script>
 
 <style>
 /* Định dạng cho bảng */
@@ -151,6 +221,10 @@
 #cart table td:last-child {
     text-align: right; /* Đảm bảo giá cuối được căn lề phải */
     font-weight: bold; /* Làm cho giá cuối nổi bật hơn */
+}
+.product-image {
+    display: block;
+    width: 100px; /* Ví dụ: điều chỉnh kích thước theo nhu cầu */
 }
 
 </style>

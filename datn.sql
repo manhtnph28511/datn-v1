@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 23, 2024 at 11:45 AM
+-- Generation Time: Aug 26, 2024 at 03:19 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.2.20
 
@@ -72,6 +72,13 @@ CREATE TABLE `carts` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`id`, `pro_id`, `user_id`, `size_id`, `color_id`, `price`, `quantity`, `total_price`, `discounted_total_price`, `voucher_code`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(99, 3, 20, 2, 4, 480000, 1, 480000, NULL, NULL, NULL, '2024-08-26 01:36:55', '2024-08-26 01:36:55');
 
 -- --------------------------------------------------------
 
@@ -171,12 +178,14 @@ INSERT INTO `clients_notifications` (`id`, `type`, `data`, `is_read`, `created_a
 (28, 'đã đặt hàng', '{\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #129Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-22 11:11:58', '2024-08-22 11:13:53'),
 (29, 'đã đặt hàng', '{\"order_id\":130,\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #130Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-23 09:45:01', '2024-08-23 09:46:02'),
 (30, 'order_cancel_request', '{\"order_id\":130,\"message\":\"B\\u1ea1n \\u0111\\u00e3 y\\u00eau c\\u1ea7u h\\u1ee7y \\u0111\\u01a1n h\\u00e0ng #130.\"}', 1, '2024-08-23 09:45:52', '2024-08-23 09:46:03'),
-(31, 'shipping_update', '{\"order_id\":130,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y.\"}', 0, '2024-08-23 09:46:58', '2024-08-23 09:46:58'),
-(32, 'account_update', '{\"user_id\":19,\"message\":\"T\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 b\\u1ecb kh\\u00f3a. Vui l\\u00f2ng li\\u00ean h\\u1ec7 qua trang chat.\"}', 0, '2024-08-23 09:59:18', '2024-08-23 09:59:18'),
-(33, 'account_update', '{\"user_id\":19,\"message\":\"T\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 b\\u1ecb kh\\u00f3a. Vui l\\u00f2ng li\\u00ean h\\u1ec7 qua trang chat\"}', 0, '2024-08-23 10:09:13', '2024-08-23 10:09:13'),
-(34, 'new_message', '{\"user_id\":\"19\",\"message\":\"C\\u00f3 tin nh\\u1eafn m\\u1edbi t\\u1eeb admin.\"}', 0, '2024-08-23 11:23:05', '2024-08-23 11:23:05'),
-(35, 'account_update', '{\"user_id\":19,\"message\":\"Ch\\u00fang t\\u00f4i \\u0111\\u00e3 m\\u1edf l\\u1ea1i t\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n\"}', 0, '2024-08-23 11:26:40', '2024-08-23 11:26:40'),
-(36, 'account_update', '{\"user_id\":19,\"message\":\"Ch\\u00fang t\\u00f4i \\u0111\\u00e3 nh\\u1eadn th\\u1ea5y 1 s\\u1ed1 h\\u00e0nh \\u0111\\u1ed9ng l\\u1ea1i t\\u1eeb t\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n n\\u00ean \\u0111\\u00e3 t\\u1ea1m th\\u1eddi kh\\u00f3a n\\u00f3 . Vui l\\u00f2ng li\\u00ean h\\u1ec7 qua trang chat\"}', 0, '2024-08-23 11:26:55', '2024-08-23 11:26:55');
+(31, 'shipping_update', '{\"order_id\":130,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y.\"}', 1, '2024-08-23 09:46:58', '2024-08-26 01:26:29'),
+(32, 'account_update', '{\"user_id\":19,\"message\":\"T\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 b\\u1ecb kh\\u00f3a. Vui l\\u00f2ng li\\u00ean h\\u1ec7 qua trang chat.\"}', 1, '2024-08-23 09:59:18', '2024-08-26 01:26:33'),
+(33, 'account_update', '{\"user_id\":19,\"message\":\"T\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 b\\u1ecb kh\\u00f3a. Vui l\\u00f2ng li\\u00ean h\\u1ec7 qua trang chat\"}', 1, '2024-08-23 10:09:13', '2024-08-26 01:26:31'),
+(34, 'new_message', '{\"user_id\":\"19\",\"message\":\"C\\u00f3 tin nh\\u1eafn m\\u1edbi t\\u1eeb admin.\"}', 1, '2024-08-23 11:23:05', '2024-08-26 01:26:26'),
+(35, 'account_update', '{\"user_id\":19,\"message\":\"Ch\\u00fang t\\u00f4i \\u0111\\u00e3 m\\u1edf l\\u1ea1i t\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n\"}', 1, '2024-08-23 11:26:40', '2024-08-26 01:26:22'),
+(36, 'account_update', '{\"user_id\":19,\"message\":\"Ch\\u00fang t\\u00f4i \\u0111\\u00e3 nh\\u1eadn th\\u1ea5y 1 s\\u1ed1 h\\u00e0nh \\u0111\\u1ed9ng l\\u1ea1i t\\u1eeb t\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n n\\u00ean \\u0111\\u00e3 t\\u1ea1m th\\u1eddi kh\\u00f3a n\\u00f3 . Vui l\\u00f2ng li\\u00ean h\\u1ec7 qua trang chat\"}', 1, '2024-08-23 11:26:55', '2024-08-26 01:26:19'),
+(37, 'đã đặt hàng', '{\"order_id\":131,\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #131Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-25 10:32:30', '2024-08-26 01:26:15'),
+(38, 'shipping_update', '{\"order_id\":131,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao h\\u00e0ng th\\u00e0nh c\\u00f4ng.\"}', 1, '2024-08-25 10:44:25', '2024-08-26 01:26:13');
 
 -- --------------------------------------------------------
 
@@ -203,21 +212,6 @@ INSERT INTO `colors` (`id`, `name`, `code`, `created_at`, `updated_at`, `deleted
 (3, 'Xám', '#e3dede', '2023-07-26 13:38:15', '2023-07-26 13:38:15', NULL),
 (4, 'Be', '#eee1b5', '2023-07-26 13:38:37', '2023-07-26 13:38:37', NULL),
 (5, 'Neon Pink', '#c25695', '2023-07-28 21:50:17', '2023-07-28 21:50:17', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `comments`
---
-
-CREATE TABLE `comments` (
-  `id` int UNSIGNED NOT NULL,
-  `user_id` int UNSIGNED NOT NULL,
-  `product_id` int UNSIGNED NOT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -309,7 +303,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (55, '2024_08_20_174627_remove_final_price_from_carts_table', 24),
 (56, '2024_08_21_172816_create_admin_notifications_table', 25),
 (57, '2024_08_22_151610_create_client_notifications_table', 26),
-(58, '2024_08_22_152459_create_clients_notifications_table', 27);
+(58, '2024_08_22_152459_create_clients_notifications_table', 27),
+(59, '2024_08_25_103542_add_voucher_id_to_users_table', 28),
+(60, '2024_08_25_155500_create_user_voucher_table', 29),
+(61, '2024_08_26_080135_create_wishlists_table', 30),
+(62, '2024_08_26_081858_add_size_and_color_to_wishlists_table', 31);
 
 -- --------------------------------------------------------
 
@@ -397,7 +395,9 @@ INSERT INTO `notifications` (`id`, `type`, `data`, `is_read`, `created_at`, `upd
 (91, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 19\"}', 1, '2024-08-23 10:09:13', '2024-08-23 10:09:26'),
 (92, 'new_message', '{\"user_id\":\"19\",\"message\":\"C\\u00f3 tin nh\\u1eafn t\\u1eeb ng\\u01b0\\u1eddi d\\u00f9ng #19\"}', 1, '2024-08-23 10:44:36', '2024-08-23 10:44:44'),
 (93, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 m\\u1edf kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 19\"}', 1, '2024-08-23 11:26:40', '2024-08-23 11:26:42'),
-(94, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 19\"}', 1, '2024-08-23 11:26:55', '2024-08-23 11:26:57');
+(94, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 19\"}', 1, '2024-08-23 11:26:55', '2024-08-23 11:26:57'),
+(95, 'đã đặt hàng', '{\"order_id\":131,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #131\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 0, '2024-08-25 10:32:30', '2024-08-25 10:32:30'),
+(96, 'shipping_update', '{\"order_id\":131,\"message\":\"Tr\\u1ea1ng th\\u00e1i \\u0111\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c c\\u1eadp nh\\u1eadt l\\u00e0 :\\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao h\\u00e0ng th\\u00e0nh c\\u00f4ng.\"}', 0, '2024-08-25 10:44:25', '2024-08-25 10:44:25');
 
 -- --------------------------------------------------------
 
@@ -527,7 +527,8 @@ INSERT INTO `orders` (`id`, `user_id`, `username`, `phone`, `email`, `address`, 
 (127, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'cancel', 'DELIVERED', 'Credit_card', '2024-08-22 08:44:35', '2024-08-22 09:44:44'),
 (128, 19, 'tran manh', '0987654321', 'manhtnph28511@fpt.edu.vn', 'ha noi', '', 'cancel', 'CANCEL', 'Credit_card', '2024-08-22 10:20:17', '2024-08-22 10:21:39'),
 (129, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-22 11:11:53', '2024-08-22 11:11:53'),
-(130, 19, 'tran manh', '0987654321', 'manhtnph28511@fpt.edu.vn', 'ha noi', '', 'cancel', 'CANCEL', 'Credit_card', '2024-08-23 09:44:54', '2024-08-23 09:46:58');
+(130, 19, 'tran manh', '0987654321', 'manhtnph28511@fpt.edu.vn', 'ha noi', '', 'cancel', 'CANCEL', 'Credit_card', '2024-08-23 09:44:54', '2024-08-23 09:46:58'),
+(131, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'success', 'DELIVERED', 'Credit_card', '2024-08-25 10:32:25', '2024-08-25 10:44:25');
 
 -- --------------------------------------------------------
 
@@ -651,7 +652,8 @@ INSERT INTO `order_details` (`id`, `order_id`, `pro_id`, `size_id`, `color_id`, 
 (111, 128, 21, 2, 4, 150, 1, 150, '2024-08-22 10:20:17', '2024-08-22 10:20:17'),
 (112, 128, 3, 2, 4, 480000, 1, 480000, '2024-08-22 10:20:17', '2024-08-22 10:20:17'),
 (113, 129, 3, 2, 4, 480000, 1, 480000, '2024-08-22 11:11:53', '2024-08-22 11:11:53'),
-(114, 130, 3, 2, 4, 480000, 1, 480000, '2024-08-23 09:44:54', '2024-08-23 09:44:54');
+(114, 130, 3, 2, 4, 480000, 1, 480000, '2024-08-23 09:44:54', '2024-08-23 09:44:54'),
+(115, 131, 3, 2, 4, 480000, 1, 480000, '2024-08-25 10:32:25', '2024-08-25 10:32:25');
 
 -- --------------------------------------------------------
 
@@ -717,7 +719,8 @@ INSERT INTO `order_updates` (`id`, `order_id`, `user_id`, `note`, `created_at`, 
 (41, 128, 17, 'Đơn hàng đơn hàng đã bị hủy.', '2024-08-22 10:21:39', '2024-08-22 10:21:39', NULL),
 (42, 125, 17, 'Đơn hàng đã được giao cho người nhận.', '2024-08-22 10:39:14', '2024-08-22 10:39:14', NULL),
 (43, 125, 17, 'Đơn hàng đã bị trễ hẹn trong quá trình vận chuyển.', '2024-08-22 10:39:30', '2024-08-22 10:39:30', NULL),
-(44, 130, 17, 'Đơn hàng đơn hàng đã bị hủy.', '2024-08-23 09:46:58', '2024-08-23 09:46:58', NULL);
+(44, 130, 17, 'Đơn hàng đơn hàng đã bị hủy.', '2024-08-23 09:46:58', '2024-08-23 09:46:58', NULL),
+(45, 131, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-08-25 10:44:25', '2024-08-25 10:44:25', NULL);
 
 -- --------------------------------------------------------
 
@@ -730,6 +733,13 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `password_reset_tokens`
+--
+
+INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
+('manhtnph28511@fpt.edu.vn', 'eyJpdiI6IlM3c0FIWWlMQWFmV1pIRC9IVTdOUmc9PSIsInZhbHVlIjoiNkROdDB4MmFwZzdkU3NDUEpoYS9lTHVRMVJnMkEyR2RoY3NVeU5qRVVxOD0iLCJtYWMiOiIzOTkxYmNlODIyMTEzZjhiMTEzNjNhMzQxMmNjZGE2YWI0M2NkNTY1MzEzYjYwNDJlZTc3MThlMjYwN2ExNGQyIiwidGFnIjoiIn0=', '2024-08-25 11:45:26');
 
 -- --------------------------------------------------------
 
@@ -782,7 +792,7 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `name`, `image`, `price`, `quantity`, `description`, `view`, `slug`, `cate_id`, `brand_id`, `color_id`, `size_id`, `status_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'Cartoon Astronaut T-Shirts', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637576/Cara/Products/jxmoqrh37yknvwnufeou.jpg', 141234.00, 10, '<p><strong>Form Dáng</strong>: Regular Fit.</p><p><strong>Chất liệu:</strong></p><blockquote><ul><li>Định lượng: 330gsm (Dày dặn, xốp, phồng đứng form)</li><li>Thành phần: 35% Cotton - 65% Polyester</li></ul></blockquote><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 25, 'cartoon-astronaut-t-shirts', 1, 1, 5, 1, 1, NULL, '2024-07-27 20:34:56', '2024-08-04 01:58:56'),
 (2, 'Cartoon Astronaut T-Shirts', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637548/Cara/Products/olkj6gj7e7kflny40axq.jpg', 141234.00, 23, '<p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 67, 'cartoon-astronaut-t-shirts', 1, 1, 5, 3, 1, NULL, '2024-07-27 20:52:33', '2024-08-08 02:52:59'),
-(3, 'TOBI Regular Raincoat', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637530/Cara/Products/qxxwuol3emz4fahronqf.jpg', 480000.00, 9, '<p><strong>Form Dáng</strong>: Oversize</p><p><strong>Chất liệu</strong>: Dù trượt nước - 100 % Polyester</p><p><strong>Chi tiết sản phẩm</strong>:</p><blockquote><ul><li>Hình in đa dạng</li><li>Phần lai áo được may xẻ tà và có nút bấm.</li></ul></blockquote><p>&nbsp;</p>', 60, 'tobi-ragular-raincoat', 1, 2, 4, 2, 1, NULL, '2024-07-28 21:22:53', '2024-08-07 05:27:22'),
+(3, 'TOBI Regular Raincoat', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637530/Cara/Products/qxxwuol3emz4fahronqf.jpg', 480000.00, 8, '<p><strong>Form Dáng</strong>: Oversize</p><p><strong>Chất liệu</strong>: Dù trượt nước - 100 % Polyester</p><p><strong>Chi tiết sản phẩm</strong>:</p><blockquote><ul><li>Hình in đa dạng</li><li>Phần lai áo được may xẻ tà và có nút bấm.</li></ul></blockquote><p>&nbsp;</p>', 60, 'tobi-ragular-raincoat', 1, 2, 4, 2, 1, NULL, '2024-07-28 21:22:53', '2024-08-07 05:27:22'),
 (4, 'Waffle Stripped Polo - Grude', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637506/Cara/Products/mds4i02ts76eg5stpirj.jpg', 430000.00, 10, '<p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 31, 'waffle-stripped-polo-grude', 1, 2, 3, 4, 2, NULL, '2024-07-28 21:24:38', '2024-07-23 21:41:26'),
 (5, 'Regular Typo Cuban Shirt', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637486/Cara/Products/zshiefnor5oyupnn7lhl.jpg', 450000.00, 32, '<p><strong>Form Dáng:</strong>&nbsp;Boxy Fit.</p><ul><li>Chất liệu: 70% Cotton 30% Nylon</li><li>Định lượng: 161GSM</li></ul><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Form dáng Boxy chia tỉ lệ cơ thể 1/3 giúp tôn dáng người mặc</li><li>In vân đá</li></ul></blockquote>', 2, 'tegular-typo-cuban-shirt', 7, 7, 3, 4, 2, NULL, '2024-07-28 21:44:37', '2024-07-23 21:33:30'),
 (6, 'Highclass Cuban Shirt', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699682825/Cara/Products/rbjjn6krrfs0dxs8z1ph.jpg', 530000.00, 22, '<p><strong>Form dáng:</strong> Boxy Fit.</p><p><strong>Chất liệu:</strong> Lụa D100</p><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Form dáng Boxy chia tỉ lệ cơ thể 1/3 giúp tôn dáng người mặc&nbsp;</li><li>Áo được in overprinted toàn bộ áo</li><li>Hoạ tiết trên áo mang hơi hướng summer vibe&nbsp;</li></ul></blockquote>', 23, 'highclass-cuban-shirt', 10, 4, 1, 5, 1, NULL, '2024-07-28 21:46:46', '2024-08-06 03:47:36'),
@@ -937,6 +947,7 @@ INSERT INTO `sub_categories` (`id`, `name`, `slug`, `description`, `parent_id`, 
 
 CREATE TABLE `users` (
   `id` int UNSIGNED NOT NULL,
+  `voucher_id` int UNSIGNED DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `avatar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png',
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -956,13 +967,35 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `avatar`, `email`, `email_verified_at`, `password`, `address`, `phone`, `role`, `deleted_at`, `remember_token`, `created_at`, `updated_at`, `status`) VALUES
-(1, 'Quản trị viên', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'admin@gmail.com', NULL, '$2y$10$WTUHCBKX30LtFY0egvP98ue9Ae6rod4NJz9eAAlt0ErPimfoy21zu', NULL, NULL, 1, NULL, NULL, '2024-06-26 20:35:16', '2024-07-23 20:35:16', 1),
-(2, 'buingocphi', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'phibnph29465@fpt.edu.vn', NULL, '$2y$10$JOtPaOdf04C4gy985Lw8hOD1pr02cDpSDywImGArglptRY8jAoX96', NULL, NULL, 0, NULL, NULL, '2024-06-28 01:56:52', '2024-08-16 08:22:30', 1),
-(3, 'Bùi Fee', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699687947/Cara/Profile/kpvg3fzzm3evjydhhnkf.png', 'buingocphinn@gmail.com', NULL, '$2y$10$rQOdhXnOK/3tKOwKYn.3auDLOzdkafHHRNNwDDfWqeJlTeC0BRTT6', 'Kim Sơn - Ninh Bình', '0377674930', 0, NULL, NULL, '2024-06-03 02:08:02', '2024-07-10 17:50:11', 1),
-(17, 'tran manh', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'manutd@gmail.com', NULL, '$2y$10$jwW4mLYi/7.L7ekzAGrS4eiQD87eJkOBJA/9QCLVArAjSxQV9JzbG', NULL, NULL, 1, NULL, NULL, '2024-07-28 20:54:41', '2024-07-28 20:55:08', 1),
-(18, 'tran manh', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'manhtnph28511@fpt.edu.vn', NULL, '$2y$10$8.22KjCyJfiorzo/LLnsiOJcnLi14ZA4BReeIGuDQyHaZ9NU8/6C.', 'ha noi', NULL, 1, NULL, NULL, '2024-07-28 21:26:46', '2024-07-29 00:16:25', 1),
-(19, 'tran manh', 'https://res.cloudinary.com/denxdub1l/image/upload/v1722249803/Cara/Profile/aovxgnserrpty9awcjzs.jpg', 'minh29122003@gmail.com', NULL, '$2y$10$Qpo/Kan2Tlh3EHd1kFdyceVOdhBnf26f8x65DmEwxN6I9UuDpKtDm', 'ha noi', '0987654321', 0, NULL, NULL, '2024-07-29 01:45:09', '2024-08-23 11:26:55', 0);
+INSERT INTO `users` (`id`, `voucher_id`, `name`, `avatar`, `email`, `email_verified_at`, `password`, `address`, `phone`, `role`, `deleted_at`, `remember_token`, `created_at`, `updated_at`, `status`) VALUES
+(1, 9, 'Quản trị viên', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'admin@gmail.com', NULL, '$2y$10$WTUHCBKX30LtFY0egvP98ue9Ae6rod4NJz9eAAlt0ErPimfoy21zu', NULL, NULL, 1, NULL, NULL, '2024-06-26 20:35:16', '2024-08-25 04:06:33', 1),
+(2, NULL, 'buingocphi', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'phibnph29465@fpt.edu.vn', NULL, '$2y$10$JOtPaOdf04C4gy985Lw8hOD1pr02cDpSDywImGArglptRY8jAoX96', NULL, NULL, 0, NULL, NULL, '2024-06-28 01:56:52', '2024-08-16 08:22:30', 1),
+(3, NULL, 'Bùi Fee', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699687947/Cara/Profile/kpvg3fzzm3evjydhhnkf.png', 'buingocphinn@gmail.com', NULL, '$2y$10$rQOdhXnOK/3tKOwKYn.3auDLOzdkafHHRNNwDDfWqeJlTeC0BRTT6', 'Kim Sơn - Ninh Bình', '0377674930', 0, NULL, NULL, '2024-06-03 02:08:02', '2024-07-10 17:50:11', 1),
+(17, NULL, 'tran manh', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'manutd@gmail.com', NULL, '$2y$10$jwW4mLYi/7.L7ekzAGrS4eiQD87eJkOBJA/9QCLVArAjSxQV9JzbG', NULL, NULL, 1, NULL, NULL, '2024-07-28 20:54:41', '2024-07-28 20:55:08', 1),
+(19, 9, 'tran manh', 'https://res.cloudinary.com/denxdub1l/image/upload/v1722249803/Cara/Profile/aovxgnserrpty9awcjzs.jpg', 'minh29122003@gmail.com', NULL, '$2y$10$Qpo/Kan2Tlh3EHd1kFdyceVOdhBnf26f8x65DmEwxN6I9UuDpKtDm', 'ha noi', '0987654321', 0, NULL, NULL, '2024-07-29 01:45:09', '2024-08-25 08:53:14', 0),
+(20, NULL, 'manh123', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'manhtnph28511@fpt.edu.vn', NULL, '$2y$10$cCQSd7Q99a6n0hqomsOMY.mOGIy14ILWMxSG7IKnU3jeQeO1x2yD6', NULL, NULL, 0, NULL, NULL, '2024-08-25 10:08:53', '2024-08-25 10:08:53', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_voucher`
+--
+
+CREATE TABLE `user_voucher` (
+  `id` int UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL,
+  `voucher_id` int UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user_voucher`
+--
+
+INSERT INTO `user_voucher` (`id`, `user_id`, `voucher_id`, `created_at`, `updated_at`) VALUES
+(4, 19, 2, '2024-08-25 09:09:22', '2024-08-25 09:09:22'),
+(5, 19, 9, '2024-08-25 09:09:49', '2024-08-25 09:09:49');
 
 -- --------------------------------------------------------
 
@@ -990,13 +1023,36 @@ CREATE TABLE `vouchers` (
 
 INSERT INTO `vouchers` (`id`, `code`, `discount`, `discount_type`, `starts_at`, `expires_at`, `usage_count`, `quantity`, `product_id`, `created_at`, `updated_at`) VALUES
 (1, 'mm23', 30, 'fixed', '2024-08-15', '2024-08-16', 0, 0, 1, '2024-08-15 03:10:32', '2024-08-15 04:01:06'),
-(2, 'mo01', 10, 'percentage', '2024-08-16', '2024-08-31', 1, 9, NULL, '2024-08-15 03:34:22', '2024-08-21 10:02:41'),
+(2, 'mo01', 10, 'percentage', '2024-08-16', '2024-08-31', 5, 9, NULL, '2024-08-15 03:34:22', '2024-08-25 03:47:13'),
 (4, 'sp', 400, 'fixed', '2024-08-17', '2024-08-23', 10, 0, NULL, '2024-08-15 03:53:42', '2024-08-21 09:21:42'),
 (5, 'santo', 555, 'fixed', '2024-08-16', '2024-08-31', 2, -2, NULL, '2024-08-16 02:39:29', '2024-08-20 08:27:03'),
 (6, 'm66686', 100000, 'fixed', '2024-08-16', '2024-08-25', 4, 7, 21, '2024-08-16 03:03:03', '2024-08-20 09:52:04'),
 (7, 'hihi', 20, 'percentage', '2024-08-20', '2024-08-22', 1, -1, NULL, '2024-08-19 02:25:35', '2024-08-19 02:39:10'),
 (8, 'premier league', 20, 'percentage', '2024-08-19', '2024-08-30', 11, 0, NULL, '2024-08-19 02:34:13', '2024-08-21 08:37:20'),
 (9, 'asd', 20, 'percentage', '2024-08-20', '2024-08-31', 1, 9, 21, '2024-08-20 09:20:29', '2024-08-20 09:20:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wishlists`
+--
+
+CREATE TABLE `wishlists` (
+  `id` int UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL,
+  `product_id` int UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `size_id` int UNSIGNED DEFAULT NULL,
+  `color_id` int UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wishlists`
+--
+
+INSERT INTO `wishlists` (`id`, `user_id`, `product_id`, `created_at`, `updated_at`, `size_id`, `color_id`) VALUES
+(1, 20, 3, '2024-08-26 01:26:00', '2024-08-26 01:26:00', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1038,14 +1094,6 @@ ALTER TABLE `clients_notifications`
 --
 ALTER TABLE `colors`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `comments`
---
-ALTER TABLE `comments`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `comments_user_id_foreign` (`user_id`),
-  ADD KEY `comments_product_id_foreign` (`product_id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -1143,7 +1191,16 @@ ALTER TABLE `sub_categories`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
+  ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD KEY `users_voucher_id_foreign` (`voucher_id`);
+
+--
+-- Indexes for table `user_voucher`
+--
+ALTER TABLE `user_voucher`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_voucher_user_id_foreign` (`user_id`),
+  ADD KEY `user_voucher_voucher_id_foreign` (`voucher_id`);
 
 --
 -- Indexes for table `vouchers`
@@ -1152,6 +1209,14 @@ ALTER TABLE `vouchers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `vouchers_code_unique` (`code`),
   ADD KEY `vouchers_product_id_foreign` (`product_id`);
+
+--
+-- Indexes for table `wishlists`
+--
+ALTER TABLE `wishlists`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `wishlists_user_id_foreign` (`user_id`),
+  ADD KEY `wishlists_product_id_foreign` (`product_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1167,7 +1232,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1185,19 +1250,13 @@ ALTER TABLE `chats`
 -- AUTO_INCREMENT for table `clients_notifications`
 --
 ALTER TABLE `clients_notifications`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `colors`
 --
 ALTER TABLE `colors`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `comments`
---
-ALTER TABLE `comments`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1209,31 +1268,31 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `order_updates`
 --
 ALTER TABLE `order_updates`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -1257,7 +1316,7 @@ ALTER TABLE `product_variants`
 -- AUTO_INCREMENT for table `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `sizes`
@@ -1281,13 +1340,25 @@ ALTER TABLE `sub_categories`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `user_voucher`
+--
+ALTER TABLE `user_voucher`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `vouchers`
 --
 ALTER TABLE `vouchers`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `wishlists`
+--
+ALTER TABLE `wishlists`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -1298,13 +1369,6 @@ ALTER TABLE `vouchers`
 --
 ALTER TABLE `chats`
   ADD CONSTRAINT `chats_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `comments`
---
-ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `order_details`
@@ -1321,10 +1385,30 @@ ALTER TABLE `product_variants`
   ADD CONSTRAINT `product_variants_size_id_foreign` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_voucher_id_foreign` FOREIGN KEY (`voucher_id`) REFERENCES `vouchers` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `user_voucher`
+--
+ALTER TABLE `user_voucher`
+  ADD CONSTRAINT `user_voucher_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `user_voucher_voucher_id_foreign` FOREIGN KEY (`voucher_id`) REFERENCES `vouchers` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `vouchers`
 --
 ALTER TABLE `vouchers`
   ADD CONSTRAINT `vouchers_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `wishlists`
+--
+ALTER TABLE `wishlists`
+  ADD CONSTRAINT `wishlists_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `wishlists_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

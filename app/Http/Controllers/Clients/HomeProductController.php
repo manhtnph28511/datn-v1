@@ -71,43 +71,17 @@ public function showProduct($id, $slug, Request $request)
     $product = Product::with('product_variants')->find($id);
     $sizes = Size::all();
     $colors = Color::all();
-    // $variantError = null;
 
-    // Lấy các giá trị đã chọn từ request
-    // $selectedSizeId = $request->input('size_id');
-    // $selectedColorId = $request->input('color_id');
+    $selectedSizeId = $request->input('size_id', '');
+    $selectedColorId = $request->input('color_id', '');
 
-    
-    // if ($product) {
-    //     // Kiểm tra size_id và color_id của sản phẩm chính
-    //     if ($selectedSizeId && $selectedColorId) {
-    //         // Kiểm tra sản phẩm chính
-    //         if ($product->size_id == $selectedSizeId && $product->color_id == $selectedColorId) {
-    //             if ($product->quantity <= 0) {
-    //                 $variantError = 'Sản phẩm chính đã hết hàng';
-    //             }
-    //         } else {
-    //             // Kiểm tra biến thể
-    //             $matchingVariant = $product->product_variants->first(function ($variant) use ($selectedSizeId, $selectedColorId) {
-    //                 return $variant->size_id == $selectedSizeId && $variant->color_id == $selectedColorId;
-    //             });
-
-    //             if (!$matchingVariant || $matchingVariant->quantity <= 0) {
-    //                 $variantError = 'Biến thể sản phẩm đã hết hàng';
-    //             }
-    //         }
-    //     } else {
-    //         $variantError = 'Vui lòng chọn kích thước và màu sắc.';
-    //     }
-    // } else {
-    //     $variantError = 'Sản phẩm không tồn tại.';
-    // }
 
     return view('clients.pages.detail-product', [
         'product' => $product,
         'sizes' => $sizes,
         'colors' => $colors,
-        // 'variantError' => $variantError,
+        'selectedSizeId' => $selectedSizeId,
+        'selectedColorId' => $selectedColorId,
     ]);
 }
 

@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\Notification;
 use App\Models\ClientsNotification;
 use App\Models\User;
+use App\Models\UserVoucher;
 use App\Models\Voucher;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
@@ -236,81 +237,7 @@ public function addToCart(Request $request)
 
 
 
-
-
-    //voucher
-    // public function applyVoucher(Request $request)
-    // {
-    //     // Xác thực dữ liệu yêu cầu
-    //     $request->validate([
-    //         'voucher_code' => 'required|string',
-    //         'pro_id' => 'required|integer|exists:products,id',
-    //         'total_price' => 'required|numeric',
-    //     ]);
-
-    //     // Tìm giỏ hàng của người dùng với sản phẩm cụ thể
-    //     $cart = Cart::where('user_id', auth()->id())->where('pro_id', $request->input('pro_id'))->first();
-
-    //     if (!$cart) {
-    //         return back()->withErrors(['error' => 'Sản phẩm không có trong giỏ hàng.']);
-    //     }
-
-    //     // Lấy thông tin sản phẩm từ cơ sở dữ liệu
-    //     $product = Product::find($cart->pro_id);
-
-    //     if (!$product) {
-    //         return back()->withErrors(['error' => 'Sản phẩm không tồn tại.']);
-    //     }
-
-    //     // Lấy giá của sản phẩm
-    //     $product_price = $product->price;
-
-    //     // Lấy voucher từ mã voucher
-    //     $voucher = Voucher::where('code', $request->input('voucher_code'))->first();
-
-    //     // Kiểm tra xem voucher có tồn tại và còn hạn sử dụng không
-    //     if (!$voucher || $voucher->expires_at < now()) {
-    //         return back()->withErrors(['error' => 'Voucher không hợp lệ hoặc đã hết hạn.']);
-    //     }
-
-    //     // Kiểm tra xem voucher có áp dụng cho sản phẩm này không
-    //     if (!$voucher->products->contains($product->id)) {
-    //         return back()->withErrors(['error' => 'Voucher không áp dụng cho sản phẩm này.']);
-    //     }
-
-    //     // Tính toán giảm giá
-    //     $discountAmount = 0;
-    //     if ($voucher->discount_type == 'percentage') {
-    //         $discountAmount = ($product_price * $voucher->discount) / 100;
-    //     } else if ($voucher->discount_type == 'fixed') {
-    //         $discountAmount = $voucher->discount;
-    //     }
-
-    //     // Nếu giảm giá lớn hơn tổng giá, đặt tổng tiền sau giảm giá là 0
-    //     $discounted_total_price = max($product_price - $discountAmount, 0);
-
-    //     // Cập nhật giỏ hàng với số tiền sau giảm giá
-    //     $cart->update([
-    //         'discounted_total_price' => $discounted_total_price,
-    //     ]);
-
-    //     return view('clients.pages.cart', [
-    //         'cart' => $cart,
-    //         'discounted_total_price' => $discounted_total_price,
-    //         'success' => 'Voucher đã được áp dụng thành công.'
-    //     ]);
-    // }
     
-
-
-
-    
-    
-
-
-
-
-
     
     // Check out
     public function checkout()
@@ -344,6 +271,34 @@ public function addToCart(Request $request)
         }
         return back();
     }
+
+//tìm voucher
+public function searchVouchers(Request $request)
+    {
+        $userId = Auth::id();
+
+
+        $carts = DB::table('carts')
+        ->leftJoin('users', 'users.id', '=', 'carts.user_id')
+        ->leftJoin('products', 'products.id', '=', 'carts.pro_id')
+        ->where('user_id', '=', $userId)
+        ->select('carts.*', 'products.id as pro_id', 'products.name as proName', 'products.image', 'users.name as username')->get();
+        // Lấy tất cả các voucher của người dùng
+        $userVouchers = UserVoucher::where('user_id', $userId)->get();
+
+        // Lấy tất cả các voucher có sẵn
+        $allVouchers = Voucher::all();
+
+
+        // Trả về view với dữ liệu
+        return view('clients.pages.orders.voucher', [
+            'carts' => $carts,
+            'userVouchers' => $userVouchers,
+            'allVouchers' => $allVouchers // Truyền tất cả các voucher vào view
+        ]);
+    }
+
+
 
 
     public function applyVoucher(Request $request)
@@ -435,167 +390,6 @@ public function addToCart(Request $request)
 
     
 
-
-
-
-//     public function checkoutStep(Request $request)
-// {
-//     $validatedData = $request->validate([
-//         'username' => 'required|string|max:255',
-//         'address' => 'required|string|max:255',
-//         'phone' => 'required|string|max:20',
-//         'email' => 'required|string|max:100',
-//         'note' => 'nullable|string|max:1000',
-//         'type_order' => ['required', Rule::in(1, 2)],
-//     ], [
-//         'username.required' => 'Họ tên không được để trống',
-//         'address.required' => 'Địa chỉ không được để trống',
-//         'phone.required' => 'Số điện thoại không được để trống',
-//         'email.required' => 'Email không được để trống',
-//         'type_order.in' => 'Chưa chọn phương thức thanh toán',
-//     ]);
-
-//     $carts = DB::table('carts')
-//         ->leftJoin('products', 'products.id', '=', 'carts.pro_id')
-//         ->where('carts.user_id', auth()->user()->id)
-//         ->select('carts.*', 'products.id as pro_id', 'products.name as proName', 'products.image', 'carts.price')
-//         ->get();
-
-//     if ($request->type_order === '1') {
-//         $stripe = new \Stripe\StripeClient('sk_test_51OCaeXJEiz1nZ8wauNXZTuCnNk3n6JOPOeucvWgKw0mYqTY6UswavZHHhoa9PKzzz02KnfRVrAPq4vAPAWgWuNls002uS07q7Z');
-//         $line_items = [];
-
-//         foreach ($carts as $item) {
-//             $line_items[] = [
-//                 'price_data' => [
-//                     'currency' => 'vnd',
-//                     'product_data' => [
-//                         'name' => $item->proName,
-//                         'images' => [$item->image],
-//                     ],
-//                     'unit_amount' => $item->discounted_total_price * 1,
-//                 ],
-//                 'quantity' => $item->quantity,
-//             ];
-//         }
-
-//         try {
-//             $session = $stripe->checkout->sessions->create([
-//                 'payment_method_types' => ['card'],
-//                 'line_items' => $line_items,
-//                 'mode' => 'payment',
-//                 'success_url' => route('order-success'),
-//                 'cancel_url' => route('home.cart'),
-//             ]);
-
-//             $order = new Order();
-//             $order->user_id = auth()->user()->id;
-//             $order->username = $validatedData['username'];
-//             $order->address = $validatedData['address'];
-//             $order->phone = $validatedData['phone'];
-//             $order->email = $validatedData['email'];
-//             $order->note = $validatedData['note'] ?? '';
-//             $order->payment_method =  'Credit_card' ;
-//             $order->shipment_status = 'PACKED';
-//             $order->order_status = "PENDING";
-//             $order->save();
-
-//             foreach ($carts as $cart) {
-//                 OrderDetail::create([
-//                     'order_id' => $order->id,
-//                     'pro_id' => $cart->pro_id,
-//                     'size_id' => $cart->size_id ?? null,
-//                     'color_id' => $cart->color_id ?? null,
-//                     'price' => $cart->price,
-//                     'quantity' => $cart->quantity,
-//                     'total_price' => $cart->discounted_total_price ?? $cart->price * $cart->quantity,
-
-//                 ]);
-//             }
-
-//             // Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
-
-
-//             Notification::create([
-//                 'type' => 'đã đặt hàng',
-//                 'order_id' =>  $order->id,
-//                 'data' => json_encode([
-//                     'message' => 'Có đơn hàng mới! Đơn hàng #' . $order->id,
-//                     'order_details' => [
-//                         'username' => $order->username,
-//                         'address' => $order->address,
-//                         'phone' => $order->phone,
-//                         'email' => $order->email,
-//                         'note' => $order->note,
-//                     ]
-//                 ]),
-//                 'is_read' => false,
-//             ]);
-
-//             session()->put('order_id', $order->id);
-//             DB::table('carts')->where('user_id', auth()->user()->id)->delete();
-
-//             return redirect($session->url);
-//         } catch (\Exception $e) {
-//             return redirect()->back()->with('error', 'Đã xảy ra lỗi khi tạo phiên thanh toán. Vui lòng thử lại.');
-//         }
-//     }
-
-//     if ($request->type_order === '2') {
-//         $order = new Order();
-//         $order->user_id = auth()->user()->id;
-//         $order->username = $validatedData['username'];
-//         $order->address = $validatedData['address'];
-//         $order->phone = $validatedData['phone'];
-//         $order->email = $validatedData['email'];
-//         $order->note = $validatedData['note'] ?? '';
-//         $order->payment_method = 'COD';
-//         $order->order_status = "PENDING";
-//         $order->shipment_status = 'ORDERPLACE';
-//         $order->save();
-
-//         foreach ($carts as $cart) {
-//             OrderDetail::create([
-//                 'order_id' => $order->id,
-//                 'pro_id' => $cart->pro_id,
-//                 'size_id' => $cart->size_id ?? null,
-//                 'color_id' => $cart->color_id ?? null,
-//                 'price' => $cart->price,
-//                 'quantity' => $cart->quantity,
-//                 'total_price' => $cart->discounted_total_price ?? $cart->price * $cart->quantity,
-
-//             ]);
-//         }
-
-//         // Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
-
-
-//         Notification::create([
-//             'type' => 'đã đặt hàng',
-//             'order_id' =>  $order->id,
-//             'data' => json_encode([
-//                 'message' => 'Có đơn hàng mới! Đơn hàng #' . $order->id,
-//                 'order_details' => [
-//                     'username' => $order->username,
-//                     'address' => $order->address,
-//                     'phone' => $order->phone,
-//                     'email' => $order->email,
-//                     'note' => $order->note,
-//                 ]
-//             ]),
-//             'is_read' => false,
-//         ]);
-
-
-
-//         DB::table('carts')->where('user_id', auth()->user()->id)->delete();
-
-
-//         // $this->sendOrderNotification($order);
-
-//         return redirect()->route('order-success');
-//     }
-// }
 public function checkoutStep(Request $request)
 {
     $validatedData = $request->validate([

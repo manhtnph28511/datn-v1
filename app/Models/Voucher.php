@@ -21,6 +21,10 @@ class Voucher extends Model
         'expires_at' => 'datetime',
     ];
 
-
+    public function userVouchers()
+    {
+        return $this->hasMany(UserVoucher::class, 'voucher_id');
+    }
+    
 
 }

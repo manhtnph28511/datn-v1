@@ -60,14 +60,16 @@
                    
 
                     {{-- thông báo đánh giá --}}
-                    @if (trim($message) === 'Đơn hàng của bạn đã được giao hàng thành công.')
                     <td class="px-6 py-4">
-                    <form action="" method="GET">
-                        @csrf
-                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Đánh giá sản phẩm</button>
-                    </form>
+                        @if (trim($message) === 'Đơn hàng của bạn đã được giao hàng thành công.')
+                        <form action="{{ route('clients.product.review', ['orderId' => $orderId]) }}" method="GET">
+                            @csrf
+                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Đánh giá sản phẩm</button>
+                        </form>
+                        
+                        @endif
                     </td>
-                    @endif
+                    
 
 
 

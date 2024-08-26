@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\ClientsNotification;
 use App\Models\Notification;
 use App\Models\Product;
+use App\Models\Order;
+use App\Models\Size;
+use App\Models\Color;
+
+
 use App\Models\OrderDetail;
 
 class ClientsNotificationController extends Controller
@@ -141,20 +146,36 @@ class ClientsNotificationController extends Controller
             return redirect()->back()->with('error', 'Thông tin đơn hàng không tồn tại.');
         }
      }
+    
 
-     public function showProduct($id)
-     {
-         // Tìm sản phẩm theo ID
-         $product = Product::find($id);
-         
-         if (!$product) {
-             return redirect()->route('clients.notifications.index')->with('error', 'Sản phẩm không tìm thấy.');
-         }
-     
-         // Hiển thị trang chi tiết sản phẩm
-         return view('clients.pages.detail-product', compact('product'));
-     }
+    
+
+     public function review($orderId)
+{
+    // Lấy thông tin đơn hàng chi tiết
+    $orderDetail = OrderDetail::where('order_id', $orderId)->firstOrFail();
+
+    // Lấy thông tin sản phẩm dựa vào pro_id
+    $sizes = Size::all();
+    $colors = Color::all();
+    $product = Product::findOrFail($orderDetail->pro_id);
+    $selectedSizeId = $orderDetail->size_id;
+    $selectedColorId = $orderDetail->color_id;
+    // Trả về view với dữ liệu đơn hàng chi tiết và sản phẩm
+    return view('clients.pages.detail-product', [
+        'orderDetail' => $orderDetail,
+        'product' => $product,
+        'selectedSizeId' => $selectedSizeId,
+        'selectedColorId' => $selectedColorId,
+        'sizes'=> $sizes,
+        'colors'=>$colors
+    ]);
+}
+}
+
+
+
      
     
 
-}
+
