@@ -71,7 +71,9 @@ Route::name('account.')->prefix('tai-khoan')->controller(AuthController::class)-
 // Admin
 Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
     // Dashboard
-    Route::get('/', [DashboardController::class, 'index'])->name('admin');
+    // Route::get('/', [DashboardController::class, 'index'])->name('admin');
+    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+   
 
     //Product Module
     Route::name('admin.')->prefix('san-pham')->controller(ProductController::class)->group(function () {

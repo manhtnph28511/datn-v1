@@ -7,7 +7,7 @@
 
     <div class="menu-items">
         <ul class="nav-links">
-            <li><a href="{{ route('admin') }}">
+            <li><a href="{{ route('admin.dashboard') }}">
                     <i class="uil uil-estate"></i>
                     <span class="link-name">Dashboard</span>
                 </a></li>

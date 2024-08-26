@@ -34,8 +34,6 @@
                         <td>Giá</td>
                         <td>Số lượng</td>
                         <td>Tổng giá</td>
-                        {{-- <td>Voucher</td>
-                        <td>Giá sau khi sử dụng voucher</td> --}}
                     </tr>
                 </thead>
 
