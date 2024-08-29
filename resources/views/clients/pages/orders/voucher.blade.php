@@ -41,8 +41,14 @@
             @endif
         
             @foreach ($carts as $index => $cart)
-            <tr class="pro-box">
-                <td><img src="{{ $cart->image }}" alt="" class="mx-auto"></td>
+            <td>
+                @if(Str::startsWith($cart->image_variant, 'http')) <!-- Kiểm tra nếu URL bắt đầu bằng http (Cloudinary) -->
+                    <img src="{{ $cart->image_variant }}" alt="Ảnh sản phẩm từ Cloudinary" class="cart-image">
+                @else
+                    <img src="{{ asset('storage/' . $cart->image_variant) }}" alt="Ảnh sản phẩm từ Storage" class="cart-image">
+                @endif
+            </td>
+            
                 <td class="w-[222px]">{{ $cart->proName }}</td>
                 <td>{{ number_format($cart->price) }} VNĐ</td>
                 <td>{{ $cart->quantity }}</td>
@@ -90,63 +96,45 @@
     </div>
     <!-- Bảng hiển thị voucher -->
     @if(isset($userVouchers) && $userVouchers->count() > 0)
-        <table>
-            <thead>
+    <table>
+        <thead>
+            <tr>
+                <th>Mã Voucher</th>
+                <th>Giảm Giá</th>
+                <th>Loại giảm Giá</th>
+                <th>Thời Gian Bắt Đầu</th>
+                <th>Thời Gian Kết Thúc</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($userVouchers as $userVoucher)
                 <tr>
-                    <th>Mã Voucher</th>
-                    <th>Giảm Giá</th>
-                    <th>Thời Gian Bắt Đầu</th>
-                    <th>Thời Gian Kết Thúc</th>
+                    <td>{{ $userVoucher->voucher->code }}</td>
+                    <td>
+                        @if($userVoucher->voucher->discount_type === 'percentage')
+                            {{ $userVoucher->voucher->discount }}%
+                        @else
+                            {{ number_format($userVoucher->voucher->discount) }} VND
+                        @endif
+                    </td>
+                    <td>
+                        @if(is_null($userVoucher->voucher->product_id))
+                            Áp dụng cho mọi sản phẩm
+                        @else
+                            Áp dụng cho sản phẩm {{ $userVoucher->voucher->product->name }}
+                        @endif
+                    </td>
+                    <td>{{ $userVoucher->voucher->starts_at->format('d-m-Y H:i:s') }}</td>
+                    <td>{{ $userVoucher->voucher->expires_at->format('d-m-Y H:i:s') }}</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach($userVouchers as $userVoucher)
-                    <tr>
-                        <td>{{ $userVoucher->voucher->code }}</td>
-                        <td>
-                            @if($userVoucher->voucher->discount_type === 'percentage')
-                                {{ $userVoucher->voucher->discount }}%
-                            @else
-                                {{ number_format($userVoucher->voucher->discount) }} VND
-                            @endif
-                        </td>
-                        <td>{{ $userVoucher->voucher->starts_at->format('d-m-Y H:i:s') }}</td>
-                        <td>{{ $userVoucher->voucher->expires_at->format('d-m-Y H:i:s') }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @elseif(isset($allVouchers) && $allVouchers->count() > 0)
-        <p>Dưới đây là các voucher có sẵn:</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Mã Voucher</th>
-                    <th>Giảm Giá</th>
-                    <th>Thời Gian Bắt Đầu</th>
-                    <th>Thời Gian Kết Thúc</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($allVouchers as $voucher)
-                    <tr>
-                        <td>{{ $voucher->code }}</td>
-                        <td>
-                            @if($voucher->discount_type === 'percentage')
-                                {{ $voucher->discount }}%
-                            @else
-                                {{ number_format($voucher->discount) }} VND
-                            @endif
-                        </td>
-                        <td>{{ $voucher->starts_at->format('d-m-Y H:i:s') }}</td>
-                        <td>{{ $voucher->expires_at->format('d-m-Y H:i:s') }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @else
-        <p>Không có voucher nào.</p>
-    @endif
+            @endforeach
+        </tbody>
+    </table>
+@else
+    <p>Không có voucher nào.</p>
+@endif
+
 </section>
 @endsection
 
@@ -225,6 +213,22 @@
 .product-image {
     display: block;
     width: 100px; /* Ví dụ: điều chỉnh kích thước theo nhu cầu */
+}
+.cart-image-container {
+    width: 150px; /* Kích thước khung chứa ảnh */
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.cart-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
 }
 
 </style>

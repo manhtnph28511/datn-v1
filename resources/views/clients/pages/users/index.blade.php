@@ -14,6 +14,7 @@
                 <li><a href="{{route('order.history')}}">lịch sử mua hàng</a></li>
                 <li><a href="{{route('order.track')}}">theo dõi đơn hàng</a></li>
                 <li><a href="{{ route('clients.users.wishlists') }}">Xem Wishlist</a></li>
+                <li><a href="{{ route('clients.ratings.index') }}">Xem đánh giá của bạn</a></li>
                 <li><a href="{{ route('clients.notifications.index') }}" class="relative">
                     <span class="notification-count">Thông báo :{{ $unreadNotificationsCount }}</span>
                 </a>

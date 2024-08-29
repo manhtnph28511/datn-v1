@@ -91,14 +91,17 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
 
    
         //Variant
-        Route::name('admin.')->prefix('variant')->controller(ProductVariantController::class)->group(function () {
-            Route::get('product_variants/{product_id}', [ProductVariantController::class, 'index'])->name('variant.index');
-            Route::get('product_variants/{product_id}/create', [ProductVariantController::class, 'create'])->name('variant.create');
-            Route::post('product_variants/{product_id}', [ProductVariantController::class, 'store'])->name('variant.store');
-            Route::delete('product_variants/{product_id}', [ProductVariantController::class, 'destroy'])->name('variant.destroy');
-            Route::get('product_variants/{product_id}/edit/{variant_id}', [ProductVariantController::class, 'edit'])->name('variant.edit');
-            Route::put('product_variants/{product_id}/update/{variant_id}', [ProductVariantController::class, 'update'])->name('variant.update');
-        });
+    Route::name('admin.')->prefix('variant')->controller(ProductVariantController::class)->group(function () {
+        Route::get('product_variants/{product_id}', [ProductVariantController::class, 'index'])->name('variant.index');
+        Route::get('product_variants/{product_id}/create', [ProductVariantController::class, 'create'])->name('variant.create');
+        Route::post('product_variants/{product_id}', [ProductVariantController::class, 'store'])->name('variant.store');
+        Route::delete('product_variants/{product_id}', [ProductVariantController::class, 'destroy'])->name('variant.destroy');
+        Route::get('product_variants/{product_id}/edit/{variant_id}', [ProductVariantController::class, 'edit'])->name('variant.edit');
+        Route::put('/products/{product_id}/variants/{variant_id}', [ProductVariantController::class, 'update'])->name('admin.variant.update');
+
+
+
+    });
        
 
     //Brand Module
@@ -244,6 +247,16 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
 
 Route::get('/', [HomeController::class, 'home'])->name('home-client');
 
+
+
+Route::post('/search', [HomeController::class, 'search'])->name('home.site.product.search');
+
+Route::post('/filter', [HomeController::class, 'filter'])->name('home.site.product.filter');
+
+
+
+
+
 Route::controller(SiteController::class)->group(function () {
     //About page
     Route::get('about', 'about')->name('home.site.about');
@@ -354,6 +367,16 @@ Route::name('clients.')->prefix('wishlists')->group(function () {
     Route::post('/wishlist/add', [WishlistsController::class, 'addToWishlist'])->name('wishlists.add');
     Route::post('/wishlist/remove/{id}', [WishlistsController::class, 'removeFromWishlist'])->name('remove');
 });
+
+
+
+Route::name('clients.')->prefix('ratings')->controller(RatingController::class)->group(function () {
+    Route::get('clients/ratings', [RatingController::class, 'index'])->name('ratings.index');
+    Route::delete('ratings/{id}', [RatingController::class, 'destroy'])->name('ratings.destroy');
+    Route::get('ratings/{id}/edit', [RatingController::class, 'edit'])->name('ratings.edit');
+    Route::put('ratings/{id}', [RatingController::class, 'update'])->name('ratings.update');
+});
+
 
 
 

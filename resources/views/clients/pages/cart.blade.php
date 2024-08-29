@@ -57,7 +57,20 @@
                                     <i class="far fa-times-circle"></i>
                                 </a>
                             </td>
-                            <td><img src="{{ $cart->image }}" alt=""></td>
+                            
+                                {{-- Kiểm tra nếu URL bắt đầu bằng http (Cloudinary) --}}
+                                <td>
+                                    @if(Str::startsWith($cart->image_variant, 'http')) <!-- Kiểm tra nếu URL bắt đầu bằng http (Cloudinary) -->
+                                        <img src="{{ $cart->image_variant }}" alt="Ảnh sản phẩm từ Cloudinary" class="cart-image">
+                                    @else
+                                        <img src="{{ asset('storage/' . $cart->image_variant) }}" alt="Ảnh sản phẩm từ Storage" class="cart-image">
+                                    @endif
+                                </td>
+                               
+                           
+                            
+                            
+
                             <td>{{ $cart->proName }}</td>
                             <td>{{ $cart->sizeName ?? 'N/A' }}</td>
                             <td>{{ $cart->colorName ?? 'N/A' }}</td>
@@ -132,4 +145,21 @@
     background-color: #f8d7da;
     border-color: #f5c6cb;
 }
+.cart-image-container {
+    width: 150px; /* Kích thước khung chứa ảnh */
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.cart-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
 </style>

@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\ProductVariant;
 use App\Models\Product;
 use App\Models\Color;
+use App\Http\Requests\Admin\StoreProductVariantRequest;
 use App\Models\Size;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ProductVariantController extends Controller
 {
@@ -28,20 +30,11 @@ class ProductVariantController extends Controller
     return view('admin.pages.variants.create', compact('product','sizes','colors','product_id'));
 
     }
-    public function store(Request $request, $product_id)
+    public function store(StoreProductVariantRequest $request, $product_id)
     {
-        // Xác thực dữ liệu từ request
-        $request->validate([
-            'size_id' => 'required|exists:sizes,id',   // Thay đổi để xác thực theo size_id
-            'color_id' => 'required|exists:colors,id', // Thay đổi để xác thực theo color_id
-            'price' => 'required|integer|min:0',
-            'quantity' => 'required|integer|min:0',
-        ]);
-    
         // Tìm sản phẩm theo ID
         $product = Product::findOrFail($product_id);
     
-
         // Tạo và lưu biến thể mới
         $variant = new ProductVariant();
         $variant->product_id = $product_id;
@@ -49,17 +42,25 @@ class ProductVariantController extends Controller
         $variant->color_id = $request->color_id;
         $variant->price = $request->price;
         $variant->quantity = $request->quantity;
+    
+        // Xử lý ảnh nếu có
         if ($request->hasFile('image_variant')) {
-            $image = $request->file('image_variant');
-            $imagePath = $image->store('images/product_variants', 'public');
-            $variant->image_variant= $imagePath;
+            $uploadedImage = Cloudinary::upload($request->file('image_variant')->getRealPath(), [
+                'folder' => 'Cara/Products',
+                'overwrite' => true,
+                'resource_type' => 'image'
+            ])->getSecurePath();
+            $variant->image_variant = $uploadedImage;
         }
+    
         $variant->save();
     
         // Chuyển hướng về trang tạo với thông báo thành công
         return redirect()->route('admin.variant.index', $product_id)
-            ->with('success', 'Biến thể đã được thêm thành công.');
+        ->with('success', 'Biến thể đã được thêm thành công.');
     }
+
+
     
     public function edit($product_id, $variant_id)
     {
@@ -72,39 +73,50 @@ class ProductVariantController extends Controller
         return view('admin.pages.variants.edit', compact('variant', 'products', 'colors', 'sizes','product_id'));
     }
 
-    public function update(Request $request, $product_id, $variant_id)
+    public function update(StoreProductVariantRequest $request, $product_id, $variant_id)
 {
-    // Xác thực dữ liệu từ request
-    $request->validate([
-        'size_id' => 'required|exists:sizes,id',
-        'color_id' => 'required|exists:colors,id',
-        'price' => 'required|numeric|min:0',
-        'quantity' => 'required|integer|min:0',
-    ]);
-
-    // Tìm biến thể theo ID
+    // Tìm sản phẩm và biến thể
+    $product = Product::findOrFail($product_id);
     $variant = ProductVariant::findOrFail($variant_id);
 
-    // Cập nhật thông tin biến thể
-    $variant->size_id = $request->size_id;
-    $variant->color_id = $request->color_id;
-    $variant->price = $request->price;
-    $variant->quantity = $request->quantity;
+    // Lấy dữ liệu từ request
+    $data = $request->except(['_token', 'image_variant']);
 
     // Xử lý hình ảnh nếu có
     if ($request->hasFile('image_variant')) {
-        $image = $request->file('image_variant');
-        $imagePath = $image->store('images/product_variants', 'public');
-        $variant->image_variant = $imagePath;
+        // Xóa hình ảnh cũ nếu có
+        if ($variant->image_variant) {
+            $publicId = $this->getPublicId($variant->image_variant);
+            Cloudinary::destroy($publicId);
+        }
+
+        // Tải lên hình ảnh mới
+        $data['image_variant'] = Cloudinary::upload($request->file('image_variant')->getRealPath(), [
+            'folder' => 'Cara/Products/Variants',
+            'overwrite' => true,
+            'resource_type' => 'image'
+        ])->getSecurePath();
     }
 
-    // Lưu biến thể
-    $variant->save();
+    // Cập nhật biến thể
+    $isSuccess = $variant->update($data);
 
-    // Chuyển hướng với thông báo thành công
-    return redirect()->route('admin.variant.index', ['product_id' => $product_id])
-    ->with('success', 'Biến thể đã được thêm thành công.');
+    // Kiểm tra thành công và thông báo
+    if ($isSuccess) {
+        return redirect()->route('admin.variant.index', ['product_id' => $product_id])
+            ->with('success', 'Biến thể đã được cập nhật thành công.');
+    } else {
+        // Xóa hình ảnh mới tải lên nếu không thành công
+        if (isset($data['image_variant'])) {
+            $publicId = $this->getPublicId($data['image_variant']);
+            Cloudinary::destroy($publicId);
+        }
+
+        return redirect()->back()->with('error', 'Cập nhật biến thể không thành công.');
+    }
 }
+
+
 
 
     public function destroy($id)

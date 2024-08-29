@@ -3,9 +3,11 @@
 
 @section('app')
 <section id="prodetails" class="section-p1">
-    
+    <!-- Hiển thị thông báo lỗi nếu có -->
+
     <div class="single-pro-image">
-        <img src="{{ $product->image }}" width="100%" id="mainImg" alt="">
+        <img src="{{  $product->image }}" width="100%" id="mainImg" alt="">
+
     </div>
     <div class="single-pro-detail">
         <form action="{{ route('clients.wishlists.add') }}" method="POST">
@@ -80,16 +82,16 @@
 
 
         <div class="container">
-            {{-- <h1>{{ $product->name }}</h1>
-            <p>{{ $product->description }}</p>
-            <p>Giá: {{ number_format($product->price, 0, ',', '.') }} VND</p> --}}
+           
         
             <h2>Đánh giá</h2>
         
             @forelse($product->ratings as $rating) 
                 <div>
                     <strong>{{ $rating->user->name ?? 'Người dùng không xác định' }}:</strong> 
-                    <p>Đánh giá: {{ $rating->rating }} Sao</p>
+                    @if($rating->rating !== null)
+                       <p>Đánh giá: {{ $rating->rating }} Sao</p>
+                    @endif
                      <p>{{ $rating->review }}</p>
                     <p>Ngày: {{ $rating->created_at->format('d-m-Y H:i:s') }}</p>
                 </div>
@@ -131,19 +133,22 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     const sizeSelect = document.getElementById('size-select');
     const colorSelect = document.getElementById('color-select');
     const priceElement = document.getElementById('product-price');
+    const mainImg = document.getElementById('mainImg');
     let basePrice = {{ $product->price }};
+    let baseImage = '{{ $product->image }}'; // Đường dẫn ảnh sản phẩm chính từ URL hoặc đường dẫn khác
     let variants = @json($product->product_variants);
 
-    function updatePrice() {
+    function updatePriceAndImage() {
         let selectedSizeId = sizeSelect.value;
         let selectedColorId = colorSelect.value;
 
         if (!selectedSizeId || !selectedColorId) {
             priceElement.textContent = 'Giá: ' + basePrice;
+            mainImg.src = baseImage; // Hiển thị ảnh sản phẩm chính nếu chưa chọn đủ size và màu
             return;
         }
 
@@ -153,17 +158,25 @@
 
         if (matchingVariant) {
             priceElement.textContent = 'Giá: ' + matchingVariant.price;
+            if (matchingVariant.image_variant) {
+                mainImg.src = '' + matchingVariant.image_variant; // Đường dẫn ảnh biến thể từ Storage
+            } else {
+                mainImg.src = baseImage; // Hiển thị ảnh sản phẩm chính nếu không có ảnh biến thể
+            }
         } else {
             priceElement.textContent = 'Giá: ' + basePrice;
-            
+            mainImg.src = baseImage; // Hiển thị ảnh sản phẩm chính nếu không tìm thấy biến thể
         }
     }
 
-    sizeSelect.addEventListener('change', updatePrice);
-    colorSelect.addEventListener('change', updatePrice);
+    sizeSelect.addEventListener('change', updatePriceAndImage);
+    colorSelect.addEventListener('change', updatePriceAndImage);
 });
 
+
+
 </script>
+
 @endsection
     
     

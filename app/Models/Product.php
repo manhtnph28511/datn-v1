@@ -36,15 +36,15 @@ class Product extends Model
     return $this->belongsTo(Color::class);
 }
 
-public function size()
-{
-    return $this->belongsTo(Size::class);
-}
-public function product_variants()
-{
-    return $this->hasMany(ProductVariant::class, 'product_id');
-}
-public function voucher()
+    public function size()
+    {
+        return $this->belongsTo(Size::class);
+    }
+    public function product_variants()
+    {
+        return $this->hasMany(ProductVariant::class, 'product_id');
+    }
+    public function voucher()
     {
         return $this->belongsTo(Voucher::class);
     }

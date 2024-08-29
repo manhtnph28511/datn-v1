@@ -10,29 +10,48 @@ class OrderDetailController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Order::query();
+        $query = OrderDetail::with('order', 'product', 'size', 'color');
+    
         $search = $request->input('search');
+        $orderId = $request->input('order_id');
         $status = $request->input('status');
-
-        if ($request->has('start_date') && $request->has('end_date')) {
-            $startDate = $request->input('start_date');
-            $endDate = $request->input('end_date');
-            $query->whereBetween('created_at', [$startDate, $endDate]);
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+    
+        // Lọc theo ngày nếu có
+        if ($startDate && $endDate) {
+            $query->whereBetween('order_details.created_at', [$startDate, $endDate]);
         }
-
-        $orderDetails = OrderDetail::with('order', 'product', 'size', 'color')
-            ->when($search, function ($query, $search) {
-                $query->whereHas('order', function ($q) use ($search) {
-                    $q->where('username', 'like', "%{$search}%");
-                });
-            })
-            ->when($status && $status !== 'all', function ($query) use ($status) {
-                $query->where('status', $status);
-            })
-            ->paginate(10);
+    
+        // Tìm kiếm theo tên người đặt
+        $query->when($search, function ($query, $search) {
+            $query->whereHas('order', function ($q) use ($search) {
+                $q->where('username', 'like', "%{$search}%");
+            });
+        });
+    
+        // Tìm kiếm theo ID đơn hàng
+        $query->when($orderId, function ($query, $orderId) {
+            $query->where('order_id', $orderId);
+        });
+    
+        // Lọc theo trạng thái đơn hàng
+        $query->when($status && $status !== 'all', function ($query) use ($status) {
+            $query->whereHas('order', function ($q) use ($status) {
+                $q->where('order_status', $status);
+            });
+        });
+    
+        $orderDetails = $query->orderBy('order_details.created_at', 'desc')->paginate(10);
     
         return view('admin.pages.orderdetails.index', compact('orderDetails'));
-    }    public function show($id)
+    }
+    
+
+
+    
+
+    public function show($id)
     {
         $orderDetails = OrderDetail::with('order', 'product', 'size', 'color')
             ->where('order_id', $id)

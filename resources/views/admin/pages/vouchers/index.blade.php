@@ -3,7 +3,7 @@
 @section('app')
     <div class="dash-content">
         <h1>Danh sách Voucher</h1>
-        <a href="{{ route('admin.vouchers.create') }}">Thêm mới Voucher</a>
+        <a href="{{ route('admin.vouchers.create') }}" class="btn btn-primary">Thêm mới Voucher</a>
         <table class="table mt-4">
             <thead>
                 <tr>
@@ -22,10 +22,9 @@
             <tbody>
                 @foreach($vouchers as $voucher)
                     <tr>
-                        <td>{{$voucher->id}}</td>
+                        <td>{{ $voucher->id }}</td>
                         <td>{{ $voucher->code }}</td>
                         <td>{{ number_format($voucher->discount) }}</td>
-                        {{-- <td>{{ ucfirst($voucher->discount_type) }}</td> --}}
                         <td>
                             @if($voucher->discount_type == 'percentage')
                                 Giảm giá phần trăm (%)
@@ -34,20 +33,18 @@
                             @else
                                 Không xác định
                             @endif
-                          
                         </td>
-                       
-                        
                         <td>{{ \Carbon\Carbon::parse($voucher->starts_at)->format('d/m/Y') }}</td>
                         <td>{{ \Carbon\Carbon::parse($voucher->expires_at)->format('d/m/Y') }}</td>
-                        <td>{{$voucher->usage_count}}</td>
-                        <td>{{$voucher->quantity}}</td>
-                        <td> @if($voucher->product_id)
-                            {{ $voucher->product->name }}
-                        @elseif($voucher->product_id===null)
-                            Tất cả sản phẩm
-                        @endif</td>
-                       
+                        <td>{{ $voucher->usage_count }}</td>
+                        <td>{{ $voucher->quantity < 0 ? 0 : $voucher->quantity }}</td>
+                        <td>
+                            @if($voucher->product_id)
+                                {{ $voucher->product->name }}
+                            @elseif($voucher->product_id === null)
+                                Tất cả sản phẩm
+                            @endif
+                        </td>
                         <td>
                             <a href="{{ route('admin.vouchers.edit', $voucher->id) }}" class="btn btn-warning">Sửa</a>
                             <form action="{{ route('admin.vouchers.destroy', $voucher->id) }}" method="POST" style="display:inline;">
@@ -59,13 +56,13 @@
                     </tr>
                 @endforeach
             </tbody>
+            
         </table>
     </div>
 @endsection
 
 <style>
-    
-.dash-content {
+    .dash-content {
     padding: 20px;
     font-family: Arial, sans-serif;
 }
@@ -117,6 +114,16 @@ a:hover {
     text-decoration: none;
     display: inline-block;
     border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
 }
 
 .btn-warning {

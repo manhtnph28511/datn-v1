@@ -1,10 +1,10 @@
- @extends('admin.layouts.app')
+@extends('admin.layouts.app')
 @section('app')
     <div class="dash-content">
-        <div class="activity"> 
+        <div class="activity">
             <div class="py-20">
-                <h3 class="text-gray-400 mb-4">Thêm mới sản phẩm</h3> 
-                 <form method="POST" action="{{ route('admin.product.store') }}" enctype="multipart/form-data">
+                <h3 class="text-gray-400 mb-4">Thêm mới sản phẩm</h3>
+                <form method="POST" action="{{ route('admin.product.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="grid grid-cols-2 gap-x-6">
                         <div>
@@ -55,8 +55,8 @@
                             </div>
                             <div class="relative z-0 w-full mb-6 group">
                                 <label for=""
-                                    class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">Select an
-                                    status</label>
+                                    class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">Loại sản
+                                    phẩm</label>
                                 <select name="status_id" id=""
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     @foreach ($sttProduct as $stt)
@@ -112,15 +112,14 @@
                                 <label for=""
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Chọn màu</label>
                                 <div class="flex gap-x-2">
-                                    <select name="color_id" id="">
+                                    <select name="color_id" id="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         @foreach ($colors as $color)
                                             <option value="{{ $color->id }}">{{ $color->name }}</option>
-                                            <div class="w-[35px] h-[35px] bg-[{{ $color->code }}] cursor-pointer" onclick="chooseColor(`{{ $color->id }}`)"></div> 
-                                       @endforeach
+                                        @endforeach
                                     </select>
-                                </div> 
-                                 <input type="hidden" name="color_id" id="color"> 
-                                 <div>
+                                </div>
+                              
+                                <div>
                                     @error('color_id')
                                         <p class="my-2 text-red-400">{{ $message }}</p>
                                     @enderror
@@ -147,9 +146,148 @@
         </div>
     </div>
 @endsection
+
+<style>
+    /* General form styles */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form .relative {
+    position: relative;
+}
+
+form .peer-focus\:font-medium {
+    font-weight: 500;
+}
+
+form .peer-placeholder-shown\:scale-100 {
+    transform: scale(1);
+}
+
+form .peer-focus\:scale-75 {
+    transform: scale(0.75);
+}
+
+form .peer-focus\:text-blue-600 {
+    color: #1D4ED8;
+}
+
+form .peer-focus\:dark\:text-blue-500 {
+    color: #3B82F6;
+}
+
+form .peer-focus\:dark\:text-gray-400 {
+    color: #D1D5DB;
+}
+
+form .dark\:bg-gray-700 {
+    background-color: #374151;
+}
+
+form .dark\:border-gray-600 {
+    border-color: #4B5563;
+}
+
+form .dark\:placeholder-gray-400 {
+    color: #9CA3AF;
+}
+
+form .text-gray-900 {
+    color: #111827;
+}
+
+form .bg-gray-50 {
+    background-color: #F9FAFB;
+}
+
+form .border-gray-300 {
+    border-color: #D1D5DB;
+}
+
+form .rounded-lg {
+    border-radius: 0.5rem;
+}
+
+form .focus\:ring-blue-500 {
+    box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.5);
+}
+
+form .focus\:border-blue-500 {
+    border-color: #1D4ED8;
+}
+
+/* Select styles */
+select {
+    background-color: #F9FAFB;
+    border-color: #D1D5DB;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    appearance: none;
+}
+
+select:focus {
+    border-color: #1D4ED8;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.5);
+}
+
+/* Image preview styles */
+#imgPreview {
+    border-radius: 0.5rem;
+    border: 1px solid #D1D5DB;
+    object-fit: cover;
+}
+
+/* Buttons */
+button {
+    background-color: #1D4ED8;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2563EB;
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.5);
+}
+
+/* Cancel button */
+a {
+    
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+}
+
+
+a:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.5);
+}
+
+/* Error message styles */
+p.text-red-400 {
+    color: #F87171;
+    font-size: 0.875rem;
+}
+
+</style>
 @push('script')
-    <script> 
-        get input value color
+    <script>
+        // get input value color
         function chooseColor(color) {
             console.log(document.querySelector(`input[name="color_id"]`).value = color);
         }
@@ -175,5 +313,4 @@
             });
     </script>
 @endpush
-
 

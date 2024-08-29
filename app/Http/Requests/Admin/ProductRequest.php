@@ -21,34 +21,42 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        $currentMethod = $this->route()->getActionMethod(); // lấy phương thức khi submit
+        $currentMethod = $this->route()->getActionMethod(); // Get the action method when submitting
         $rules = [];
-        switch ($this->method()){
+    
+        switch ($this->method()) {
             case 'POST':
-                switch ($currentMethod){
+                switch ($currentMethod) {
                     case 'store':
                         $rules = [
-                            'name' => 'required',
-                            'image' => 'file|required',
-                            'price' => 'required|integer',
-                            'quantity' => 'required|integer',
-                            'cate_id' => 'required',
-                            'size_id' => 'required',
-                            'color_id' => 'required',
-                            'brand_id'  => 'required',
+                            'name' => 'required|string|max:255',
+                            'image' => 'nullable|file|mimes:jpg,jpeg,png|max:2048', // Image is optional but must be valid if provided
+                            'price' => 'required|numeric|min:0',
+                            'quantity' => 'required|integer|min:1',
+                            'cate_id' => 'required|exists:sub_categories,id',
+                            'size_id' => 'required|exists:sizes,id',
+                            'color_id' => 'required|exists:colors,id',
+                            'brand_id' => 'required|exists:brands,id',
                         ];
                         break;
                     case 'update':
                         $rules = [
-                            'name' => 'required',
-                            'price' => 'required|integer',
-                            'quantity' => 'required|integer',
+                            'name' => 'required|string|max:255',
+                            'price' => 'required|numeric|min:0',
+                            'quantity' => 'required|integer|min:1',
+                            'cate_id' => 'sometimes|exists:sub_categories,id',
+                            'size_id' => 'sometimes|exists:sizes,id',
+                            'color_id' => 'sometimes|exists:colors,id',
+                            'brand_id' => 'sometimes|exists:brands,id',
                         ];
                         break;
                 }
                 break;
             default:
+                // Default rules can be added here if needed
+                break;
         }
+    
         return $rules;
     }
 

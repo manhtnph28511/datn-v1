@@ -21,215 +21,45 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderMail;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Support\Str;
+
+
+
 
 class CartController extends Controller
 {
     // Cart
     public function cart()
-    {
-        if (auth()->check()) {
-            $userId = Auth::user()->id;
-            $carts = DB::table('carts')
-                ->leftJoin('users', 'users.id', '=', 'carts.user_id')
-                ->leftJoin('products', 'products.id', '=', 'carts.pro_id')
-                ->leftJoin('sizes', 'sizes.id', '=', 'carts.size_id')
-                ->leftJoin('colors', 'colors.id', '=', 'carts.color_id')
-                ->where('user_id', '=', $userId)
-                ->select(
-                    'carts.*',
-                    'products.id as pro_id',
-                    'products.name as proName',
-                    'products.image',
-                    'users.name as username',
-                    'sizes.name as sizeName', // Thêm size name
-                    'colors.name as colorName' // Thêm color name
-                )
-                ->get();
-            return view('clients.pages.cart', compact('carts'));
-        }
-        return back();
+{
+    if (auth()->check()) {
+        $userId = Auth::user()->id;
+        $carts = DB::table('carts')
+            ->leftJoin('users', 'users.id', '=', 'carts.user_id')
+            ->leftJoin('products', 'products.id', '=', 'carts.pro_id')
+            ->leftJoin('sizes', 'sizes.id', '=', 'carts.size_id')
+            ->leftJoin('colors', 'colors.id', '=', 'carts.color_id')
+            ->where('user_id', '=', $userId)
+            ->select(
+                'carts.*',
+                'products.id as pro_id',
+                'products.name as proName',
+                // 'products.image',
+                'users.name as username',
+                'sizes.name as sizeName',
+                'colors.name as colorName',
+                'carts.image_variant',
+                
+            )
+            ->get();
+        return view('clients.pages.cart', compact('carts'));
     }
+    return back();
+}
+
 
    
 
-// public function addToCart(Request $request)
-// {
-//     // Kiểm tra xem yêu cầu có chứa 'pro_id' không
-
-//     $user = auth()->user();
-
-//     // Kiểm tra trạng thái của người dùng
-//     if ($user->status == 0) {
-//         return redirect()->back()->withErrors(['error' => 'Tài khoản của bạn đã bị khóa. Bạn không thể thực hiện mua hàng. Hãy chat với admin để mở khóa trước!']);;
-//     }
-
-//     if (!$request->has('pro_id')) {
-//         toast()->error('Lỗi');
-//         return back();
-//     }
-
-//     // Kiểm tra xem người dùng đã đăng nhập chưa
-//     if (Auth::check()) {
-//         $proId = $request->get('pro_id');
-//         $colorId = $request->get('color_id');
-//         $sizeId = $request->get('size_id');
-//         $quantity = $request->input('quantity', 1);
-
-//         // Lấy sản phẩm và biến thể của sản phẩm
-//         $product = Product::with('product_variants')->find($proId);
-
-//         if (!$product) {
-//             toast()->error('Sản phẩm không tồn tại');
-//             return back();
-//         }
-
-//         // Nếu chưa chọn kích thước hoặc màu sắc, hiển thị thông báo lỗi
-//         if (!$colorId || !$sizeId) {
-//             return redirect()->back()->withErrors(['error' => 'Vui lòng chọn kích thước và màu sắc.']);
-//         }
-
-//         // Kiểm tra nếu người dùng chọn kích thước và màu sắc
-//         if ($sizeId && $colorId) {
-//             // Kiểm tra biến thể
-//             $variant = $product->product_variants->first(function ($variant) use ($sizeId, $colorId) {
-//                 return $variant->size_id == $sizeId && $variant->color_id == $colorId;
-//             });
-
-//             if ($variant) {
-//                 // Kiểm tra số lượng biến thể
-//                 if ($quantity > $variant->quantity) {
-//                     toast()->error('Số lượng yêu cầu vượt quá số lượng có sẵn');
-//                     return back();
-//                 }
-
-//                 // Lấy giá biến thể nếu có
-//                 $price = $variant->price;
-//                 $image = $variant->image_variant; 
-//             } else {
-//                 // Nếu không có biến thể phù hợp, kiểm tra giá của sản phẩm chính
-//                 if ($product->size_id == $sizeId && $product->color_id == $colorId) {
-//                     if ($quantity > $product->quantity) {
-//                         toast()->error('Số lượng yêu cầu vượt quá số lượng có sẵn');
-//                         return back();
-//                     }
-
-//                     // Lấy giá sản phẩm chính
-//                     $price = $product->price;
-//                     $image = $product->image; 
-//                 } else {
-//                     toast()->error('Biến thể sản phẩm không tồn tại');
-//                     return back();
-//                 }
-//             }
-//         } else {
-//             // Nếu chưa chọn kích thước và màu sắc
-//             toast()->error('Vui lòng chọn kích thước và màu sắc.');
-//             return back();
-//         }
-
-//         try {
-//             // Thêm sản phẩm vào giỏ hàng
-//             $isSuccess = Cart::create([
-//                 'pro_id' => $proId,
-//                 'user_id' => Auth::user()->id,
-//                 'size_id' => $sizeId,
-//                 'color_id' => $colorId,
-//                 'price' => $price,
-//                 'quantity' => $quantity,
-//                 'total_price' => ($price * $quantity),
-//                 'image_variant' => $image
-//             ]);
-
-//             // Hiển thị thông báo thành công
-//             return checkEndDisplayMsg('success', $isSuccess, 'Thành công', 'Thêm giỏ hàng thành công', 'home.cart');
-//         } catch (\Throwable $th) {
-//             toast()->error('Đã xảy ra lỗi: ' . $th->getMessage());
-//             return back();
-//         }
-//     }
-    
-//     // Nếu người dùng chưa đăng nhập, trả về trang trước
-//     return back();
-// }
-
-// public function addToCart(Request $request)
-// {
-//     $user = auth()->user();
-
-//     // Kiểm tra trạng thái của người dùng
-//     if ($user->status == 0) {
-//         return redirect()->back()->withErrors(['error' => 'Tài khoản của bạn đã bị khóa. Bạn không thể thực hiện mua hàng. Hãy chat với admin để mở khóa trước!']);
-//     }
-
-//     if (!$request->has('pro_id')) {
-//         toast()->error('Lỗi');
-//         return back();
-//     }
-
-//     if (Auth::check()) {
-//         $proId = $request->get('pro_id');
-//         $colorId = $request->get('color_id');
-//         $sizeId = $request->get('size_id');
-//         $quantity = $request->input('quantity', 1);
-
-//         // Lấy sản phẩm và biến thể của sản phẩm
-//         $product = Product::with('product_variants')->find($proId);
-
-//         if (!$product) {
-//             toast()->error('Sản phẩm không tồn tại');
-//             return back();
-//         }
-
-//         // Mặc định giá và ảnh của sản phẩm chính
-//         $price = $product->price;
-//         $image = $product->image;
-
-//         // Nếu có kích thước và màu sắc được chọn
-//         if ($colorId && $sizeId) {
-//             // Tìm biến thể phù hợp
-//             $variant = $product->product_variants->first(function ($variant) use ($sizeId, $colorId) {
-//                 return $variant->size_id == $sizeId && $variant->color_id == $colorId;
-//             });
-
-//             if ($variant) {
-//                 if ($quantity > $variant->quantity) {
-//                     toast()->error('Số lượng yêu cầu vượt quá số lượng có sẵn');
-//                     return back();
-//                 }
-//                 $price = $variant->price;
-//                 $image = $variant->image_variant; // Cập nhật ảnh biến thể
-//             } else {
-//                 toast()->error('Biến thể sản phẩm không tồn tại');
-//                 return back();
-//             }
-//         } else {
-//             toast()->error('Vui lòng chọn kích thước và màu sắc.');
-//             return back();
-//         }
-
-//         try {
-//             // Thêm sản phẩm vào giỏ hàng
-//             $isSuccess = Cart::create([
-//                 'pro_id' => $proId,
-//                 'user_id' => Auth::user()->id,
-//                 'size_id' => $sizeId,
-//                 'color_id' => $colorId,
-//                 'price' => $price,
-//                 'quantity' => $quantity,
-//                 'total_price' => ($price * $quantity),
-//                 'image_variant' => $image ?: $product->image // Sử dụng ảnh biến thể nếu có, nếu không thì dùng ảnh của sản phẩm chính
-//             ]);
-
-//             return checkEndDisplayMsg('success', $isSuccess, 'Thành công', 'Thêm giỏ hàng thành công', 'home.cart');
-//         } catch (\Throwable $th) {
-//             toast()->error('Đã xảy ra lỗi: ' . $th->getMessage());
-//             return back();
-//         }
-//     }
-
-//     return back();
-// }
-public function addToCart(Request $request)
+ public function addToCart(Request $request)
 {
     $user = auth()->user();
 
@@ -243,14 +73,12 @@ public function addToCart(Request $request)
         return back();
     }
 
-    // Kiểm tra xem người dùng đã đăng nhập chưa
     if (Auth::check()) {
         $proId = $request->get('pro_id');
         $colorId = $request->get('color_id');
         $sizeId = $request->get('size_id');
         $quantity = $request->input('quantity', 1);
 
-        // Lấy sản phẩm và biến thể của sản phẩm
         $product = Product::with('product_variants')->find($proId);
 
         if (!$product) {
@@ -258,52 +86,46 @@ public function addToCart(Request $request)
             return back();
         }
 
-        // Nếu chưa chọn kích thước hoặc màu sắc, hiển thị thông báo lỗi
         if (!$colorId || !$sizeId) {
             return redirect()->back()->withErrors(['error' => 'Vui lòng chọn kích thước và màu sắc.']);
         }
 
         // Kiểm tra nếu người dùng chọn kích thước và màu sắc
+        $image = null;
         if ($sizeId && $colorId) {
-            // Kiểm tra biến thể
             $variant = $product->product_variants->first(function ($variant) use ($sizeId, $colorId) {
                 return $variant->size_id == $sizeId && $variant->color_id == $colorId;
             });
 
             if ($variant) {
-                // Kiểm tra số lượng biến thể
                 if ($quantity > $variant->quantity) {
-                    toast()->error('Số lượng yêu cầu vượt quá số lượng có sẵn');
+                    toast()->error('Số lượng yêu cầu vượt quá số lượng có sẵn hoặc đã hết hàng');
                     return back();
                 }
 
-                // Lấy giá biến thể nếu có
+                // Lấy giá trị của image_variant từ biến thể
                 $price = $variant->price;
-                $image = $variant->image_variant;
+                $image = $variant->image_variant; // Đảm bảo giá trị được gán đúng từ đối tượng variant
             } else {
-                // Nếu không có biến thể phù hợp, kiểm tra giá của sản phẩm chính
                 if ($product->size_id == $sizeId && $product->color_id == $colorId) {
                     if ($quantity > $product->quantity) {
                         toast()->error('Số lượng yêu cầu vượt quá số lượng có sẵn');
                         return back();
                     }
 
-                    // Lấy giá sản phẩm chính
                     $price = $product->price;
-                    $image = $product->image;
+                    $image = $product->image; // Sử dụng hình ảnh của sản phẩm nếu không có biến thể
                 } else {
                     toast()->error('Biến thể sản phẩm không tồn tại');
                     return back();
                 }
             }
         } else {
-            // Nếu chưa chọn kích thước và màu sắc
             toast()->error('Vui lòng chọn kích thước và màu sắc.');
             return back();
         }
 
         try {
-            // Thêm sản phẩm vào giỏ hàng
             $isSuccess = Cart::create([
                 'pro_id' => $proId,
                 'user_id' => Auth::user()->id,
@@ -312,11 +134,9 @@ public function addToCart(Request $request)
                 'price' => $price,
                 'quantity' => $quantity,
                 'total_price' => ($price * $quantity),
-                'image_variant' => $image 
+                'image_variant' => $image // Đây là nơi bạn gán giá trị cho image_variant
             ]);
 
-            // Hiển thị thông báo thành công
-           
             return checkEndDisplayMsg('success', $isSuccess, 'Thành công', 'Thêm giỏ hàng thành công', 'home.cart');
         } catch (\Throwable $th) {
             toast()->error('Đã xảy ra lỗi: ' . $th->getMessage());
@@ -324,9 +144,11 @@ public function addToCart(Request $request)
         }
     }
 
-    // Nếu người dùng chưa đăng nhập, trả về trang trước
     return back();
 }
+
+    
+
 
 
 
@@ -457,29 +279,28 @@ public function addToCart(Request $request)
 
 //tìm voucher
 public function searchVouchers(Request $request)
-    {
-        $userId = Auth::id();
+{
+    $userId = Auth::id();
 
-
-        $carts = DB::table('carts')
+    $carts = DB::table('carts')
         ->leftJoin('users', 'users.id', '=', 'carts.user_id')
         ->leftJoin('products', 'products.id', '=', 'carts.pro_id')
         ->where('user_id', '=', $userId)
         ->select('carts.*', 'products.id as pro_id', 'products.name as proName', 'products.image', 'users.name as username')->get();
-        // Lấy tất cả các voucher của người dùng
-        $userVouchers = UserVoucher::where('user_id', $userId)->get();
 
-        // Lấy tất cả các voucher có sẵn
-        $allVouchers = Voucher::all();
+    // Lấy tất cả các voucher của người dùng kèm thông tin sản phẩm
+    $userVouchers = UserVoucher::where('user_id', $userId)
+        ->with('voucher') // Include voucher relationship
+        ->get();
 
+    // Trả về view với dữ liệu
+    return view('clients.pages.orders.voucher', [
+        'carts' => $carts,
+        'userVouchers' => $userVouchers,
+    ]);
+}
 
-        // Trả về view với dữ liệu
-        return view('clients.pages.orders.voucher', [
-            'carts' => $carts,
-            'userVouchers' => $userVouchers,
-            'allVouchers' => $allVouchers // Truyền tất cả các voucher vào view
-        ]);
-    }
+    
 
 
 
@@ -594,7 +415,7 @@ public function checkoutStep(Request $request)
     $carts = DB::table('carts')
         ->leftJoin('products', 'products.id', '=', 'carts.pro_id')
         ->where('carts.user_id', auth()->user()->id)
-        ->select('carts.*', 'products.id as pro_id', 'products.name as proName', 'products.image', 'carts.price', 'carts.discounted_total_price')
+        ->select('carts.*', 'products.id as pro_id', 'products.name as proName', 'carts.image_variant', 'carts.price', 'carts.discounted_total_price')
         ->get();
 
     // Tính tổng giá trị của giỏ hàng
@@ -610,18 +431,22 @@ public function checkoutStep(Request $request)
         foreach ($carts as $item) {
 
             $unit_amount = $item->discounted_total_price ? ($item->discounted_total_price / $item->quantity) : $item->price;
+           
+            
 
-            $line_items[] = [
-                'price_data' => [
-                    'currency' => 'vnd',
-                    'product_data' => [
-                        'name' => $item->proName,
-                        'images' => [$item->image],
-                    ],
-                    'unit_amount' => $unit_amount,
+
+        $line_items[] = [
+            'price_data' => [
+                'currency' => 'vnd',
+                'product_data' => [
+                    'name' => $item->proName,
+                    'images' => [$item->image_variant],
                 ],
-                'quantity' => $item->quantity,
-            ];
+                'unit_amount' => $unit_amount*1,
+            ],
+            'quantity' => $item->quantity,
+        ];
+        
         }
 
         try {
@@ -654,6 +479,7 @@ public function checkoutStep(Request $request)
                     'price' => $cart->price,
                     'quantity' => $cart->quantity,
                     'total_price' => $cart->discounted_total_price ?? ($cart->price * $cart->quantity),
+                    'image' => $cart->image_variant,
                 ]);
             }
 
@@ -751,6 +577,7 @@ public function checkoutStep(Request $request)
                 'price' => $cart->price,
                 'quantity' => $cart->quantity,
                 'total_price' => $cart->discounted_total_price ?? ($cart->price * $cart->quantity),
+                'image' => $cart->image_variant,
             ]);
         }
  

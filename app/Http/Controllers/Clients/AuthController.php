@@ -139,7 +139,7 @@ class AuthController extends Controller
             if (Auth::attempt($credentials)) {
                 if (Auth::user()->role === 1) {
                     toast('Đăng nhập thành công!', 'success');
-                    return redirect()->route('admin');
+                    return redirect()->route('admin.dashboard');
                 }
                 toast('Đăng nhập thành công!', 'success');
                 return redirect()->route('home-client');

@@ -100,7 +100,7 @@
                 <td colspan="4" style="width: 300px;">
                     <p
                         style="font-size: 12px; font-weight: bold; color: #5b5b5b; line-height: 1; vertical-align: top; ">
-                    Tên khách hàng :{{$order->username}}</p>
+                       Tên khách hàng :{{$order->username}}</p>
                         <p
                         style="font-size: 12px; font-weight: bold; color: #5b5b5b; line-height: 1; vertical-align: top; ">
                        Số điện thoại :{{$order->phone}}</p>

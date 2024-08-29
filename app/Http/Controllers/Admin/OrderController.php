@@ -15,10 +15,12 @@ use niklasravnsborg\LaravelPdf\Facades\Pdf;
 class OrderController extends Controller
 {
     public function index()
-    {
-        $orders = Order::paginate(10);
-        return view('admin.pages.orders.index', compact('orders'));
-    }
+{
+    $orders = Order::orderBy('created_at', 'desc')->paginate(10);
+
+    return view('admin.pages.orders.index', compact('orders'));
+}
+
 
     public function show($id)
     {
@@ -51,182 +53,7 @@ class OrderController extends Controller
 
         return view('admin.pages.orders.index', compact('orders'));
     }
-    // public function updatePaymentStatus(Request $request)
-    // {
-    //     $order = Order::findOrFail((int)$request->order_id);
-    //     $order->order_status = $request->status;
-    //     $order->save();
-    //     if ($request->status == "PENDING") {
-    //         $status = "chờ thanh toán";
-    //     } else if ($request->status == 'PAID') {
-    //         $status = "đã thanh toán";
-    //     } else {
-    //         $status = "huỷ";
-    //     }
-    //     OrderUpdate::create([
-    //         'order_id' => $order->id,
-    //         'user_id' => auth()->user()->id,
-    //         'note' => 'Trạng thái thanh toán được cập nhật thành ' . $status . '.',
-    //     ]);
-
-    //     return true;
-    // }
-
-    // public function updateDeliveryStatus(Request $request)
-    // {
-    //     $order = Order::findOrFail((int)$request->order_id);
-    //     $order->shipment_status = $request->status;
-    //     $order->save();
-
-        
-    //     if ($request->status == "ORDERPLACE") {
-    //         $status = "đã được tạo";
-    //     } else   if ($request->status == "PACKED") {
-    //         $status = 'đã nhận và đang đóng gói';
-    //     } else  if ($request->status == "SHIPPED") {
-    //         $status = 'đã được vận chuyển';
-    //     } else   if ($request->status == "INTRANSIT") {
-    //         $status = 'đang trên đường đến điểm đến';
-    //     } else   if ($request->status == "OUTFORDELIVERY") {
-    //         $status = 'đã được giao cho người nhận';
-        
-    //     } else  if ($request->status == "DELAYED") {
-    //         $status = 'đã bị trễ hẹn trong quá trình vận chuyển';
-    
-    //     } else   if ($request->status == "DELIVERED") {
-    //         $status = 'đã được giao hàng thành công';
-    //     }
-    //      else  if ($request->status == "CANCEL") {
-    //      $status = 'đơn hàng đã bị hủy';
-    //      }
-        
-        
-    //     OrderUpdate::create([
-    //         'order_id' => $order->id,
-    //         'user_id' => auth()->user()->id,
-    //         'note' => 'Đơn hàng ' . $status . '.',
-    //     ]);
-
-
-
-
-        
-    //     if ($request->status == "PACKED") {
-    //         ClientsNotification::create([
-    //             'user_id' => $order->user_id,
-    //             'type' => 'shipping_update',
-    //             'data' => json_encode([
-    //                 'order_id' => $order->id,
-    //                 'message' => 'Đơn hàng đã được xác nhận . Người bán đang chuẩn bị hàng.',
-    //             ]),
-    //             'is_read' => false,
-    //         ]);
-    //     }
-
-
-
-    //     if ($request->status == "SHIPPED") {
-    //         ClientsNotification::create([
-    //             'user_id' => $order->user_id,
-    //             'type' => 'shipping_update',
-    //             'data' => json_encode([
-    //                 'order_id' => $order->id,
-    //                 'message' => 'Đơn hàng đã được giao cho shipper và sẽ được giao cho bạn trong 1-2 ngày tới',
-    //             ]),
-    //             'is_read' => false,
-    //         ]);
-    //     }
-
-    //     if ($request->status == "INTRANSIT") {
-    //         ClientsNotification::create([
-    //             'user_id' => $order->user_id,
-    //             'type' => 'shipping_update',
-    //             'data' => json_encode([
-    //                 'order_id' => $order->id,
-    //                 'message' => 'Đơn hàng đang được giao đến bạn',
-    //             ]),
-    //             'is_read' => false,
-    //         ]);
-    //     }
-
-        
-    //     if ($request->status == "DELAYED") {
-    //         ClientsNotification::create([
-    //             'user_id' => $order->user_id,
-    //             'type' => 'shipping_update',
-    //             'data' => json_encode([
-    //                 'order_id' => $order->id,
-    //                 'message' => 'Đơn hàng đang gặp vấn đề trong qua trình vận chuyển',
-    //             ]),
-    //             'is_read' => false,
-    //         ]);
-    //     }
-
-
-
-    //     if ($request->status == "OUTFORDELIVERY") {
-    //         ClientsNotification::create([
-    //             'user_id' => $order->user_id,
-    //             'type' => 'shipping_update',
-    //             'data' => json_encode([
-    //                 'order_id' => $order->id,
-    //                 'message' => 'Đơn hàng đã được giao cho người nhận. Vui lòng xác nhận đã nhận hàng.',
-    //             ]),
-    //             'is_read' => false,
-    //         ]);
-    //     }
-
-
-    //     if ($request->status =="CANCEL") {
-    //         $order->order_status = "cancel";
-    //         ClientsNotification::create([
-    //             'user_id' => $order->user_id,
-    //             'type' => 'shipping_update',
-    //             'data' => json_encode([
-    //                 'order_id' => $order->id,
-    //                 'message' => 'Đơn hàng đã bị hủy',
-    //             ]),
-    //             'is_read' => false,
-    //         ]);
-    //         Notification::create([
-    //             'user_id' => $order->user_id,
-    //             'type' => 'shipping_update',
-    //             'data' => json_encode([
-    //                 'order_id' => $order->id,
-    //                 'message' => 'Đơn hàng đã bị hủy',
-    //             ]),
-    //             'is_read' => false,
-    //         ]);
-    //     }
-
-
-    //     if ($request->input('status') == "DELIVERED") {
-    //         $order->order_status = "success";
-    //         ClientsNotification::create([
-    //             'user_id' => $order->user_id,
-    //             'type' => 'order_delivered',
-    //             'data' => json_encode([
-    //                 'order_id' => $order->id,
-    //                 'message' => 'Đơn hàng của bạn đã được giao thành công. Hãy đánh giá và cho ý kiến về đơn hàng!',
-    //             ]),
-    //             'is_read' => false,
-    //         ]);
-    //     }
-    
-
-    //     if ($request->status == "CANCEL") {
-    //         $order->order_status = "cancel";
-    //     } else if ($request->status == "DELIVERED") {
-    //         $order->order_status = "success";
-    //     }
-        
-
-        
-    //     $order->save();
-
-    //     return true;
-
-    // }
+  
 
 
 
@@ -291,7 +118,7 @@ class OrderController extends Controller
         'type' => 'shipping_update',
         'data' => json_encode([
             'order_id' => $order->id,
-            'message' => 'Trạng thái đơn hàng đã được cập nhật là :' . $statusMessage . '.',
+            'message' => 'Trạng thái đơn hàng '.$order->id.' đã được cập nhật là :' . $statusMessage . '.',
         ]),
         'is_read' => false,
     ]);

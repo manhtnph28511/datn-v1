@@ -33,18 +33,18 @@
                         <td><img src="{{ $variant->product->image }}" alt="{{ $variant->product->name }}" width="50"></td>
                         <td>
                             @if($variant->image_variant)
-                            <img src="{{ asset('storage/' . $variant->image_variant) }}" alt="Variant Image" width="50px">
+                            <img src="{{$variant->image_variant }}" alt="Variant Image" width="50px">
                             @else
                                 Không có hình ảnh
                             @endif
                         </td>
                         <td>{{ $variant->color->name }}</td>
                         <td>{{ $variant->size->name }}</td>
-                        <td>{{ $variant->quantity }}</td>
+                        <td><span class="quantity" data-id="{{ $variant->id }}">{{ $variant->quantity }}</span></td>
                         <td>{{ $variant->price }}</td>
                         
                         <td>
-                            <a href="{{ route('admin.variant.edit', ['product_id' => $variant->product_id, 'variant_id' => $variant->id]) }}">
+                            <a href="{{ route('admin.variant.edit', ['product_id' => $variant->product_id, 'variant_id' => $variant->id]) }}" class="btn btn-edit">
                                 Sửa
                             </a>
                             <form action="{{ route('admin.variant.destroy', $variant->id) }}" method="POST" style="display:inline-block">
@@ -58,7 +58,77 @@
             </tbody>
         </table>
     </div>
+    <a href="{{ route('admin.product.index') }}" class="btn btn-back">Quay lại</a>
 @endsection
+
+
+
+<style>
+    .btn {
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-block;
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+    
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+    
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+    
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+    
+    .btn-back {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+    
+    .btn-back:hover {
+        background-color: #5a6268;
+        border-color: #4e555b;
+    }
+    .btn-edit {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    
+    .btn-edit:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+</style>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('.quantity').forEach((element) => {
+            let quantity = parseInt(element.textContent, 10);
+            if (quantity < 0) {
+                element.textContent = 0;
+            }
+        });
+    });
+</script>
 <style>
     .dash-content {
         padding: 20px;
@@ -112,16 +182,6 @@
         padding: 15px;
         margin-bottom: 20px;
         border-radius: 4px;
-    }
-    
-    .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-    }
-    
-    .btn-danger:hover {
-        background-color: #c82333;
-        border-color: #bd2130;
     }
     
     form {

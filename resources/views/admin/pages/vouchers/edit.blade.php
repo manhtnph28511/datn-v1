@@ -65,7 +65,8 @@
             <button type="submit" class="btn btn-primary">Update Voucher</button>
         </form>
     </div>
-    <a href="{{route('admin.vouchers.index')}}"><- Quay lại</a>
+    <a href="{{ route('admin.vouchers.index') }}" class="btn btn-back"> Quay lại</a>
+
 @endsection
 
 <style>
@@ -133,5 +134,23 @@ a {
 a:hover {
     text-decoration: underline;
 }
+.btn-back {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid #007bff;
+    color: #007bff;
+    background-color: transparent;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-back:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
 
 </style>

@@ -18,6 +18,7 @@ class Cart extends Model
         'price',
         'quantity',
         'total_price',
+        'image_variant',
         'discounted_total_price',
         'final_price'
 

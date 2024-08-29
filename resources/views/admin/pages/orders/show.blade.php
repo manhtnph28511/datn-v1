@@ -37,7 +37,7 @@
                     </script>
                 </div>
 
-                <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="bg-white p-6 rounded-lg shadow-md" style="margin-top:-90px">
                     <p><strong>Tên người dùng:</strong> {{ $order->username }}</p>
                     <p><strong>Số điện thoại:</strong> {{ $order->phone }}</p>
                     <p><strong>Địa chỉ:</strong> {{ $order->address }}</p>
@@ -65,15 +65,17 @@
                                 hàng thành công</option>
                         </select>
                     </div>
-                </div>
-                    <a href="{{ route('admin.order.index') }}"
-                        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full">
-                        Trở về
-                    </a>
-                </div>
+                
             </div>
         </div>
+       
+        </div>
     </div>
+    <a href="{{ route('admin.order.index') }}"
+    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full">
+        Quay lại
+</a>
+
 @endsection
 @section('js')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -82,23 +84,6 @@
 
     <script>
        
-        // $('#update_delivery_status').on('change', function() {
-        //     var order_id = {{ $order->id }};
-        //     var status = $('#update_delivery_status').val();
-        //     $.post('{{ route('admin.orders.update_delivery_status') }}', {
-        //         _token: '{{ @csrf_token() }}',
-        //         order_id: order_id,
-        //         status: status
-        //     }, function(data) {
-        //         Swal.fire({
-        //             icon: 'success',
-        //             title: 'Trạng thái vận chuyển được cập nhật thành công',
-        //             showConfirmButton: false,
-        //             timer: 1500
-        //         });
-        //         window.location.reload();
-        //     });
-        // });
 
         $('#update_delivery_status').on('change', function() {
     var order_id = {{ $order->id }};
@@ -130,3 +115,124 @@
 }); 
     </script>
 @endsection
+
+<style>
+    /* Định dạng cho phần nội dung chính */
+.dash-content {
+    padding: 1.5rem;
+}
+
+/* Định dạng cho phần hoạt động */
+.activity {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+/* Định dạng cho tiêu đề và nút xuất hoá đơn */
+.activity .flex {
+    margin-bottom: 1.5rem;
+}
+
+.activity h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333333;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+}
+
+.card-header {
+    margin-bottom: 1.5rem;
+}
+
+.card-header h5 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.card-header .text-accent {
+    color: #2563eb;
+}
+
+.card-header .text-muted {
+    color: #6b7280;
+}
+
+/* Định dạng cho khối thông tin đơn hàng */
+.bg-white {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+.bg-white p {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #333333;
+}
+
+.bg-white .form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.form-select {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    color: #374151;
+    border-radius: 0.375rem;
+    border: 1px solid #d1d5db;
+    background-color: #ffffff;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.form-select:focus {
+    border-color: #2563eb;
+    outline: none;
+}
+
+/* Định dạng cho nút quay lại */
+.bg-gray-500 {
+    background-color: #6b7280;
+}
+
+.bg-gray-500:hover {
+    background-color: #4b5563;
+}
+
+.bg-gray-500, .bg-gray-500:hover {
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-weight: 700;
+}
+
+</style>

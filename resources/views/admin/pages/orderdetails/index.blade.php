@@ -16,19 +16,22 @@
                
                 {{-- Form tìm kiếm theo trạng thái --}}
                 <form action="{{ route('admin.orderdetail.index') }}" method="GET" class="flex items-center gap-x-4">
-                    <input type="text" name="search" placeholder="Tìm kiếm theo tên người đặt hàng" class="border px-4 py-2 rounded-lg" value="{{ request('search') }}">
-
+                    <input type="text" name="search" placeholder="Tìm kiếm theo tên người đặt hoặc ID đơn hàng" class="border px-4 py-2 rounded-lg" value="{{ request('search') }}">
+                    <input type="text" name="order_id" placeholder="Tìm kiếm theo ID đơn hàng" class="border px-4 py-2 rounded-lg" value="{{ request('order_id') }}">
+                    
                     <input type="date" name="start_date" class="border px-4 py-2 rounded-lg" value="{{ request('start_date') }}">
                     <input type="date" name="end_date" class="border px-4 py-2 rounded-lg" value="{{ request('end_date') }}">
                     
                     <select name="status" class="border px-4 py-2 rounded-lg">
                         <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Tất cả trạng thái</option>
-                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>đang chờ xác nhận</option>
-                        <option value="success" {{ request('status') == 'success' ? 'selected' : '' }}>hoàn thành</option>
-                        <option value="cancel" {{ request('status') == 'cancel' ? 'selected' : '' }}>đã hủy</option>
+                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Đang chờ xác nhận</option>
+                        <option value="success" {{ request('status') == 'success' ? 'selected' : '' }}>Hoàn thành</option>
+                        <option value="cancel" {{ request('status') == 'cancel' ? 'selected' : '' }}>Đã hủy</option>
                     </select>
+                
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Tìm kiếm</button>
                 </form>
+                
 
                 <div class="relative overflow-x-auto mb-8">
                     @if ($orderDetails->count() > 0)
@@ -112,12 +115,12 @@
                                 <i class="fa-solid fa-exclamation"></i>
                             </div>
                             <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
-                                <p>Không tìm thấy chi tiết đơn hàng nào.</p>
+                                <p>Không tìm thấy đơn hàng nào.</p>
                             </div>
                         </div>
                     @endif
                 </div>
-                {{ $orderDetails->links('admin.layouts.pagination') }} <!-- Hiển thị phân trang -->
+                {{ $orderDetails->links('admin.layouts.pagination') }} 
             </div>
         </div>
     </div>
