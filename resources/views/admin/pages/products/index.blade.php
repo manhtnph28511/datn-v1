@@ -5,89 +5,58 @@
             <div class="py-20">
                 <div class="flex justify-end mb-4">
                     <a href="{{ route('admin.product.store') }}"
-                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-2 rounded-full">+
-                        Sản phẩm</a>
-                    <a class="bg-[#f687b3] hover:bg-[#f687b3] text-white font-bold py-2 px-4 rounded-full"
-                        href="{{ route('admin.product.trash') }}">
+                       class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-2 rounded-full">
+                        + Sản phẩm
+                    </a>
+                    <a href="{{ route('admin.product.trash') }}"
+                       class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-full">
                         Thùng rác
-                        <i class="fa-solid fa-trash"></i>
+                        <i class="fa-solid fa-trash ml-2"></i>
                     </a>
                 </div>
 
+                {{-- Form tìm kiếm --}}
+                <h3 class="text-lg font-semibold mb-2">Tìm kiếm sản phẩm</h3>
+                <form action="{{ route('admin.product.search') }}" method="GET" class="flex mb-4">
+                    <input type="text" name="query" placeholder="Tìm kiếm theo tên sản phẩm..." 
+                           class="border border-gray-300 p-2 rounded-md flex-1">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md ml-2">
+                        Tìm kiếm
+                    </button>
+                </form>
 
-                 {{-- Form tìm kiếm --}}
-                 <h3>Tìm kiếm sản phẩm</h3>
-                 <form action="{{ route('admin.product.search') }}" method="GET" class="flex mb-4">
-                     <input type="text" name="query" placeholder="Tìm kiếm theo tên sản phẩm..." class="border border-gray-300 p-2 rounded-md">
-                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md ml-2">
-                         Tìm kiếm
-                     </button>
-                 </form>
-
-                <div class="relative overflow-x-auto mb-8">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <div class="relative overflow-x-auto mb-8 shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    Tên
-                                </th>
-                                <th scope="col" class="px-6 py-3 w-[150px]">
-                                    Ảnh
-                                </th>
-                                <th scope="col" class="px-6 py-3 w-[150px]">
-                                    Màu sắc
-                                </th>
-                                <th scope="col" class="px-6 py-3 w-[150px]">
-                                    Size
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Hành động
-                                </th>
+                                <th scope="col" class="px-6 py-3">Tên</th>
+                                <th scope="col" class="px-6 py-3 w-36">Ảnh</th>
+                                <th scope="col" class="px-6 py-3 w-36">Màu sắc</th>
+                                <th scope="col" class="px-6 py-3 w-36">Size</th>
+                                <th scope="col" class="px-6 py-3">Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($products as $pro)
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white truncate">
-                                        {{ $pro->name }}
-                                    </th>
+                                <tr class="bg-white border-b hover:bg-gray-100">
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap truncate">{{ $pro->name }}</td>
                                     <td class="px-6 py-4">
-                                        <img src="{{ $pro->image }}" alt="">
+                                        <img src="{{ $pro->image }}" alt="{{ $pro->name }}" class="w-20 h-20 object-cover rounded-md">
                                     </td>
-                                    <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white truncate">
-                                    {{ $pro->color->name  }}
-                                </th>
-                                <th scope="row"
-                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white truncate">
-                                {{ $pro->size->name  }}
-                                
-                        
-                            </th>
-                                <th scope="row"
-                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white truncate">
-                                {{ $pro->name }}
-                            </th>
-                                    <td class="px-6 py-4 flex gap-x-4">
-                                        {{-- <a href=""
-                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                                            Chi tiết
-                                            <i class="fa-solid fa-eye"></i>
-                                        </a> --}}
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap truncate">{{ $pro->color->name }}</td>
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap truncate">{{ $pro->size->name }}</td>
+                                    <td class="px-6 py-4 flex space-x-4">
                                         <a href="{{ route('admin.product.update', $pro->id) }}"
-                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                                           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                                             Cập nhật
-                                            <i class="fa-solid fa-pen"></i>
+                                            <i class="fa-solid fa-pen ml-2"></i>
                                         </a>
-                                        <form action="{{ route('admin.product.softDelete', $pro->id) }}" method="POST">
+                                        <form action="{{ route('admin.product.softDelete', $pro->id) }}" method="POST" class="inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button
-                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
+                                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
                                                 Xóa
-                                                <i class="fa-solid fa-x"></i>
+                                                <i class="fa-solid fa-x ml-2"></i>
                                             </button>
                                         </form>
                                     </td>
