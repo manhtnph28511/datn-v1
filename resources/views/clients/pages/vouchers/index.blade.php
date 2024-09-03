@@ -27,6 +27,7 @@
                     <th>Thời Gian Kết Thúc</th>
                     <th>Sản Phẩm Áp Dụng</th>
                     <th>Số Lượt Dùng Còn Lại</th>
+                    <th>Trạng Thái</th>
                 </tr>
             </thead>
             <tbody>
@@ -51,9 +52,16 @@
                         </td>
                         <td>{{ max(0, $voucher->quantity - $voucher->usage_count) }}</td>
                         <td>
+                            @if(now()->gt($voucher->expires_at))
+                                <span class="text-danger">Hết hạn</span>
+                            @else
+                                <span class="text-success">Còn hạn</span>
+                            @endif
+                        </td>
+                        <td>
                             <form action="{{ route('clients.vouchers.save', ['voucherId' => $voucher->id, 'id' => Auth::id()]) }}" method="POST">
                                 @csrf
-                                <button type="submit">Lưu Voucher</button>
+                                <button type="submit" class="save-button">Lưu Voucher</button>
                             </form>
                         </td>
                     </tr>
@@ -63,3 +71,27 @@
     @endif
 </div>
 @endsection
+
+<style>
+    
+.save-button {
+    background-color: #4CAF50; 
+    color: #ffffff; 
+    padding: 0.5rem 1rem; 
+    border: none; 
+    border-radius: 0.375rem; 
+    font-weight: 500; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+.save-button:hover {
+    background-color: #45a049;
+}
+
+.save-button:focus {
+    outline: none; 
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2); 
+}
+
+</style>

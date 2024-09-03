@@ -32,8 +32,8 @@ class VoucherController extends Controller
         'starts_at' => 'required|date',
         'expires_at' => 'required|date',
         'product_id' => 'nullable|exists:products,id',
-        'quantity' => 'required|int|min:0', // Số lượng còn lại
-        'usage_count' => 'required|int|min:0', // Số lần đã sử dụng
+        'quantity' => 'required|int|min:0', 
+        'usage_count' => 'required|int|min:0', 
     ]);
 
     Voucher::create($validated);
@@ -53,28 +53,32 @@ public function edit(Voucher $voucher, $id)
 public function update(Request $request, Voucher $voucher, $id)
 {
     $voucher = Voucher::findOrFail($id);
-    $request->validate([
+    $validated=$request->validate([
         'code' => 'required|string',
         'discount' => 'required|numeric',
         'discount_type' => 'required|string|in:percentage,fixed',
         'starts_at' => 'required|date',
         'expires_at' => 'required|date',
         'product_id' => 'nullable|exists:products,id',
-        'quantity' => 'required|int|min:0', // Cập nhật số lượng
-        'usage_count' => 'required|int|min:0', // Cập nhật số lần sử dụng
+        'quantity' => 'required|int|min:0', 
+        'usage_count' => 'required|int|min:0', 
     ]);
 
-    $voucher->code = $request->code;
-    $voucher->discount = $request->discount;
-    $voucher->discount_type = $request->discount_type;
-    $voucher->starts_at = $request->starts_at;
-    $voucher->expires_at = $request->expires_at;
-    $voucher->product_id = $request->product_id;
-    $voucher->quantity = $request->quantity; // Cập nhật số lượng
-    $voucher->usage_count = $request->usage_count; // Cập nhật số lần sử dụng
+    $validated['quantity'] = max(0, $validated['quantity']);
+
+    $voucher->update($validated);
+
+    $voucher->code = $validated['code'];
+    $voucher->discount = $validated['discount'];
+    $voucher->discount_type = $validated['discount_type'];
+    $voucher->starts_at = $validated['starts_at'];
+    $voucher->expires_at = $validated['expires_at'];
+    $voucher->product_id = $validated['product_id'];
+    $voucher->quantity = $validated['quantity']; 
+    $voucher->usage_count = $validated['usage_count']; 
     $voucher->save();
 
-    return redirect()->route('admin.vouchers.index')->with('success', 'Voucher updated successfully.');
+    return redirect()->route('admin.vouchers.index')->with('success', 'Cập nhật thành công.');
 }
 
 public function destroy(Voucher $voucher,$id)

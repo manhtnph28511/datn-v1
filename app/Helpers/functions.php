@@ -1,20 +1,12 @@
 <?php
 use RealRashid\SweetAlert\Facades\Alert;
 
-// function checkEndDisplayMsg($flat=true,$type,$title='',$mgs='',$route='') {
-//     if($flat) {
-//         Alert::$type($title, $mgs);
-//         return redirect()->route($route);
-//     }
-//     Alert::error('Failed', 'Có lỗi xảy ra');
-//     return redirect()->back();
 
-// }
 function checkEndDisplayMsg( $type = 'info',$flat = true, $title = '', $msg = '', $route = '') {
     // Kiểm tra loại thông báo hợp lệ
     $validTypes = ['info', 'success', 'warning', 'error'];
     if (!in_array($type, $validTypes)) {
-        $type = 'info'; // Gán giá trị mặc định nếu loại không hợp lệ
+        $type = 'info'; 
     }
 
     if ($flat) {
@@ -30,7 +22,6 @@ function getStatusOrderShip($text, $type = "default")
 {
     $status = '';
 
-    // Kiểm tra nếu $type không phải là "default", thêm chữ "Đơn hàng"
     $title = ($type == "default") ? "Đơn hàng " : "";
 
     switch ($text) {
@@ -69,11 +60,6 @@ function getStatusOrderShip($text, $type = "default")
                             $title gặp vấn đề trong quá trình vận chuyển
                         </span>";
             break;
-        // case 'EXCEPTION':
-        //     $status = "<span class='badge rounded-pill bg-primary-light text-primary fw-medium p-0' style='text-align:left;font-size:16px'>
-        //                     $title gặp vấn đề hoặc ngoại lệ trong quá trình vận chuyển
-        //                 </span>";
-        //     break;
         case 'CANCEL':
             $status = "<span class='badge rounded-pill bg-primary-light text-primary fw-medium p-0' style='text-align:left;font-size:16px'>
                             $title đã huỷ

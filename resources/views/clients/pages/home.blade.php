@@ -1,6 +1,5 @@
 @extends('clients.layouts.app')
 @section('app')
-    {{-- Begin Banner   --}}
     <section id="sm-banner" class="section-p1">
         <div class="banner-box">
             <h4>crazy deals</h4>
@@ -32,40 +31,36 @@
         </div>
     </section>
 
-    {{-- Begin Search and Filter --}}
-<!-- Form bộ lọc -->
-<form action="{{ route('home.site.product.filter') }}" method="POST">
-    @csrf
-    <input type="text" name="query" placeholder="Tìm sản phẩm" value="{{ old('query') }}">
-    <select name="category">
-        <option value="">Chọn danh mục</option>
-        @foreach ($categories as $category)
-            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
-                {{ $category->name }}
-            </option>
-        @endforeach
-    </select>
-    <input type="number" name="min_price" placeholder="Giá tối thiểu" value="{{ old('min_price') }}">
-    <input type="number" name="max_price" placeholder="Giá tối đa" value="{{ old('max_price') }}">
-    <button type="submit">Lọc</button>
-</form>
+    <form action="{{ route('home-client.search.name') }}" method="POST">
+        @csrf
+        <input type="text" name="name" placeholder="Tên sản phẩm">
+        <button type="submit">Tìm kiếm theo tên</button>
+    </form>
+    
+    <!-- Tìm kiếm theo giá -->
+    <form action="{{ route('home-client.search.price') }}" method="POST">
+        @csrf
+        <input type="number" name="min_price" placeholder="Giá tối thiểu">
+        <input type="number" name="max_price" placeholder="Giá tối đa">
+        <button type="submit">Tìm kiếm theo giá</button>
+    </form>
+    
+    
 
-{{-- End Search and Filter --}}
-
-    {{-- End Banner   --}}
-    {{-- Begin Product 1   --}}
+    
+    
     <section id="product1" class="section-p1">
         <h2 class="text-3xl">Featured Products</h2>
         <p>Summer Collection New Modern Design</p>
         <div class="pro-container">
             @foreach ($products as $pro)
-                @if($pro->status_id === 1)
                     <div class="pro">
                         <a href="{{ route('home.site.product.show', ['id' => $pro->id, 'slug' => $pro->slug])."?cate=$pro->cate_id" }}">
                             <img src="{{ $pro->image }}" alt="">
                         </a>
                         <div class="des">
-                            <span>{{ $pro->subCate->name }}</span>
+                            <span style="color: #007bff">{{ $pro->subCate->name }}</span>
+                            <span style="color: #ff8000">{{ optional($pro->statusProduct)->status ?? 'N/A' }}</span>
                             <h5>
                                 <a href="{{ route('home.site.product.show', ['id' => $pro->id, 'slug' => $pro->slug])."?cate=$pro->cate_id" }}"
                                    class="text-decoration-none text-body-secondary">{{ $pro->name }}</a>
@@ -88,26 +83,20 @@
                                 <div>
                                     <h4>{{ number_format($pro->price) }}</h4>
                                 </div>
-                                <div>
-                                    {{ $pro->statusProduct->status }}
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
                             </div>
+                            <p>Lượt xem: {{ $pro->view }}</p> 
                         </div>
                     </div>
-                @endif
             @endforeach
         </div>
     </section>
-    {{--  End Product 1  --}}
-    {{-- Banner Top --}}
+    
     <section id="banner" class="section-m1">
         <h4>Repair Services</h4>
         <h2>Up to <span>70% Off</span> - All T-Shirts & Accessories</h2>
         <button class="normal">Explore More</button>
     </section>
-    {{--  End Banner Top  --}}
-    {{-- Begin Product 2   --}}
+  
     <section id="product1" class="section-p1">
         <h2 class="text-3xl">New Arrivals</h2>
         <p>Summer Collection New Modern Design</p>
@@ -151,7 +140,7 @@
             @endforeach
         </div>
     </section>
-    {{-- End Product 2   --}}
+    
     <section id="newletter" class="section-p1">
         <div class="newtext">
             <h4>Sign Up For Newsletters</h4>
@@ -163,3 +152,50 @@
         </div>
     </section>
 @endsection
+
+<style>
+    /* CSS cho form tìm kiếm */
+form {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* form input[type="text"],
+form input[type="number"] {
+    width: calc(33.33% - 10px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-right: 10px;
+    box-sizing: border-box;
+} */
+
+form input[type="number"] {
+    width: calc(33.33% - 10px);
+}
+
+form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+</style>

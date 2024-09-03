@@ -28,56 +28,37 @@
 
 <body>
     <div class="model">
-        <div class="model_heading d-flex align-items-center">
-            <span>Thay đổi mật khẩu</span>
+        @if (session('success'))
+        <div style="color: green;">
+            {{ session('success') }}
         </div>
-        @if ($status)
-            <form action="{{ route('account.password.reset') }}" method="POST" id="login-form">
-                @csrf
-                <p>Mật khẩu</p>
-                <input type="password" name="password" class="w-100 " value="{{ old('password') }}"
-                    style="line-height: revert;">
-                @error('password')
-                    <style>
-                        input[name="password"] {
-                            border: 1px solid red;
-                        }
-                    </style>
-                    <span class="text-danger my-2">{{ $message }}</span>
-                @enderror
-                <p>Nhập lại mật khẩu</p>
-                <input type="password" name="password_confirm" class="w-100" value="{{ old('password_confirm') }}"
-                    style="line-height: revert;">
-                @error('password_confirm')
-                    <style>
-                        input[name="password_confirm"] {
-                            border: 1px solid red;
-                        }
-                    </style>
-                    <span class="text-danger my-2">{{ $message }}</span>
-                @enderror
+    @endif
 
-                @if (session('success'))
-                    <div class="alert alert-success mt-2">
-                        {{ session('success') }}
-                    </div>
-                @endif
+    <!-- Hiển thị lỗi nếu có -->
+    @if ($errors->any())
+        <div style="color: red;">
+            @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
 
-                @if (session('error'))
-                    <div class="alert alert-danger mt-2">
-                        {{ session('error') }}
-                    </div>
-                @endif
+    <form action="{{ route('account.password.update') }}" method="POST">
+        @csrf
+        <input type="hidden" name="user_id" value="{{ old('user_id', $user_id) }}">
 
-                <div class="d-flex mt-2  justify-content-end">
-                    <button class=" mt-2 normal text-white" style="margin:0">Thay đổi</button>
-                </div>
-            </form>
-        @else
-            <div class="alert alert-danger text-center">
-                Liên kết không đúng hoặc đã hết hạn. Vui lòng thử lại.
-            </div>
-        @endif
+        <div>
+            <label for="password">Mật khẩu mới:</label>
+            <input type="password" name="password" id="password" required>
+        </div>
+        <div>
+            <label for="password_confirmation">Xác nhận mật khẩu:</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" required>
+        </div>
+        <div>
+            <button type="submit">Cập Nhật Mật Khẩu</button>
+        </div>
+    </form>
     </div>
     @include('sweetalert::alert')
     @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
@@ -85,3 +66,84 @@
 </body>
 
 </html>
+
+<style>
+
+body {
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+.model {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.model h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+
+.model div[style*="color: green;"],
+.model div[style*="color: red;"] {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.model div[style*="color: green;"] {
+    background-color: #e0f7e0;
+    color: #2e7d32;
+}
+
+.model div[style*="color: red;"] {
+    background-color: #fddede;
+    color: #d32f2f;
+}
+
+
+.model input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+
+.model label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+
+.model button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.model button:hover {
+    background-color: #0056b3;
+}
+
+</style>

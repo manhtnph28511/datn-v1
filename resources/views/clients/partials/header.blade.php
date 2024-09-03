@@ -4,7 +4,7 @@
         <ul id="navbar">
             <li><a class="" href="{{ route('home-client') }}">Home</a></li>
             <li><a href="{{ route('home.site.product.shop')  }}">Shop</a></li>
-            <li><a href="{{ route('home.site.blog')  }}">Blog</a></li>
+            <li><a href="{{ route('clients.blogs.index') }}">Blog</a></li>
             <li><a href="{{ route('home.site.about')  }}">About</a></li>
             <li><a href="{{ route('home.site.contact')  }}">Contact</a></li>
             <li><a href="{{ route('clients.vouchers.index') }}">Xem Voucher</a>
@@ -32,10 +32,14 @@
                     <a href="{{ route('clients.notifications.index') }}" class="notification-link">
                         <div class="icon-container">
                             <i class="fa-solid fa-bell"></i>
-                            <span class="notification-count">{{ $unreadNotificationsCount }}</span>
+                            @if ($clientUnreadNotificationsCount > 0)
+                                <span class="notification-count">{{ $clientUnreadNotificationsCount }}</span>
+                            @endif
                         </div>
                         <span class="link-name" style="font-weight: bold;">Thông Báo</span>
                     </a>
+                    
+                    
                     
                     
                     <a href="{{ route('clients.index') }}">

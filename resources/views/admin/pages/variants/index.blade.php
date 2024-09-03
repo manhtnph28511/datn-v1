@@ -3,7 +3,6 @@
 @section('app')
     <div class="dash-content">
         <h1>Danh sách biến thể sản phẩm</h1>
-        {{-- <a href="{{ route('admin.variant.create,['product_id' => $product->id]') }}" class="btn btn-primary">Thêm biến thể mới</a> --}}
         <a href="{{ route('admin.variant.create', ['product_id' => $product->id]) }}" class="btn btn-primary">Thêm biến thể</a>
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -40,7 +39,11 @@
                         </td>
                         <td>{{ $variant->color->name }}</td>
                         <td>{{ $variant->size->name }}</td>
-                        <td><span class="quantity" data-id="{{ $variant->id }}">{{ $variant->quantity }}</span></td>
+                        <td>
+                            <span class="quantity" data-id="{{ $variant->id }}">
+                                {{ $variant->quantity < 0 ? 0 : $variant->quantity }}
+                            </span>
+                        </td>
                         <td>{{ $variant->price }}</td>
                         
                         <td>

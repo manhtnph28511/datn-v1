@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 26, 2024 at 03:19 AM
+-- Generation Time: Sep 03, 2024 at 09:31 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.2.20
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `datn`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blogs`
+--
+
+CREATE TABLE `blogs` (
+  `id` int UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_id` int UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `blogs`
+--
+
+INSERT INTO `blogs` (`id`, `name`, `content`, `product_id`, `created_at`, `updated_at`) VALUES
+(1, 'Giới thiệu giày thể thao', 'Thiết Kế Chuyên Biệt\r\nĐế Giày: Thường có đế cao su hoặc EVA để đảm bảo độ bám và giảm chấn.\r\nChất Liệu: Sử dụng vải lưới hoặc da tổng hợp để tạo sự thoáng khí và nhẹ nhàng.\r\nHỗ Trợ và Độ Bền\r\nHỗ Trợ Bàn Chân: Nhiều mẫu giày có công nghệ hỗ trợ gót chân và vòm bàn chân, giúp giảm nguy cơ chấn thương.\r\nĐộ Bền Cao: Được chế tạo để chịu được áp lực và ma sát từ các hoạt động thể thao.\r\nHãy đến xem sản phẩm và mua ngay kẻo lỡ!', 23, '2024-08-31 11:35:27', '2024-08-31 11:37:00'),
+(2, 'bài viết mới', 'ko có gì', 17, '2024-08-31 11:50:42', '2024-08-31 11:50:42');
 
 -- --------------------------------------------------------
 
@@ -49,7 +72,9 @@ INSERT INTO `brands` (`id`, `name`, `slug`, `description`, `deleted_at`, `create
 (5, 'Chanel', 'Chanel', 'Được thành lập từ những năm 1909-1910 do Gabrielle \"Coco\" Chanel sáng lập, cái tên Chanel được biết đến như một nhãn hiệu thời trang cao cấp đáng tự hào nhất của ngành công nghiệp thời trang nước Pháp. Hơn bất kì nhãn hiệu nào, Chanel mang trọn vẹn nhiều tinh hoa của ngành thời trang cổ điển thời đại trước.', NULL, '2024-07-28 21:27:00', '2024-07-28 21:27:00'),
 (6, 'Burberry', 'Burberry', 'Burberry là một thương hiệu thời trang cao cấp với phong cách quý tộc Anh được sáng lập vào năm 1856 bởi Thomas Burberry khi ông chỉ mới 21 tuổi, nhãn hiệu được thành lập trên sứ mệnh rằng quần áo phải được thiết kế để bảo vệ cơ thể con người trước thời tiết lạnh giá của nước Anh.', NULL, '2024-07-28 21:27:27', '2024-07-28 21:27:27'),
 (7, 'Fendi', 'fendi', 'Thương hiệu Fendi được Adele và Edoardo Fendi thành lập vào năm 1925, từ một cửa hàng thời trang đồ lông tại khu Via del Plebiscito, thành phố Roma. Tới năm 1946, thế hệ thứ hai nhà Fendi lên nắm quyền điều hành công ty, với năm chị em Paola, Anna, Franca, Carla và Alda Fendi. Cổ phần mỗi người là 20%.', NULL, '2023-07-28 21:27:51', '2023-11-09 20:54:32'),
-(8, 'Dior', 'Dior', 'Công ty Dior được thành lập vào ngày 16 tháng 12 năm 1946 tại nhà riêng của Christian Dior tại số 30 Avenue Montaigne Paris B. Tuy nhiên hiện nay, Dior lấy năm 1947 là năm thành lập. Dior lúc đó được hỗ trợ tài chính bởi doanh nhân Marcel Boussac.. Vốn ban đầu của công ty là 6 triệu Franc với 80 nhân công.', NULL, '2024-06-30 01:07:38', '2024-07-26 02:31:13');
+(8, 'Dior', 'Dior', 'Công ty Dior được thành lập vào ngày 16 tháng 12 năm 1946 tại nhà riêng của Christian Dior tại số 30 Avenue Montaigne Paris B. Tuy nhiên hiện nay, Dior lấy năm 1947 là năm thành lập. Dior lúc đó được hỗ trợ tài chính bởi doanh nhân Marcel Boussac.. Vốn ban đầu của công ty là 6 triệu Franc với 80 nhân công.', NULL, '2024-06-30 01:07:38', '2024-07-26 02:31:13'),
+(9, 'Adidas', 'adidas', 'Adidas (tiếng Đức: [ˈʔadiˌdas]; cách điệu thành adidas từ năm 1949) là một tập đoàn đa quốc gia của Đức, được thành lập và có trụ sở tại Herzogenaurach, Bavaria, chuyên thiết kế và sản xuất giày dép, quần áo và phụ kiện. Đây là nhà sản xuất đồ thể thao lớn nhất ở châu Âu và lớn thứ hai trên thế giới, sau Nike.', NULL, '2024-08-31 10:19:21', '2024-08-31 10:19:54'),
+(10, 'Nike, Inc', 'nike-inc', 'Nike, Inc. (/ˈnaɪki/ hoặc /ˈnaɪk/)[note 1] là một tập đoàn đa quốc gia của Hoa Kỳ tham gia thiết kế, phát triển, sản xuất, tiếp thị và bán giày dép trên toàn thế giới, may mặc, thiết bị, phụ kiện và dịch vụ. Công ty có trụ sở chính gần Beaverton, Oregon, trong vùng đô thị Portland.[4] Đây là nhà cung cấp giày và quần áo thể thao lớn nhất thế giới, đồng thời là nhà sản xuất thiết bị thể thao lớn, với doanh thu vượt 46 tỷ đô la Mỹ trong năm tài chính 2022.[5][6]\r\n\r\nCông ty được Bill Bowerman và Phil Knight thành lập vào ngày 25 tháng 1 năm 1964 với tên gọi \"Blue Ribbon Sports\", và chính thức trở thành Nike, Inc. vào ngày 30 tháng 5 năm 1971. Công ty lấy tên từ Nike, nữ thần chiến thắng của Hy Lạp.[7] Nike tiếp thị sản phẩm của mình dưới thương hiệu riêng, cũng như Nike Golf, Nike Pro, Nike+, Air Jordan, Nike Blazers, Air Force 1, Nike Dunk, Air Max, Foamposite, Nike Skateboarding, Nike CR7,[8] và các công ty con bao gồm Air Jordan và Converse. Nike cũng sở hữu Bauer Hockey từ năm 1995 đến năm 2008 và trước đó đã sở hữu Cole Haan, Umbro và Hurley International.[9] Ngoài việc sản xuất trang phục và thiết bị thể thao, công ty còn điều hành các cửa hàng bán lẻ dưới tên Niketown. Nike tài trợ cho nhiều vận động viên và đội thể thao nổi tiếng trên toàn thế giới, với các thương hiệu được công nhận cao \"Just Do It\" và logo Swoosh.', NULL, '2024-09-03 09:00:20', '2024-09-03 09:00:30');
 
 -- --------------------------------------------------------
 
@@ -66,19 +91,13 @@ CREATE TABLE `carts` (
   `price` int NOT NULL,
   `quantity` int NOT NULL,
   `total_price` int NOT NULL,
+  `image_variant` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `discounted_total_price` int DEFAULT NULL,
   `voucher_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `carts`
---
-
-INSERT INTO `carts` (`id`, `pro_id`, `user_id`, `size_id`, `color_id`, `price`, `quantity`, `total_price`, `discounted_total_price`, `voucher_code`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(99, 3, 20, 2, 4, 480000, 1, 480000, NULL, NULL, NULL, '2024-08-26 01:36:55', '2024-08-26 01:36:55');
 
 -- --------------------------------------------------------
 
@@ -101,9 +120,8 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `slug`, `description`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'Thời trang', 'thoi-trang', '', NULL, '2023-07-26 13:37:08', '2023-07-26 13:37:08'),
-(2, 'Giày Dép', 'giay-dep', '', NULL, '2023-07-26 13:37:17', '2023-07-28 21:57:13'),
-(5, 'tên danh mục', 'ten-danh-muc', '', '2023-08-03 20:33:41', '2023-08-03 20:33:36', '2023-08-03 20:33:41');
+(1, 'Quần áo', 'quan-ao', '', NULL, '2023-07-26 13:37:08', '2024-08-29 03:33:27'),
+(2, 'Giày Dép', 'giay-dep', '', NULL, '2023-07-26 13:37:17', '2023-07-28 21:57:13');
 
 -- --------------------------------------------------------
 
@@ -116,6 +134,7 @@ CREATE TABLE `chats` (
   `user_id` int UNSIGNED NOT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
   `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_up` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -124,9 +143,13 @@ CREATE TABLE `chats` (
 -- Dumping data for table `chats`
 --
 
-INSERT INTO `chats` (`id`, `user_id`, `is_admin`, `message`, `created_at`, `updated_at`) VALUES
-(1, 19, 0, 'hêlo', '2024-08-23 10:44:36', '2024-08-23 10:44:36'),
-(2, 19, 1, 'ok', '2024-08-23 11:23:05', '2024-08-23 11:23:05');
+INSERT INTO `chats` (`id`, `user_id`, `is_admin`, `message`, `file_up`, `created_at`, `updated_at`) VALUES
+(1, 19, 0, 'hêlo', NULL, '2024-08-23 10:44:36', '2024-08-23 10:44:36'),
+(2, 19, 1, 'ok', NULL, '2024-08-23 11:23:05', '2024-08-23 11:23:05'),
+(5, 19, 1, 'test', 'chat_files/4syrZPaEGcH18xuTBYUiZWNfW9aa7tNQ9H9dM8J5.jpg', '2024-08-30 09:54:29', '2024-08-30 09:54:29'),
+(7, 20, 0, 'hello', 'chat_files/SONtrOdGUG6RNLNIUAf0zhG1a4F8LovM1uEktVrx.jpg', '2024-08-30 10:05:23', '2024-08-30 10:05:23'),
+(11, 20, 0, 'hi', 'chat_files/Xa53sHoTgnctVDTGXRGH4hQrnsfpw2kCDMGhMs6L.jpg', '2024-08-30 10:33:03', '2024-08-30 10:33:03'),
+(12, 20, 1, 'ok success', NULL, '2024-08-30 10:58:58', '2024-08-30 10:58:58');
 
 -- --------------------------------------------------------
 
@@ -136,6 +159,7 @@ INSERT INTO `chats` (`id`, `user_id`, `is_admin`, `message`, `created_at`, `upda
 
 CREATE TABLE `clients_notifications` (
   `id` int UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_read` tinyint(1) NOT NULL DEFAULT '0',
@@ -147,45 +171,19 @@ CREATE TABLE `clients_notifications` (
 -- Dumping data for table `clients_notifications`
 --
 
-INSERT INTO `clients_notifications` (`id`, `type`, `data`, `is_read`, `created_at`, `updated_at`) VALUES
-(1, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #125\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-22 08:27:34', '2024-08-22 08:31:01'),
-(2, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #126\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-22 08:40:48', '2024-08-22 08:45:03'),
-(3, 'đã đặt hàng', '{\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #127\",\"0\":\"Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-22 08:44:42', '2024-08-22 08:45:09'),
-(4, 'order_delivered', '{\"order_id\":5,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao th\\u00e0nh c\\u00f4ng. H\\u00e3y \\u0111\\u00e1nh gi\\u00e1 v\\u00e0 cho \\u00fd ki\\u1ebfn v\\u1ec1 \\u0111\\u01a1n h\\u00e0ng!\"}', 0, '2024-08-22 09:11:11', '2024-08-22 09:11:11'),
-(5, 'order_delivered', '{\"order_id\":9,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao th\\u00e0nh c\\u00f4ng. H\\u00e3y \\u0111\\u00e1nh gi\\u00e1 v\\u00e0 cho \\u00fd ki\\u1ebfn v\\u1ec1 \\u0111\\u01a1n h\\u00e0ng!\"}', 0, '2024-08-22 09:17:56', '2024-08-22 09:17:56'),
-(6, 'shipping_update', '{\"order_id\":10,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111ang g\\u1eb7p v\\u1ea5n \\u0111\\u1ec1 trong qua tr\\u00ecnh v\\u1eadn chuy\\u1ec3n\"}', 0, '2024-08-22 09:20:13', '2024-08-22 09:20:13'),
-(7, 'shipping_update', '{\"order_id\":11,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn. Vui l\\u00f2ng x\\u00e1c nh\\u1eadn \\u0111\\u00e3 nh\\u1eadn h\\u00e0ng.\"}', 0, '2024-08-22 09:24:17', '2024-08-22 09:24:17'),
-(8, 'shipping_update', '{\"order_id\":11,\"message\":\"\\u0110\\u01a1n h\\u00e0ng tr\\u1ea1ng th\\u00e1i kh\\u00f4ng h\\u1ee3p l\\u1ec7.\"}', 0, '2024-08-22 09:28:59', '2024-08-22 09:28:59'),
-(9, 'shipping_update', '{\"order_id\":11,\"message\":\"\\u0110\\u01a1n h\\u00e0ng tr\\u1ea1ng th\\u00e1i kh\\u00f4ng h\\u1ee3p l\\u1ec7.\"}', 0, '2024-08-22 09:29:02', '2024-08-22 09:29:02'),
-(10, 'shipping_update', '{\"order_id\":11,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn.\"}', 0, '2024-08-22 09:29:06', '2024-08-22 09:29:06'),
-(11, 'shipping_update', '{\"order_id\":11,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c ho\\u00e0n tr\\u1ea3 l\\u1ea1i cho ng\\u01b0\\u1eddi g\\u1eedi.\"}', 0, '2024-08-22 09:32:34', '2024-08-22 09:32:34'),
-(12, 'shipping_update', '{\"order_id\":10,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c ho\\u00e0n tr\\u1ea3 l\\u1ea1i cho ng\\u01b0\\u1eddi g\\u1eedi.\"}', 0, '2024-08-22 09:32:52', '2024-08-22 09:32:52'),
-(13, 'order_delivered', '{\"order_id\":11,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao th\\u00e0nh c\\u00f4ng. H\\u00e3y \\u0111\\u00e1nh gi\\u00e1 v\\u00e0 cho \\u00fd ki\\u1ebfn v\\u1ec1 \\u0111\\u01a1n h\\u00e0ng!\"}', 0, '2024-08-22 09:38:38', '2024-08-22 09:38:38'),
-(14, 'order_delivered', '{\"order_id\":10,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao th\\u00e0nh c\\u00f4ng. H\\u00e3y \\u0111\\u00e1nh gi\\u00e1 v\\u00e0 cho \\u00fd ki\\u1ebfn v\\u1ec1 \\u0111\\u01a1n h\\u00e0ng!\"}', 0, '2024-08-22 09:38:52', '2024-08-22 09:38:52'),
-(15, 'shipping_update', '{\"order_id\":35,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y\"}', 0, '2024-08-22 09:39:14', '2024-08-22 09:39:14'),
-(16, 'order_delivered', '{\"order_id\":35,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao th\\u00e0nh c\\u00f4ng. H\\u00e3y \\u0111\\u00e1nh gi\\u00e1 v\\u00e0 cho \\u00fd ki\\u1ebfn v\\u1ec1 \\u0111\\u01a1n h\\u00e0ng!\"}', 0, '2024-08-22 09:40:09', '2024-08-22 09:40:09'),
-(17, 'shipping_update', '{\"order_id\":127,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y\"}', 0, '2024-08-22 09:44:42', '2024-08-22 09:44:42'),
-(18, 'shipping_update', '{\"order_id\":126,\"message\":\"\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y\"}', 0, '2024-08-22 09:49:36', '2024-08-22 09:49:36'),
-(19, 'shipping_update', '{\"order_id\":98,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y.\"}', 0, '2024-08-22 09:52:30', '2024-08-22 09:52:30'),
-(20, 'shipping_update', '{\"order_id\":54,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y.\"}', 0, '2024-08-22 10:17:08', '2024-08-22 10:17:08'),
-(21, 'đã đặt hàng', '{\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #128Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-22 10:20:27', '2024-08-22 10:21:02'),
-(22, 'shipping_update', '{\"order_id\":128,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 b\\u1ecb tr\\u1ec5 h\\u1eb9n trong qu\\u00e1 tr\\u00ecnh v\\u1eadn chuy\\u1ec3n.\"}', 0, '2024-08-22 10:21:23', '2024-08-22 10:21:23'),
-(23, 'shipping_update', '{\"order_id\":128,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y.\"}', 0, '2024-08-22 10:21:39', '2024-08-22 10:21:39'),
-(24, 'shipping_update', '{\"order_id\":125,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn.\"}', 1, '2024-08-22 10:39:14', '2024-08-22 11:05:56'),
-(25, 'shipping_update', '{\"order_id\":125,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 b\\u1ecb tr\\u1ec5 h\\u1eb9n trong qu\\u00e1 tr\\u00ecnh v\\u1eadn chuy\\u1ec3n.\"}', 0, '2024-08-22 10:39:30', '2024-08-22 10:39:30'),
-(26, 'order_received_confirmation', '{\"order_id\":125,\"message\":\"Ng\\u01b0\\u1eddi d\\u00f9ng \\u0111\\u00e3 nh\\u1eadn h\\u00e0ng cho \\u0111\\u01a1n h\\u00e0ng #125\"}', 0, '2024-08-22 11:02:34', '2024-08-22 11:02:34'),
-(27, 'order_received_confirmation', '{\"order_id\":125,\"message\":\"Ng\\u01b0\\u1eddi d\\u00f9ng \\u0111\\u00e3 nh\\u1eadn h\\u00e0ng cho \\u0111\\u01a1n h\\u00e0ng #125\"}', 0, '2024-08-22 11:02:57', '2024-08-22 11:02:57'),
-(28, 'đã đặt hàng', '{\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #129Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-08-22 11:11:58', '2024-08-22 11:13:53'),
-(29, 'đã đặt hàng', '{\"order_id\":130,\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #130Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-23 09:45:01', '2024-08-23 09:46:02'),
-(30, 'order_cancel_request', '{\"order_id\":130,\"message\":\"B\\u1ea1n \\u0111\\u00e3 y\\u00eau c\\u1ea7u h\\u1ee7y \\u0111\\u01a1n h\\u00e0ng #130.\"}', 1, '2024-08-23 09:45:52', '2024-08-23 09:46:03'),
-(31, 'shipping_update', '{\"order_id\":130,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y.\"}', 1, '2024-08-23 09:46:58', '2024-08-26 01:26:29'),
-(32, 'account_update', '{\"user_id\":19,\"message\":\"T\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 b\\u1ecb kh\\u00f3a. Vui l\\u00f2ng li\\u00ean h\\u1ec7 qua trang chat.\"}', 1, '2024-08-23 09:59:18', '2024-08-26 01:26:33'),
-(33, 'account_update', '{\"user_id\":19,\"message\":\"T\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 b\\u1ecb kh\\u00f3a. Vui l\\u00f2ng li\\u00ean h\\u1ec7 qua trang chat\"}', 1, '2024-08-23 10:09:13', '2024-08-26 01:26:31'),
-(34, 'new_message', '{\"user_id\":\"19\",\"message\":\"C\\u00f3 tin nh\\u1eafn m\\u1edbi t\\u1eeb admin.\"}', 1, '2024-08-23 11:23:05', '2024-08-26 01:26:26'),
-(35, 'account_update', '{\"user_id\":19,\"message\":\"Ch\\u00fang t\\u00f4i \\u0111\\u00e3 m\\u1edf l\\u1ea1i t\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n\"}', 1, '2024-08-23 11:26:40', '2024-08-26 01:26:22'),
-(36, 'account_update', '{\"user_id\":19,\"message\":\"Ch\\u00fang t\\u00f4i \\u0111\\u00e3 nh\\u1eadn th\\u1ea5y 1 s\\u1ed1 h\\u00e0nh \\u0111\\u1ed9ng l\\u1ea1i t\\u1eeb t\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n n\\u00ean \\u0111\\u00e3 t\\u1ea1m th\\u1eddi kh\\u00f3a n\\u00f3 . Vui l\\u00f2ng li\\u00ean h\\u1ec7 qua trang chat\"}', 1, '2024-08-23 11:26:55', '2024-08-26 01:26:19'),
-(37, 'đã đặt hàng', '{\"order_id\":131,\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #131Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-25 10:32:30', '2024-08-26 01:26:15'),
-(38, 'shipping_update', '{\"order_id\":131,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao h\\u00e0ng th\\u00e0nh c\\u00f4ng.\"}', 1, '2024-08-25 10:44:25', '2024-08-26 01:26:13');
+INSERT INTO `clients_notifications` (`id`, `user_id`, `type`, `data`, `is_read`, `created_at`, `updated_at`) VALUES
+(72, 19, 'account_update', '{\"user_id\":19,\"message\":\"Ch\\u00fang t\\u00f4i \\u0111\\u00e3 m\\u1edf l\\u1ea1i t\\u00e0i kho\\u1ea3n c\\u1ee7a b\\u1ea1n\"}', 1, '2024-09-01 04:33:22', '2024-09-02 07:58:57'),
+(81, 19, 'đã đặt hàng', '{\"order_id\":163,\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #163Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-09-01 08:54:51', '2024-09-02 07:58:57'),
+(82, 19, 'order_cancel_request', '{\"order_id\":163,\"message\":\"B\\u1ea1n \\u0111\\u00e3 y\\u00eau c\\u1ea7u h\\u1ee7y \\u0111\\u01a1n h\\u00e0ng #163.\"}', 1, '2024-09-01 08:55:21', '2024-09-02 07:58:57'),
+(83, 19, 'shipping_update', '{\"order_id\":163,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y. Vui l\\u00f2ng li\\u00ean h\\u1ec7 v\\u1edbi admin \\u0111\\u1ec3 \\u0111\\u01b0\\u1ee3c ho\\u00e0n ti\\u1ec1n..\"}', 1, '2024-09-01 08:55:47', '2024-09-02 07:58:57'),
+(84, 19, 'đã đặt hàng', '{\"order_id\":164,\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #164,Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-09-01 09:21:51', '2024-09-02 07:58:57'),
+(85, 19, 'shipping_update', '{\"order_id\":164,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao h\\u00e0ng th\\u00e0nh c\\u00f4ng.\"}', 1, '2024-09-01 09:27:48', '2024-09-02 07:58:57'),
+(86, 20, 'đã đặt hàng', '{\"order_id\":165,\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #165,Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"manh123\",\"address\":\"hanoi bac tu liem\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-09-02 07:41:20', '2024-09-03 04:24:36'),
+(87, 20, 'shipping_update', '{\"order_id\":165,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c v\\u1eadn chuy\\u1ec3n.\"}', 1, '2024-09-02 07:42:06', '2024-09-03 04:24:36'),
+(88, 20, 'shipping_update', '{\"order_id\":165,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn.\"}', 1, '2024-09-02 07:42:22', '2024-09-03 04:24:36'),
+(89, 20, 'shipping_update', '{\"order_id\":165,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao h\\u00e0ng th\\u00e0nh c\\u00f4ng.\"}', 1, '2024-09-02 07:42:26', '2024-09-03 04:24:36'),
+(90, 20, 'đã đặt hàng', '{\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #166Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-09-02 09:00:11', '2024-09-03 04:24:36'),
+(91, 20, 'đã đặt hàng', '{\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #167Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-09-02 09:03:12', '2024-09-03 04:24:36');
 
 -- --------------------------------------------------------
 
@@ -210,8 +208,12 @@ INSERT INTO `colors` (`id`, `name`, `code`, `created_at`, `updated_at`, `deleted
 (1, 'Đen', '#000000', '2023-07-26 13:37:45', '2023-07-26 13:37:45', NULL),
 (2, 'Đỏ', '#f50000', '2023-07-26 13:37:57', '2023-07-26 13:37:57', NULL),
 (3, 'Xám', '#e3dede', '2023-07-26 13:38:15', '2023-07-26 13:38:15', NULL),
-(4, 'Be', '#eee1b5', '2023-07-26 13:38:37', '2023-07-26 13:38:37', NULL),
-(5, 'Neon Pink', '#c25695', '2023-07-28 21:50:17', '2023-07-28 21:50:17', NULL);
+(4, 'Trắng', '#f2f1ed', '2023-07-26 13:38:37', '2024-09-03 08:39:53', NULL),
+(5, 'Hồng', '#c25695', '2023-07-28 21:50:17', '2024-09-03 08:43:24', NULL),
+(6, 'Xanh', '#35d09c', '2024-08-31 10:12:52', '2024-09-03 09:05:14', NULL),
+(7, 'Xanh lam', '#402dd2', '2024-09-03 09:05:26', '2024-09-03 09:05:41', NULL),
+(8, 'Vàng', '#c5e817', '2024-09-03 09:05:59', '2024-09-03 09:05:59', NULL),
+(9, 'Cam', '#e5aa57', '2024-09-03 09:15:56', '2024-09-03 09:15:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -307,7 +309,15 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (59, '2024_08_25_103542_add_voucher_id_to_users_table', 28),
 (60, '2024_08_25_155500_create_user_voucher_table', 29),
 (61, '2024_08_26_080135_create_wishlists_table', 30),
-(62, '2024_08_26_081858_add_size_and_color_to_wishlists_table', 31);
+(62, '2024_08_26_081858_add_size_and_color_to_wishlists_table', 31),
+(63, '2024_08_26_131921_add_image_variant_to_cart_table', 32),
+(64, '2024_08_29_092358_add_image_to_order_details_table', 33),
+(65, '2024_08_30_162307_add_file_path_to_chats_table', 34),
+(66, '2024_08_30_183345_add_user_id_to_clients_notifications_table', 35),
+(67, '2024_08_31_175035_update_description_nullable', 36),
+(68, '2024_08_31_182312_create_blogs_table', 37),
+(69, '2024_09_02_152532_add_pro_id_to_blogs_table', 38),
+(70, '2024_09_02_152718_drop_pro_id_from_blogs_table', 39);
 
 -- --------------------------------------------------------
 
@@ -396,8 +406,56 @@ INSERT INTO `notifications` (`id`, `type`, `data`, `is_read`, `created_at`, `upd
 (92, 'new_message', '{\"user_id\":\"19\",\"message\":\"C\\u00f3 tin nh\\u1eafn t\\u1eeb ng\\u01b0\\u1eddi d\\u00f9ng #19\"}', 1, '2024-08-23 10:44:36', '2024-08-23 10:44:44'),
 (93, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 m\\u1edf kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 19\"}', 1, '2024-08-23 11:26:40', '2024-08-23 11:26:42'),
 (94, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 19\"}', 1, '2024-08-23 11:26:55', '2024-08-23 11:26:57'),
-(95, 'đã đặt hàng', '{\"order_id\":131,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #131\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 0, '2024-08-25 10:32:30', '2024-08-25 10:32:30'),
-(96, 'shipping_update', '{\"order_id\":131,\"message\":\"Tr\\u1ea1ng th\\u00e1i \\u0111\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c c\\u1eadp nh\\u1eadt l\\u00e0 :\\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao h\\u00e0ng th\\u00e0nh c\\u00f4ng.\"}', 0, '2024-08-25 10:44:25', '2024-08-25 10:44:25');
+(95, 'đã đặt hàng', '{\"order_id\":131,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #131\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-25 10:32:30', '2024-08-29 04:21:49'),
+(96, 'shipping_update', '{\"order_id\":131,\"message\":\"Tr\\u1ea1ng th\\u00e1i \\u0111\\u01a1n h\\u00e0ng \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c c\\u1eadp nh\\u1eadt l\\u00e0 :\\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao h\\u00e0ng th\\u00e0nh c\\u00f4ng.\"}', 1, '2024-08-25 10:44:25', '2024-08-29 04:21:49'),
+(97, 'đã đặt hàng', '{\"order_id\":132,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #132\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 10:53:36', '2024-08-29 04:21:49'),
+(98, 'đã đặt hàng', '{\"order_id\":133,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #133\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 11:02:45', '2024-08-29 04:21:49'),
+(99, 'đã đặt hàng', '{\"order_id\":134,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #134\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 11:04:04', '2024-08-29 04:21:49'),
+(100, 'đã đặt hàng', '{\"order_id\":135,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #135\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 11:04:58', '2024-08-29 04:21:49'),
+(101, 'đã đặt hàng', '{\"order_id\":136,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #136\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 11:08:46', '2024-08-29 04:21:49'),
+(102, 'đã đặt hàng', '{\"order_id\":137,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #137\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 11:11:45', '2024-08-29 04:21:49'),
+(103, 'đã đặt hàng', '{\"order_id\":138,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #138\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 11:13:57', '2024-08-29 04:21:49'),
+(104, 'đã đặt hàng', '{\"order_id\":139,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #139\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 11:16:43', '2024-08-29 04:21:49'),
+(105, 'đã đặt hàng', '{\"order_id\":140,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #140\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 11:25:04', '2024-08-29 04:21:49'),
+(106, 'đã đặt hàng', '{\"order_id\":141,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #141\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 11:28:20', '2024-08-29 04:21:49'),
+(107, 'đã đặt hàng', '{\"order_id\":142,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #142\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 11:33:40', '2024-08-29 04:21:49'),
+(108, 'đã đặt hàng', '{\"order_id\":143,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #143\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 11:52:25', '2024-08-30 09:16:12'),
+(109, 'đã đặt hàng', '{\"order_id\":144,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #144\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 11:54:27', '2024-08-29 04:21:49'),
+(110, 'đã đặt hàng', '{\"order_id\":145,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #145\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 11:55:18', '2024-08-29 04:21:49'),
+(111, 'đã đặt hàng', '{\"order_id\":146,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #146\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 12:03:05', '2024-08-29 04:21:49'),
+(112, 'đã đặt hàng', '{\"order_id\":147,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #147\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-28 13:17:13', '2024-08-29 04:21:49'),
+(113, 'đã đặt hàng', '{\"order_id\":148,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #148\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-29 02:21:29', '2024-08-29 04:21:49'),
+(114, 'đã đặt hàng', '{\"order_id\":149,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #149\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-29 02:26:30', '2024-08-29 04:21:49'),
+(115, 'đã đặt hàng', '{\"order_id\":150,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #150\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-29 02:41:32', '2024-08-29 04:21:49'),
+(118, 'đã đặt hàng', '{\"order_id\":153,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #153\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-29 03:01:02', '2024-08-30 09:16:15'),
+(119, 'đã đặt hàng', '{\"order_id\":154,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #154\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-08-29 03:02:34', '2024-08-29 04:21:49'),
+(122, 'shipping_update', '{\"order_id\":155,\"message\":\"Tr\\u1ea1ng th\\u00e1i 155 \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c c\\u1eadp nh\\u1eadt l\\u00e0 :\\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao h\\u00e0ng th\\u00e0nh c\\u00f4ng.\"}', 1, '2024-08-29 10:23:13', '2024-08-30 09:15:49'),
+(123, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 20\"}', 1, '2024-08-30 10:04:58', '2024-08-30 11:06:53'),
+(124, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 m\\u1edf kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 20\"}', 1, '2024-08-30 10:05:00', '2024-08-30 11:06:53'),
+(125, 'new_message', '{\"user_id\":\"20\",\"message\":\"C\\u00f3 tin nh\\u1eafn m\\u1edbi t\\u1eeb ng\\u01b0\\u1eddi d\\u00f9ng #20\"}', 1, '2024-08-30 10:05:22', '2024-08-30 11:06:53'),
+(126, 'new_message', '{\"user_id\":\"20\",\"message\":\"C\\u00f3 tin nh\\u1eafn m\\u1edbi t\\u1eeb ng\\u01b0\\u1eddi d\\u00f9ng #20\"}', 1, '2024-08-30 10:05:23', '2024-08-30 11:06:53'),
+(127, 'new_message', '{\"user_id\":\"20\",\"message\":\"C\\u00f3 tin nh\\u1eafn m\\u1edbi t\\u1eeb ng\\u01b0\\u1eddi d\\u00f9ng #20\"}', 1, '2024-08-30 10:07:15', '2024-08-30 11:06:53'),
+(128, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 20\"}', 1, '2024-08-30 11:08:50', '2024-08-31 11:44:29'),
+(129, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 m\\u1edf kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 20\"}', 1, '2024-08-30 11:08:59', '2024-08-31 11:44:29'),
+(130, 'account_update', '{\"user_id\":17,\"message\":\"B\\u1ea1n \\u0111\\u00e3 m\\u1edf kh\\u00f3a t\\u00e0i kho\\u1ea3n ng\\u01b0\\u1eddi d\\u00f9ng v\\u1edbi ID: 19\"}', 1, '2024-09-01 04:33:22', '2024-09-01 04:33:25'),
+(131, 'đã đặt hàng', '{\"order_id\":157,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #157\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-09-01 04:35:22', '2024-09-01 08:35:45'),
+(132, 'đã đặt hàng', '{\"order_id\":158,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #158\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-09-01 08:32:52', '2024-09-01 08:35:45'),
+(133, 'đã đặt hàng', '{\"order_id\":159,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #159\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-09-01 08:33:38', '2024-09-01 08:35:45'),
+(134, 'đã đặt hàng', '{\"order_id\":160,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #160\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-09-01 08:34:21', '2024-09-01 08:35:45'),
+(135, 'đã đặt hàng', '{\"order_id\":161,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #161\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-09-01 08:35:29', '2024-09-01 08:35:45'),
+(136, 'đã đặt hàng', '{\"order_id\":162,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #162\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-09-01 08:37:16', '2024-09-01 08:40:09'),
+(137, 'order_cancel_request', '{\"order_id\":162,\"message\":\"Ng\\u01b0\\u1eddi d\\u00f9ng y\\u00eau c\\u1ea7u h\\u1ee7y \\u0111\\u01a1n h\\u00e0ng #162.\"}', 1, '2024-09-01 08:48:45', '2024-09-01 08:48:54'),
+(144, 'đã đặt hàng', '{\"order_id\":163,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #163\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-09-01 08:54:51', '2024-09-01 08:55:12'),
+(145, 'order_cancel_request', '{\"order_id\":163,\"message\":\"Ng\\u01b0\\u1eddi d\\u00f9ng y\\u00eau c\\u1ea7u h\\u1ee7y \\u0111\\u01a1n h\\u00e0ng #163.\"}', 1, '2024-09-01 08:55:21', '2024-09-01 08:55:27'),
+(146, 'shipping_update', '{\"order_id\":163,\"message\":\"Tr\\u1ea1ng th\\u00e1i \\u0111\\u01a1n h\\u00e0ng 163 \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c c\\u1eadp nh\\u1eadt l\\u00e0 :\\u0110\\u01a1n h\\u00e0ng \\u0111\\u00e3 b\\u1ecb h\\u1ee7y. Vui l\\u00f2ng li\\u00ean h\\u1ec7 v\\u1edbi admin \\u0111\\u1ec3 \\u0111\\u01b0\\u1ee3c ho\\u00e0n ti\\u1ec1n..\"}', 1, '2024-09-01 08:55:47', '2024-09-01 08:58:10'),
+(147, 'đã đặt hàng', '{\"order_id\":164,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #164\",\"order_details\":{\"username\":\"tran manh\",\"address\":\"ha noi\",\"phone\":\"0987654321\",\"email\":\"minh29122003@gmail.com\",\"note\":\"\"}}', 1, '2024-09-01 09:21:51', '2024-09-01 09:23:54'),
+(148, 'shipping_update', '{\"order_id\":164,\"message\":\"Tr\\u1ea1ng th\\u00e1i \\u0111\\u01a1n h\\u00e0ng 164 \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c c\\u1eadp nh\\u1eadt l\\u00e0 :\\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao h\\u00e0ng th\\u00e0nh c\\u00f4ng.\"}', 1, '2024-09-01 09:27:48', '2024-09-02 07:41:50'),
+(149, 'đã đặt hàng', '{\"order_id\":165,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #165\",\"order_details\":{\"username\":\"manh123\",\"address\":\"hanoi bac tu liem\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-09-02 07:41:20', '2024-09-02 07:41:50'),
+(150, 'shipping_update', '{\"order_id\":165,\"message\":\"Tr\\u1ea1ng th\\u00e1i \\u0111\\u01a1n h\\u00e0ng 165 \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c c\\u1eadp nh\\u1eadt l\\u00e0 :\\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c v\\u1eadn chuy\\u1ec3n.\"}', 1, '2024-09-02 07:42:06', '2024-09-02 07:42:35'),
+(151, 'shipping_update', '{\"order_id\":165,\"message\":\"Tr\\u1ea1ng th\\u00e1i \\u0111\\u01a1n h\\u00e0ng 165 \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c c\\u1eadp nh\\u1eadt l\\u00e0 :\\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn.\"}', 1, '2024-09-02 07:42:22', '2024-09-02 07:42:35'),
+(152, 'shipping_update', '{\"order_id\":165,\"message\":\"Tr\\u1ea1ng th\\u00e1i \\u0111\\u01a1n h\\u00e0ng 165 \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c c\\u1eadp nh\\u1eadt l\\u00e0 :\\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao h\\u00e0ng th\\u00e0nh c\\u00f4ng.\"}', 1, '2024-09-02 07:42:26', '2024-09-02 07:42:35'),
+(153, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #166\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-09-02 09:00:11', '2024-09-03 08:35:38'),
+(154, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #167\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-09-02 09:03:12', '2024-09-03 08:35:38');
 
 -- --------------------------------------------------------
 
@@ -528,7 +586,43 @@ INSERT INTO `orders` (`id`, `user_id`, `username`, `phone`, `email`, `address`, 
 (128, 19, 'tran manh', '0987654321', 'manhtnph28511@fpt.edu.vn', 'ha noi', '', 'cancel', 'CANCEL', 'Credit_card', '2024-08-22 10:20:17', '2024-08-22 10:21:39'),
 (129, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-22 11:11:53', '2024-08-22 11:11:53'),
 (130, 19, 'tran manh', '0987654321', 'manhtnph28511@fpt.edu.vn', 'ha noi', '', 'cancel', 'CANCEL', 'Credit_card', '2024-08-23 09:44:54', '2024-08-23 09:46:58'),
-(131, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'success', 'DELIVERED', 'Credit_card', '2024-08-25 10:32:25', '2024-08-25 10:44:25');
+(131, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'success', 'DELIVERED', 'Credit_card', '2024-08-25 10:32:25', '2024-08-25 10:44:25'),
+(132, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 10:53:26', '2024-08-28 10:53:26'),
+(133, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 11:02:41', '2024-08-28 11:02:41'),
+(134, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 11:03:59', '2024-08-28 11:03:59'),
+(135, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 11:04:52', '2024-08-28 11:04:52'),
+(136, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 11:08:41', '2024-08-28 11:08:41'),
+(137, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 11:11:41', '2024-08-28 11:11:41'),
+(138, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 11:13:51', '2024-08-28 11:13:51'),
+(139, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 11:16:38', '2024-08-28 11:16:38'),
+(140, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 11:24:57', '2024-08-28 11:24:57'),
+(141, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 11:28:08', '2024-08-28 11:28:08'),
+(142, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 11:33:23', '2024-08-28 11:33:23'),
+(143, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 11:52:16', '2024-08-28 11:52:16'),
+(144, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 11:54:17', '2024-08-28 11:54:17'),
+(145, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 11:55:13', '2024-08-28 11:55:13'),
+(146, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 12:02:58', '2024-08-28 12:02:58'),
+(147, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-28 13:17:08', '2024-08-28 13:17:08'),
+(148, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-29 02:21:23', '2024-08-29 02:21:23'),
+(149, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-29 02:26:16', '2024-08-29 02:26:16'),
+(150, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-29 02:41:27', '2024-08-29 02:41:27'),
+(151, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-29 02:45:13', '2024-08-29 02:45:13'),
+(152, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-29 02:47:17', '2024-08-29 02:47:17'),
+(153, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-29 03:00:54', '2024-08-29 03:00:54'),
+(154, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'PACKED', 'Credit_card', '2024-08-29 03:02:29', '2024-08-29 03:02:29'),
+(155, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'success', 'DELIVERED', 'COD', '2024-08-29 03:03:11', '2024-08-29 10:23:13'),
+(156, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'success', 'DELIVERED', 'COD', '2024-08-29 03:05:19', '2024-08-29 09:15:15'),
+(157, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-09-01 04:35:15', '2024-09-01 04:35:15'),
+(158, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-09-01 08:32:37', '2024-09-01 08:32:37'),
+(159, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-09-01 08:33:32', '2024-09-01 08:33:32'),
+(160, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-09-01 08:34:14', '2024-09-01 08:34:14'),
+(161, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'PENDING', 'PACKED', 'Credit_card', '2024-09-01 08:35:22', '2024-09-01 08:35:22'),
+(162, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'success', 'DELIVERED', 'Credit_card', '2024-09-01 08:37:13', '2024-09-01 08:49:49'),
+(163, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'cancel', 'CANCEL', 'Credit_card', '2024-09-01 08:54:37', '2024-09-01 08:55:47'),
+(164, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'success', 'DELIVERED', 'Credit_card', '2024-09-01 09:21:47', '2024-09-01 09:27:48'),
+(165, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'hanoi bac tu liem', '', 'success', 'DELIVERED', 'Credit_card', '2024-09-02 07:41:05', '2024-09-02 07:42:26'),
+(166, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-09-02 09:00:04', '2024-09-02 09:00:04'),
+(167, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-09-02 09:03:08', '2024-09-02 09:03:08');
 
 -- --------------------------------------------------------
 
@@ -542,6 +636,7 @@ CREATE TABLE `order_details` (
   `pro_id` bigint UNSIGNED NOT NULL,
   `size_id` bigint UNSIGNED DEFAULT NULL,
   `color_id` bigint UNSIGNED DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` int NOT NULL,
   `quantity` int NOT NULL,
   `total_price` int NOT NULL,
@@ -553,107 +648,163 @@ CREATE TABLE `order_details` (
 -- Dumping data for table `order_details`
 --
 
-INSERT INTO `order_details` (`id`, `order_id`, `pro_id`, `size_id`, `color_id`, `price`, `quantity`, `total_price`, `created_at`, `updated_at`) VALUES
-(5, 25, 3, 2, 2, 480000, 1, 480000, '2024-08-04 02:28:20', '2024-08-04 02:28:20'),
-(6, 26, 3, 2, 2, 480000, 1, 480000, '2024-08-04 02:58:07', '2024-08-04 02:58:07'),
-(8, 35, 3, 1, 2, 480000, 1, 480000, '2024-08-04 03:02:08', '2024-08-04 03:02:08'),
-(10, 40, 2, 3, 2, 141234, 1, 141234, '2024-08-04 03:08:02', '2024-08-04 03:08:02'),
-(11, 41, 10, 1, 1, 230000, 1, 230000, '2024-08-04 03:08:55', '2024-08-04 03:08:55'),
-(13, 44, 8, 1, 2, 320000, 1, 320000, '2024-08-04 03:11:05', '2024-08-04 03:11:05'),
-(17, 48, 3, 1, 2, 480000, 1, 480000, '2024-08-04 03:20:23', '2024-08-04 03:20:23'),
-(23, 54, 3, 2, 2, 480000, 1, 480000, '2024-08-04 03:35:26', '2024-08-04 03:35:26'),
-(24, 55, 10, 1, 3, 230000, 1, 230000, '2024-08-04 03:35:56', '2024-08-04 03:35:56'),
-(25, 56, 15, 2, 1, 141234, 1, 141234, '2024-08-04 03:38:31', '2024-08-04 03:38:31'),
-(26, 57, 15, 2, 1, 141234, 1, 141234, '2024-08-04 03:39:14', '2024-08-04 03:39:14'),
-(27, 58, 3, 2, 1, 480000, 1, 480000, '2024-08-05 20:27:54', '2024-08-05 20:29:07'),
-(28, 59, 13, 1, 2, 900000, 1, 900000, '2024-08-06 03:29:36', '2024-08-06 03:29:36'),
-(29, 60, 13, 1, 2, 900000, 1, 900000, '2024-08-06 03:30:37', '2024-08-06 03:30:37'),
-(30, 61, 13, 1, 2, 900000, 1, 900000, '2024-08-06 03:41:08', '2024-08-07 03:21:51'),
-(31, 62, 13, 1, 2, 900000, 1, 900000, '2024-08-06 03:41:55', '2024-08-06 03:41:55'),
-(32, 64, 15, 2, 1, 141234, 1, 141234, '2024-08-06 03:45:51', '2024-08-06 03:45:51'),
-(33, 65, 6, 1, 1, 530000, 1, 530000, '2024-08-06 03:47:47', '2024-08-06 03:47:47'),
-(34, 66, 15, 2, 2, 141234, 1, 141234, '2024-08-06 03:51:59', '2024-08-06 03:51:59'),
-(35, 67, 15, 2, 2, 141234, 1, 141234, '2024-08-06 03:52:06', '2024-08-06 03:52:06'),
-(36, 68, 15, 2, 2, 141234, 1, 141234, '2024-08-06 03:53:03', '2024-08-06 03:53:03'),
-(37, 69, 3, 2, 1, 480000, 1, 480000, '2024-08-07 05:27:44', '2024-08-07 05:27:44'),
-(38, 70, 21, 2, 4, 300, 1, 300, '2024-08-08 04:32:41', '2024-08-08 19:12:32'),
-(39, 70, 21, 2, 4, 300, 1, 300, '2024-08-08 04:32:41', '2024-08-08 19:12:32'),
-(40, 71, 21, 3, 3, 300, 1, 300, '2024-08-08 19:29:37', '2024-08-08 19:29:37'),
-(41, 71, 21, 3, 3, 300, 1, 300, '2024-08-08 19:29:37', '2024-08-08 19:29:37'),
-(42, 72, 13, 3, 3, 900000, 1, 900000, '2024-08-08 21:26:37', '2024-08-08 21:26:37'),
-(43, 72, 21, 2, 4, 300000, 2, 600000, '2024-08-08 21:26:37', '2024-08-08 21:26:37'),
-(44, 73, 21, 2, 4, 300000, 1, 300000, '2024-08-08 21:30:35', '2024-08-08 21:30:35'),
-(45, 73, 6, 5, 1, 530000, 2, 1060000, '2024-08-08 21:30:35', '2024-08-08 21:30:35'),
-(46, 74, 13, 1, 1, 900000, 1, 900000, '2024-08-08 21:33:35', '2024-08-08 21:37:44'),
-(47, 74, 21, 3, 3, 500, 1, 500, '2024-08-08 21:33:35', '2024-08-08 21:37:44'),
-(48, 75, 21, 2, 4, 150, 1, 150, '2024-08-12 10:18:29', '2024-08-12 10:18:29'),
-(49, 76, 17, 2, 3, 69999, 1, 69999, '2024-08-12 10:19:54', '2024-08-12 10:19:54'),
-(50, 80, 21, 2, 4, 300000, 2, 600000, '2024-08-16 05:16:40', '2024-08-16 05:16:40'),
-(51, 81, 21, 2, 4, 300000, 2, 600000, '2024-08-16 05:24:02', '2024-08-16 05:24:02'),
-(52, 82, 21, 2, 4, 300000, 2, 600000, '2024-08-16 05:24:23', '2024-08-16 05:24:23'),
-(53, 83, 21, 2, 4, 300000, 2, 600000, '2024-08-16 05:25:25', '2024-08-16 05:25:25'),
-(54, 84, 21, 2, 4, 300000, 2, 600000, '2024-08-16 05:26:01', '2024-08-16 05:26:01'),
-(55, 85, 21, 3, 3, 500, 1, 500, '2024-08-17 11:25:54', '2024-08-17 11:25:54'),
-(56, 85, 21, 1, 1, 300000, 1, 300000, '2024-08-17 11:25:54', '2024-08-17 11:25:54'),
-(57, 85, 3, 2, 4, 480000, 1, 480000, '2024-08-17 11:25:54', '2024-08-17 11:25:54'),
-(58, 85, 21, 1, 1, 300000, 1, 300000, '2024-08-17 11:25:54', '2024-08-17 11:25:54'),
-(59, 86, 3, 2, 4, 480000, 1, 480000, '2024-08-20 09:45:48', '2024-08-20 09:45:48'),
-(60, 86, 21, 1, 1, 300000, 2, 600000, '2024-08-20 09:45:48', '2024-08-20 09:45:48'),
-(61, 87, 3, 2, 4, 480000, 1, 384000, '2024-08-20 09:52:13', '2024-08-20 09:52:13'),
-(62, 87, 21, 2, 4, 150, 1, 0, '2024-08-20 09:52:13', '2024-08-20 09:52:13'),
-(63, 88, 3, 2, 4, 480000, 2, 960000, '2024-08-20 10:01:15', '2024-08-20 10:01:15'),
-(64, 88, 21, 1, 1, 300000, 1, 300000, '2024-08-20 10:01:15', '2024-08-20 10:01:15'),
-(65, 89, 3, 2, 4, 480000, 1, 480000, '2024-08-20 10:11:25', '2024-08-20 10:11:25'),
-(66, 89, 21, 2, 4, 150, 1, 150, '2024-08-20 10:11:25', '2024-08-20 10:11:25'),
-(67, 90, 3, 2, 4, 480000, 1, 480000, '2024-08-20 10:18:54', '2024-08-20 10:18:54'),
-(68, 90, 21, 3, 3, 500, 2, 1000, '2024-08-20 10:18:54', '2024-08-20 10:18:54'),
-(69, 91, 3, 2, 4, 480000, 1, 480000, '2024-08-20 10:21:20', '2024-08-20 10:21:20'),
-(70, 91, 21, 2, 4, 150, 1, 150, '2024-08-20 10:21:20', '2024-08-20 10:21:20'),
-(71, 92, 3, 2, 4, 480000, 1, 480000, '2024-08-20 10:22:53', '2024-08-20 10:22:53'),
-(72, 92, 21, 2, 4, 150, 1, 150, '2024-08-20 10:22:53', '2024-08-20 10:22:53'),
-(73, 93, 3, 2, 4, 480000, 1, 480000, '2024-08-20 10:29:07', '2024-08-20 10:29:07'),
-(74, 94, 3, 2, 4, 480000, 1, 480000, '2024-08-20 10:38:07', '2024-08-20 10:38:07'),
-(75, 95, 3, 2, 4, 480000, 1, 480000, '2024-08-20 10:38:08', '2024-08-20 10:38:08'),
-(76, 96, 3, 2, 4, 480000, 1, 480000, '2024-08-21 08:29:13', '2024-08-21 08:29:13'),
-(77, 96, 21, 3, 3, 500, 1, 500, '2024-08-21 08:29:13', '2024-08-21 08:29:13'),
-(78, 97, 3, 2, 4, 480000, 1, 480000, '2024-08-21 08:29:38', '2024-08-21 08:29:38'),
-(79, 97, 21, 3, 3, 500, 1, 500, '2024-08-21 08:29:38', '2024-08-21 08:29:38'),
-(80, 98, 3, 2, 4, 480000, 1, 480000, '2024-08-21 08:36:20', '2024-08-21 08:36:20'),
-(81, 98, 21, 3, 3, 500, 1, 500, '2024-08-21 08:36:20', '2024-08-21 08:36:20'),
-(82, 99, 3, 2, 4, 480000, 2, 768000, '2024-08-21 08:37:29', '2024-08-21 08:37:29'),
-(83, 100, 3, 2, 4, 480000, 2, 959600, '2024-08-21 08:39:06', '2024-08-21 08:39:06'),
-(84, 101, 3, 2, 4, 480000, 2, 959600, '2024-08-21 08:43:20', '2024-08-21 08:43:20'),
-(85, 102, 3, 2, 4, 480000, 2, 959600, '2024-08-21 08:45:32', '2024-08-21 08:45:32'),
-(86, 103, 3, 2, 4, 480000, 2, 959600, '2024-08-21 08:48:24', '2024-08-21 08:48:24'),
-(87, 104, 3, 2, 4, 480000, 2, 959600, '2024-08-21 08:51:36', '2024-08-21 08:51:36'),
-(88, 105, 3, 2, 4, 480000, 2, 960000, '2024-08-21 09:02:09', '2024-08-21 09:02:09'),
-(89, 106, 3, 2, 4, 480000, 2, 960000, '2024-08-21 09:03:12', '2024-08-21 09:03:12'),
-(90, 107, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:09:04', '2024-08-21 09:09:04'),
-(91, 108, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:09:50', '2024-08-21 09:09:50'),
-(92, 109, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:13:24', '2024-08-21 09:13:24'),
-(93, 110, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:13:39', '2024-08-21 09:13:39'),
-(94, 111, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:17:24', '2024-08-21 09:17:24'),
-(95, 112, 3, 2, 4, 480000, 2, 960000, '2024-08-21 09:18:12', '2024-08-21 09:18:12'),
-(96, 113, 3, 2, 4, 480000, 2, 960000, '2024-08-21 09:18:26', '2024-08-21 09:18:26'),
-(97, 114, 3, 2, 4, 480000, 2, 960000, '2024-08-21 09:21:26', '2024-08-21 09:21:26'),
-(98, 115, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:21:50', '2024-08-21 09:21:50'),
-(99, 116, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:23:26', '2024-08-21 09:23:26'),
-(100, 117, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:25:31', '2024-08-21 09:25:31'),
-(101, 118, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:28:03', '2024-08-21 09:28:03'),
-(102, 119, 3, 2, 4, 480000, 2, 959600, '2024-08-21 09:32:50', '2024-08-21 09:32:50'),
-(103, 120, 3, 2, 4, 480000, 1, 480000, '2024-08-21 09:37:23', '2024-08-21 09:37:23'),
-(104, 121, 21, 1, 1, 300000, 1, 300000, '2024-08-21 09:47:44', '2024-08-21 09:47:44'),
-(105, 122, 21, 1, 1, 300000, 2, 600000, '2024-08-21 09:50:53', '2024-08-21 09:50:53'),
-(106, 123, 21, 1, 1, 300000, 2, 600000, '2024-08-21 09:54:37', '2024-08-21 09:54:37'),
-(107, 124, 3, 2, 4, 480000, 2, 864000, '2024-08-21 10:05:27', '2024-08-21 10:05:27'),
-(108, 125, 21, 1, 1, 300000, 1, 300000, '2024-08-22 08:27:24', '2024-08-22 08:27:24'),
-(109, 126, 3, 2, 4, 480000, 1, 480000, '2024-08-22 08:40:39', '2024-08-22 08:40:39'),
-(110, 127, 3, 2, 4, 480000, 1, 480000, '2024-08-22 08:44:35', '2024-08-22 08:44:35'),
-(111, 128, 21, 2, 4, 150, 1, 150, '2024-08-22 10:20:17', '2024-08-22 10:20:17'),
-(112, 128, 3, 2, 4, 480000, 1, 480000, '2024-08-22 10:20:17', '2024-08-22 10:20:17'),
-(113, 129, 3, 2, 4, 480000, 1, 480000, '2024-08-22 11:11:53', '2024-08-22 11:11:53'),
-(114, 130, 3, 2, 4, 480000, 1, 480000, '2024-08-23 09:44:54', '2024-08-23 09:44:54'),
-(115, 131, 3, 2, 4, 480000, 1, 480000, '2024-08-25 10:32:25', '2024-08-25 10:32:25');
+INSERT INTO `order_details` (`id`, `order_id`, `pro_id`, `size_id`, `color_id`, `image`, `price`, `quantity`, `total_price`, `created_at`, `updated_at`) VALUES
+(5, 25, 3, 2, 2, NULL, 480000, 1, 480000, '2024-08-04 02:28:20', '2024-08-04 02:28:20'),
+(6, 26, 3, 2, 2, NULL, 480000, 1, 480000, '2024-08-04 02:58:07', '2024-08-04 02:58:07'),
+(8, 35, 3, 1, 2, NULL, 480000, 1, 480000, '2024-08-04 03:02:08', '2024-08-04 03:02:08'),
+(10, 40, 2, 3, 2, NULL, 141234, 1, 141234, '2024-08-04 03:08:02', '2024-08-04 03:08:02'),
+(11, 41, 10, 1, 1, NULL, 230000, 1, 230000, '2024-08-04 03:08:55', '2024-08-04 03:08:55'),
+(13, 44, 8, 1, 2, NULL, 320000, 1, 320000, '2024-08-04 03:11:05', '2024-08-04 03:11:05'),
+(17, 48, 3, 1, 2, NULL, 480000, 1, 480000, '2024-08-04 03:20:23', '2024-08-04 03:20:23'),
+(23, 54, 3, 2, 2, NULL, 480000, 1, 480000, '2024-08-04 03:35:26', '2024-08-04 03:35:26'),
+(24, 55, 10, 1, 3, NULL, 230000, 1, 230000, '2024-08-04 03:35:56', '2024-08-04 03:35:56'),
+(25, 56, 15, 2, 1, NULL, 141234, 1, 141234, '2024-08-04 03:38:31', '2024-08-04 03:38:31'),
+(26, 57, 15, 2, 1, NULL, 141234, 1, 141234, '2024-08-04 03:39:14', '2024-08-04 03:39:14'),
+(27, 58, 3, 2, 1, NULL, 480000, 1, 480000, '2024-08-05 20:27:54', '2024-08-05 20:29:07'),
+(28, 59, 13, 1, 2, NULL, 900000, 1, 900000, '2024-08-06 03:29:36', '2024-08-06 03:29:36'),
+(29, 60, 13, 1, 2, NULL, 900000, 1, 900000, '2024-08-06 03:30:37', '2024-08-06 03:30:37'),
+(30, 61, 13, 1, 2, NULL, 900000, 1, 900000, '2024-08-06 03:41:08', '2024-08-07 03:21:51'),
+(31, 62, 13, 1, 2, NULL, 900000, 1, 900000, '2024-08-06 03:41:55', '2024-08-06 03:41:55'),
+(32, 64, 15, 2, 1, NULL, 141234, 1, 141234, '2024-08-06 03:45:51', '2024-08-06 03:45:51'),
+(33, 65, 6, 1, 1, NULL, 530000, 1, 530000, '2024-08-06 03:47:47', '2024-08-06 03:47:47'),
+(34, 66, 15, 2, 2, NULL, 141234, 1, 141234, '2024-08-06 03:51:59', '2024-08-06 03:51:59'),
+(35, 67, 15, 2, 2, NULL, 141234, 1, 141234, '2024-08-06 03:52:06', '2024-08-06 03:52:06'),
+(36, 68, 15, 2, 2, NULL, 141234, 1, 141234, '2024-08-06 03:53:03', '2024-08-06 03:53:03'),
+(37, 69, 3, 2, 1, NULL, 480000, 1, 480000, '2024-08-07 05:27:44', '2024-08-07 05:27:44'),
+(38, 70, 21, 2, 4, NULL, 300, 1, 300, '2024-08-08 04:32:41', '2024-08-08 19:12:32'),
+(39, 70, 21, 2, 4, NULL, 300, 1, 300, '2024-08-08 04:32:41', '2024-08-08 19:12:32'),
+(40, 71, 21, 3, 3, NULL, 300, 1, 300, '2024-08-08 19:29:37', '2024-08-08 19:29:37'),
+(41, 71, 21, 3, 3, NULL, 300, 1, 300, '2024-08-08 19:29:37', '2024-08-08 19:29:37'),
+(42, 72, 13, 3, 3, NULL, 900000, 1, 900000, '2024-08-08 21:26:37', '2024-08-08 21:26:37'),
+(43, 72, 21, 2, 4, NULL, 300000, 2, 600000, '2024-08-08 21:26:37', '2024-08-08 21:26:37'),
+(44, 73, 21, 2, 4, NULL, 300000, 1, 300000, '2024-08-08 21:30:35', '2024-08-08 21:30:35'),
+(45, 73, 6, 5, 1, NULL, 530000, 2, 1060000, '2024-08-08 21:30:35', '2024-08-08 21:30:35'),
+(46, 74, 13, 1, 1, NULL, 900000, 1, 900000, '2024-08-08 21:33:35', '2024-08-08 21:37:44'),
+(47, 74, 21, 3, 3, NULL, 500, 1, 500, '2024-08-08 21:33:35', '2024-08-08 21:37:44'),
+(48, 75, 21, 2, 4, NULL, 150, 1, 150, '2024-08-12 10:18:29', '2024-08-12 10:18:29'),
+(49, 76, 17, 2, 3, NULL, 69999, 1, 69999, '2024-08-12 10:19:54', '2024-08-12 10:19:54'),
+(50, 80, 21, 2, 4, NULL, 300000, 2, 600000, '2024-08-16 05:16:40', '2024-08-16 05:16:40'),
+(51, 81, 21, 2, 4, NULL, 300000, 2, 600000, '2024-08-16 05:24:02', '2024-08-16 05:24:02'),
+(52, 82, 21, 2, 4, NULL, 300000, 2, 600000, '2024-08-16 05:24:23', '2024-08-16 05:24:23'),
+(53, 83, 21, 2, 4, NULL, 300000, 2, 600000, '2024-08-16 05:25:25', '2024-08-16 05:25:25'),
+(54, 84, 21, 2, 4, NULL, 300000, 2, 600000, '2024-08-16 05:26:01', '2024-08-16 05:26:01'),
+(55, 85, 21, 3, 3, NULL, 500, 1, 500, '2024-08-17 11:25:54', '2024-08-17 11:25:54'),
+(56, 85, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-17 11:25:54', '2024-08-17 11:25:54'),
+(57, 85, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-17 11:25:54', '2024-08-17 11:25:54'),
+(58, 85, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-17 11:25:54', '2024-08-17 11:25:54'),
+(59, 86, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-20 09:45:48', '2024-08-20 09:45:48'),
+(60, 86, 21, 1, 1, NULL, 300000, 2, 600000, '2024-08-20 09:45:48', '2024-08-20 09:45:48'),
+(61, 87, 3, 2, 4, NULL, 480000, 1, 384000, '2024-08-20 09:52:13', '2024-08-20 09:52:13'),
+(62, 87, 21, 2, 4, NULL, 150, 1, 0, '2024-08-20 09:52:13', '2024-08-20 09:52:13'),
+(63, 88, 3, 2, 4, NULL, 480000, 2, 960000, '2024-08-20 10:01:15', '2024-08-20 10:01:15'),
+(64, 88, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-20 10:01:15', '2024-08-20 10:01:15'),
+(65, 89, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-20 10:11:25', '2024-08-20 10:11:25'),
+(66, 89, 21, 2, 4, NULL, 150, 1, 150, '2024-08-20 10:11:25', '2024-08-20 10:11:25'),
+(67, 90, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-20 10:18:54', '2024-08-20 10:18:54'),
+(68, 90, 21, 3, 3, NULL, 500, 2, 1000, '2024-08-20 10:18:54', '2024-08-20 10:18:54'),
+(69, 91, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-20 10:21:20', '2024-08-20 10:21:20'),
+(70, 91, 21, 2, 4, NULL, 150, 1, 150, '2024-08-20 10:21:20', '2024-08-20 10:21:20'),
+(71, 92, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-20 10:22:53', '2024-08-20 10:22:53'),
+(72, 92, 21, 2, 4, NULL, 150, 1, 150, '2024-08-20 10:22:53', '2024-08-20 10:22:53'),
+(73, 93, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-20 10:29:07', '2024-08-20 10:29:07'),
+(74, 94, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-20 10:38:07', '2024-08-20 10:38:07'),
+(75, 95, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-20 10:38:08', '2024-08-20 10:38:08'),
+(76, 96, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-21 08:29:13', '2024-08-21 08:29:13'),
+(77, 96, 21, 3, 3, NULL, 500, 1, 500, '2024-08-21 08:29:13', '2024-08-21 08:29:13'),
+(78, 97, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-21 08:29:38', '2024-08-21 08:29:38'),
+(79, 97, 21, 3, 3, NULL, 500, 1, 500, '2024-08-21 08:29:38', '2024-08-21 08:29:38'),
+(80, 98, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-21 08:36:20', '2024-08-21 08:36:20'),
+(81, 98, 21, 3, 3, NULL, 500, 1, 500, '2024-08-21 08:36:20', '2024-08-21 08:36:20'),
+(82, 99, 3, 2, 4, NULL, 480000, 2, 768000, '2024-08-21 08:37:29', '2024-08-21 08:37:29'),
+(83, 100, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 08:39:06', '2024-08-21 08:39:06'),
+(84, 101, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 08:43:20', '2024-08-21 08:43:20'),
+(85, 102, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 08:45:32', '2024-08-21 08:45:32'),
+(86, 103, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 08:48:24', '2024-08-21 08:48:24'),
+(87, 104, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 08:51:36', '2024-08-21 08:51:36'),
+(88, 105, 3, 2, 4, NULL, 480000, 2, 960000, '2024-08-21 09:02:09', '2024-08-21 09:02:09'),
+(89, 106, 3, 2, 4, NULL, 480000, 2, 960000, '2024-08-21 09:03:12', '2024-08-21 09:03:12'),
+(90, 107, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 09:09:04', '2024-08-21 09:09:04'),
+(91, 108, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 09:09:50', '2024-08-21 09:09:50'),
+(92, 109, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 09:13:24', '2024-08-21 09:13:24'),
+(93, 110, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 09:13:39', '2024-08-21 09:13:39'),
+(94, 111, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 09:17:24', '2024-08-21 09:17:24'),
+(95, 112, 3, 2, 4, NULL, 480000, 2, 960000, '2024-08-21 09:18:12', '2024-08-21 09:18:12'),
+(96, 113, 3, 2, 4, NULL, 480000, 2, 960000, '2024-08-21 09:18:26', '2024-08-21 09:18:26'),
+(97, 114, 3, 2, 4, NULL, 480000, 2, 960000, '2024-08-21 09:21:26', '2024-08-21 09:21:26'),
+(98, 115, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 09:21:50', '2024-08-21 09:21:50'),
+(99, 116, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 09:23:26', '2024-08-21 09:23:26'),
+(100, 117, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 09:25:31', '2024-08-21 09:25:31'),
+(101, 118, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 09:28:03', '2024-08-21 09:28:03'),
+(102, 119, 3, 2, 4, NULL, 480000, 2, 959600, '2024-08-21 09:32:50', '2024-08-21 09:32:50'),
+(103, 120, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-21 09:37:23', '2024-08-21 09:37:23'),
+(104, 121, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-21 09:47:44', '2024-08-21 09:47:44'),
+(105, 122, 21, 1, 1, NULL, 300000, 2, 600000, '2024-08-21 09:50:53', '2024-08-21 09:50:53'),
+(106, 123, 21, 1, 1, NULL, 300000, 2, 600000, '2024-08-21 09:54:37', '2024-08-21 09:54:37'),
+(107, 124, 3, 2, 4, NULL, 480000, 2, 864000, '2024-08-21 10:05:27', '2024-08-21 10:05:27'),
+(108, 125, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-22 08:27:24', '2024-08-22 08:27:24'),
+(109, 126, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-22 08:40:39', '2024-08-22 08:40:39'),
+(110, 127, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-22 08:44:35', '2024-08-22 08:44:35'),
+(111, 128, 21, 2, 4, NULL, 150, 1, 150, '2024-08-22 10:20:17', '2024-08-22 10:20:17'),
+(112, 128, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-22 10:20:17', '2024-08-22 10:20:17'),
+(113, 129, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-22 11:11:53', '2024-08-22 11:11:53'),
+(114, 130, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-23 09:44:54', '2024-08-23 09:44:54'),
+(115, 131, 3, 2, 4, NULL, 480000, 1, 480000, '2024-08-25 10:32:25', '2024-08-25 10:32:25'),
+(116, 132, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 10:53:26', '2024-08-28 10:53:26'),
+(117, 132, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 10:53:26', '2024-08-28 10:53:26'),
+(118, 133, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 11:02:41', '2024-08-28 11:02:41'),
+(119, 133, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 11:02:41', '2024-08-28 11:02:41'),
+(120, 134, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 11:03:59', '2024-08-28 11:03:59'),
+(121, 134, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 11:03:59', '2024-08-28 11:03:59'),
+(122, 135, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 11:04:52', '2024-08-28 11:04:52'),
+(123, 135, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 11:04:52', '2024-08-28 11:04:52'),
+(124, 136, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 11:08:41', '2024-08-28 11:08:41'),
+(125, 136, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 11:08:41', '2024-08-28 11:08:41'),
+(126, 137, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 11:11:41', '2024-08-28 11:11:41'),
+(127, 137, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 11:11:41', '2024-08-28 11:11:41'),
+(128, 138, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 11:13:51', '2024-08-28 11:13:51'),
+(129, 138, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 11:13:51', '2024-08-28 11:13:51'),
+(130, 139, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 11:16:38', '2024-08-28 11:16:38'),
+(131, 139, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 11:16:38', '2024-08-28 11:16:38'),
+(132, 140, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 11:24:57', '2024-08-28 11:24:57'),
+(133, 140, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 11:24:57', '2024-08-28 11:24:57'),
+(134, 141, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 11:28:09', '2024-08-28 11:28:09'),
+(135, 141, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 11:28:09', '2024-08-28 11:28:09'),
+(136, 142, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 11:33:23', '2024-08-28 11:33:23'),
+(137, 142, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 11:33:23', '2024-08-28 11:33:23'),
+(138, 143, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 11:52:16', '2024-08-28 11:52:16'),
+(139, 143, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 11:52:16', '2024-08-28 11:52:16'),
+(140, 144, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 11:54:17', '2024-08-28 11:54:17'),
+(141, 144, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 11:54:17', '2024-08-28 11:54:17'),
+(142, 145, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 11:55:13', '2024-08-28 11:55:13'),
+(143, 145, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 11:55:13', '2024-08-28 11:55:13'),
+(144, 146, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 12:02:58', '2024-08-28 12:02:58'),
+(145, 146, 21, 2, 4, NULL, 150, 2, 300, '2024-08-28 12:02:58', '2024-08-28 12:02:58'),
+(146, 147, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-28 13:17:08', '2024-08-28 13:17:08'),
+(147, 147, 21, 2, 4, NULL, 300, 1, 300, '2024-08-28 13:17:08', '2024-08-28 13:17:08'),
+(148, 148, 21, 1, 1, NULL, 300000, 1, 300000, '2024-08-29 02:21:23', '2024-08-29 02:21:23'),
+(149, 148, 21, 2, 4, NULL, 300, 1, 300, '2024-08-29 02:21:23', '2024-08-29 02:21:23'),
+(150, 149, 21, 1, 1, 'https://res.cloudinary.com/denxdub1l/image/upload/v1722853863/Cara/Products/f0guuvvtcr6n7eftyjm2.jpg', 300000, 1, 300000, '2024-08-29 02:26:16', '2024-08-29 02:26:16'),
+(151, 149, 21, 2, 4, 'https://res.cloudinary.com/denxdub1l/image/upload/v1724849212/Cara/Products/o6v04numvqtu73lclqum.jpg', 300, 1, 300, '2024-08-29 02:26:16', '2024-08-29 02:26:16'),
+(152, 150, 21, 2, 4, NULL, 300, 1, 300, '2024-08-29 02:41:27', '2024-08-29 02:41:27'),
+(153, 151, 21, 2, 4, 'https://res.cloudinary.com/denxdub1l/image/upload/v1724849212/Cara/Products/o6v04numvqtu73lclqum.jpg', 300, 1, 300, '2024-08-29 02:45:13', '2024-08-29 02:45:13'),
+(154, 152, 21, 5, 5, 'https://res.cloudinary.com/denxdub1l/image/upload/v1724849456/Cara/Products/eg6abqtdh2bnptncxylt.jpg', 141234, 1, 141234, '2024-08-29 02:47:18', '2024-08-29 02:47:18'),
+(155, 153, 21, 1, 1, 'https://res.cloudinary.com/denxdub1l/image/upload/v1722853863/Cara/Products/f0guuvvtcr6n7eftyjm2.jpg', 300000, 1, 270000, '2024-08-29 03:00:54', '2024-08-29 03:00:54'),
+(156, 154, 21, 1, 1, 'https://res.cloudinary.com/denxdub1l/image/upload/v1722853863/Cara/Products/f0guuvvtcr6n7eftyjm2.jpg', 300000, 1, 270000, '2024-08-29 03:02:29', '2024-08-29 03:02:29'),
+(157, 155, 21, 1, 1, 'https://res.cloudinary.com/denxdub1l/image/upload/v1722853863/Cara/Products/f0guuvvtcr6n7eftyjm2.jpg', 300000, 1, 270000, '2024-08-29 03:03:11', '2024-08-29 03:03:11'),
+(158, 156, 21, 1, 1, 'https://res.cloudinary.com/denxdub1l/image/upload/v1722853863/Cara/Products/f0guuvvtcr6n7eftyjm2.jpg', 300000, 1, 270000, '2024-08-29 03:05:19', '2024-08-29 03:05:19'),
+(159, 157, 23, 2, 1, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725159822/MWSPORT/Products/yrqnhex3x3yuzizwwmj2.jpg', 200000, 1, 200000, '2024-09-01 04:35:15', '2024-09-01 04:35:15'),
+(160, 158, 23, 2, 1, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725159822/MWSPORT/Products/yrqnhex3x3yuzizwwmj2.jpg', 200000, 1, 200000, '2024-09-01 08:32:37', '2024-09-01 08:32:37'),
+(161, 159, 23, 2, 1, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725159822/MWSPORT/Products/yrqnhex3x3yuzizwwmj2.jpg', 200000, 1, 200000, '2024-09-01 08:33:32', '2024-09-01 08:33:32'),
+(162, 160, 23, 2, 1, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725159822/MWSPORT/Products/yrqnhex3x3yuzizwwmj2.jpg', 200000, 1, 200000, '2024-09-01 08:34:14', '2024-09-01 08:34:14'),
+(163, 161, 23, 2, 1, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725159822/MWSPORT/Products/yrqnhex3x3yuzizwwmj2.jpg', 200000, 1, 200000, '2024-09-01 08:35:22', '2024-09-01 08:35:22'),
+(164, 162, 23, 2, 1, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725159822/MWSPORT/Products/yrqnhex3x3yuzizwwmj2.jpg', 200000, 1, 200000, '2024-09-01 08:37:13', '2024-09-01 08:37:13'),
+(165, 163, 23, 3, 4, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725159867/MWSPORT/Products/tvxikemfjz79woyyhrui.jpg', 300000, 1, 300000, '2024-09-01 08:54:37', '2024-09-01 08:54:37'),
+(166, 164, 21, 2, 3, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725181584/MWSPORT/Products/awjtpzy3uc9ib0of5wej.jpg', 14000, 1, 14000, '2024-09-01 09:21:47', '2024-09-01 09:21:47'),
+(167, 164, 23, 2, 1, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725159822/MWSPORT/Products/yrqnhex3x3yuzizwwmj2.jpg', 200000, 1, 200000, '2024-09-01 09:21:47', '2024-09-01 09:21:47'),
+(168, 165, 23, 2, 1, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725159822/MWSPORT/Products/yrqnhex3x3yuzizwwmj2.jpg', 200000, 1, 200000, '2024-09-02 07:41:05', '2024-09-02 07:41:05'),
+(169, 165, 21, 2, 4, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725181615/MWSPORT/Products/ht1yxve7p8uoplmesekn.jpg', 300, 1, 300, '2024-09-02 07:41:05', '2024-09-02 07:41:05'),
+(170, 166, 21, 2, 4, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725181615/MWSPORT/Products/ht1yxve7p8uoplmesekn.jpg', 300, 1, 300, '2024-09-02 09:00:04', '2024-09-02 09:00:04'),
+(171, 167, 21, 2, 3, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725181584/MWSPORT/Products/awjtpzy3uc9ib0of5wej.jpg', 14000, 1, 14000, '2024-09-02 09:03:08', '2024-09-02 09:03:08');
 
 -- --------------------------------------------------------
 
@@ -720,7 +871,20 @@ INSERT INTO `order_updates` (`id`, `order_id`, `user_id`, `note`, `created_at`, 
 (42, 125, 17, 'Đơn hàng đã được giao cho người nhận.', '2024-08-22 10:39:14', '2024-08-22 10:39:14', NULL),
 (43, 125, 17, 'Đơn hàng đã bị trễ hẹn trong quá trình vận chuyển.', '2024-08-22 10:39:30', '2024-08-22 10:39:30', NULL),
 (44, 130, 17, 'Đơn hàng đơn hàng đã bị hủy.', '2024-08-23 09:46:58', '2024-08-23 09:46:58', NULL),
-(45, 131, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-08-25 10:44:25', '2024-08-25 10:44:25', NULL);
+(45, 131, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-08-25 10:44:25', '2024-08-25 10:44:25', NULL),
+(46, 156, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-08-29 09:15:15', '2024-08-29 09:15:15', NULL),
+(47, 155, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-08-29 10:23:13', '2024-08-29 10:23:13', NULL),
+(48, 162, 17, 'Đơn hàng đơn hàng đã bị hủy.', '2024-09-01 08:49:17', '2024-09-01 08:49:17', NULL),
+(49, 162, 17, 'Đơn hàng đã bị trễ hẹn trong quá trình vận chuyển.', '2024-09-01 08:49:31', '2024-09-01 08:49:31', NULL),
+(50, 162, 17, 'Đơn hàng đơn hàng đã bị hủy.', '2024-09-01 08:49:35', '2024-09-01 08:49:35', NULL),
+(51, 162, 17, 'Đơn hàng đã bị trễ hẹn trong quá trình vận chuyển.', '2024-09-01 08:49:43', '2024-09-01 08:49:43', NULL),
+(52, 162, 17, 'Đơn hàng đơn hàng đã bị hủy.', '2024-09-01 08:49:45', '2024-09-01 08:49:45', NULL),
+(53, 162, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-09-01 08:49:49', '2024-09-01 08:49:49', NULL),
+(54, 163, 17, 'Đơn hàng Đơn hàng đã bị hủy. Vui lòng liên hệ với admin để được hoàn tiền..', '2024-09-01 08:55:47', '2024-09-01 08:55:47', NULL),
+(55, 164, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-09-01 09:27:48', '2024-09-01 09:27:48', NULL),
+(56, 165, 17, 'Đơn hàng đã được vận chuyển.', '2024-09-02 07:42:06', '2024-09-02 07:42:06', NULL),
+(57, 165, 17, 'Đơn hàng đã được giao cho người nhận.', '2024-09-02 07:42:22', '2024-09-02 07:42:22', NULL),
+(58, 165, 17, 'Đơn hàng đã được giao hàng thành công.', '2024-09-02 07:42:26', '2024-09-02 07:42:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -739,7 +903,7 @@ CREATE TABLE `password_reset_tokens` (
 --
 
 INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
-('manhtnph28511@fpt.edu.vn', 'eyJpdiI6IlM3c0FIWWlMQWFmV1pIRC9IVTdOUmc9PSIsInZhbHVlIjoiNkROdDB4MmFwZzdkU3NDUEpoYS9lTHVRMVJnMkEyR2RoY3NVeU5qRVVxOD0iLCJtYWMiOiIzOTkxYmNlODIyMTEzZjhiMTEzNjNhMzQxMmNjZGE2YWI0M2NkNTY1MzEzYjYwNDJlZTc3MThlMjYwN2ExNGQyIiwidGFnIjoiIn0=', '2024-08-25 11:45:26');
+('manhtnph28511@fpt.edu.vn', 'eyJpdiI6ImppNDZqN1d3VjdxUithMnhIb3dYT1E9PSIsInZhbHVlIjoiMm1rd205ZE5IYWF5MGpTd0VwejNlb1ZKTzNLNXYxZ1RTMkNoOE8wVEF2ND0iLCJtYWMiOiJmZGY5NDFhMjY0OTEwYzNiOGQ5OTUwYWFkNGI5NjE1ZTc2N2FmNmM5YTVhODkyMGMxNjgzZjExZDA5MmQ4MmFhIiwidGFnIjoiIn0=', '2024-09-03 02:25:14');
 
 -- --------------------------------------------------------
 
@@ -790,24 +954,28 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `image`, `price`, `quantity`, `description`, `view`, `slug`, `cate_id`, `brand_id`, `color_id`, `size_id`, `status_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'Cartoon Astronaut T-Shirts', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637576/Cara/Products/jxmoqrh37yknvwnufeou.jpg', 141234.00, 10, '<p><strong>Form Dáng</strong>: Regular Fit.</p><p><strong>Chất liệu:</strong></p><blockquote><ul><li>Định lượng: 330gsm (Dày dặn, xốp, phồng đứng form)</li><li>Thành phần: 35% Cotton - 65% Polyester</li></ul></blockquote><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 25, 'cartoon-astronaut-t-shirts', 1, 1, 5, 1, 1, NULL, '2024-07-27 20:34:56', '2024-08-04 01:58:56'),
+(1, 'Cartoon Astronaut T-Shirts', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637576/Cara/Products/jxmoqrh37yknvwnufeou.jpg', 141234.00, 10, '<p><strong>Form Dáng</strong>: Regular Fit.</p><p><strong>Chất liệu:</strong></p><blockquote><ul><li>Định lượng: 330gsm (Dày dặn, xốp, phồng đứng form)</li><li>Thành phần: 35% Cotton - 65% Polyester</li></ul></blockquote><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 27, 'cartoon-astronaut-t-shirts', 1, 1, 5, 1, 1, NULL, '2024-07-27 20:34:56', '2024-09-01 10:51:17'),
 (2, 'Cartoon Astronaut T-Shirts', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637548/Cara/Products/olkj6gj7e7kflny40axq.jpg', 141234.00, 23, '<p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 67, 'cartoon-astronaut-t-shirts', 1, 1, 5, 3, 1, NULL, '2024-07-27 20:52:33', '2024-08-08 02:52:59'),
 (3, 'TOBI Regular Raincoat', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637530/Cara/Products/qxxwuol3emz4fahronqf.jpg', 480000.00, 8, '<p><strong>Form Dáng</strong>: Oversize</p><p><strong>Chất liệu</strong>: Dù trượt nước - 100 % Polyester</p><p><strong>Chi tiết sản phẩm</strong>:</p><blockquote><ul><li>Hình in đa dạng</li><li>Phần lai áo được may xẻ tà và có nút bấm.</li></ul></blockquote><p>&nbsp;</p>', 60, 'tobi-ragular-raincoat', 1, 2, 4, 2, 1, NULL, '2024-07-28 21:22:53', '2024-08-07 05:27:22'),
 (4, 'Waffle Stripped Polo - Grude', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637506/Cara/Products/mds4i02ts76eg5stpirj.jpg', 430000.00, 10, '<p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 31, 'waffle-stripped-polo-grude', 1, 2, 3, 4, 2, NULL, '2024-07-28 21:24:38', '2024-07-23 21:41:26'),
 (5, 'Regular Typo Cuban Shirt', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637486/Cara/Products/zshiefnor5oyupnn7lhl.jpg', 450000.00, 32, '<p><strong>Form Dáng:</strong>&nbsp;Boxy Fit.</p><ul><li>Chất liệu: 70% Cotton 30% Nylon</li><li>Định lượng: 161GSM</li></ul><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Form dáng Boxy chia tỉ lệ cơ thể 1/3 giúp tôn dáng người mặc</li><li>In vân đá</li></ul></blockquote>', 2, 'tegular-typo-cuban-shirt', 7, 7, 3, 4, 2, NULL, '2024-07-28 21:44:37', '2024-07-23 21:33:30'),
 (6, 'Highclass Cuban Shirt', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699682825/Cara/Products/rbjjn6krrfs0dxs8z1ph.jpg', 530000.00, 22, '<p><strong>Form dáng:</strong> Boxy Fit.</p><p><strong>Chất liệu:</strong> Lụa D100</p><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Form dáng Boxy chia tỉ lệ cơ thể 1/3 giúp tôn dáng người mặc&nbsp;</li><li>Áo được in overprinted toàn bộ áo</li><li>Hoạ tiết trên áo mang hơi hướng summer vibe&nbsp;</li></ul></blockquote>', 23, 'highclass-cuban-shirt', 10, 4, 1, 5, 1, NULL, '2024-07-28 21:46:46', '2024-08-06 03:47:36'),
 (7, 'TOBI Basic Boxy T-shirt', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637465/Cara/Products/rg4oynlowmtrxs9wyr5x.jpg', 299999.00, 22, '<p><strong>Form Dáng</strong>: Boxy Fit.</p><p><strong>Chất liệu:</strong></p><blockquote><ul><li>Định lượng: 250GSM</li><li>Thành phần: 100% Cotton - 2 Chiều.</li></ul></blockquote><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Bo cổ dệt định lượng dày, chắc chắn, hạn chế nhão &amp; co rút sau khi giặt.</li><li>Dáng boxy chia tỉ lệ vàng cơ thể 1/3.</li><li>Logo&nbsp;<strong>TOBI®</strong>&nbsp;màu kem in nổi cao thành, chắc chắn.</li></ul></blockquote>', 0, 'tobi-basic-boxy-t-shirt', 7, 5, 3, 5, 3, NULL, '2024-07-28 21:48:47', '2024-11-09 20:31:05'),
-(8, 'TOBI SauRieng T-shirt', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637417/Cara/Products/tftdjcgnjr8sspsy9bsm.jpg', 320000.00, 20, '<p><strong>Form Dáng:</strong> Boxy Fit.</p><p><strong>Chất liệu:</strong></p><blockquote><ul><li>Định lượng: 250gsm&nbsp;</li><li>Thành phần: 100% Cotton - 2 Chiều.</li></ul></blockquote><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt.</li><li>Dáng boxy chia tỉ lệ vàng cơ thể 1/3.</li><li>Hình in Trame.</li></ul></blockquote>', 5, 'tobi-saurieng-t-shirt', 8, 8, 5, 3, 1, NULL, '2024-07-28 21:51:45', '2024-08-04 03:10:53'),
+(8, 'TOBI SauRieng T-shirt', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637417/Cara/Products/tftdjcgnjr8sspsy9bsm.jpg', 320000.00, 20, '<p><strong>Form Dáng:</strong> Boxy Fit.</p><p><strong>Chất liệu:</strong></p><blockquote><ul><li>Định lượng: 250gsm&nbsp;</li><li>Thành phần: 100% Cotton - 2 Chiều.</li></ul></blockquote><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt.</li><li>Dáng boxy chia tỉ lệ vàng cơ thể 1/3.</li><li>Hình in Trame.</li></ul></blockquote>', 7, 'tobi-saurieng-t-shirt', 8, 8, 5, 3, 1, NULL, '2024-07-28 21:51:45', '2024-09-02 13:01:03'),
 (9, 'Dép Sục Hà Mã Mắt To Dễ Thương Hot Trend', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637384/Cara/Products/mxiqa7j1m3id6azkg7md.jpg', 150000.00, 8, '<blockquote><ul><li>Dép làm từ nhựa EVA cao cấp, siêu nhẹ, cực kỳ dẻo dai, khả năng chịu lực cao và hoàn toàn không độc hại&nbsp;</li><li>Đảm bảo đi cực kỳ êm chân, cực bền với thiết kế bề mặt giúp đôi chân luôn thoáng mát, không tạo mùi hôi chân&nbsp;</li><li>Đế thiết kế ma sát, chống trơn trượt, chống nước cực tốt Mọi người đi mưa lội nước thoải mái mà không lo hỏng dép nhé ạ</li></ul></blockquote>', 1, 'dep-suc-ha-ma', 23, 4, 3, 2, 3, NULL, '2024-07-28 22:04:28', '2024-11-20 02:37:31'),
 (10, 'Dép lông con sóc siêu cute', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637364/Cara/Products/ms7fbjcpqfyykpnkbzce.jpg', 230000.00, 51, NULL, 28, 'dep-long-con-soc', 26, 8, 4, 1, 1, NULL, '2024-07-28 22:06:19', '2024-08-04 03:35:47'),
 (11, 'Dép thời trang nam chữ H', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637345/Cara/Products/mznngajzsysv8buwd1tw.jpg', 124000.00, 11, NULL, 3, 'dep-thoi-trang-nam', 1, 6, 1, 5, 3, NULL, '2024-07-28 22:07:54', '2024-11-20 03:14:50'),
 (12, 'Giày Adifom Superstar', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637326/Cara/Products/iiznllyzylr8ynhvy9i0.jpg', 210000.00, 43, '<p><i>👉 Thông tin sản phẩm:&nbsp;</i></p><p><i>✔️ Chất lượng tốt nhất trong tầm giá&nbsp;</i></p><p><i>✔️ Form đẹp chuẩn : Màu sắc giống đến 98 °/ₒ ;&nbsp;</i></p><p><i>✔️ Chất liệu da + da lộn + vải mesh&nbsp;</i></p><p><i>✔️ Logo Mông in dập chìm.&nbsp;</i></p><p><i>✔️ Lưỡi gà cao dày dặn; swoosh sắc nét; Mông mũi làm đẹp&nbsp;</i></p><p><i>✔️ Tem QR CODE Có thể check mã 2D&nbsp;</i></p><p><i>✔️ Đế 2 lớp khâu chỉ đều&nbsp;</i></p><p><i>✔️ Full box + accessories&nbsp;</i></p><p><i>✔️ Mẫu này bạn mang đúng hoặc up 1 size đối với chân bè</i></p>', 5, 'giay-adiform', 21, 2, 1, 3, 2, NULL, '2024-07-28 22:09:29', '2024-08-04 03:11:27'),
 (13, 'STYLE 93 SHOE', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637312/Cara/Products/eqg0pg0ssqkgrhwwlu9q.webp', 900000.00, 5, '<p>Style 93, otherwise known as the Vans Mary Jane, debuted around 1994 and flourished as a popular women’s silhouette that tapped into retro nostalgia and a playful interpretation of femininity.&nbsp;</p><p>With a simple buckle and strap, Vans Style 93 took a traditional women’s Mary Jane silhouette and uniquely matched it with a chunky lug rubber outsole,&nbsp;</p><p>making the iconic design more casual and truly Off The Wall. No wonder it’s still a cult favorite today.</p><p>&nbsp;</p><blockquote><ul><li>Mary Jane-style silhouette</li></ul><p>&nbsp;</p><ul><li>Sturdy canvas uppers</li></ul><p>&nbsp;</p><ul><li>Heart buckle closure</li></ul><p>&nbsp;</p><ul><li>Rubber toe caps</li></ul><p>&nbsp;</p><ul><li>Lug rubber outsoles</li></ul></blockquote>', 22, 'van', 21, 5, 3, 3, 1, NULL, '2024-07-28 22:15:52', '2024-08-08 21:13:42'),
 (14, 'TOBI Regular Boxy Sweater', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637299/Cara/Products/grvnik1fqpruzongmmk3.jpg', 590000.00, 45, '<p><strong>Form Dáng:</strong>&nbsp;Boxy Fit.</p><p><strong>Chất liệu:</strong></p><ul><li>Định lượng: 430gsm&nbsp;</li><li>Thành phần: 100% Cotton - Chân cua</li></ul><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt.</li><li>Dáng boxy chia tỉ lệ vàng cơ thể 1/3.</li><li>Phần To bản lai áo và tay được may 3cm tạo cảm giác cứng cáp chắc chắn hơn</li><li>Logo TOBI Regular 2024 được in lụa nổi cao thành, chắn chắn.</li></ul></blockquote>', 0, 'tobi-regular-boxy-sweater', 7, 3, 3, 3, 3, NULL, '2024-07-29 18:52:19', '2024-11-09 20:28:19'),
-(15, 'Quần jean nam rách gối', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637230/Cara/Products/mum0grnh1m0ndbcqr3cq.jpg', 141234.00, 21, '<p>✔️ Loại : quần jeans nam, quần rach gối nam,quần bò rách gối</p><p>✔️ Màu sắc: quần jean nam đen, quần jean nam xanh, quần jean nam xám, quần jean nam trắng ( màu theo mã trên hình )</p><p>✔️ Thích hợp : quần jean nam ống suông gối thích hợp cho Đi Chơi, Công Sở, Đời Thường</p><p>✔️Chất liệu : quần rin nam được làm từ chất jeans</p><p>✔️kiểu dáng: skinny jean nam, quần jean nam slimfit,quần jean nam ống đứng</p>', 125, 'quan-jean-nam-rach-goi', 11, 6, 1, 4, 1, NULL, '2024-07-29 20:34:20', '2024-08-06 03:51:47'),
+(15, 'Quần jean nam rách gối', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637230/Cara/Products/mum0grnh1m0ndbcqr3cq.jpg', 141234.00, 21, '<p>✔️ Loại : quần jeans nam, quần rach gối nam,quần bò rách gối</p><p>✔️ Màu sắc: quần jean nam đen, quần jean nam xanh, quần jean nam xám, quần jean nam trắng ( màu theo mã trên hình )</p><p>✔️ Thích hợp : quần jean nam ống suông gối thích hợp cho Đi Chơi, Công Sở, Đời Thường</p><p>✔️Chất liệu : quần rin nam được làm từ chất jeans</p><p>✔️kiểu dáng: skinny jean nam, quần jean nam slimfit,quần jean nam ống đứng</p>', 126, 'quan-jean-nam-rach-goi', 11, 6, 1, 4, 1, NULL, '2024-07-29 20:34:20', '2024-09-03 04:19:21'),
 (17, 'Sandal Nữ', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637209/Cara/Products/ibueiu32mw9pwckonpba.jpg', 69999.00, 8, '<p>✔️𝐌𝐎̂ 𝐓𝐀̉ 𝐒𝐀̉𝐍 𝐏𝐇𝐀̂̉𝐌&nbsp;</p><p>- Chất liệu: da mềm&nbsp;</p><p>- Màu sắc: đen&nbsp;</p><p>-kiểu dáng thời trang&nbsp;</p><p>- phù hợp với mọi lứa tuổi&nbsp;</p><p>- Kích thước: 35,36,37,38,39</p>', 6, 'sandal-nu', 22, 2, 3, 2, 2, NULL, '2024-07-29 20:42:14', '2024-07-24 17:10:19'),
-(20, 'PAULWEEKEND Áo Sơ Mi Dài Tay Form Rộng Phong Cách retro Nhật Bản Cho Nam', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637126/Cara/Products/c5gd2n5z5nrea9wjm8f5.jpg', 158000.00, 32, NULL, 0, NULL, 7, 8, 4, 3, 3, NULL, '2024-11-09 20:25:26', '2024-11-10 09:51:34'),
-(21, 'áo thể thao', 'https://res.cloudinary.com/denxdub1l/image/upload/v1722853863/Cara/Products/f0guuvvtcr6n7eftyjm2.jpg', 300000.00, 15, NULL, 13, 'ao-the-thao', 1, 1, 1, 1, 1, NULL, '2024-08-05 03:30:51', '2024-08-17 04:32:30');
+(20, 'PAULWEEKEND Áo Sơ Mi Dài Tay Form Rộng Phong Cách retro Nhật Bản Cho Nam', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637126/Cara/Products/c5gd2n5z5nrea9wjm8f5.jpg', 158000.00, 32, NULL, 1, NULL, 7, 8, 4, 3, 1, NULL, '2024-11-09 20:25:26', '2024-09-01 10:51:01'),
+(21, 'áo thể thao', 'https://res.cloudinary.com/denxdub1l/image/upload/v1722853863/Cara/Products/f0guuvvtcr6n7eftyjm2.jpg', 300000.00, 6, '<ul><li>Được chính những Designer bậc thầy trong làng thể thao thiết kế trên&nbsp;<strong>10 năm kinh nghiệm</strong>&nbsp;cho các hãng thể thao Nike, Adidas, Puma.</li><li>Vải được đặt dệt riêng từ những nhà DỆT gia công cho hãng</li><li>Bảo dưỡng và làm đẹp lại sản phẩm&nbsp;<strong>TRỌN ĐỜI.</strong></li><li>Là Xưởng thể thao áo bóng đá được nhiều phản hồi tích cực từ khách hàng và là thương hiệu đi đầu về đặt áo đá banh tự thiết kế tại Pháp.</li></ul>', 52, 'ao-the-thao', 1, 1, 1, 1, 1, NULL, '2024-08-05 03:30:51', '2024-09-03 08:51:37'),
+(22, 'ao dt anh', 'https://res.cloudinary.com/denxdub1l/image/upload/v1724849750/Cara/Products/pdbqckhzyl2dz3hzmbth.jpg', 15000.00, 3, NULL, 0, 'naruto', 1, 1, 3, 1, 1, '2024-08-29 04:12:34', '2024-08-28 12:26:03', '2024-08-29 04:12:34'),
+(23, 'giày thể thao', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725098847/MWSPORT/Products/tuifk45vrbv5h1y0rkhs.jpg', 150.00, 30, '<p>Chào Đón Sự Xuất Hiện Đỉnh Cao - Giày Bóng Đá Kaiwin Legend với Da MICROFIBER.</p><p>Được tạo ra với tâm huyết và niềm đam mê đối với bóng đá, Kaiwin Legend đánh dấu một bước tiến quan trọng trong thế giới giày bóng đá. Thiết kế độc đáo và tinh tế sẽ khiến bạn tỏa sáng trên sân cỏ.</p><p><br>- Form giày Ka-Fit thích hợp với chân người Việt<br>- Da MICROFIBER cao cấp<br>- Cổ dệt Flyknit ôm cổ chân<br>- Công nghệ in hoạ tiết nổi Matrix - Technical<br>- Công nghệ may 4D họa tiết kim cương<br>- Công nghệ thoáng khí Fresh Air<br>- Đế cao su Ka-Spin tạo độ bám sân tối đa<br>- Công nghệ lót giày E.V.A-CARBON nhẹ thoáng khí</p>', 2, 'giay-the-thao', 21, 10, 6, 1, 4, NULL, '2024-08-31 10:07:20', '2024-09-03 09:01:52'),
+(24, 'test', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725162577/MWSPORT/Products/vmktl2qdfu5v4fx6ahzb.jpg', 900000.00, 3, NULL, 1000, 'test', 1, 1, 1, 1, 2, '2024-09-01 03:55:15', '2024-09-01 03:49:29', '2024-09-01 03:55:15'),
+(25, 'Bộ quần áo thể thao', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725354903/MWSPORT/Products/y3wdpvwtojgfhtaflkfk.jpg', 450000.00, 100, '<p>QUẦN ÁO BÓNG ĐÁ MU TRẮNG 2022 2023✔️Chất liệu đồ đá banh vải Poly thun lạnh cao cấp ✔️Quần áo bóng đá hàng chất lượng, bền đẹp ✔️Chất vải thun lạnh 100% Polyester thấm hút mồ hôi cực tốt ✔️Quần áo đá bóng thiết chuẩn mẫu của các CLB sẽ ra mắt 2022 - 2023✔️Logo áo bóng đá dệt rồi thêu trực tiếp lên áo nên rất bền đẹp, không bong tróc✔️Hoa văn bộ đồ đá banh in phun kỹ thuật số sắc nét, không bong tróc✔️Đường may gia công tỉ mỉ, chi tiết nhất✅Thông tin sản phẩm:👉Xuất xứ: Việt Nam👉Chất liệu: 100% Polyester thoáng mát, không nhăn, không xù lông👉Size: S M L XL XXL- Size S: 45-55kg, - Size M : 55-62kg- Size L : 62-70kg- Size XL : 70-80kg- Size XXL : 80-88kg✅Bảo quản:👉Không dùng chất tẩy👉Lật mặt trái trước khi giặt để màu sắc được luôn như mới</p>', 100, 'bo-quan-ao-the-thao', 1, 9, 4, 3, 5, NULL, '2024-09-03 09:14:53', '2024-09-03 09:14:53');
 
 -- --------------------------------------------------------
 
@@ -832,10 +1000,19 @@ CREATE TABLE `product_variants` (
 --
 
 INSERT INTO `product_variants` (`id`, `product_id`, `image_variant`, `color_id`, `size_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
-(1, 20, NULL, 1, 1, 0, 300, '2024-08-07 21:25:22', '2024-08-07 21:25:22'),
-(2, 20, NULL, 3, 4, -41, 300, '2024-08-07 21:26:50', '2024-08-07 21:26:50'),
-(5, 21, 'images/product_variants/VmcuL0E5VpK8CVCsvC4e0ARwP99OxlyqwLkqclza.jpg', 4, 2, 3, 150, '2024-08-07 21:33:14', '2024-08-17 11:18:09'),
-(6, 21, 'images/product_variants/YIKS94x5PNlGN4OKHkokTXcQAWjbPlH0mzzhkZ6w.jpg', 3, 3, 2, 500, '2024-08-07 21:46:57', '2024-08-17 11:16:30');
+(19, 21, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725181615/MWSPORT/Products/ht1yxve7p8uoplmesekn.jpg', 4, 2, 97, 300, '2024-08-28 12:46:48', '2024-09-01 09:06:46'),
+(20, 21, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725353655/MWSPORT/Products/fiavwf79g41tfst6j3qu.jpg', 3, 5, 20, 140000, '2024-08-28 12:50:51', '2024-09-03 08:54:18'),
+(21, 21, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725181584/MWSPORT/Products/awjtpzy3uc9ib0of5wej.jpg', 4, 4, 100, 14000, '2024-08-28 12:54:20', '2024-09-03 08:40:19'),
+(22, 23, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725159822/MWSPORT/Products/yrqnhex3x3yuzizwwmj2.jpg', 1, 2, 2, 200000, '2024-09-01 03:03:34', '2024-09-01 03:03:34'),
+(23, 23, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725159846/MWSPORT/Products/exuvpwzkfyehtppudsur.jpg', 2, 3, 10, 250000, '2024-09-01 03:03:58', '2024-09-01 03:03:58'),
+(24, 23, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725159867/MWSPORT/Products/tvxikemfjz79woyyhrui.jpg', 4, 3, 9, 300000, '2024-09-01 03:04:20', '2024-09-01 03:04:20'),
+(25, 21, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725353923/MWSPORT/Products/tceofawgsihsemq0fahg.jpg', 5, 3, 100, 150000, '2024-09-03 08:58:33', '2024-09-03 08:58:33'),
+(26, 23, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725354428/MWSPORT/Products/yhgv8ghjwrih7qhgfxtt.jpg', 6, 3, 50, 250000, '2024-09-03 09:06:58', '2024-09-03 09:06:58'),
+(27, 23, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725354478/MWSPORT/Products/p56wtfj9twvsejfsgyfm.jpg', 8, 4, 100, 300000, '2024-09-03 09:07:48', '2024-09-03 09:07:48'),
+(28, 25, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725354995/MWSPORT/Products/rln87dsr32enbfpfipb1.jpg', 9, 3, 100, 400000, '2024-09-03 09:16:25', '2024-09-03 09:16:25'),
+(29, 25, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725355130/MWSPORT/Products/u9eiblwskmix666vnhex.jpg', 1, 1, 200, 500000, '2024-09-03 09:18:40', '2024-09-03 09:18:40'),
+(30, 25, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725355209/MWSPORT/Products/kyblwqp3kbmqnoxnnvz6.jpg', 4, 4, 100, 350000, '2024-09-03 09:19:02', '2024-09-03 09:20:00'),
+(31, 25, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725355274/MWSPORT/Products/iifciybfsvlk4s43wrnb.jpg', 6, 4, 100, 250000, '2024-09-03 09:21:05', '2024-09-03 09:21:05');
 
 -- --------------------------------------------------------
 
@@ -852,6 +1029,14 @@ CREATE TABLE `ratings` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ratings`
+--
+
+INSERT INTO `ratings` (`id`, `user_id`, `product_id`, `rating`, `review`, `created_at`, `updated_at`) VALUES
+(4, 20, 21, 5.00, 'tốt', '2024-08-29 09:43:45', '2024-08-29 10:03:41'),
+(5, 20, 23, 5.00, 'sản phẩm đẹp ,đúng với mô tả', '2024-09-02 07:43:05', '2024-09-02 07:43:05');
 
 -- --------------------------------------------------------
 
@@ -888,7 +1073,7 @@ INSERT INTO `sizes` (`id`, `name`, `description`, `deleted_at`, `created_at`, `u
 CREATE TABLE `status_products` (
   `id` int UNSIGNED NOT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -898,9 +1083,10 @@ CREATE TABLE `status_products` (
 --
 
 INSERT INTO `status_products` (`id`, `status`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Sản phẩm nổi trội', 'Voluptate commodi sint quis quibusdam. Sunt tempora quo esse molestiae doloribus facere voluptas. Iusto totam ut eum quia. Sit deserunt commodi quia illum nihil nihil. Quasi aliquam aut id voluptatem voluptatum consectetur.', '2024-07-29 18:07:38', '2024-07-29 18:07:38'),
-(2, 'Sản phẩm bán chạy nhất', 'Non consequatur repellat sit tempora modi et nostrum. Tempora modi reiciendis nisi at minus rerum. Ad natus quae explicabo tenetur et sint. Harum ab beatae eos ullam natus omnis.', '2024-07-29 18:07:38', '2024-07-29 18:07:38'),
-(3, 'Sản phẩm được quan tâm nhất', 'Velit atque similique voluptatum perspiciatis magnam cupiditate et. Sunt id aperiam eligendi tempora. Occaecati exercitationem distinctio laboriosam recusandae impedit minus blanditiis. Ut accusantium vitae quo enim in mollitia.', '2024-07-29 18:07:38', '2024-07-29 18:07:38');
+(1, 'Sản phẩm nổi trội', 'Sản phẩm tích hợp các tính năng mà các sản phẩm khác chưa có hoặc chưa phổ biến.\r\nỨng dụng công nghệ mới nhất, mang lại trải nghiệm sử dụng vượt trội cho người dùng.\r\nCó khả năng giải quyết các vấn đề cụ thể một cách hiệu quả hơn so với các sản phẩm khác.', '2024-07-29 18:07:38', '2024-09-03 09:30:01'),
+(2, 'Sản phẩm bán chạy nhất', 'Được sản xuất với các tiêu chuẩn chất lượng cao, đảm bảo độ bền, an toàn và hiệu suất hoạt động tốt.\r\nChất liệu và linh kiện được chọn lọc kỹ càng, giúp sản phẩm có tuổi thọ cao hơn.', '2024-07-29 18:07:38', '2024-09-03 09:30:31'),
+(4, 'Hàng mới về', 'Sản phẩm hoạt động hiệu quả, ổn định, mang lại giá trị sử dụng cao.\r\nĐược kiểm nghiệm kỹ lưỡng trước khi đưa ra thị trường, hạn chế lỗi phát sinh trong quá trình sử dụng.', '2024-08-31 10:51:31', '2024-09-03 09:30:48'),
+(5, 'Hàng chất lượng', 'Sản phẩm được làm từ các loại nguyên liệu tốt nhất, có độ bền cao, không dễ hỏng hóc.\r\nChất liệu thân thiện với môi trường hoặc an toàn cho sức khỏe người dùng.\r\nCó thể là da thật, vải chất lượng, kim loại không gỉ, nhựa chịu lực, v.v.', '2024-08-31 10:54:07', '2024-09-03 09:29:25');
 
 -- --------------------------------------------------------
 
@@ -972,8 +1158,8 @@ INSERT INTO `users` (`id`, `voucher_id`, `name`, `avatar`, `email`, `email_verif
 (2, NULL, 'buingocphi', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'phibnph29465@fpt.edu.vn', NULL, '$2y$10$JOtPaOdf04C4gy985Lw8hOD1pr02cDpSDywImGArglptRY8jAoX96', NULL, NULL, 0, NULL, NULL, '2024-06-28 01:56:52', '2024-08-16 08:22:30', 1),
 (3, NULL, 'Bùi Fee', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699687947/Cara/Profile/kpvg3fzzm3evjydhhnkf.png', 'buingocphinn@gmail.com', NULL, '$2y$10$rQOdhXnOK/3tKOwKYn.3auDLOzdkafHHRNNwDDfWqeJlTeC0BRTT6', 'Kim Sơn - Ninh Bình', '0377674930', 0, NULL, NULL, '2024-06-03 02:08:02', '2024-07-10 17:50:11', 1),
 (17, NULL, 'tran manh', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'manutd@gmail.com', NULL, '$2y$10$jwW4mLYi/7.L7ekzAGrS4eiQD87eJkOBJA/9QCLVArAjSxQV9JzbG', NULL, NULL, 1, NULL, NULL, '2024-07-28 20:54:41', '2024-07-28 20:55:08', 1),
-(19, 9, 'tran manh', 'https://res.cloudinary.com/denxdub1l/image/upload/v1722249803/Cara/Profile/aovxgnserrpty9awcjzs.jpg', 'minh29122003@gmail.com', NULL, '$2y$10$Qpo/Kan2Tlh3EHd1kFdyceVOdhBnf26f8x65DmEwxN6I9UuDpKtDm', 'ha noi', '0987654321', 0, NULL, NULL, '2024-07-29 01:45:09', '2024-08-25 08:53:14', 0),
-(20, NULL, 'manh123', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'manhtnph28511@fpt.edu.vn', NULL, '$2y$10$cCQSd7Q99a6n0hqomsOMY.mOGIy14ILWMxSG7IKnU3jeQeO1x2yD6', NULL, NULL, 0, NULL, NULL, '2024-08-25 10:08:53', '2024-08-25 10:08:53', 1);
+(19, 9, 'tran manh', 'https://res.cloudinary.com/denxdub1l/image/upload/v1722249803/Cara/Profile/aovxgnserrpty9awcjzs.jpg', 'minh29122003@gmail.com', NULL, '$2y$10$Qpo/Kan2Tlh3EHd1kFdyceVOdhBnf26f8x65DmEwxN6I9UuDpKtDm', 'ha noi', '0987654321', 0, NULL, NULL, '2024-07-29 01:45:09', '2024-09-01 04:28:59', 1),
+(20, NULL, 'manh123', 'https://cdn-icons-png.flaticon.com/512/1255/1255974.png', 'manhtnph28511@fpt.edu.vn', NULL, '$2y$10$/tJWrW8RQ.7eif3eDGLhAetBjyZ5LUmlDQJ4NoP9RbW5LJEYG1HSS', NULL, NULL, 0, NULL, NULL, '2024-08-25 10:08:53', '2024-09-03 03:49:25', 1);
 
 -- --------------------------------------------------------
 
@@ -995,7 +1181,11 @@ CREATE TABLE `user_voucher` (
 
 INSERT INTO `user_voucher` (`id`, `user_id`, `voucher_id`, `created_at`, `updated_at`) VALUES
 (4, 19, 2, '2024-08-25 09:09:22', '2024-08-25 09:09:22'),
-(5, 19, 9, '2024-08-25 09:09:49', '2024-08-25 09:09:49');
+(5, 19, 9, '2024-08-25 09:09:49', '2024-08-25 09:09:49'),
+(6, 20, 2, '2024-08-29 02:53:39', '2024-08-29 02:53:39'),
+(7, 20, 2, '2024-08-29 02:53:39', '2024-08-29 02:53:39'),
+(8, 20, 6, '2024-08-29 02:53:43', '2024-08-29 02:53:43'),
+(9, 20, 9, '2024-08-29 02:53:45', '2024-08-29 02:53:45');
 
 -- --------------------------------------------------------
 
@@ -1023,13 +1213,13 @@ CREATE TABLE `vouchers` (
 
 INSERT INTO `vouchers` (`id`, `code`, `discount`, `discount_type`, `starts_at`, `expires_at`, `usage_count`, `quantity`, `product_id`, `created_at`, `updated_at`) VALUES
 (1, 'mm23', 30, 'fixed', '2024-08-15', '2024-08-16', 0, 0, 1, '2024-08-15 03:10:32', '2024-08-15 04:01:06'),
-(2, 'mo01', 10, 'percentage', '2024-08-16', '2024-08-31', 5, 9, NULL, '2024-08-15 03:34:22', '2024-08-25 03:47:13'),
+(2, 'mo01', 10, 'percentage', '2024-08-16', '2029-10-10', 6, 18, NULL, '2024-08-15 03:34:22', '2024-09-02 13:13:48'),
 (4, 'sp', 400, 'fixed', '2024-08-17', '2024-08-23', 10, 0, NULL, '2024-08-15 03:53:42', '2024-08-21 09:21:42'),
 (5, 'santo', 555, 'fixed', '2024-08-16', '2024-08-31', 2, -2, NULL, '2024-08-16 02:39:29', '2024-08-20 08:27:03'),
 (6, 'm66686', 100000, 'fixed', '2024-08-16', '2024-08-25', 4, 7, 21, '2024-08-16 03:03:03', '2024-08-20 09:52:04'),
 (7, 'hihi', 20, 'percentage', '2024-08-20', '2024-08-22', 1, -1, NULL, '2024-08-19 02:25:35', '2024-08-19 02:39:10'),
-(8, 'premier league', 20, 'percentage', '2024-08-19', '2024-08-30', 11, 0, NULL, '2024-08-19 02:34:13', '2024-08-21 08:37:20'),
-(9, 'asd', 20, 'percentage', '2024-08-20', '2024-08-31', 1, 9, 21, '2024-08-20 09:20:29', '2024-08-20 09:20:46');
+(8, 'premier league', 20, 'percentage', '2024-08-19', '2024-08-30', 11, 19, NULL, '2024-08-19 02:34:13', '2024-08-30 09:05:42'),
+(9, 'asd', 20, 'percentage', '2024-08-20', '2024-08-31', 1, 10, 21, '2024-08-20 09:20:29', '2024-08-30 09:06:10');
 
 -- --------------------------------------------------------
 
@@ -1057,6 +1247,13 @@ INSERT INTO `wishlists` (`id`, `user_id`, `product_id`, `created_at`, `updated_a
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `blogs`
+--
+ALTER TABLE `blogs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `blogs_product_id_foreign` (`product_id`);
 
 --
 -- Indexes for table `brands`
@@ -1087,7 +1284,8 @@ ALTER TABLE `chats`
 -- Indexes for table `clients_notifications`
 --
 ALTER TABLE `clients_notifications`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `clients_notifications_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `colors`
@@ -1223,16 +1421,22 @@ ALTER TABLE `wishlists`
 --
 
 --
+-- AUTO_INCREMENT for table `blogs`
+--
+ALTER TABLE `blogs`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1244,19 +1448,19 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `chats`
 --
 ALTER TABLE `chats`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `clients_notifications`
 --
 ALTER TABLE `clients_notifications`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT for table `colors`
 --
 ALTER TABLE `colors`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1268,31 +1472,31 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
 
 --
 -- AUTO_INCREMENT for table `order_updates`
 --
 ALTER TABLE `order_updates`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -1304,19 +1508,19 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `product_variants`
 --
 ALTER TABLE `product_variants`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `sizes`
@@ -1328,7 +1532,7 @@ ALTER TABLE `sizes`
 -- AUTO_INCREMENT for table `status_products`
 --
 ALTER TABLE `status_products`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `sub_categories`
@@ -1346,7 +1550,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_voucher`
 --
 ALTER TABLE `user_voucher`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `vouchers`
@@ -1365,10 +1569,22 @@ ALTER TABLE `wishlists`
 --
 
 --
+-- Constraints for table `blogs`
+--
+ALTER TABLE `blogs`
+  ADD CONSTRAINT `blogs_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `chats`
 --
 ALTER TABLE `chats`
   ADD CONSTRAINT `chats_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `clients_notifications`
+--
+ALTER TABLE `clients_notifications`
+  ADD CONSTRAINT `clients_notifications_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `order_details`

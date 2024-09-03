@@ -4,7 +4,7 @@
         <div class="activity">
             <div class="py-20">
                 <div class="flex justify-end my-2">
-                    <a href="{{ route('admin.brand.store') }}"
+                    <a href="{{ route('admin.brand.create') }}"
                         class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-2 rounded-full">+ Thương
                         hiệu</a>
                     <a class="bg-[#f687b3] hover:bg-[#f687b3] text-white font-bold py-2 px-4 rounded-full"

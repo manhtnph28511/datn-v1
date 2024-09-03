@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\StatusController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\ManageController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\OrderController;
@@ -32,12 +34,12 @@ use App\Http\Controllers\Clients\HomeProductController;
 use App\Http\Controllers\Clients\HomeCategoryController;
 use App\Http\Controllers\Clients\OrderController as ClientsOrderController;
 use App\Http\Controllers\Clients\OrderPlacedController;
-use Illuminate\Notifications\Notification;
+use App\Http\Controllers\Clients\ClientsChatController;
 use App\Http\Controllers\Clients\ClientsNotificationController;
-use App\Http\Controllers\Clients\ChatController as ClientsChatController;
-use App\Http\Controllers\Clients\VoucherController as ClientsVoucherController;  //trang chủ
-use App\Http\Controllers\Clients\UserVoucherController ; //trang người dùng
+use App\Http\Controllers\Clients\VoucherController as ClientsVoucherController;  
+use App\Http\Controllers\Clients\UserVoucherController ; 
 use App\Http\Controllers\Clients\WishlistsController ;
+use App\Http\Controllers\Clients\ClientsBlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,14 +66,23 @@ Route::name('account.')->prefix('tai-khoan')->controller(AuthController::class)-
     // Logout
     Route::get('dang-xuat', 'logout')->name('logout');
 
-    Route::match(['GET', 'POST'], 'forgotpassword', 'forgot')->name('forgotpassword');
-    Route::match(['GET', 'POST'], 'resetpassword', 'reset')->name('password.reset');
+   // forgot
+   Route::get('/password/forgot', function () {
+            return view('clients.pages.auth.forgotpassword');
+        })->name('password.request');
+
+    Route::post('/password/forgot', [AuthController::class, 'forgotPassword'])->name('password.forgot');
+
+    Route::get('/password/show', [AuthController::class, 'showPassword'])->name('password.show');
+    Route::post('/password/update', [AuthController::class, 'updatePassword'])->name('password.update');
+
+
+    
 });
 
 // Admin
 Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
-    // Dashboard
-    // Route::get('/', [DashboardController::class, 'index'])->name('admin');
+   
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
    
 
@@ -80,8 +91,8 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::get('/', 'index')->name('product.index');
         Route::get('danh-sach-san-pham-da-xoa', 'trash')->name('product.trash');
         Route::match(['GET', 'POST'], 'them-moi', 'store')->name('product.store');
-        // Route::get('admin/products/create', [ProductController::class, 'create'])->name('admin.product.create');
-        // Route::post('admin/products', [ProductController::class, 'store'])->name('admin.product.store');
+       
+        Route::get('/show{id}', [ProductController::class, 'show'])->name('product.show');
         Route::match(['GET', 'POST'], 'cap-nhat/{id}', 'update')->name('product.update');
         Route::delete('xoa-mem/{id}', 'softDelete')->name('product.softDelete');
         Route::delete('xoa/{id}', 'destroy')->name('product.destroy');
@@ -108,7 +119,8 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
     Route::name('admin.')->prefix('thuong-hieu')->controller(BrandController::class)->group(function () {
         Route::get('/', [BrandController::class, 'index'])->name('brand.index');
         Route::get('thuong-hieu-da-xoa', [BrandController::class, 'trash'])->name('brand.trash');
-        Route::match(['GET', 'POST'], 'them-moi', 'store')->name('brand.store');
+        Route::get('them-moi', [BrandController::class, 'create'])->name('brand.create'); 
+        Route::post('them-moi', [BrandController::class, 'store'])->name('brand.store'); 
         Route::match(['GET', 'POST'], 'cap-nhat/{id}', 'update')->name('brand.update');
         Route::get('khoi-phuc/{id}', 'restore')->name('brand.restore');
         Route::delete('xoa-mem/{id}', 'softDelete')->name('brand.softDelete');
@@ -141,6 +153,22 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
     });
 
 
+//status_products
+    Route::name('admin.')->prefix('status')->controller(StatusController::class)->group(function () {
+        Route::get('/', 'index')->name('status.index');
+        Route::get('search', [StatusController::class, 'search'])->name('status.search');
+        Route::get('create', 'create')->name('status.create');    
+        Route::post('store', 'store')->name('status.store');      
+        Route::get('edit/{id}', 'edit')->name('status.edit');       
+        Route::post('update/{id}', 'update')->name('status.update'); // Xử lý cập nhật trạng thá
+        Route::delete('destroy/{id}', 'destroy')->name('status.destroy');
+    });
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('blogs', BlogController::class);
+    });
+
+
     // Order Module
     Route::name('admin.')->prefix('order')->controller(OrderController::class)->group(function () {
 
@@ -149,7 +177,6 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::get('dashboard/order/search', [OrderController::class, 'search'])->name('order.search');
         Route::post('/update-delivery-status', 'updateDeliveryStatus')->name('orders.update_delivery_status');
         Route::get('/invoice-download/{id}', 'downloadInvoice')->name('orders.downloadInvoice');
-        // Route::post('/update-payment-status', 'updatePaymentStatus')->name('orders.update_payment_status');
     });
 
     // OrderDetail Module
@@ -224,9 +251,14 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
     });
 
     Route::name('admin.')->prefix('chats')->controller(ChatController::class)->group(function () {
-        Route::get('/', 'index')->name('chats.index');
-        Route::get('/{userId}', 'show')->name('chats.show'); // Hiển thị chat với một người dùng cụ thể
-        Route::post('/send/{userId}', 'sendMessage')->name('chats.sendMessage'); 
+        Route::get('/chats/{userId?}', [ChatController::class, 'index'])->name('chats.index');
+        Route::get('/show/{userId}', [ChatController::class, 'show'])->name('chats.show');
+        Route::post('/chats/send/{userId}', [ChatController::class, 'sendMessage'])->name('chats.sendMessage');
+
+        
+        Route::delete('/chats/{id}/delete-message-and-file', [ChatController::class, 'deleteMessageAndFile'])
+     ->name('chats.deleteMessageAndFile');
+
     });
 
     Route::name('admin.')->prefix('ratings')->controller(AdminRatingController::class)->group(function () {
@@ -246,12 +278,12 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
 // Clients
 
 Route::get('/', [HomeController::class, 'home'])->name('home-client');
+Route::post('/search/name', [HomeController::class, 'searchByName'])->name('home-client.search.name');
+Route::post('/search/price', [HomeController::class, 'searchByPrice'])->name('home-client.search.price');
 
 
 
-Route::post('/search', [HomeController::class, 'search'])->name('home.site.product.search');
 
-Route::post('/filter', [HomeController::class, 'filter'])->name('home.site.product.filter');
 
 
 
@@ -260,9 +292,6 @@ Route::post('/filter', [HomeController::class, 'filter'])->name('home.site.produ
 Route::controller(SiteController::class)->group(function () {
     //About page
     Route::get('about', 'about')->name('home.site.about');
-    // Blog page
-    Route::get('blog', 'blog')->name('home.site.blog');
-    // Contact page
     Route::get('contact', 'contact')->name('home.site.contact');
 });
 
@@ -297,13 +326,17 @@ Route::middleware('auth')->prefix('cart')->controller(CartController::class)->gr
     Route::get('delete/{id}', 'destroy')->name('home.cart.destroy');
     Route::get('order-success', 'success')->name('home.cart.order-success');
     Route::view('success', 'clients.pages.orders.order-success')->name('order-success');
+
+
     Route::get('voucher', 'voucher')->name('home.cart.voucher');
+    Route::get('search-vouchers', 'searchVouchers')->name('clients.search-vouchers');
     Route::post('applyVoucher', [CartController::class, 'applyVoucher'])->name('applyVoucher');
+   
+
     Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 
-    // Route::get('clients/search-vouchers', [CartController::class, 'searchVouchers'])->name('clients.search-vouchers');
-    Route::get('search-vouchers', 'searchVouchers')->name('clients.search-vouchers');
-    // Route::post('/stripe/webhook', [CartController::class, 'handleStripeWebhook']);
+   
+    
 
 
 });
@@ -328,21 +361,28 @@ Route::middleware('auth')->name('order.')->prefix('order')->controller(ClientsOr
 //thông báo
 Route::name('clients.')->prefix('notification')->controller(ClientsNotificationController::class)->group(function () {
     Route::get('/notifications', 'index')->name('notifications.index');
-    Route::post('/notifications/{id}/read', 'markAsRead')->name('notifications.markAsRead');
+    
     Route::delete('/notifications/{id}', 'delete')->name('notifications.delete');
     Route::post('/notifications/{id}/confirm-received', 'confirmReceived')->name('notifications.confirmReceived');
     Route::post('/notifications/{id}/cancel-order', 'cancelOrder')->name('notifications.cancelOrder');
-   // Route để hiển thị form đánh giá sản phẩm
-   Route::get('product/{orderId}/review', 'review')->name('product.review');
+  
+    Route::get('/product/review/{orderId}/{productId}', [ClientsNotificationController::class, 'review'])->name('product.review');
+
+
+   
 });
 
 
 
-//chat
-Route::prefix('clients')->name('clients.')->namespace('Clients')->controller(ClientsChatController::class)->group(function () {
+
+Route::prefix('clients')->name('clients.')->namespace('Clients')->group(function () {
     Route::get('/chats/{userId?}', [ClientsChatController::class, 'index'])->name('chats.index');
     Route::post('/chats/send', [ClientsChatController::class, 'send'])->name('chats.send');
+    Route::delete('/chats/{id}/delete-message-and-file', [ClientsChatController::class, 'deleteMessageAndFile'])
+     ->name('chats.deleteMessageAndFile');
 });
+
+
 
 
 
@@ -375,6 +415,12 @@ Route::name('clients.')->prefix('ratings')->controller(RatingController::class)-
     Route::delete('ratings/{id}', [RatingController::class, 'destroy'])->name('ratings.destroy');
     Route::get('ratings/{id}/edit', [RatingController::class, 'edit'])->name('ratings.edit');
     Route::put('ratings/{id}', [RatingController::class, 'update'])->name('ratings.update');
+});
+
+Route::name('clients.')->prefix('blogs')->controller(ClientsBlogController::class)->group(function () {
+    Route::get('/', [ClientsBlogController::class, 'index'])->name('blogs.index');
+    Route::get('/{id}', [ClientsBlogController::class, 'show'])->name('blogs.show');
+   
 });
 
 

@@ -14,23 +14,16 @@ class AdminMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    // public function handle(Request $request, Closure $next): Response
-    // {
-    //     if(Auth::check()) {
-    //         if(Auth::user()->role === 1) {
-    //             return $next($request);
-    //         }
-    //         return abort(404);
-    //     }
-    //     return abort(404);
-    // }
-    public function handle($request, Closure $next): Response
+    // app/Http/Middleware/CheckAdmin.php
+
+public function handle($request, Closure $next)
 {
     if (Auth::check() && Auth::user()->role === 1) {
         return $next($request);
     }
 
-    return redirect()->route('home-client')->with('error', 'Bạn không có quyền truy cập vào trang admin.');
+    return redirect()->route('home-client')->with('error', 'Bạn không có quyền truy cập.');
 }
+
 
 }

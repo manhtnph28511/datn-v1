@@ -2,14 +2,7 @@
 @section('app')
 <section id="cart" class="section-p1">
 
-    <div class="mb-4">
-        <form action="{{ route('clients.search-vouchers') }}" method="GET">
-            @csrf
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary mt-2">Tìm Voucher</button>
-            </div>
-        </form>
-    </div>
+    
     <table width="100%">
         <thead>
             <tr>
@@ -91,10 +84,21 @@
         </tfoot>
     </table>
 
+    <div class="mb-4">
+        <form action="{{ route('clients.search-vouchers') }}" method="GET">
+            @csrf
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary mt-2">Tìm Voucher</button>
+            </div>
+        </form>
+    </div>
+
     <div class="checkout">
         <a href="{{ route('home.cart.checkout') }}" class="btn btn-primary">Tiến hành thanh toán</a>
     </div>
-    <!-- Bảng hiển thị voucher -->
+   
+    <div class="vouchertable" style="margin:10px">
+        <p>Đây là voucher có sẵn của bạn</p>
     @if(isset($userVouchers) && $userVouchers->count() > 0)
     <table>
         <thead>
@@ -127,13 +131,21 @@
                     </td>
                     <td>{{ $userVoucher->voucher->starts_at->format('d-m-Y H:i:s') }}</td>
                     <td>{{ $userVoucher->voucher->expires_at->format('d-m-Y H:i:s') }}</td>
+                    <td>
+                        @if(now()->gt($userVoucher->voucher->expires_at))
+                            <span class="text-danger">Hết hạn</span>
+                        @else
+                            <span class="text-success">Còn hạn</span>
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 @else
-    <p>Không có voucher nào.</p>
+    
 @endif
+</div>
 
 </section>
 @endsection
@@ -160,11 +172,10 @@
  </script>
 
 <style>
-/* Định dạng cho bảng */
+
 #cart table {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px; /* Thêm khoảng cách dưới bảng */
+    margin-bottom: 20px; 
 }
 
 #cart table td, #cart table th {
@@ -173,26 +184,25 @@
     border-bottom: 1px solid #ddd;
 }
 
-/* Định dạng cho phần tử trong bảng giỏ hàng */
-.pro-box {
+#cart .cart-box td {
     vertical-align: top;
 }
 
-/* Định dạng cho form áp dụng voucher */
-.pro-box form {
+
+.voucher-form form {
     display: flex;
-    flex-direction: column; /* Đặt các phần tử thành cột để tránh bị chen nhau */
+    flex-direction: column; 
 }
 
-/* Định dạng cho input và button trong form */
-.pro-box input[type="text"] {
+
+.voucher-form input[type="text"] {
     padding: 6px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    margin-bottom: 10px; /* Thêm khoảng cách giữa input và button */
+    margin-bottom: 10px; 
 }
 
-.pro-box button {
+.voucher-form button {
     padding: 6px 12px;
     border: none;
     border-radius: 4px;
@@ -201,21 +211,19 @@
     cursor: pointer;
 }
 
-.pro-box button:hover {
+.voucher-form button:hover {
     background-color: #0056b3;
 }
 
-/* Định dạng cho giá cuối */
-#cart table td:last-child {
-    text-align: right; /* Đảm bảo giá cuối được căn lề phải */
-    font-weight: bold; /* Làm cho giá cuối nổi bật hơn */
+
+#cart .discounted-price {
+    text-align: right; 
+    font-weight: bold; 
 }
-.product-image {
-    display: block;
-    width: 100px; /* Ví dụ: điều chỉnh kích thước theo nhu cầu */
-}
+
+
 .cart-image-container {
-    width: 150px; /* Kích thước khung chứa ảnh */
+    width: 150px;
     height: 150px;
     display: flex;
     align-items: center;
@@ -230,5 +238,6 @@
     max-height: 100%;
     object-fit: cover;
 }
+
 
 </style>

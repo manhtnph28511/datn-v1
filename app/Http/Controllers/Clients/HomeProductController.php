@@ -16,91 +16,25 @@ use Illuminate\Support\Facades\DB;
 
 class HomeProductController extends Controller
 {
-// public function showProduct($id, $slug, Request $request)
-// {
-//     $product = Product::with('product_variants')->find($id);
-//     $sizes = Size::all();
-//     $colors = Color::all();
-//     $variantError = null;
-    
-//     // Kiểm tra biến thể nếu có size_id và color_id trong request
-//     $selectedSizeId = $request->get('size_id');
-//     $selectedColorId = $request->get('color_id');
-    
-//     // if ($selectedSizeId && $selectedColorId) {
-//     //     $matchingVariant = $product->product_variants->first(function ($variant) use ($selectedSizeId, $selectedColorId) {
-//     //         return $variant->size_id == $selectedSizeId && $variant->color_id == $selectedColorId;
-//     //     });
-        
-//     //     if (!$matchingVariant) {
-//     //         $variantError = 'Sản phẩm đã hết hàng';
-//     //     }
-//     // }
 
-//     if ($product && $selectedSizeId && $selectedColorId) {
-    
-//         // Kiểm tra size_id và color_id của sản phẩm chính
-//         if ($product->size_id == $selectedSizeId && $product->color_id == $selectedColorId) {
-//             // Sản phẩm chính trùng khớp với size_id và color_id
-//             if ($product->quantity <= 0) {
-//                 $variantError = 'Sản phẩm chính đã hết hàng';
-//             }
-
-//         }else{
-//         $matchingVariant = $product->product_variants->first(function ($variant) use ($selectedSizeId, $selectedColorId) {
-//             return $variant->size_id == $selectedSizeId && $variant->color_id == $selectedColorId;
-//         });
-        
-//         if (!$matchingVariant) {
-//             $variantError = 'Sản phẩm đã hết hàng';
-//         }
-//     }
-    
-//     }
-//     // Truyền dữ liệu đến view
-//     return view('clients.pages.detail-product', [
-//         'product' => $product,
-//         'sizes' => $sizes,
-//         'colors' => $colors,
-//         'variantError' => $variantError,
-//     ]);
-// }
-// public function showProduct($id, $slug, Request $request)
-// {
-   
-//     $product = Product::with('product_variants')->find($id);
-//     $sizes = Size::all();
-//     $colors = Color::all();
-//     $variants = $product->product_variants;
-
-//     $selectedSizeId = $request->input('size_id', '');
-//     $selectedColorId = $request->input('color_id', '');
-
-
-//     return view('clients.pages.detail-product', [
-//         'product' => $product,
-//         'sizes' => $sizes,
-//         'colors' => $colors,
-//         'selectedSizeId' => $selectedSizeId,
-//         'selectedColorId' => $selectedColorId,
-//         'variants' => $variants,
-//     ]);
-// }
-public function showProduct($id, $slug, Request $request)
+public function showProduct($id, Request $request)
 {
-    // Truy vấn sản phẩm cùng với các biến thể liên quan
+    
     $product = Product::with('product_variants.size', 'product_variants.color')->find($id);
 
-    // Lấy tất cả các kích thước và màu sắc
+   
     $sizes = Size::all();
     $colors = Color::all();
 
-    // Lấy các biến thể sản phẩm liên quan đến sản phẩm hiện tại
+   
     $variants = $product->product_variants;
 
-    // Lấy size_id và color_id từ request nếu có
+   
     $selectedSizeId = $request->input('size_id', '');
     $selectedColorId = $request->input('color_id', '');
+
+
+    $product->increment('view');
 
     // Trả về view cùng với dữ liệu
     return view('clients.pages.detail-product', [
@@ -112,8 +46,6 @@ public function showProduct($id, $slug, Request $request)
         'variants' => $variants,
     ]);
 }
-
-
 
 
 
@@ -132,7 +64,6 @@ public function showProduct($id, $slug, Request $request)
     }
 
 
-    // product from sub cate
     public function productFromSubCate($id)
     {
         $subCate = SubCategory::all();

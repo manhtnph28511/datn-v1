@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Size;
 use App\Models\StatusProduct;
 use App\Models\SubCategory;
+Use App\Models\Category;
 use App\Models\ProductVariant;
 use Alert;
 use App\Http\Requests\Admin\ProductRequest;
@@ -27,6 +28,13 @@ class ProductController extends Controller
         ->with(['color', 'size']) 
         ->paginate(6);
         return view('admin.pages.products.index', compact('products'));
+    }
+
+
+    public function show($id)
+    {
+        $product = Product::with(['subCate','brand', 'color', 'size', 'statusProduct'])->findOrFail($id);
+        return view('admin.pages.products.show', compact('product'));
     }
 
     public function trash()
@@ -54,9 +62,10 @@ class ProductController extends Controller
             $data['slug'] = Str::slug($request->get('name'));
             if($request->hasFile('image')) {
                 $data['image'] = Cloudinary::upload($request->file('image')->getRealPath(),array(
-                    'folder' => 'Cara/Products',
-                    'overwrite' => TRUE,
-                    'resource_type' => 'image'
+                    'upload_preset' => 'mwsports',  // Tên của Upload Preset
+                    'folder' => 'MWSPORT/Products',  // Thư mục để lưu ảnh
+                    'overwrite' => true,
+                    'resource_type' => 'image',
                 ))->getSecurePath();
             }
             $isSuccess = Product::create($data);
@@ -75,80 +84,6 @@ class ProductController extends Controller
         ]);
     }
     
-    // public function store(ProductRequest $request)
-    // {
-    //     // Lấy danh sách các tùy chọn cho form
-    //     $brands = Brand::all();
-    //     $cates = SubCategory::all();
-    //     $colors = Color::all();
-    //     $sizes = Size::all();
-    //     $sttProduct = StatusProduct::all();
-        
-    //     if ($request->method() === 'POST') {
-    
-    //         // Lấy dữ liệu từ request
-    //         $data = $request->except('image', 'variant_product_id', 'image_variant', 'color_id', 'size_id', 'price_variant');
-    //         $data['slug'] = Str::slug($request->get('name'));
-    
-    //         // Xử lý hình ảnh sản phẩm
-    //         if($request->hasFile('image')) {
-    //             $data['image'] = Cloudinary::upload($request->file('image')->getRealPath(), array(
-    //                 'folder' => 'Cara/Products',
-    //                 'overwrite' => TRUE,
-    //                 'resource_type' => 'image'
-    //             ))->getSecurePath();
-    //         }
-    
-    //         // Tạo sản phẩm
-    //         $product = Product::create($data);
-    
-    //         if ($product) {
-    //             // Xử lý các biến thể sản phẩm
-    //             if ($request->has('variant_product_id')) {
-    //                 foreach ($request->input('variant_product_id') as $index => $variantProductId) {
-    //                     if ($variantProductId) {
-    //                         $variantImagePath = null;
-    //                         if ($request->hasFile('image_variant.' . $index)) {
-    //                             $imageVariant = $request->file('image_variant.' . $index);
-    //                             $variantImagePath = Cloudinary::upload($imageVariant->getRealPath(), array(
-    //                                 'folder' => 'Cara/ProductVariants',
-    //                                 'overwrite' => TRUE,
-    //                                 'resource_type' => 'image'
-    //                             ))->getSecurePath();
-    //                         }
-    
-    //                         ProductVariant::create([
-    //                             'product_id' => $product->id,
-    //                             'variant_product_id' => $variantProductId,
-    //                             'image_variant' => $variantImagePath,
-    //                             'color_id' => $request->input('color_id.' . $index),
-    //                             'size_id' => $request->input('size_id.' . $index),
-    //                             'price' => $request->input('price_variant.' . $index),
-    //                         ]);
-    //                     }
-    //                 }
-    //             }
-    //         } else {
-    //             // Xóa hình ảnh nếu không tạo được sản phẩm
-    //             if ($data['image']) {
-    //                 $publicId = $this->getPublicId($data['image']);
-    //                 Cloudinary::destroy($publicId);
-    //             }
-    //         }
-    
-    //         // Hiển thị thông báo thành công hoặc thất bại
-    //         return checkEndDisplayMsg('success', 'Thành công', 'Thêm mới thành công', 'admin.product.index');
-    //     }
-    
-    //     // Trả về view để thêm sản phẩm mới
-    //     return view('admin.pages.products.create-form', [
-    //         'brands' => $brands,
-    //         'cates' => $cates,
-    //         'colors' => $colors,
-    //         'sizes' => $sizes,
-    //         'sttProduct' => $sttProduct
-    //     ]);
-    // }
     
     
 
@@ -168,9 +103,10 @@ class ProductController extends Controller
 
             if($request->hasFile('image')) {
                 $data['image'] = $data['image'] = Cloudinary::upload($request->file('image')->getRealPath(),array(
-                    'folder' => 'Cara/Products',
-                    'overwrite' => TRUE,
-                    'resource_type' => 'image'
+                    'upload_preset' => 'mwsports',  // Tên của Upload Preset
+                    'folder' => 'MWSPORT/Products',  // Thư mục để lưu ảnh
+                    'overwrite' => true,
+                    'resource_type' => 'image',
                 ))->getSecurePath();
             }
 

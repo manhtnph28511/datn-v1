@@ -54,13 +54,10 @@
         <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
             <i class="checkmark">✓</i>
         </div>
-        <h2 class="success-h2">Success</h2>
-        <p>We received your purchase request;<br/> we'll be in touch shortly! </p>
+        <h2 class="success-h2">Thành công</h2>
+        <p>Cảm ơn bạn đã đặt hàng<br/> Chúc bạn một ngày tốt lành </p>
         <div class="order-details">
             <div class="order-image py-4">
-                {{-- <a href="{{ route('home-client') }}"
-                   class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">Go
-                    Back</a> --}}
                     <form action="{{ route('cart.clear') }}" method="POST">
                         @csrf
                         @method('DELETE')

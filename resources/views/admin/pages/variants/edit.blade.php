@@ -2,9 +2,19 @@
 
 @section('app')
 <div class="dash-content">
-    <form action="{{ route('admin.variant.update', ['product_id' => $variant->product_id, 'variant_id' => $variant->id]) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.admin.variant.update', ['product_id' => $variant->product_id, 'variant_id' => $variant->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <div class="form-group">
                 <label for="size_id">Size</label>
@@ -128,6 +138,31 @@
     .btn-back:hover {
         background-color: #5a6268;
         border-color: #4e555b;
+    }
+
+    .alert {
+        padding: 20px;
+        margin-bottom: 15px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        position: relative;
+        width: 100%;
+    }
+
+    .alert-danger {
+        background-color: #f2dede;
+        border-color: #ebccd1;
+        color: #a94442;
+    }
+
+    .alert-danger ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .alert-danger li {
+        margin-bottom: 5px;
     }
 </style>
 

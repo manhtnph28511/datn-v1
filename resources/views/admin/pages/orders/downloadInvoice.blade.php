@@ -182,7 +182,7 @@
                                                         <div>{{ $product->name }}</div>
                                                         <div class="text-muted">
                                                             <span class="fs-xs">
-                                                                {{ $product->Color->name }} x {{ $product->Size->name }}
+                                                                {{ $item->color->name }} x {{ $item->size->name }}
                                                             </span>
                                                         </div>
                                                     </td>

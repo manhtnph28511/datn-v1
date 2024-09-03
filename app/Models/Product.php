@@ -16,6 +16,7 @@ class Product extends Model
         'quantity',
         'slug',
         'image',
+        'view',
         'cate_id',
         'brand_id',
         'color_id',
@@ -24,6 +25,10 @@ class Product extends Model
         'description'
     ];
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'cate_id');
+    }
     public function subCate(): BelongsTo {
         return $this->belongsTo(SubCategory::class,'cate_id','id');
     }
@@ -44,6 +49,13 @@ class Product extends Model
     {
         return $this->hasMany(ProductVariant::class, 'product_id');
     }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id');
+    }
+
+    
     public function voucher()
     {
         return $this->belongsTo(Voucher::class);
@@ -56,4 +68,10 @@ class Product extends Model
     {
         return $this->hasMany(Notification::class, 'product_id');
     }
+
+    public function blog()
+{
+    return $this->belongsTo(Blog::class);
+}
+
 }

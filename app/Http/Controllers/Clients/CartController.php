@@ -466,7 +466,7 @@ public function checkoutStep(Request $request)
             $order->email = $validatedData['email'];
             $order->note = $validatedData['note'] ?? '';
             $order->payment_method = 'Credit_card';
-            $order->shipment_status = 'PACKED';
+            $order->shipment_status = 'ORDERPLACE';
             $order->order_status = 'PENDING';
             $order->save();
 
@@ -487,7 +487,6 @@ public function checkoutStep(Request $request)
             //cập nhật lại só lượng sau khi thanh toán thành công
             foreach ($carts as $cart) {
                 if ($cart->size_id && $cart->color_id) {
-                    // Kiểm tra xem size_id và color_id có phải là biến thể không
                     $isVariant = DB::table('product_variants')
                         ->where('product_id', $cart->pro_id)
                         ->where('size_id', $cart->size_id)
@@ -495,14 +494,12 @@ public function checkoutStep(Request $request)
                         ->exists();
             
                     if ($isVariant) {
-                        // Nếu là biến thể, giảm số lượng của biến thể
                         DB::table('product_variants')
                             ->where('product_id', $cart->pro_id)
                             ->where('size_id', $cart->size_id)
                             ->where('color_id', $cart->color_id)
                             ->decrement('quantity', $cart->quantity);
                     } else {
-                        // Nếu không phải biến thể, giảm số lượng của sản phẩm chính
                         DB::table('products')
                             ->where('id', $cart->pro_id)
                             ->decrement('quantity', $cart->quantity);
@@ -531,10 +528,11 @@ public function checkoutStep(Request $request)
             ]);
 
             ClientsNotification::create([
+                'user_id'=> auth()->user()->id,
                 'type' => 'đã đặt hàng',
                 'data' => json_encode([
                     'order_id' => $order->id,
-                    'message' => 'Đã đặt hàng! Đơn hàng #' . $order->id . 'Vui lòng chờ xác nhận',
+                    'message' => 'Đã đặt hàng! Đơn hàng #' . $order->id . ',Vui lòng chờ xác nhận',
                     'order_details' => [
                         'username' => $order->username,
                         'address' => $order->address,
@@ -555,7 +553,6 @@ public function checkoutStep(Request $request)
             return redirect()->back()->with('error', 'Đã xảy ra lỗi khi tạo phiên thanh toán. Vui lòng thử lại.');
         }
     } elseif ($request->type_order === '2') {
-        // Thanh toán khi nhận hàng
         $order = new Order();
         $order->user_id = auth()->user()->id;
         $order->username = $validatedData['username'];
@@ -583,7 +580,6 @@ public function checkoutStep(Request $request)
  
         foreach ($carts as $cart) {
             if ($cart->size_id && $cart->color_id) {
-                // Kiểm tra xem size_id và color_id có phải là biến thể không
                 $isVariant = DB::table('product_variants')
                     ->where('product_id', $cart->pro_id)
                     ->where('size_id', $cart->size_id)
@@ -591,14 +587,12 @@ public function checkoutStep(Request $request)
                     ->exists();
         
                 if ($isVariant) {
-                    // Nếu là biến thể, giảm số lượng của biến thể
                     DB::table('product_variants')
                         ->where('product_id', $cart->pro_id)
                         ->where('size_id', $cart->size_id)
                         ->where('color_id', $cart->color_id)
                         ->decrement('quantity', $cart->quantity);
                 } else {
-                    // Nếu không phải biến thể, giảm số lượng của sản phẩm chính
                     DB::table('products')
                         ->where('id', $cart->pro_id)
                         ->decrement('quantity', $cart->quantity);
@@ -610,6 +604,7 @@ public function checkoutStep(Request $request)
         Mail::to($order->email)->send(new InvoiceMail(auth()->user(),$order));
 
         ClientsNotification::create([
+            'user_id'=> auth()->user()->id,
             'type' => 'đã đặt hàng',
             'order_id' => $order->id,
             'data' => json_encode([
@@ -646,23 +641,7 @@ public function checkoutStep(Request $request)
         return redirect()->route('order-success');
     }
 }
-// public function orderSuccess(Request $request)
-// {
-//     // Retrieve order_id from query parameter
-//     $orderId = $request->query('order_id');
 
-//     if ($orderId) {
-//         // Clear the cart for the user
-//         DB::table('carts')->where('user_id', auth()->user()->id)->delete();
-
-//         // Clear order_id from session
-//         session()->forget('order_id');
-
-//         return view('clients.pages.orders.order-success');
-//     }
-
-//     return redirect()->route('home.cart')->with('error', 'Đơn hàng không hợp lệ.');
-// }
 public function clear(Request $request)
 {
     // Xóa giỏ hàng của người dùng hiện tại

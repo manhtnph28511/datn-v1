@@ -9,20 +9,23 @@ class NotificationController extends Controller
 {
     public function showNotifications()
     {
-        // Cập nhật tất cả thông báo là đã đọc
+    
         Notification::where('is_read', false)->update(['is_read' => true]);
 
-        // Lấy tất thông báo
+        
         $notifications = Notification::orderBy('created_at', 'desc')->get();
 
-        // Lấy số lượng thông báo chưa đọc
-        $unreadNotificationsCount = Notification::where('is_read', false)->count();
+        
+        $unreadNotificationsCount = 0;
 
         return view('admin.pages.notifications.index', compact('notifications', 'unreadNotificationsCount'));
     }
+
+
+
     public static function getUnreadNotificationsCount()
     {
-        return Notification::where('is_read', 'unread')->count();
+        return Notification::where('is_read', false)->count();
     }
 
     public function store($orderId)
@@ -35,6 +38,7 @@ class NotificationController extends Controller
                 'order_id' => $orderId,
                 'message' => 'Có đơn hàng mới!',
             ]),
+            'is_read' => false,
         ]);
     }
     public function markAsRead($id)

@@ -21,6 +21,11 @@ class BrandController extends Controller
         return view('admin.pages.brands.trash-list', compact('brands'));
     }
 
+
+    public function create()
+    {
+        return view('admin.pages.brands.create-form'); // Trả về view để hiển thị form thêm mới
+    }
     public function store(BrandRequest $request)
     {
         if ($request->method() === 'POST') {

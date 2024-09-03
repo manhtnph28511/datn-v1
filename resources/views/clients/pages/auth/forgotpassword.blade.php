@@ -21,34 +21,27 @@
             <span>Quên mật khẩu</span>
             <span><a href="{{ route('account.login') }}" class="text-decoration-none">Đăng nhập</a></span>
         </div>
-        <form action="{{ route('account.forgotpassword') }}" method="POST" id="login-form">
+        <form action="{{ route('account.password.forgot') }}" method="POST">
             @csrf
-            <p>Email</p>
-            <input type="text" name="email" class="w-100" value="{{ old('email') }}">
-            @error('email')
-                <style>
-                    input[name="email"] {
-                        border: 1px solid red;
-                    }
-                </style>
-                <span class="text-danger my-2">{{ $message }}</span>
-            @enderror
-            @if (session('success'))
-                <div class="alert alert-success mt-2">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            @if (session('error'))
-                <div class="alert alert-danger mt-2">
-                    {{ session('error') }}
-                </div>
-            @endif
-
-            <div class="d-flex mt-2  justify-content-end">
-                <button class=" mt-2 normal text-white" style="margin:0">Xác thực</button>
+            <div>
+                <label for="username">Tên đăng nhập:</label>
+                <input type="text" name="name" id="name" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div>
+                <button type="submit">Gửi yêu cầu</button>
             </div>
         </form>
+        @if ($errors->any())
+            <div>
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
     </div>
     @include('sweetalert::alert')
     @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
@@ -56,3 +49,94 @@
 </body>
 
 </html>
+
+<style>
+    
+body {
+    background-color: #e0e0e0; 
+    font-family: Arial, sans-serif; 
+    margin: 0;
+    padding: 0;
+}
+
+
+.model {
+    max-width: 500px; 
+    margin: 50px auto; 
+    padding: 20px;
+    background-color: #fff; 
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+
+.model_heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.model_heading span {
+    font-size: 18px;
+    color: #333;
+}
+
+.model_heading a {
+    color: #007bff; 
+    text-decoration: none;
+}
+
+.model_heading a:hover {
+    text-decoration: underline; 
+}
+
+
+.model input[type="text"],
+.model input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+
+.model label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+
+.model button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.model button:hover {
+    background-color: #0056b3; 
+}
+
+
+.model div {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #fddede;
+    color: #d32f2f;
+}
+
+.model div p {
+    margin: 0;
+}
+
+</style>

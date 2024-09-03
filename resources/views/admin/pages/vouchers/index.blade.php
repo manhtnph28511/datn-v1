@@ -3,6 +3,14 @@
 @section('app')
     <div class="dash-content">
         <h1>Danh sách Voucher</h1>
+
+
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        
         <a href="{{ route('admin.vouchers.create') }}" class="btn btn-primary">Thêm mới Voucher</a>
         <table class="table mt-4">
             <thead>
@@ -16,6 +24,7 @@
                     <th>số lần đã sửu dụng</th>
                     <th>số lượng </th>
                     <th>Sản phẩm</th>
+                    <th>Trạng thái</th>
                     <th>Hành động</th>
                 </tr>
             </thead>
@@ -43,6 +52,13 @@
                                 {{ $voucher->product->name }}
                             @elseif($voucher->product_id === null)
                                 Tất cả sản phẩm
+                            @endif
+                        </td>
+                        <td>
+                            @if(now()->gt($voucher->expires_at))
+                                <span class="text-danger">Hết hạn</span>
+                            @else
+                                <span class="text-success">Còn hạn</span>
                             @endif
                         </td>
                         <td>

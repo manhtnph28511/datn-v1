@@ -9,7 +9,7 @@ class ClientsNotification extends Model
 {
     use HasFactory;
 
-    protected $fillable=['order _id', 'type', 'data', 'is_read'];
+    protected $fillable=['user_id', 'type', 'data', 'is_read'];
 
     public function order()
     {

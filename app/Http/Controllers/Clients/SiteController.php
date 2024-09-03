@@ -12,11 +12,6 @@ class SiteController extends Controller
         return view('clients.pages.about');
     }
 
-    //Blog Page
-    public function blog() {
-        return view('clients.pages.blog');
-    }
-
     //Contact Page
     public function contact() {
         return view('clients.pages.contact');

@@ -25,17 +25,17 @@ class ProductVariantController extends Controller
     {
 
     $product = Product::findOrFail($product_id);
-    $sizes = Size::all(); // Thay thế Size bằng tên model của bạn
-    $colors = Color::all(); // Thay thế Color bằng tên model của bạn
+    $sizes = Size::all(); 
+    $colors = Color::all(); 
     return view('admin.pages.variants.create', compact('product','sizes','colors','product_id'));
 
     }
     public function store(StoreProductVariantRequest $request, $product_id)
     {
-        // Tìm sản phẩm theo ID
+       
         $product = Product::findOrFail($product_id);
     
-        // Tạo và lưu biến thể mới
+        
         $variant = new ProductVariant();
         $variant->product_id = $product_id;
         $variant->size_id = $request->size_id;
@@ -43,19 +43,20 @@ class ProductVariantController extends Controller
         $variant->price = $request->price;
         $variant->quantity = $request->quantity;
     
-        // Xử lý ảnh nếu có
+      
         if ($request->hasFile('image_variant')) {
             $uploadedImage = Cloudinary::upload($request->file('image_variant')->getRealPath(), [
-                'folder' => 'Cara/Products',
+                'upload_preset' => 'mwsports',  
+                'folder' => 'MWSPORT/Products', 
                 'overwrite' => true,
-                'resource_type' => 'image'
+                'resource_type' => 'image',
             ])->getSecurePath();
             $variant->image_variant = $uploadedImage;
         }
     
         $variant->save();
     
-        // Chuyển hướng về trang tạo với thông báo thành công
+       
         return redirect()->route('admin.variant.index', $product_id)
         ->with('success', 'Biến thể đã được thêm thành công.');
     }
@@ -75,38 +76,44 @@ class ProductVariantController extends Controller
 
     public function update(StoreProductVariantRequest $request, $product_id, $variant_id)
 {
-    // Tìm sản phẩm và biến thể
+   
     $product = Product::findOrFail($product_id);
     $variant = ProductVariant::findOrFail($variant_id);
 
-    // Lấy dữ liệu từ request
+   
     $data = $request->except(['_token', 'image_variant']);
 
-    // Xử lý hình ảnh nếu có
+   
     if ($request->hasFile('image_variant')) {
-        // Xóa hình ảnh cũ nếu có
+       
         if ($variant->image_variant) {
             $publicId = $this->getPublicId($variant->image_variant);
             Cloudinary::destroy($publicId);
         }
-
-        // Tải lên hình ảnh mới
+ 
         $data['image_variant'] = Cloudinary::upload($request->file('image_variant')->getRealPath(), [
-            'folder' => 'Cara/Products/Variants',
+            'upload_preset' => 'mwsports',  
+            'folder' => 'MWSPORT/Products',  
             'overwrite' => true,
-            'resource_type' => 'image'
+            'resource_type' => 'image',
         ])->getSecurePath();
     }
 
-    // Cập nhật biến thể
+
+    
+    if ($variant->quantity < 0) {
+        $variant->quantity = 0; 
+    }
+    
+    
     $isSuccess = $variant->update($data);
 
-    // Kiểm tra thành công và thông báo
+   
     if ($isSuccess) {
         return redirect()->route('admin.variant.index', ['product_id' => $product_id])
             ->with('success', 'Biến thể đã được cập nhật thành công.');
     } else {
-        // Xóa hình ảnh mới tải lên nếu không thành công
+       
         if (isset($data['image_variant'])) {
             $publicId = $this->getPublicId($data['image_variant']);
             Cloudinary::destroy($publicId);

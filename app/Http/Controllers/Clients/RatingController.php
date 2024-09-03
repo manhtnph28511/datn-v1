@@ -19,41 +19,47 @@ class RatingController extends Controller
         return view('products.show', compact('product'));
     }
     public function rating(Request $request)
-    {
-        $user = Auth::user();
-        $productId = $request->input('product_id');
+{
+    $user = Auth::user();
+    $productId = $request->input('product_id');
     
-       
-        $hasPurchased = Order::where('user_id', $user->id)
-            ->whereHas('orderDetails', function($query) use ($productId) {
-                $query->where('pro_id', $productId)
-                    ->where('order_status', 'SUCCESS'); 
-            })
-            ->exists();
-    
-        if (!$hasPurchased) {
-            return redirect()->back()->with('error', 'Bạn chỉ có thể đánh giá sản phẩm đã mua và nhận hàng thành công.');
-        }
-    
-       
-        $existingRating = Rating::where('user_id', $user->id)
-            ->where('product_id', $productId)
-            ->exists();
-    
-        if ($existingRating) {
-            return redirect()->back()->with('error', 'Bạn đã đánh giá sản phẩm này rồi.');
-        }
-    
-       
-        Rating::create([
-            'user_id' => $user->id,
-            'product_id' => $productId,
-            'rating' => $request->input('rating'),
-            'review' => $request->input('review'),
-        ]);
-    
-        return redirect()->back()->with('success', 'Đánh giá của bạn đã được gửi thành công.');
+    // Kiểm tra productId có hợp lệ hay không
+    if (!$productId) {
+        return redirect()->back()->with('error', 'Không xác định được sản phẩm để đánh giá.');
     }
+
+    // Kiểm tra người dùng đã mua và nhận sản phẩm chưa
+    $hasPurchased = Order::where('user_id', $user->id)
+        ->whereHas('orderDetails', function($query) use ($productId) {
+            $query->where('pro_id', $productId)
+                  ->where('order_status', 'SUCCESS');
+        })
+        ->exists();
+
+    if (!$hasPurchased) {
+        return redirect()->back()->with('error', 'Bạn chỉ có thể đánh giá sản phẩm đã mua và nhận hàng thành công.');
+    }
+
+    // Kiểm tra người dùng đã đánh giá sản phẩm này chưa
+    $existingRating = Rating::where('user_id', $user->id)
+        ->where('product_id', $productId)
+        ->exists();
+
+    if ($existingRating) {
+        return redirect()->back()->with('error', 'Bạn đã đánh giá sản phẩm này rồi.');
+    }
+
+    // Tạo đánh giá mới
+    Rating::create([
+        'user_id' => $user->id,
+        'product_id' => $productId,
+        'rating' => $request->input('rating'),
+        'review' => $request->input('review'),
+    ]);
+
+    return redirect()->back()->with('success', 'Đánh giá của bạn đã được gửi thành công.');
+}
+
     
 
     public function index()

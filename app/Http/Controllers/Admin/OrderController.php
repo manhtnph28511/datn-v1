@@ -61,47 +61,62 @@ class OrderController extends Controller
 {
     $order = Order::findOrFail((int)$request->order_id);
 
-    // Kiểm tra trạng thái hiện tại của đơn hàng
     if ($order->order_status == 'cancel' || $order->order_status == 'success') {
-        // Trả về lỗi nếu trạng thái đã bị hủy hoặc đã giao thành công
         return response()->json([
             'success' => false,
             'message' => 'Không thể cập nhật trạng thái của đơn hàng đã bị hủy hoặc đã giao thành công.'
         ]);
     }
 
-    // Cập nhật trạng thái vận chuyển
     $order->shipment_status = $request->status;
 
-    // Xác định thông điệp trạng thái
+    
     $statusMessage = '';
+    $statusMessageClients='';
     switch ($request->status) {
         case 'ORDERPLACE':
             $statusMessage = 'đã được tạo';
+            $statusMessageClients="đã được tạo";
             break;
         case 'PACKED':
             $statusMessage = 'đã nhận và đang đang xử lí';
+            $statusMessageClients = 'đã nhận và đang đang xử lí';
             break;
         case 'SHIPPED':
             $statusMessage = 'đã được vận chuyển';
+            $statusMessageClients = 'đã được vận chuyển';
             break;
         case 'INTRANSIT':
             $statusMessage = 'đang trên đường đến điểm đến';
+            $statusMessageClients = 'đang trên đường đến điểm đến';
             break;
         case 'OUTFORDELIVERY':
             $statusMessage = 'đã được giao cho người nhận';
+            $statusMessageClients = 'đã được giao cho người nhận';
             break;
         case 'DELAYED':
             $statusMessage = 'đã bị trễ hẹn trong quá trình vận chuyển';
+            $statusMessageClients = 'đã bị trễ hẹn trong quá trình vận chuyển';
             break;
         case 'DELIVERED':
             $statusMessage = 'đã được giao hàng thành công';
+            $statusMessageClients = 'đã được giao hàng thành công';
             break;
         case 'CANCEL':
-            $statusMessage = 'đơn hàng đã bị hủy';
+            if ($order->payment_method == 'Credit_card') {
+                $statusMessage = 'Đơn hàng đã bị hủy.';
+                $statusMessageClients = 'Đơn hàng đã bị hủy. Vui lòng liên hệ với admin để được hoàn tiền.';
+            } elseif ($order->payment_method == 'COD') {
+                $statusMessage = 'Đơn hàng đã bị hủy thành công.';
+                $statusMessage = 'Đơn hàng đã bị hủy thành công.';
+            } else {
+                $statusMessage = 'Đơn hàng đã bị hủy.';
+                $statusMessageClients = 'Đơn hàng đã bị hủy.';
+            }
             break;
         default:
             $statusMessage = 'trạng thái không xác định';
+            $statusMessageClients = 'trạng thái không xác định';
             break;
     }
 
@@ -128,7 +143,7 @@ class OrderController extends Controller
         'type' => 'shipping_update',
         'data' => json_encode([
             'order_id' => $order->id,
-            'message' => 'Đơn hàng của bạn ' . $statusMessage . '.',
+            'message' => 'Đơn hàng của bạn ' . $statusMessageClients . '.',
         ]),
         'is_read' => false,
     ]);
@@ -154,11 +169,11 @@ class OrderController extends Controller
 
 
 
-    public function downloadInvoice($id)
+    public function downloadInvoice($orderId)
 {
     $font_family = "'Roboto','sans-serif'";
     $order = Order::with('orderDetails.product', 'orderDetails.color', 'orderDetails.size')
-    ->findOrFail($id);
+    ->findOrFail($orderId);
 
     return Pdf::loadView('admin.pages.orders.downloadInvoice', [
         'order' => $order,

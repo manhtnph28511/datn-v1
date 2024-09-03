@@ -22,17 +22,32 @@
                         <strong>Admin:</strong>
                     @endif
                     <p>{{ $chat->message }}</p>
+                    @if ($chat->file_up)
+                        <img src="{{ asset('storage/' . $chat->file_up) }}" alt="" style="max-width: 100px; max-height: 100px;">
+                    @endif
                     <span class="timestamp">{{ $chat->created_at->format('d-m-Y H:i') }}</span>
+                    <!-- Form xóa -->
+                    @if ($chat->is_admin)
+                    <form action="{{ route('admin.chats.deleteMessageAndFile', ['id' => $chat->id]) }}" method="POST" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                @endif
                 </div>
             @endforeach
         </div>
+        
 
         <!-- Form gửi tin nhắn -->
-        <form action="{{ route('admin.chats.sendMessage', ['userId' => $user->id]) }}" method="POST">
+        <form action="{{ route('admin.chats.sendMessage', ['userId' => $user->id]) }}" method="POST" enctype="multipart/form-data" class="chat-form">
             @csrf
-            <textarea name="message" rows="3" placeholder="Nhập tin nhắn..." required></textarea>
-            <button type="submit" class="btn btn-primary">Gửi</button>
+            <textarea name="message" rows="3" required class="chat-textarea" placeholder="Type your message..."></textarea>
+            <input type="file" name="file_up" accept=".jpg,.png,.pdf,.docx" class="chat-file-input" />
+            <button type="submit" class="chat-submit-btn">Send</button>
         </form>
+        
+        <a href="{{ route('admin.chats.index') }} " class="back-link">Quay lại</a>
     </div>
 @endsection
 
@@ -118,6 +133,21 @@ form button {
 
 form button:hover {
     background-color: #0056b3;
+}
+.back-link {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.back-link:hover {
+    background-color: #0056b3;
+    color: #e0e0e0;
 }
 
 </style>

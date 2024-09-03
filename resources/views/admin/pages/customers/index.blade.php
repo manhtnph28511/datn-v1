@@ -38,8 +38,14 @@
                                 <th scope="col" class="px-6 py-3">
                                     Quyền hạn
                                 </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Trạng thái
+                                </th>
                                 <th scope="col" class="px-6 py-3 w-[300px]">
                                     Hành động
+                                </th>
+                                <th scope="col" class="px-6 py-3 w-[300px]">
+                                    Chat
                                 </th>
                             </tr>
                         </thead>
@@ -75,6 +81,9 @@
                                             @else
                                                 <a href="{{ route('admin.customer.activate', $cus->id) }}" class="text-green-600">Kích hoạt</a>
                                             @endif
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <a href="{{ route('admin.chats.show', $cus->id) }}" class="text-blue-600">Chat</a>
                                         </td>
                                     </tr>
                                 @endif

@@ -16,60 +16,45 @@ use App\Models\OrderDetail;
 
 class ClientsNotificationController extends Controller
 {
-    // public function index()
-    // {
-    //     $notifications = ClientsNotification::orderBy('created_at', 'desc')->get();
-
-    //     foreach ($notifications as $notification) {
-    //         $data = json_decode($notification->data);
-    //         $orderId = $data->order_id ?? null;
-            
-    //         if ($orderId) {
-    //             // Lấy các sản phẩm trong đơn hàng
-    //             $orderDetails = OrderDetail::where('order_id', $orderId)->get();
-    //             $productIds = $orderDetails->pluck('pro_id')->unique(); // Danh sách product_id của sản phẩm trong đơn hàng
-    //             $notification->productIds = $productIds;
-    //         } else {
-    //             $notification->productIds = collect(); // Gán giá trị mặc định nếu không có orderId
-    //         }
-    //     }
-    //     return view('clients.pages.notifications.index', compact('notifications'));
-    // }
 
     public function index()
 {
-    $notifications = ClientsNotification::orderBy('created_at', 'desc')->get();
+    $user = auth()->user();
+    $notifications = ClientsNotification::where('user_id', $user->id)
+        ->orderBy('created_at', 'desc')
+        ->get();
 
-    // Xử lý từng thông báo để lấy danh sách các sản phẩm liên quan
+   
     foreach ($notifications as $notification) {
+        if ($notification->is_read == 0) {
+            $notification->is_read = 1;
+            $notification->save();
+        }
+
         $data = json_decode($notification->data);
         $orderId = $data->order_id ?? null;
 
         if ($orderId) {
-            // Lấy các sản phẩm từ chi tiết đơn hàng
             $orderDetails = OrderDetail::where('order_id', $orderId)->get();
-            $productIds = $orderDetails->pluck('pro_id')->unique(); // Danh sách các product_id
-
-            // Gán danh sách productIds cho thông báo
+            $productIds = $orderDetails->pluck('pro_id')->unique();
             $notification->productIds = $productIds;
         } else {
-            // Gán giá trị mặc định nếu không có orderId
             $notification->productIds = collect();
         }
     }
 
-    // Trả về view với các thông báo
+
+    $clientUnreadNotificationsCount = ClientsNotification::where('user_id', $user->id)
+        ->where('is_read', 0)
+        ->count();
+    session(['clientUnreadNotificationsCount' => $clientUnreadNotificationsCount]);
+
     return view('clients.pages.notifications.index', compact('notifications'));
 }
-    public function markAsRead($id)
-    {
-        $notification = ClientsNotification::find($id);
-        if ($notification) {
-            $notification->is_read = true;
-            $notification->save();
-        }
-        return back();
-    }
+
+
+
+
 
     public function delete($id)
     {
@@ -81,14 +66,14 @@ class ClientsNotificationController extends Controller
     }
     public function confirmReceived($id)
     {
-        // Tìm thông báo theo ID
+      
         $notification = ClientsNotification::findOrFail($id);
         
-        // Đánh dấu thông báo đã đọc
+       
         $notification->is_read = true;
         $notification->save();
     
-        // Lấy thông tin đơn hàng từ dữ liệu thông báo
+        
         $data = json_decode($notification->data);
         $orderId = $data->order_id ?? null;
     
@@ -111,15 +96,15 @@ class ClientsNotificationController extends Controller
     {
         $notification = ClientsNotification::findOrFail($id);
     
-        // Giải mã dữ liệu thông báo
+        
         $data = json_decode($notification->data);
         var_dump($data);
     
-        // Kiểm tra nếu $data và $data->order_id tồn tại
+        
         if (isset($data->order_id)) {
             $orderId = $data->order_id;
     
-            // Tạo thông báo mới cho admin
+      
             Notification::create([
                 'user_id' => auth()->user()->id,
                 'type' => 'order_cancel_request',
@@ -150,18 +135,21 @@ class ClientsNotificationController extends Controller
 
     
 
-     public function review($orderId)
+     public function review($orderId, $productId)
 {
-    // Lấy thông tin đơn hàng chi tiết
-    $orderDetail = OrderDetail::where('order_id', $orderId)->firstOrFail();
+    // Tìm chi tiết đơn hàng với orderId và productId
+    $orderDetail = OrderDetail::where('order_id', $orderId)
+                               ->where('pro_id', $productId)
+                               ->firstOrFail();
 
-    // Lấy thông tin sản phẩm dựa vào pro_id
+    // Lấy thông tin sản phẩm, kích thước, màu sắc liên quan
     $sizes = Size::all();
     $colors = Color::all();
-    $product = Product::findOrFail($orderDetail->pro_id);
+    $product = Product::findOrFail($productId);
     $selectedSizeId = $orderDetail->size_id;
     $selectedColorId = $orderDetail->color_id;
-    // Trả về view với dữ liệu đơn hàng chi tiết và sản phẩm
+
+    // Trả về view với thông tin chi tiết sản phẩm để đánh giá
     return view('clients.pages.detail-product', [
         'orderDetail' => $orderDetail,
         'product' => $product,
@@ -171,6 +159,12 @@ class ClientsNotificationController extends Controller
         'colors'=>$colors
     ]);
 }
+
+
+public function getClientUnreadNotificationsCount()
+    {
+        return Notification::where('is_read', false)->count();
+    }
 }
 
 

@@ -3,19 +3,33 @@
 
 @section('app')
 <section id="prodetails" class="section-p1">
-    <!-- Hiển thị thông báo lỗi nếu có -->
-
     <div class="single-pro-image">
-        <img src="{{  $product->image }}" width="100%" id="mainImg" alt="">
-
+        <div class="slideshow-container">
+            <!-- Slide Images -->
+            <div class="mySlides">
+                <img src="{{ $product->image }}" class="slide-img" id="mainImg" alt="Product Image">
+            </div>
+            @foreach($product->product_variants as $variant)
+                @if($variant->image_variant)
+                <div class="mySlides">
+                    <img src="{{ $variant->image_variant }}" class="slide-img" alt="Variant Image">
+                </div>
+                @endif
+            @endforeach
+           
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
     </div>
+
+
     <div class="single-pro-detail">
         <form action="{{ route('clients.wishlists.add') }}" method="POST">
             @csrf
             <input type="hidden" name="product_id" value="{{ $product->id }}">
             <input type="hidden" name="size_id" value="{{ $selectedSizeId }}">
             <input type="hidden" name="color_id" value="{{ $selectedColorId }}">
-            <button type="submit" class="normal">Yêu thích</button>
+            <button type="submit" class="normal" style="margin:0px 0px 20px 0px">Yêu thích</button>
         </form>
         <form action="{{ route('home.cart.addToCart') }}" method="POST" id="product-form">
             @csrf
@@ -52,27 +66,33 @@
             <h4>{{ $product->name }}</h4>
             <input type="hidden" value="{{ $product->id }}" name="pro_id">
 
-            <!-- Hiển thị giá cơ bản -->
+           
             <p id="product-price">Giá: {{ number_format($product->price, 2, '.', ',') }}</p>
 
 
-            <!-- Hiển thị thông báo lỗi nếu có -->
+           
             
 
-            <select name="size_id" id="size-select" class="border">
-                <option value="">Chọn kích thước</option>
-                @foreach($sizes as $size)
-                    <option value="{{ $size->id }}">{{ $size->name }}</option>
-                @endforeach
-            </select>
+            <div class="select-container">
+                <select name="size_id" id="size-select">
+                    <option value="">Chọn kích thước</option>
+                    @foreach($sizes as $size)
+                        <option value="{{ $size->id }}">{{ $size->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
+            
+            <div class="select-container">
+                <select name="color_id" id="color-select">
+                    <option value="">Chọn màu sắc</option>
+                    @foreach($colors as $color)
+                        <option value="{{ $color->id }}" style="background-color: {{ $color->hex_code }};">{{ $color->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <input type="number" value="1" min="1" class="number-input" name="quantity" style="height: 30px">
 
-            <select name="color_id" id="color-select" class="border">
-                <option value="">Chọn màu sắc</option>
-                @foreach($colors as $color)
-                    <option value="{{ $color->id }}">{{ $color->name }}</option>
-                @endforeach
-            </select>
-            <input type="number" value="1" min="1" class="border" name="quantity">
             <button class="normal">Thêm vào giỏ hàng</button>
         </form>
 
@@ -177,6 +197,196 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </script>
 
+
+<script>
+    let slideIndex = 1;
+  showSlides(slideIndex);
+  
+  
+  function plusSlides(n) {
+      showSlides(slideIndex += n);
+  }
+  
+ 
+  function currentSlide(n) {
+      showSlides(slideIndex = n);
+  }
+  
+  function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      if (n > slides.length) { slideIndex = 1 }
+      if (n < 1) { slideIndex = slides.length }
+      for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+      }
+      slides[slideIndex - 1].style.display = "block";
+  }
+  
+  
+  setInterval(() => {
+      plusSlides(1);
+  }, 5000);
+  
+  </script>
+      
+
 @endsection
     
-    
+<style>
+
+.slideshow-container {
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+    overflow: hidden;
+}
+
+
+.mySlides {
+    display: none;
+}
+
+
+.slide-img {
+    width: 100%;
+    height: auto;
+}
+
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+button.normal {
+    background-color: #ff5a5f; 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block; 
+    font-size: 16px;
+    margin: 4px 2px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+    transition: background-color 0.3s; 
+}
+
+button.normal:hover {
+    background-color: #e14e53; 
+}
+
+
+#error-message {
+    background-color: #f8d7da; 
+    color: #721c24; 
+    border: 1px solid #f5c6cb; 
+    border-radius: 5px; 
+    padding: 10px; /
+    margin-bottom: 15px;
+}
+
+
+#success-message {
+    background-color: #d4edda; 
+    color: #155724; 
+    border: 1px solid #c3e6cb;
+    border-radius: 5px; 
+    padding: 10px; 
+}
+
+
+.select-container {
+    position: relative;
+    display: inline-block;
+    width: 200px; 
+    margin-bottom: 15px; 
+}
+
+
+.select-container select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+}
+
+
+#color-select option {
+    background-color: transparent; 
+}
+
+#color-select option[data-color] {
+    background-color: var(--option-color); 
+
+}
+.select-container option {
+    padding: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.select-container option:hover {
+    background-color: #f1f1f1;
+}
+
+
+#color-select option[data-color] {
+    background-color: #f0f0f0;
+    color: #000;
+}
+
+
+
+.number-input {
+    width: 100%; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    font-family: Arial, sans-serif; 
+    color: #333; 
+    background-color: #fff; 
+    box-sizing: border-box; 
+    text-align: center; 
+}
+
+
+.number-input::-webkit-inner-spin-button,
+.number-input::-webkit-outer-spin-button {
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+
+.number-input[type=number] {
+    -moz-appearance: textfield; 
+}
+
+.number-input:focus {
+    border-color: #007bff; 
+    outline: none; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+}
+
+</style>
+

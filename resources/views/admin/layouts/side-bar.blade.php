@@ -27,6 +27,14 @@
                     <i class="fa-solid fa-cogs"></i>
                     <span class="link-name">Thuộc Tính</span>
                 </a></li>
+            <li><a href="{{ route('admin.status.index') }}">
+                <i class="fa-solid fa-table"></i>
+                <span class="link-name">Loại sản phẩm</span>
+            </a></li>
+            <li><a href="{{ route('admin.blogs.index') }}">
+                <i class="fa-solid fa-blog"></i>
+                <span class="link-name">Bài viết</span>
+            </a></li>            
             <li><a href="{{ route('admin.manage.index') }}">
                     <i class="fa-solid fa-user-tie"></i>
                     <span class="link-name">Tài Khoản Admin</span>

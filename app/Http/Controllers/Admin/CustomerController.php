@@ -24,6 +24,7 @@ class CustomerController extends Controller
 
 
         ClientsNotification::create([
+            'user_id'=>$user->id,
             'type' => 'account_update',
             'data' => json_encode([
                 'user_id' => $user->id,
@@ -52,6 +53,7 @@ class CustomerController extends Controller
     
         // Tạo thông báo cho người dùng bị khóa tài khoản
         ClientsNotification::create([
+            'user_id'=>$user->id,
             'type' => 'account_update',
             'data' => json_encode([
                 'user_id' => $user->id,

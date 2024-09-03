@@ -13,9 +13,12 @@ class DashboardController extends Controller
 {
         public function index(Request $request)
         {
+            
             $startDate = $request->input('start_date');
             $endDate = $request->input('end_date');
     
+
+
             // Tổng số đơn hàng đã được đặt
             $totalOrdersQuery = Order::query();
             if ($startDate && $endDate) {
@@ -23,6 +26,9 @@ class DashboardController extends Controller
             }
             $totalOrders = $totalOrdersQuery->count();
     
+
+
+
             // Người đặt hàng nhiều nhất
             $topCustomerQuery = Order::select('user_id')
                 ->selectRaw('COUNT(*) as order_count')
@@ -34,6 +40,8 @@ class DashboardController extends Controller
             $topCustomer = $topCustomerQuery->first();
             $topCustomerName = $topCustomer ? User::find($topCustomer->user_id)->name : 'N/A';
     
+
+
             // Tổng số tiền thu được
             $totalRevenueQuery = OrderDetail::query();
             if ($startDate && $endDate) {
@@ -43,6 +51,8 @@ class DashboardController extends Controller
             }
             $totalRevenue = $totalRevenueQuery->sum('total_price');
     
+
+
             // Sản phẩm bán nhiều nhất
             $topProductQuery = OrderDetail::select('pro_id')
                 ->selectRaw('SUM(quantity) as total_quantity')
@@ -55,7 +65,35 @@ class DashboardController extends Controller
             }
             $topProduct = $topProductQuery->first();
             $topProductName = $topProduct ? Product::find($topProduct->pro_id)->name : 'N/A';
+
+
+
+
+            $topViewedProductQuery = Product::query()
+            ->orderBy('view', 'desc');
+            if ($startDate && $endDate) {
+                $topViewedProductQuery->whereBetween('created_at', [$startDate, $endDate]);
+            }
+            $topViewedProduct = $topViewedProductQuery->first();
+            $topViewedProductName = $topViewedProduct ? $topViewedProduct->name : 'N/A';
+            $topViewedProductViews = $topViewedProduct ? $topViewedProduct->view : 0;
+
+
+
+            $topRatedProductQuery = Product::select('products.*')
+            ->join('ratings', 'products.id', '=', 'ratings.product_id')
+            ->selectRaw('AVG(ratings.rating) as avg_rating')
+            ->groupBy('products.id')
+            ->orderBy('avg_rating', 'desc');
     
+        if ($startDate && $endDate) {
+            $topRatedProductQuery->whereBetween('products.created_at', [$startDate, $endDate]);
+        }
+    
+        $topRatedProduct = $topRatedProductQuery->first();
+        $topRatedProductName = $topRatedProduct ? $topRatedProduct->name : 'N/A';
+        $topRatedProductRating = $topRatedProduct ? number_format($topRatedProduct->avg_rating, 2) : 'N/A';
+            
             return view('admin.pages.dashboard', [
                 'totalOrders' => $totalOrders,
                 'topCustomerName' => $topCustomerName,
@@ -63,6 +101,10 @@ class DashboardController extends Controller
                 'topProductName' => $topProductName,
                 'startDate' => $startDate,
                 'endDate' => $endDate,
+                'topViewedProductName' => $topViewedProductName,
+                'topViewedProductViews' => $topViewedProductViews,
+                'topRatedProductName' => $topRatedProductName,
+                'topRatedProductRating' => $topRatedProductRating,
             ]);
         }
     }

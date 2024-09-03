@@ -9,7 +9,6 @@
                 <tr>
                     <th scope="col" class="px-6 py-3">Tin nhắn</th>
                     <th scope="col" class="px-6 py-3">Thời gian</th>
-                    <th scope="col" class="px-6 py-3">Trạng thái</th>
                     <th scope="col" class="px-6 py-3">Hành động</th>
                 </tr>
             </thead>
@@ -17,76 +16,31 @@
                 @foreach ($notifications as $notification)
                 @php
                     $data = json_decode($notification->data);
-                    $message = $data ? $data->message ?? 'No message' : 'No message';
-                    $orderId = $data ? $data->order_id ?? null : null;
-                    $type = $notification->type;
+                    $message = $data->message ?? 'Không có tin nhắn';
+                    $orderId = $data->order_id ?? null;
                 @endphp
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <td class="px-6 py-4">{{ $message }}</td>
                     <td class="px-6 py-4">{{ $notification->created_at->format('d/m/Y H:i') }}</td>
 
-                    <!-- thông báo đã nhận được hàng -->
-                    @if (trim($message) === 'Đơn hàng của bạn đã được giao cho người nhận.')
-                        <td class="px-6 py-4">
-                            <form action="{{ route('clients.notifications.confirmReceived', $notification->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Đã nhận</button>
-                            </form>
-                        </td>
-                    @endif
-
-
-                    {{-- hiển thị nút hủy đơn hàng --}}
-                    @if (trim($type) === 'đã đặt hàng')
-                        <td class="px-6 py-4">
-                            <form action="{{ route('clients.notifications.cancelOrder', $notification->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Hủy đơn</button>
-                            </form>
-                            
-                        </td>
-                    @endif
-
-                    {{-- hiển thị bị kháo tài khoản --}}
-                    @if (trim($message) === 'Chúng tôi đã nhận thấy 1 số hành động lại từ tài khoản của bạn nên đã tạm thời khóa nó . Vui lòng liên hệ qua trang chat')
+                    <!-- Kiểm tra thông báo "Đơn hàng đã giao thành công" -->
+                    @if ($message === 'Đơn hàng của bạn đã được giao hàng thành công.')
                     <td class="px-6 py-4">
-                        <form action="{{ route('clients.chats.index', ['userId' => auth()->user()->id]) }}" method="GET">
-                            @csrf
-                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Chat với admin</button>
-                        </form>
-                    </td>
-                   @endif
-
-                   
-
-                    {{-- thông báo đánh giá --}}
-                    <td class="px-6 py-4">
-                        @if (trim($message) === 'Đơn hàng của bạn đã được giao hàng thành công.')
-                        <form action="{{ route('clients.product.review', ['orderId' => $orderId]) }}" method="GET">
-                            @csrf
-                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Đánh giá sản phẩm</button>
-                        </form>
-                        
+                        <!-- Hiển thị nút đánh giá cho tất cả sản phẩm -->
+                        @if ($orderId)
+                            @php
+                                $orderDetails = \App\Models\OrderDetail::where('order_id', $orderId)->get();
+                            @endphp
+                            @foreach ($orderDetails as $orderDetail)
+                                <form action="{{ route('clients.product.review', ['orderId' => $orderId, 'productId' => $orderDetail->pro_id]) }}" method="GET">
+                                    @csrf
+                                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" style="margin:10px">Đánh giá sản phẩm {{ $orderDetail->pro_id }}</button>
+                                </form>
+                            @endforeach
                         @endif
                     </td>
-                    
+                    @endif
 
-
-
-
-                    <!-- Hiển thị trạng thái đã đọc/chưa đọc -->
-                    <td class="px-6 py-4">
-                        @if (!$notification->is_read)
-                            <span class="text-red-500">Chưa đọc</span>
-                            <!-- Đánh dấu là đã đọc -->
-                            <form action="{{ route('clients.notifications.markAsRead', $notification->id) }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" class="text-blue-500 hover:text-blue-700">Đánh dấu là đã đọc</button>
-                            </form>
-                        @else
-                            <span class="text-green-500">Đã đọc</span>
-                        @endif
-                    </td>
 
                     <!-- Xóa thông báo -->
                     <td class="px-6 py-4">
@@ -100,7 +54,7 @@
                 @endforeach
             </tbody>
         </table>
-        <a href="{{ route('clients.index') }}" class="text-blue-500 hover:underline mt-4 inline-block">Quay lại</a>
+        <a href="{{ route('clients.index') }}" class="back-button mt-4 inline-block">Quay lại</a>
     @else
         <div role="alert" class="bg-red-100 border border-red-400 text-red-700 rounded px-4 py-3">
             <p class="font-bold">Thông báo</p>
@@ -108,5 +62,39 @@
         </div>
     @endif
 </div>
-
 @endsection
+
+<style>
+   
+
+.button-container {
+    margin-top: 1rem; 
+}
+
+.button-container form {
+    margin-bottom: 0.5rem;
+}
+
+.button-container form button {
+    display: block; 
+    margin-bottom: 0.5rem; 
+    width: auto;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 0.5rem 1rem; 
+    background-color: #1d4ed8; 
+    color: #ffffff; 
+    text-decoration: none; 
+    border-radius: 0.375rem; 
+    font-weight: 500; 
+    transition: background-color 0.3s ease; 
+}
+
+.back-button:hover {
+    background-color: #2563eb; 
+}
+
+
+</style>

@@ -24,10 +24,10 @@
                                         <td class="px-6 py-4">{{ $message }}</td>
                                         <td class="px-6 py-4">{{ $notification->created_at }}</td>
                                         <td class="px-6 py-4">
-                                            <form action="{{ route('admin.notifications.mark-as-read', $notification->id) }}" method="POST" style="display:inline;">
+                                            {{-- <form action="{{ route('admin.notifications.mark-as-read', $notification->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 <button type="submit" class="text-blue-500 hover:text-blue-700">Đánh dấu là đã đọc</button>
-                                            </form>
+                                            </form> --}}
                                             <form action="{{ route('admin.notifications.delete', $notification->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
