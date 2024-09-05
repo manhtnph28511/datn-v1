@@ -11,7 +11,8 @@
                 <td>Giá</td>
                 <td>Số lượng</td>
                 <td>Tổng giá</td>
-                <td>Voucher</td>    
+                <td>Voucher</td>   
+                 
             </tr>
         </thead>
         <tbody class="cart-box">
@@ -59,14 +60,13 @@
                 </td>
             </tr>
         
-            <!-- Form để nhập mã giảm giá cho mỗi sản phẩm -->
             <tr id="voucher-form-{{ $index }}" class="voucher-form" style="display: none;">
                 <td colspan="7">
                     <form action="{{ route('applyVoucher') }}" method="POST">
                         @csrf
                         <input type="hidden" name="pro_id" value="{{ $cart->pro_id }}">
                         <input type="text" name="voucher_code" placeholder="Nhập mã voucher">
-                        {{-- <button type="submit" class="btn btn-primary">Tìm Voucher</button> --}}
+                        
                         <button type="submit" class="btn btn-primary">Sử dụng</button>
                     </form>
                 </td>
@@ -108,6 +108,8 @@
                 <th>Loại giảm Giá</th>
                 <th>Thời Gian Bắt Đầu</th>
                 <th>Thời Gian Kết Thúc</th>
+                <th>Trạng thái</th>
+                <th>Chọn</th> 
                 
             </tr>
         </thead>
@@ -126,7 +128,7 @@
                         @if(is_null($userVoucher->voucher->product_id))
                             Áp dụng cho mọi sản phẩm
                         @else
-                            Áp dụng cho sản phẩm {{ $userVoucher->voucher->product->name }}
+                            Áp dụng cho {{ $userVoucher->voucher->product->name }}
                         @endif
                     </td>
                     <td>{{ $userVoucher->voucher->starts_at->format('d-m-Y H:i:s') }}</td>
@@ -137,6 +139,11 @@
                         @else
                             <span class="text-success">Còn hạn</span>
                         @endif
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary select-voucher" data-voucher-code="{{ $userVoucher->voucher->code }}">
+                            Chọn
+                        </button>
                     </td>
                 </tr>
             @endforeach
@@ -155,6 +162,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     var showVoucherButtons = document.querySelectorAll('.show-voucher-form');
+    var selectVoucherButtons = document.querySelectorAll('.select-voucher');
 
     showVoucherButtons.forEach(function(button) {
         button.addEventListener('click', function() {
@@ -162,10 +170,21 @@
             var voucherForm = document.getElementById('voucher-form-' + index);
             var discountedPriceCell = button.closest('tr').querySelector('.discounted-price');
 
-            voucherForm.style.display = 'table-row'; // Hiển thị form tương ứng
+            voucherForm.style.display = 'table-row'; 
             discountedPriceCell.style.display = 'table-cell'; 
 
-            button.style.display = 'none'; // Ẩn nút sau khi nhấn
+            button.style.display = 'none'; 
+        });
+    });
+
+    selectVoucherButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var voucherCode = button.getAttribute('data-voucher-code');
+            var voucherInput = document.querySelector('input[name="voucher_code"]');
+
+            if (voucherInput) {
+                voucherInput.value = voucherCode; 
+            }
         });
     });
 });

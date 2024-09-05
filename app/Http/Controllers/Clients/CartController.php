@@ -290,10 +290,10 @@ public function searchVouchers(Request $request)
 
     // Lấy tất cả các voucher của người dùng kèm thông tin sản phẩm
     $userVouchers = UserVoucher::where('user_id', $userId)
-        ->with('voucher') // Include voucher relationship
+        ->with('voucher') 
         ->get();
 
-    // Trả về view với dữ liệu
+   
     return view('clients.pages.orders.voucher', [
         'carts' => $carts,
         'userVouchers' => $userVouchers,
@@ -370,6 +370,13 @@ public function searchVouchers(Request $request)
                 return back()->withErrors(['error' => 'Sản phẩm không có trong giỏ hàng.']);
             }
     
+            if ($voucher->product_id != $cart->pro_id) {
+                return back()->withErrors(['voucher_code' => 'Voucher không áp dụng cho sản phẩm này.']);
+            }
+    
+            $discountAmount = 0;
+
+            
             if ($voucher->discount_type == 'percentage') {
                 $discountAmount = ($cart->total_price * $voucher->discount) / 100;
             } else {

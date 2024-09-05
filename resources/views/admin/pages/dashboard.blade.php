@@ -38,13 +38,13 @@
             <div class="box box5 " style="background-color:rgb(197, 104, 203)">
                 <span class="text">Sản phẩm có lượt xem cao nhất</span>
                 <span class="text">{{ $topViewedProductName }}</span>
-                <span class="views">{{ $topViewedProductViews }} views</span>
+                <span class="views">{{ $topViewedProductViews }} lượt xem</span>
             </div>
 
             <div class="box box6" style="background-color:aliceblue">
                 <span class="text">Sản phẩm có đánh giá cao nhất</span>
                 <span class="text">{{ $topRatedProductName }}</span>
-                <span class="rating">{{ $topRatedProductRating }} stars</span>
+                <span class="rating">{{ $topRatedProductRating }} sao</span>
             </div>
         </div>
     </div>

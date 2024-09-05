@@ -27,44 +27,44 @@
         @csrf
 
         <div class="form-group">
-            <label for="code">Voucher Code:</label>
+            <label for="code">Mã giảm giá</label>
             <input type="text" name="code" id="code" class="form-control" required>
         </div>
 
         <div class="form-group">
-            <label for="discount">Discount:</label>
+            <label for="discount">Giá</label>
             <input type="number" name="discount" id="discount" class="form-control" step="0.01" required>
         </div>
 
         <div class="form-group">
-            <label for="discount_type">Discount Type:</label>
+            <label for="discount_type">Loại giảm giá</label>
             <select name="discount_type" id="discount_type" class="form-control" required>
                 <option value="percentage">giảm giá phần trăm (%)</option>
                 <option value="fixed">giảm giá theo số tiền </option>
             </select>
         </div>
         <div class="form-group">
-            <label for="starts_at">Start Date:</label>
+            <label for="starts_at">Ngày bắt đầu:</label>
             <input type="date" name="starts_at" id="starts_at" class="form-control" required>
         </div>
 
         <div class="form-group">
-            <label for="expires_at">Expiry Date:</label>
+            <label for="expires_at">Ngày kết thúc:</label>
             <input type="date" name="expires_at" id="expires_at" class="form-control" required>
         </div>
         <div class="form-group">
-            <label for="usage_count">Usage Count</label>
+            <label for="usage_count">Số lượt đã dùng</label>
             <input type="number" name="usage_count" id="usage_count" class="form-control" value="{{ old('usage_count', $voucher->usage_count ?? 0) }}">
         </div>
         <div class="form-group">
-            <label for="quantity">Quantity</label>
+            <label for="quantity">Số lượng</label>
             <input type="number" name="quantity" id="quantity" class="form-control" required>
         </div>
 
         <div class="form-group">
-            <label for="product_id">Product:</label>
+            <label for="product_id">Sản phẩm</label>
             <select name="product_id" id="product_id" class="form-control">
-                <option value="">Select a product (optional)</option>
+                <option value="">Tất cả sản phẩm</option>
                 @foreach($products as $product)
                     <option value="{{ $product->id }}">{{ $product->name }}</option>
                 @endforeach
@@ -74,7 +74,7 @@
 
         <button type="submit" class="btn btn-primary">Create Voucher</button>
     </form>
-    <a href="{{route('admin.vouchers.index')}}"><- Quay lại</a>
+    <a href="{{route('admin.vouchers.index')}}">Quay lại</a>
     </div>
 @endsection
 <style>
