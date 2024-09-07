@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 03, 2024 at 09:31 AM
+-- Generation Time: Sep 07, 2024 at 04:30 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.2.20
 
@@ -99,6 +99,13 @@ CREATE TABLE `carts` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`id`, `pro_id`, `user_id`, `size_id`, `color_id`, `price`, `quantity`, `total_price`, `image_variant`, `discounted_total_price`, `voucher_code`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(164, 21, 17, 2, 4, 300, 1, 300, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725181615/MWSPORT/Products/ht1yxve7p8uoplmesekn.jpg', NULL, NULL, NULL, '2024-09-05 11:14:50', '2024-09-05 11:14:50');
+
 -- --------------------------------------------------------
 
 --
@@ -183,7 +190,8 @@ INSERT INTO `clients_notifications` (`id`, `user_id`, `type`, `data`, `is_read`,
 (88, 20, 'shipping_update', '{\"order_id\":165,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn.\"}', 1, '2024-09-02 07:42:22', '2024-09-03 04:24:36'),
 (89, 20, 'shipping_update', '{\"order_id\":165,\"message\":\"\\u0110\\u01a1n h\\u00e0ng c\\u1ee7a b\\u1ea1n \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao h\\u00e0ng th\\u00e0nh c\\u00f4ng.\"}', 1, '2024-09-02 07:42:26', '2024-09-03 04:24:36'),
 (90, 20, 'đã đặt hàng', '{\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #166Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-09-02 09:00:11', '2024-09-03 04:24:36'),
-(91, 20, 'đã đặt hàng', '{\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #167Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-09-02 09:03:12', '2024-09-03 04:24:36');
+(91, 20, 'đã đặt hàng', '{\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #167Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-09-02 09:03:12', '2024-09-03 04:24:36'),
+(92, 20, 'đã đặt hàng', '{\"order_id\":168,\"message\":\"\\u0110\\u00e3 \\u0111\\u1eb7t h\\u00e0ng! \\u0110\\u01a1n h\\u00e0ng #168,Vui l\\u00f2ng ch\\u1edd x\\u00e1c nh\\u1eadn\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-09-05 11:16:48', '2024-09-07 02:20:34');
 
 -- --------------------------------------------------------
 
@@ -213,7 +221,8 @@ INSERT INTO `colors` (`id`, `name`, `code`, `created_at`, `updated_at`, `deleted
 (6, 'Xanh', '#35d09c', '2024-08-31 10:12:52', '2024-09-03 09:05:14', NULL),
 (7, 'Xanh lam', '#402dd2', '2024-09-03 09:05:26', '2024-09-03 09:05:41', NULL),
 (8, 'Vàng', '#c5e817', '2024-09-03 09:05:59', '2024-09-03 09:05:59', NULL),
-(9, 'Cam', '#e5aa57', '2024-09-03 09:15:56', '2024-09-03 09:15:56', NULL);
+(9, 'Cam', '#e5aa57', '2024-09-03 09:15:56', '2024-09-03 09:15:56', NULL),
+(10, 'Tím', '#a422c9', '2024-09-07 03:43:38', '2024-09-07 03:43:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -455,7 +464,8 @@ INSERT INTO `notifications` (`id`, `type`, `data`, `is_read`, `created_at`, `upd
 (151, 'shipping_update', '{\"order_id\":165,\"message\":\"Tr\\u1ea1ng th\\u00e1i \\u0111\\u01a1n h\\u00e0ng 165 \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c c\\u1eadp nh\\u1eadt l\\u00e0 :\\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao cho ng\\u01b0\\u1eddi nh\\u1eadn.\"}', 1, '2024-09-02 07:42:22', '2024-09-02 07:42:35'),
 (152, 'shipping_update', '{\"order_id\":165,\"message\":\"Tr\\u1ea1ng th\\u00e1i \\u0111\\u01a1n h\\u00e0ng 165 \\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c c\\u1eadp nh\\u1eadt l\\u00e0 :\\u0111\\u00e3 \\u0111\\u01b0\\u1ee3c giao h\\u00e0ng th\\u00e0nh c\\u00f4ng.\"}', 1, '2024-09-02 07:42:26', '2024-09-02 07:42:35'),
 (153, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #166\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-09-02 09:00:11', '2024-09-03 08:35:38'),
-(154, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #167\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-09-02 09:03:12', '2024-09-03 08:35:38');
+(154, 'đã đặt hàng', '{\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #167\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 1, '2024-09-02 09:03:12', '2024-09-03 08:35:38'),
+(155, 'đã đặt hàng', '{\"order_id\":168,\"message\":\"C\\u00f3 \\u0111\\u01a1n h\\u00e0ng m\\u1edbi! \\u0110\\u01a1n h\\u00e0ng #168\",\"order_details\":{\"username\":\"manh123\",\"address\":\"tan phong bx vp\",\"phone\":\"0987184285\",\"email\":\"manhtnph28511@fpt.edu.vn\",\"note\":\"\"}}', 0, '2024-09-05 11:16:48', '2024-09-05 11:16:48');
 
 -- --------------------------------------------------------
 
@@ -622,7 +632,8 @@ INSERT INTO `orders` (`id`, `user_id`, `username`, `phone`, `email`, `address`, 
 (164, 19, 'tran manh', '0987654321', 'minh29122003@gmail.com', 'ha noi', '', 'success', 'DELIVERED', 'Credit_card', '2024-09-01 09:21:47', '2024-09-01 09:27:48'),
 (165, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'hanoi bac tu liem', '', 'success', 'DELIVERED', 'Credit_card', '2024-09-02 07:41:05', '2024-09-02 07:42:26'),
 (166, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-09-02 09:00:04', '2024-09-02 09:00:04'),
-(167, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-09-02 09:03:08', '2024-09-02 09:03:08');
+(167, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'COD', '2024-09-02 09:03:08', '2024-09-02 09:03:08'),
+(168, 20, 'manh123', '0987184285', 'manhtnph28511@fpt.edu.vn', 'tan phong bx vp', '', 'PENDING', 'ORDERPLACE', 'Credit_card', '2024-09-05 11:16:39', '2024-09-05 11:16:39');
 
 -- --------------------------------------------------------
 
@@ -804,7 +815,8 @@ INSERT INTO `order_details` (`id`, `order_id`, `pro_id`, `size_id`, `color_id`, 
 (168, 165, 23, 2, 1, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725159822/MWSPORT/Products/yrqnhex3x3yuzizwwmj2.jpg', 200000, 1, 200000, '2024-09-02 07:41:05', '2024-09-02 07:41:05'),
 (169, 165, 21, 2, 4, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725181615/MWSPORT/Products/ht1yxve7p8uoplmesekn.jpg', 300, 1, 300, '2024-09-02 07:41:05', '2024-09-02 07:41:05'),
 (170, 166, 21, 2, 4, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725181615/MWSPORT/Products/ht1yxve7p8uoplmesekn.jpg', 300, 1, 300, '2024-09-02 09:00:04', '2024-09-02 09:00:04'),
-(171, 167, 21, 2, 3, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725181584/MWSPORT/Products/awjtpzy3uc9ib0of5wej.jpg', 14000, 1, 14000, '2024-09-02 09:03:08', '2024-09-02 09:03:08');
+(171, 167, 21, 2, 3, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725181584/MWSPORT/Products/awjtpzy3uc9ib0of5wej.jpg', 14000, 1, 14000, '2024-09-02 09:03:08', '2024-09-02 09:03:08'),
+(172, 168, 25, 3, 4, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725354903/MWSPORT/Products/y3wdpvwtojgfhtaflkfk.jpg', 450000, 1, 360000, '2024-09-05 11:16:39', '2024-09-05 11:16:39');
 
 -- --------------------------------------------------------
 
@@ -954,28 +966,28 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `image`, `price`, `quantity`, `description`, `view`, `slug`, `cate_id`, `brand_id`, `color_id`, `size_id`, `status_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'Cartoon Astronaut T-Shirts', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637576/Cara/Products/jxmoqrh37yknvwnufeou.jpg', 141234.00, 10, '<p><strong>Form Dáng</strong>: Regular Fit.</p><p><strong>Chất liệu:</strong></p><blockquote><ul><li>Định lượng: 330gsm (Dày dặn, xốp, phồng đứng form)</li><li>Thành phần: 35% Cotton - 65% Polyester</li></ul></blockquote><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 27, 'cartoon-astronaut-t-shirts', 1, 1, 5, 1, 1, NULL, '2024-07-27 20:34:56', '2024-09-01 10:51:17'),
-(2, 'Cartoon Astronaut T-Shirts', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637548/Cara/Products/olkj6gj7e7kflny40axq.jpg', 141234.00, 23, '<p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 67, 'cartoon-astronaut-t-shirts', 1, 1, 5, 3, 1, NULL, '2024-07-27 20:52:33', '2024-08-08 02:52:59'),
-(3, 'TOBI Regular Raincoat', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637530/Cara/Products/qxxwuol3emz4fahronqf.jpg', 480000.00, 8, '<p><strong>Form Dáng</strong>: Oversize</p><p><strong>Chất liệu</strong>: Dù trượt nước - 100 % Polyester</p><p><strong>Chi tiết sản phẩm</strong>:</p><blockquote><ul><li>Hình in đa dạng</li><li>Phần lai áo được may xẻ tà và có nút bấm.</li></ul></blockquote><p>&nbsp;</p>', 60, 'tobi-ragular-raincoat', 1, 2, 4, 2, 1, NULL, '2024-07-28 21:22:53', '2024-08-07 05:27:22'),
-(4, 'Waffle Stripped Polo - Grude', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637506/Cara/Products/mds4i02ts76eg5stpirj.jpg', 430000.00, 10, '<p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 31, 'waffle-stripped-polo-grude', 1, 2, 3, 4, 2, NULL, '2024-07-28 21:24:38', '2024-07-23 21:41:26'),
-(5, 'Regular Typo Cuban Shirt', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637486/Cara/Products/zshiefnor5oyupnn7lhl.jpg', 450000.00, 32, '<p><strong>Form Dáng:</strong>&nbsp;Boxy Fit.</p><ul><li>Chất liệu: 70% Cotton 30% Nylon</li><li>Định lượng: 161GSM</li></ul><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Form dáng Boxy chia tỉ lệ cơ thể 1/3 giúp tôn dáng người mặc</li><li>In vân đá</li></ul></blockquote>', 2, 'tegular-typo-cuban-shirt', 7, 7, 3, 4, 2, NULL, '2024-07-28 21:44:37', '2024-07-23 21:33:30'),
-(6, 'Highclass Cuban Shirt', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699682825/Cara/Products/rbjjn6krrfs0dxs8z1ph.jpg', 530000.00, 22, '<p><strong>Form dáng:</strong> Boxy Fit.</p><p><strong>Chất liệu:</strong> Lụa D100</p><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Form dáng Boxy chia tỉ lệ cơ thể 1/3 giúp tôn dáng người mặc&nbsp;</li><li>Áo được in overprinted toàn bộ áo</li><li>Hoạ tiết trên áo mang hơi hướng summer vibe&nbsp;</li></ul></blockquote>', 23, 'highclass-cuban-shirt', 10, 4, 1, 5, 1, NULL, '2024-07-28 21:46:46', '2024-08-06 03:47:36'),
-(7, 'TOBI Basic Boxy T-shirt', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637465/Cara/Products/rg4oynlowmtrxs9wyr5x.jpg', 299999.00, 22, '<p><strong>Form Dáng</strong>: Boxy Fit.</p><p><strong>Chất liệu:</strong></p><blockquote><ul><li>Định lượng: 250GSM</li><li>Thành phần: 100% Cotton - 2 Chiều.</li></ul></blockquote><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Bo cổ dệt định lượng dày, chắc chắn, hạn chế nhão &amp; co rút sau khi giặt.</li><li>Dáng boxy chia tỉ lệ vàng cơ thể 1/3.</li><li>Logo&nbsp;<strong>TOBI®</strong>&nbsp;màu kem in nổi cao thành, chắc chắn.</li></ul></blockquote>', 0, 'tobi-basic-boxy-t-shirt', 7, 5, 3, 5, 3, NULL, '2024-07-28 21:48:47', '2024-11-09 20:31:05'),
-(8, 'TOBI SauRieng T-shirt', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637417/Cara/Products/tftdjcgnjr8sspsy9bsm.jpg', 320000.00, 20, '<p><strong>Form Dáng:</strong> Boxy Fit.</p><p><strong>Chất liệu:</strong></p><blockquote><ul><li>Định lượng: 250gsm&nbsp;</li><li>Thành phần: 100% Cotton - 2 Chiều.</li></ul></blockquote><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt.</li><li>Dáng boxy chia tỉ lệ vàng cơ thể 1/3.</li><li>Hình in Trame.</li></ul></blockquote>', 7, 'tobi-saurieng-t-shirt', 8, 8, 5, 3, 1, NULL, '2024-07-28 21:51:45', '2024-09-02 13:01:03'),
-(9, 'Dép Sục Hà Mã Mắt To Dễ Thương Hot Trend', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637384/Cara/Products/mxiqa7j1m3id6azkg7md.jpg', 150000.00, 8, '<blockquote><ul><li>Dép làm từ nhựa EVA cao cấp, siêu nhẹ, cực kỳ dẻo dai, khả năng chịu lực cao và hoàn toàn không độc hại&nbsp;</li><li>Đảm bảo đi cực kỳ êm chân, cực bền với thiết kế bề mặt giúp đôi chân luôn thoáng mát, không tạo mùi hôi chân&nbsp;</li><li>Đế thiết kế ma sát, chống trơn trượt, chống nước cực tốt Mọi người đi mưa lội nước thoải mái mà không lo hỏng dép nhé ạ</li></ul></blockquote>', 1, 'dep-suc-ha-ma', 23, 4, 3, 2, 3, NULL, '2024-07-28 22:04:28', '2024-11-20 02:37:31'),
-(10, 'Dép lông con sóc siêu cute', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637364/Cara/Products/ms7fbjcpqfyykpnkbzce.jpg', 230000.00, 51, NULL, 28, 'dep-long-con-soc', 26, 8, 4, 1, 1, NULL, '2024-07-28 22:06:19', '2024-08-04 03:35:47'),
-(11, 'Dép thời trang nam chữ H', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637345/Cara/Products/mznngajzsysv8buwd1tw.jpg', 124000.00, 11, NULL, 3, 'dep-thoi-trang-nam', 1, 6, 1, 5, 3, NULL, '2024-07-28 22:07:54', '2024-11-20 03:14:50'),
-(12, 'Giày Adifom Superstar', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637326/Cara/Products/iiznllyzylr8ynhvy9i0.jpg', 210000.00, 43, '<p><i>👉 Thông tin sản phẩm:&nbsp;</i></p><p><i>✔️ Chất lượng tốt nhất trong tầm giá&nbsp;</i></p><p><i>✔️ Form đẹp chuẩn : Màu sắc giống đến 98 °/ₒ ;&nbsp;</i></p><p><i>✔️ Chất liệu da + da lộn + vải mesh&nbsp;</i></p><p><i>✔️ Logo Mông in dập chìm.&nbsp;</i></p><p><i>✔️ Lưỡi gà cao dày dặn; swoosh sắc nét; Mông mũi làm đẹp&nbsp;</i></p><p><i>✔️ Tem QR CODE Có thể check mã 2D&nbsp;</i></p><p><i>✔️ Đế 2 lớp khâu chỉ đều&nbsp;</i></p><p><i>✔️ Full box + accessories&nbsp;</i></p><p><i>✔️ Mẫu này bạn mang đúng hoặc up 1 size đối với chân bè</i></p>', 5, 'giay-adiform', 21, 2, 1, 3, 2, NULL, '2024-07-28 22:09:29', '2024-08-04 03:11:27'),
-(13, 'STYLE 93 SHOE', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637312/Cara/Products/eqg0pg0ssqkgrhwwlu9q.webp', 900000.00, 5, '<p>Style 93, otherwise known as the Vans Mary Jane, debuted around 1994 and flourished as a popular women’s silhouette that tapped into retro nostalgia and a playful interpretation of femininity.&nbsp;</p><p>With a simple buckle and strap, Vans Style 93 took a traditional women’s Mary Jane silhouette and uniquely matched it with a chunky lug rubber outsole,&nbsp;</p><p>making the iconic design more casual and truly Off The Wall. No wonder it’s still a cult favorite today.</p><p>&nbsp;</p><blockquote><ul><li>Mary Jane-style silhouette</li></ul><p>&nbsp;</p><ul><li>Sturdy canvas uppers</li></ul><p>&nbsp;</p><ul><li>Heart buckle closure</li></ul><p>&nbsp;</p><ul><li>Rubber toe caps</li></ul><p>&nbsp;</p><ul><li>Lug rubber outsoles</li></ul></blockquote>', 22, 'van', 21, 5, 3, 3, 1, NULL, '2024-07-28 22:15:52', '2024-08-08 21:13:42'),
-(14, 'TOBI Regular Boxy Sweater', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637299/Cara/Products/grvnik1fqpruzongmmk3.jpg', 590000.00, 45, '<p><strong>Form Dáng:</strong>&nbsp;Boxy Fit.</p><p><strong>Chất liệu:</strong></p><ul><li>Định lượng: 430gsm&nbsp;</li><li>Thành phần: 100% Cotton - Chân cua</li></ul><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt.</li><li>Dáng boxy chia tỉ lệ vàng cơ thể 1/3.</li><li>Phần To bản lai áo và tay được may 3cm tạo cảm giác cứng cáp chắc chắn hơn</li><li>Logo TOBI Regular 2024 được in lụa nổi cao thành, chắn chắn.</li></ul></blockquote>', 0, 'tobi-regular-boxy-sweater', 7, 3, 3, 3, 3, NULL, '2024-07-29 18:52:19', '2024-11-09 20:28:19'),
-(15, 'Quần jean nam rách gối', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637230/Cara/Products/mum0grnh1m0ndbcqr3cq.jpg', 141234.00, 21, '<p>✔️ Loại : quần jeans nam, quần rach gối nam,quần bò rách gối</p><p>✔️ Màu sắc: quần jean nam đen, quần jean nam xanh, quần jean nam xám, quần jean nam trắng ( màu theo mã trên hình )</p><p>✔️ Thích hợp : quần jean nam ống suông gối thích hợp cho Đi Chơi, Công Sở, Đời Thường</p><p>✔️Chất liệu : quần rin nam được làm từ chất jeans</p><p>✔️kiểu dáng: skinny jean nam, quần jean nam slimfit,quần jean nam ống đứng</p>', 126, 'quan-jean-nam-rach-goi', 11, 6, 1, 4, 1, NULL, '2024-07-29 20:34:20', '2024-09-03 04:19:21'),
-(17, 'Sandal Nữ', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637209/Cara/Products/ibueiu32mw9pwckonpba.jpg', 69999.00, 8, '<p>✔️𝐌𝐎̂ 𝐓𝐀̉ 𝐒𝐀̉𝐍 𝐏𝐇𝐀̂̉𝐌&nbsp;</p><p>- Chất liệu: da mềm&nbsp;</p><p>- Màu sắc: đen&nbsp;</p><p>-kiểu dáng thời trang&nbsp;</p><p>- phù hợp với mọi lứa tuổi&nbsp;</p><p>- Kích thước: 35,36,37,38,39</p>', 6, 'sandal-nu', 22, 2, 3, 2, 2, NULL, '2024-07-29 20:42:14', '2024-07-24 17:10:19'),
-(20, 'PAULWEEKEND Áo Sơ Mi Dài Tay Form Rộng Phong Cách retro Nhật Bản Cho Nam', 'https://res.cloudinary.com/denxdub1l/image/upload/v1699637126/Cara/Products/c5gd2n5z5nrea9wjm8f5.jpg', 158000.00, 32, NULL, 1, NULL, 7, 8, 4, 3, 1, NULL, '2024-11-09 20:25:26', '2024-09-01 10:51:01'),
-(21, 'áo thể thao', 'https://res.cloudinary.com/denxdub1l/image/upload/v1722853863/Cara/Products/f0guuvvtcr6n7eftyjm2.jpg', 300000.00, 6, '<ul><li>Được chính những Designer bậc thầy trong làng thể thao thiết kế trên&nbsp;<strong>10 năm kinh nghiệm</strong>&nbsp;cho các hãng thể thao Nike, Adidas, Puma.</li><li>Vải được đặt dệt riêng từ những nhà DỆT gia công cho hãng</li><li>Bảo dưỡng và làm đẹp lại sản phẩm&nbsp;<strong>TRỌN ĐỜI.</strong></li><li>Là Xưởng thể thao áo bóng đá được nhiều phản hồi tích cực từ khách hàng và là thương hiệu đi đầu về đặt áo đá banh tự thiết kế tại Pháp.</li></ul>', 52, 'ao-the-thao', 1, 1, 1, 1, 1, NULL, '2024-08-05 03:30:51', '2024-09-03 08:51:37'),
+(1, 'Áo thun thể thao', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725683342/MWSPORT/Products/bm6zq0yuetplo9vvuza3.jpg', 141234.00, 10, '<p><strong>Form Dáng</strong>: Regular Fit.</p><p><strong>Chất liệu:</strong></p><blockquote><ul><li>Định lượng: 330gsm (Dày dặn, xốp, phồng đứng form)</li><li>Thành phần: 35% Cotton - 65% Polyester</li></ul></blockquote><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 27, 'cartoon-astronaut-t-shirts', 6, 1, 3, 1, 1, NULL, '2024-07-27 20:34:56', '2024-09-07 04:28:49'),
+(2, 'Giày cao cổ thể thao', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725683181/MWSPORT/Products/anldg8x9nls5rohczmxc.jpg', 140000.00, 23, '<p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 67, 'cartoon-astronaut-t-shirts', 22, 1, 4, 3, 1, NULL, '2024-07-27 20:52:33', '2024-09-07 04:26:07'),
+(3, 'Quần thể thao', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682935/MWSPORT/Products/p4nfehboztm80ymlp6zg.jpg', 480000.00, 80, '<p><strong>Form Dáng</strong>: Oversize</p><p><strong>Chất liệu</strong>: &nbsp;100 % Polyester</p><p><strong>Chi tiết sản phẩm</strong>:</p><blockquote><ul><li>Hình in đa dạng</li><li>Phần lai áo được may xẻ tà và có nút bấm.</li></ul></blockquote><p>&nbsp;</p>', 60, 'tobi-ragular-raincoat', 9, 2, 4, 2, 1, NULL, '2024-07-28 21:22:53', '2024-09-07 04:22:01'),
+(4, 'Áo thun thể thao', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682753/MWSPORT/Products/rcdjlwvqcbcd4ogkgkqs.jpg', 430000.00, 10, '<p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Thoáng khí và thấm hút cao: Bề mặt vải được dệt mắt lô kim to giúp thoáng khi tuyệt đối cao.</li><li>Vải có 2 bề mặt khác nhau<ul><li>Bề mặt ngoài: Sợi cotton được dệt waffle tạo độ xốp, phồng đứng form áo.</li><li>Bề mặt bên trong: Sợi polyester dệt mịn, trơn vải dạm da mượt, mát, thoáng khí, chống nhăn sau khi giặt.</li></ul></li><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt cùng với chi tiết sọc.</li><li>Dáng regular fit thoải mái.</li><li>Logo TOBI Regular 2024 được in nhung nổi cao thành, chắn chắn.</li></ul></blockquote>', 31, 'waffle-stripped-polo-grude', 6, 2, 8, 4, 2, NULL, '2024-07-28 21:24:38', '2024-09-07 04:19:00'),
+(5, 'Áo thi đấu clb PSG', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682552/MWSPORT/Products/z16jlshysthj5gnu7dst.jpg', 450000.00, 32, '<p><strong>Form Dáng:</strong>&nbsp;Boxy Fit.</p><ul><li>Chất liệu: 70% Cotton 30% Nylon</li><li>Định lượng: 161GSM</li></ul><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Form dáng Boxy chia tỉ lệ cơ thể 1/3 giúp tôn dáng người mặc</li><li>In vân đá</li></ul></blockquote>', 2, 'tegular-typo-cuban-shirt', 7, 7, 9, 4, 2, NULL, '2024-07-28 21:44:37', '2024-09-07 04:15:39'),
+(6, 'Áo thi đấu clb Bayern Munich', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682340/MWSPORT/Products/o1gfrby0lhe72dxdpadq.jpg', 530000.00, 22, '<p><strong>Form dáng:</strong> Boxy Fit.</p><p><strong>Chất liệu:</strong> Lụa D100</p><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Form dáng Boxy chia tỉ lệ cơ thể 1/3 giúp tôn dáng người mặc&nbsp;</li><li>Áo được in overprinted toàn bộ áo</li><li>Hoạ tiết trên áo mang hơi hướng summer vibe&nbsp;</li></ul></blockquote>', 23, 'highclass-cuban-shirt', 8, 4, 4, 5, 1, NULL, '2024-07-28 21:46:46', '2024-09-07 04:12:07'),
+(7, 'Áo thi đấu clb Bayern_munchen', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725681849/MWSPORT/Products/sgfwz0gaimv5drrafywf.jpg', 299000.00, 22, '<p><strong>Form Dáng</strong>: Boxy Fit.</p><p><strong>Chất liệu:</strong></p><blockquote><ul><li>Định lượng: 250GSM</li><li>Thành phần: 100% Cotton - 2 Chiều.</li></ul></blockquote><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Bo cổ dệt định lượng dày, chắc chắn, hạn chế nhão &amp; co rút sau khi giặt.</li><li>Dáng boxy chia tỉ lệ vàng cơ thể 1/3.</li><li>Logo&nbsp;<strong>TOBI®</strong>&nbsp;màu kem in nổi cao thành, chắc chắn.</li></ul></blockquote>', 19, 'tobi-basic-boxy-t-shirt', 8, 5, 2, 5, 1, NULL, '2024-07-28 21:48:47', '2024-09-07 04:03:56'),
+(8, 'Áo thi đấu clb Juventus', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725681362/MWSPORT/Products/rpgejatcss9p8y7621oh.jpg', 399000.00, 20, '<p><strong>Form Dáng:</strong> Boxy Fit.</p><p><strong>Chất liệu:</strong></p><blockquote><ul><li>Định lượng: 250gsm&nbsp;</li><li>Thành phần: 100% Cotton - 2 Chiều.</li></ul></blockquote><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt.</li><li>Dáng boxy chia tỉ lệ vàng cơ thể 1/3.</li><li>Hình in Trame.</li></ul></blockquote>', 70, 'tobi-saurieng-t-shirt', 12, 7, 1, 3, 1, NULL, '2024-07-28 21:51:45', '2024-09-07 03:55:49'),
+(9, 'Áo thi đấu clb Inter Milan', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725681089/MWSPORT/Products/ltwua4ecdsq9ltwle4e9.jpg', 550000.00, 80, '<ul><li>Chất liệu vải thường là vải dệt mè kim hoặc mè tổ ong hoặc mè kim cương dày dặn và thoáng mát.</li><li>Vải mè ít co giãn, không bị nhăn, có khả năng kháng khuẩn, chống nấm mốc, chống nước rất tốt.</li><li>Logo thêu sắc nét.</li><li>Bề ngoài sản phẩm tương đối giống 90-95% so với sản phẩm chính hãng các cầu thủ mặ</li></ul>', 100, 'dep-suc-ha-ma', 12, 1, 9, 2, 1, NULL, '2024-07-28 22:04:28', '2024-09-07 03:51:15'),
+(10, 'Áo thi đấu clb AC Milan', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680883/MWSPORT/Products/obcpxevbivmksq4ipuq9.jpg', 599000.00, 56, '<p>➡️ Được làm bởi&nbsp;<strong>chất liệu vải Thailand cao cấp</strong>&nbsp;cho khả năng<strong>&nbsp;hút ẩm và&nbsp;chống nhăn</strong>&nbsp;cực kỳ tốt</p><p>➡️ Vải Thailand có khả năng cách nhiệt và thoáng khí tốt</p><p>➡️ Bề mặt áo mượt mà, không xù, luôn sáng bóng, cảm giác dễ chịu. Hơn nữa&nbsp;<strong>khả năng kháng bụi bẩn cao</strong>&nbsp;giúp tránh bám bẩn trong quá trình sử dụng. Dễ dàng giặt sạch, nhanh khô</p><p>➡️ Các đường may đồng đều, chỉ may cao cấp, cho áo<strong>&nbsp;độ bền cao</strong>, tránh bục rách trong những pha kéo áo</p><p>➡️ Vải Thailand có khả năng giữ màu cao, đạt&nbsp;<strong>tính thẩm mỹ cao</strong></p><p>➡️ &nbsp;Có thể in tên, số áo lên phần sau của áo</p><p>➡️ Size: Full size</p>', 280, 'dep-long-con-soc', 12, 6, 4, 2, 1, NULL, '2024-07-28 22:06:19', '2024-09-07 03:47:49'),
+(11, 'Áo thi đấu clb Real Madrid', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680522/MWSPORT/Products/ka9xezgujgl2vtnoa01j.jpg', 999000.00, 110, '<p>➡️ <a href=\"https://dothethao.net.vn/danh-muc/ao-cau-lac-bo/la-liga/ao-real-madrid/\">Áo Real Madrid 2022</a> được làm bởi <strong>chất liệu vải mè lục giác</strong>&nbsp;cao cấp Cotton + Interlock</p><p>➡️ Vải mượt mà, mát mịn,&nbsp;<strong>bền vững</strong>&nbsp;cấu trúc</p><p>➡️ <strong>Thấm hút mồ hô</strong>i tức thời, tỏa nhiệt qua bề mặt vải</p><p>➡️ Kháng khuẩn, khử mùi,&nbsp;<strong>chống bám bẩn</strong>&nbsp;và kháng tĩnh điện</p><p>➡️ Độ bền màu cao,&nbsp;<strong>không phai màu</strong>&nbsp;trong điều kiến thời tiết (nắng/mưa)</p><p>➡️ Các đường may tỉ mỉ, chỉ may cao cấp cho&nbsp;<strong>áo độ bền cao</strong></p><p>➡️ Nơi sản xuất:&nbsp;<strong>Việt Nam</strong></p><p>➡️ Có thể in tên, số áo lên phần sau của áo</p><p>➡️ Size: Full size</p><p><br>&nbsp;</p>', 30, 'dep-thoi-trang-nam', 11, 6, 4, 5, 1, NULL, '2024-07-28 22:07:54', '2024-09-07 03:41:50'),
+(12, 'Áo thi đấu clb Barcerlona', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680239/MWSPORT/Products/zanapunmkq9dbrsxdzqh.jpg', 490000.00, 45, '<p><i>👉 Thông tin sản phẩm:&nbsp;</i></p><p><i>✔️ Chất lượng tốt nhất trong tầm giá&nbsp;</i></p><p><i>✔️ Form đẹp chuẩn : Màu sắc giống đến 98 °/ₒ ;&nbsp;</i></p><p><i>✔️ Chất liệu da + da lộn + vải mesh&nbsp;</i></p><p><i>✔️ Logo Mông in dập chìm.&nbsp;</i></p><p><i>✔️ Lưỡi gà cao dày dặn; swoosh sắc nét; Mông mũi làm đẹp&nbsp;</i></p><p><i>✔️ Tem QR CODE Có thể check mã 2D&nbsp;</i></p><p><i>✔️ Đế 2 lớp khâu chỉ đều&nbsp;</i></p><p><i>✔️ Full box + accessories&nbsp;</i></p><p><i>✔️ Mẫu này bạn mang đúng hoặc up 1 size đối với chân bè</i></p>', 50, 'giay-adiform', 11, 8, 3, 3, 2, NULL, '2024-07-28 22:09:29', '2024-09-07 03:37:06'),
+(13, 'Ái thi đấu clb Chelsea', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680023/MWSPORT/Products/ixoqpejgkoe3s5lxbxxp.jpg', 900000.00, 800, '<blockquote><ul><li>Áo đấu sân nhà của Chelsea 2020 – 2021 có màu xanh bích đậm và nhạt, cổ áo và cổ tay áo cũng có màu xanh đậm. Kết hợp với họa tiết chữ V bao phủ toàn bộ mặt trước, mặt sau và tay áo mang đến một cái nhìn tinh tế, ấn tượng.&nbsp;Áo đấu sân khách của Chelsea 2020 – 2021 chủ yếu là màu xanh lam sáng. Các logo trên áo bóng đá được in với màu xanh lam rất đậm. Về mặt thiết kế, áo đấu sân khách Nike Chelsea có đồ họa rất giống với áo đấu sân nhà.</li></ul><p>&nbsp;</p><ul><li>Rubber toe caps</li><li>Lug rubber outsoles</li><li>Áo bóng đá Chelsea đủ các size S, M, L, XL, XXL</li><li>Chất liệu thun lạnh thể thao cao cấp, vải mềm, cực kỳ mịn và mát.</li><li>In tên số, logo theo yêu cầu, 1 bộ cũng in</li></ul></blockquote>', 222, 'van', 10, 4, 6, 3, 1, NULL, '2024-07-28 22:15:52', '2024-09-07 03:33:30'),
+(14, 'Áo đấu clb Arsenel', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725679637/MWSPORT/Products/ixt7ujeelslznwbe9z3y.jpg', 599000.00, 450, '<p><strong>Form Dáng:</strong>&nbsp;Boxy Fit.</p><p><strong>Chất liệu:</strong></p><ul><li>Định lượng: 430gsm&nbsp;</li><li>Thành phần: 100% Cotton - Chân cua</li></ul><p><strong>Chi tiết sản phẩm:</strong></p><blockquote><ul><li>Bo cổ dệt định lượng dày, chắc chắn, chống nhão, co rút sau khi giặt.</li><li>Dáng boxy chia tỉ lệ vàng cơ thể 1/3.</li><li>Phần To bản lai áo và tay được may 3cm tạo cảm giác cứng cáp chắc chắn hơn</li><li>Logo TOBI Regular 2024 được in lụa nổi cao thành, chắn chắn.</li></ul></blockquote>', 100, 'tobi-regular-boxy-sweater', 10, 5, 2, 3, 1, NULL, '2024-07-29 18:52:19', '2024-09-07 03:27:04'),
+(15, 'Áo thi đấu manutd', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725679386/MWSPORT/Products/spnfqmowyt6tfdzvwupu.jpg', 999000.00, 200, '<p>Quần áo bóng đá Manchester United mùa bóng 21/22 với thiết kế đẹp, chất liệu thoáng mát thấm hút mồ hôi tốt &amp; thoải mái khi mặc. Với các sợi kỹ thuật thoáng khí, chiếc áo này sẽ hoạt động với cơ thể của bạn để nâng cao hiệu suất của bạn khi bạn cần nhất.</p><p>Logo thêu sắc sảo, bền đẹp không bong tróc. Vải thun lạnh 100% polyester, đặt dệt độc quyền mềm và mịn. Độ co dãn tốt, giúp thoáng mát và thoải mái khi vận động. Màu áo quần cực bền, in ấn có độ thẩm mỹ cao, không bong tróc.</p>', 1000, 'quan-jean-nam-rach-goi', 10, 6, 2, 4, 1, NULL, '2024-07-29 20:34:20', '2024-09-07 03:22:53'),
+(17, 'Giày chạy bộ Jogarbola', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725679023/MWSPORT/Products/nqlavlig4blyflonb7da.webp', 699999.00, 80, '<p><strong>CÔNG NGHỆ ĐẾ EVA + TPR</strong></p><p>Nhẹ, linh hoạt, độ bền cao, giảm sốc hiệu quả</p><p><strong>CHẤT LIỆU LƯỚI MESH</strong></p><p>Siêu bền, mềm mại, ôm chân tuyệt đối, thoáng khí nhờ hàng triệu&nbsp;lỗ nhỏ trên bề mặt</p><p><strong>ĐẾ TRONG CẤU TRÚC HẠT XỐP SIÊU NHỎ</strong></p><p>Đàn hồi tốt, cho phép sử dụng thoải mái trên mọi địa hình</p><p><strong>CÔNG NGHỆ ĐÚC LIỀN MẠCH KHÔNG ĐƯỜNG MAY</strong></p><p>Hạn chế cọ xát, không gây xước xát, kích ứng da chân</p>', 600, 'sandal-nu', 25, 7, 4, 3, 2, NULL, '2024-07-29 20:42:14', '2024-09-07 03:16:50'),
+(20, 'Giày leo núi Nhật Bản Cho Nam', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725678655/MWSPORT/Products/iarzo3licut1d02ddh8r.avif', 499000.00, 30, '<p><strong>Giày hiking này có tất cả những gì bạn cần để leo núi.Đế bám, thân giày chống thấm nước, tấm chắn đá và giảm chấn toàn bộ giày.</strong></p><p>Mẫu giày chống thấm nước được thiết kế để đồng hành cùng bạn trong các chuyến đi bộ đường dài. Là vật dụng không thể thiếu cho các chuyến đi núi.</p>', 10, NULL, 26, 8, 1, 3, 4, NULL, '2024-11-09 20:25:26', '2024-09-07 03:10:42'),
+(21, 'áo thể thao', 'https://res.cloudinary.com/denxdub1l/image/upload/v1722853863/Cara/Products/f0guuvvtcr6n7eftyjm2.jpg', 300000.00, 6, '<ul><li>Được chính những Designer bậc thầy trong làng thể thao thiết kế trên&nbsp;<strong>10 năm kinh nghiệm</strong>&nbsp;cho các hãng thể thao Nike, Adidas, Puma.</li><li>Vải được đặt dệt riêng từ những nhà DỆT gia công cho hãng</li><li>Bảo dưỡng và làm đẹp lại sản phẩm&nbsp;<strong>TRỌN ĐỜI.</strong></li><li>Là Xưởng thể thao áo bóng đá được nhiều phản hồi tích cực từ khách hàng và là thương hiệu đi đầu về đặt áo đá banh tự thiết kế tại Pháp.</li></ul>', 57, 'ao-the-thao', 1, 1, 1, 1, 1, NULL, '2024-08-05 03:30:51', '2024-09-07 02:28:02'),
 (22, 'ao dt anh', 'https://res.cloudinary.com/denxdub1l/image/upload/v1724849750/Cara/Products/pdbqckhzyl2dz3hzmbth.jpg', 15000.00, 3, NULL, 0, 'naruto', 1, 1, 3, 1, 1, '2024-08-29 04:12:34', '2024-08-28 12:26:03', '2024-08-29 04:12:34'),
-(23, 'giày thể thao', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725098847/MWSPORT/Products/tuifk45vrbv5h1y0rkhs.jpg', 150.00, 30, '<p>Chào Đón Sự Xuất Hiện Đỉnh Cao - Giày Bóng Đá Kaiwin Legend với Da MICROFIBER.</p><p>Được tạo ra với tâm huyết và niềm đam mê đối với bóng đá, Kaiwin Legend đánh dấu một bước tiến quan trọng trong thế giới giày bóng đá. Thiết kế độc đáo và tinh tế sẽ khiến bạn tỏa sáng trên sân cỏ.</p><p><br>- Form giày Ka-Fit thích hợp với chân người Việt<br>- Da MICROFIBER cao cấp<br>- Cổ dệt Flyknit ôm cổ chân<br>- Công nghệ in hoạ tiết nổi Matrix - Technical<br>- Công nghệ may 4D họa tiết kim cương<br>- Công nghệ thoáng khí Fresh Air<br>- Đế cao su Ka-Spin tạo độ bám sân tối đa<br>- Công nghệ lót giày E.V.A-CARBON nhẹ thoáng khí</p>', 2, 'giay-the-thao', 21, 10, 6, 1, 4, NULL, '2024-08-31 10:07:20', '2024-09-03 09:01:52'),
+(23, 'giày thể thao', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725098847/MWSPORT/Products/tuifk45vrbv5h1y0rkhs.jpg', 150000.00, 30, '<p>Chào Đón Sự Xuất Hiện Đỉnh Cao - Giày Bóng Đá Kaiwin Legend với Da MICROFIBER.</p><p>Được tạo ra với tâm huyết và niềm đam mê đối với bóng đá, Kaiwin Legend đánh dấu một bước tiến quan trọng trong thế giới giày bóng đá. Thiết kế độc đáo và tinh tế sẽ khiến bạn tỏa sáng trên sân cỏ.</p><p><br>- Form giày Ka-Fit thích hợp với chân người Việt<br>- Da MICROFIBER cao cấp<br>- Cổ dệt Flyknit ôm cổ chân<br>- Công nghệ in hoạ tiết nổi Matrix - Technical<br>- Công nghệ may 4D họa tiết kim cương<br>- Công nghệ thoáng khí Fresh Air<br>- Đế cao su Ka-Spin tạo độ bám sân tối đa<br>- Công nghệ lót giày E.V.A-CARBON nhẹ thoáng khí</p>', 7, 'giay-the-thao', 21, 10, 6, 1, 4, NULL, '2024-08-31 10:07:20', '2024-09-07 02:28:12'),
 (24, 'test', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725162577/MWSPORT/Products/vmktl2qdfu5v4fx6ahzb.jpg', 900000.00, 3, NULL, 1000, 'test', 1, 1, 1, 1, 2, '2024-09-01 03:55:15', '2024-09-01 03:49:29', '2024-09-01 03:55:15'),
-(25, 'Bộ quần áo thể thao', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725354903/MWSPORT/Products/y3wdpvwtojgfhtaflkfk.jpg', 450000.00, 100, '<p>QUẦN ÁO BÓNG ĐÁ MU TRẮNG 2022 2023✔️Chất liệu đồ đá banh vải Poly thun lạnh cao cấp ✔️Quần áo bóng đá hàng chất lượng, bền đẹp ✔️Chất vải thun lạnh 100% Polyester thấm hút mồ hôi cực tốt ✔️Quần áo đá bóng thiết chuẩn mẫu của các CLB sẽ ra mắt 2022 - 2023✔️Logo áo bóng đá dệt rồi thêu trực tiếp lên áo nên rất bền đẹp, không bong tróc✔️Hoa văn bộ đồ đá banh in phun kỹ thuật số sắc nét, không bong tróc✔️Đường may gia công tỉ mỉ, chi tiết nhất✅Thông tin sản phẩm:👉Xuất xứ: Việt Nam👉Chất liệu: 100% Polyester thoáng mát, không nhăn, không xù lông👉Size: S M L XL XXL- Size S: 45-55kg, - Size M : 55-62kg- Size L : 62-70kg- Size XL : 70-80kg- Size XXL : 80-88kg✅Bảo quản:👉Không dùng chất tẩy👉Lật mặt trái trước khi giặt để màu sắc được luôn như mới</p>', 100, 'bo-quan-ao-the-thao', 1, 9, 4, 3, 5, NULL, '2024-09-03 09:14:53', '2024-09-03 09:14:53');
+(25, 'Bộ quần áo thể thao', 'https://res.cloudinary.com/djwiv368z/image/upload/v1725354903/MWSPORT/Products/y3wdpvwtojgfhtaflkfk.jpg', 450000.00, 99, '<p>QUẦN ÁO BÓNG ĐÁ MU TRẮNG 2022 2023✔️Chất liệu đồ đá banh vải Poly thun lạnh cao cấp ✔️Quần áo bóng đá hàng chất lượng, bền đẹp ✔️Chất vải thun lạnh 100% Polyester thấm hút mồ hôi cực tốt ✔️Quần áo đá bóng thiết chuẩn mẫu của các CLB sẽ ra mắt 2022 - 2023✔️Logo áo bóng đá dệt rồi thêu trực tiếp lên áo nên rất bền đẹp, không bong tróc✔️Hoa văn bộ đồ đá banh in phun kỹ thuật số sắc nét, không bong tróc✔️Đường may gia công tỉ mỉ, chi tiết nhất✅Thông tin sản phẩm:👉Xuất xứ: Việt Nam👉Chất liệu: 100% Polyester thoáng mát, không nhăn, không xù lông👉Size: S M L XL XXL- Size S: 45-55kg, - Size M : 55-62kg- Size L : 62-70kg- Size XL : 70-80kg- Size XXL : 80-88kg✅Bảo quản:👉Không dùng chất tẩy👉Lật mặt trái trước khi giặt để màu sắc được luôn như mới</p>', 104, 'bo-quan-ao-the-thao', 1, 9, 4, 3, 5, NULL, '2024-09-03 09:14:53', '2024-09-05 11:12:33');
 
 -- --------------------------------------------------------
 
@@ -1012,7 +1024,50 @@ INSERT INTO `product_variants` (`id`, `product_id`, `image_variant`, `color_id`,
 (28, 25, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725354995/MWSPORT/Products/rln87dsr32enbfpfipb1.jpg', 9, 3, 100, 400000, '2024-09-03 09:16:25', '2024-09-03 09:16:25'),
 (29, 25, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725355130/MWSPORT/Products/u9eiblwskmix666vnhex.jpg', 1, 1, 200, 500000, '2024-09-03 09:18:40', '2024-09-03 09:18:40'),
 (30, 25, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725355209/MWSPORT/Products/kyblwqp3kbmqnoxnnvz6.jpg', 4, 4, 100, 350000, '2024-09-03 09:19:02', '2024-09-03 09:20:00'),
-(31, 25, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725355274/MWSPORT/Products/iifciybfsvlk4s43wrnb.jpg', 6, 4, 100, 250000, '2024-09-03 09:21:05', '2024-09-03 09:21:05');
+(31, 25, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725355274/MWSPORT/Products/iifciybfsvlk4s43wrnb.jpg', 6, 4, 100, 250000, '2024-09-03 09:21:05', '2024-09-03 09:21:05'),
+(32, 20, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725678788/MWSPORT/Products/ea5udz0kxcle8w1chlvn.jpg', 3, 2, 200, 399000, '2024-09-07 03:12:54', '2024-09-07 03:12:54'),
+(33, 20, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725678809/MWSPORT/Products/hgrsvfwveitin0cej5vp.jpg', 2, 4, 30, 399000, '2024-09-07 03:13:16', '2024-09-07 03:13:16'),
+(34, 20, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725678836/MWSPORT/Products/tyzheay0ss5yihakx57q.jpg', 8, 2, 40, 499000, '2024-09-07 03:13:44', '2024-09-07 03:13:44'),
+(35, 17, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725679049/MWSPORT/Products/xqt33fltxkakqbhdwxmg.jpg', 2, 3, 400, 900000, '2024-09-07 03:17:16', '2024-09-07 03:17:16'),
+(37, 17, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725679085/MWSPORT/Products/ddwo5boyf6cwjwsytywu.jpg', 7, 3, 400, 500000, '2024-09-07 03:17:52', '2024-09-07 03:17:52'),
+(38, 17, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725679115/MWSPORT/Products/di2wtxb2kqacvoyhootg.jpg', 6, 4, 300, 599000, '2024-09-07 03:18:22', '2024-09-07 03:18:22'),
+(39, 15, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725679412/MWSPORT/Products/qgkmern2i5zvargufkrs.jpg', 6, 4, 300, 799000, '2024-09-07 03:23:19', '2024-09-07 03:23:19'),
+(40, 15, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725679442/MWSPORT/Products/hdeergrmwfu1i5bluyuv.jpg', 1, 3, 400, 699000, '2024-09-07 03:23:49', '2024-09-07 03:23:49'),
+(41, 15, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725679463/MWSPORT/Products/go2mlnj9vsttalyyhpm8.jpg', 4, 1, 500, 799000, '2024-09-07 03:24:10', '2024-09-07 03:24:10'),
+(42, 14, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725679672/MWSPORT/Products/qvnllpxlgchw37ebvqoq.jpg', 7, 3, 400, 599000, '2024-09-07 03:27:38', '2024-09-07 03:27:38'),
+(43, 14, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725679704/MWSPORT/Products/j3iaw7xsrjpbh6ccelyj.jpg', 4, 4, 900, 599000, '2024-09-07 03:28:11', '2024-09-07 03:28:11'),
+(44, 14, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725679726/MWSPORT/Products/evbtptptnwvtjesg04ze.jpg', 5, 4, 400, 699000, '2024-09-07 03:28:33', '2024-09-07 03:28:33'),
+(45, 13, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680061/MWSPORT/Products/vm8dahyrwmxxzut7rg30.jpg', 6, 1, 400, 499000, '2024-09-07 03:34:09', '2024-09-07 03:34:09'),
+(46, 13, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680086/MWSPORT/Products/u8qbg67li0w0clsxwpnw.jpg', 7, 4, 500, 599000, '2024-09-07 03:34:33', '2024-09-07 03:34:33'),
+(47, 12, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680322/MWSPORT/Products/lmh8ughpz0zsqgqbusi2.jpg', 7, 1, 40, 490000, '2024-09-07 03:37:37', '2024-09-07 03:38:29'),
+(48, 12, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680292/MWSPORT/Products/nprvcnhrsir01efqq8s3.jpg', 2, 1, 40, 499000, '2024-09-07 03:37:59', '2024-09-07 03:37:59'),
+(49, 12, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680360/MWSPORT/Products/jfcfunvko4v9drv8vkvn.jpg', 4, 1, 40, 490000, '2024-09-07 03:39:06', '2024-09-07 03:39:06'),
+(50, 11, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680552/MWSPORT/Products/kjrkngnyap9yh9u7zx9h.jpg', 1, 1, 50, 499000, '2024-09-07 03:42:19', '2024-09-07 03:42:19'),
+(51, 11, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680582/MWSPORT/Products/gtlkqhfwrhmj9apmhvpq.jpg', 8, 3, 50, 599000, '2024-09-07 03:42:49', '2024-09-07 03:42:49'),
+(52, 11, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680661/MWSPORT/Products/p6lrgsrc9vve0reeqvwb.jpg', 10, 4, 50, 399000, '2024-09-07 03:43:07', '2024-09-07 03:44:08'),
+(53, 10, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680906/MWSPORT/Products/vbnldmhyi9yvvuiaa9al.jpg', 1, 1, 50, 599000, '2024-09-07 03:48:12', '2024-09-07 03:48:12'),
+(54, 10, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680924/MWSPORT/Products/wcpk4iveit016gozine5.jpg', 3, 1, 50, 499000, '2024-09-07 03:48:32', '2024-09-07 03:48:32'),
+(55, 10, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725680950/MWSPORT/Products/ua6b1qb9o2tryjdnmu6z.jpg', 2, 4, 50, 699000, '2024-09-07 03:48:57', '2024-09-07 03:48:57'),
+(56, 9, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725681133/MWSPORT/Products/yn4rkbawxu1jgzoumjv4.jpg', 7, 4, 60, 599000, '2024-09-07 03:52:00', '2024-09-07 03:52:00'),
+(57, 9, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725681159/MWSPORT/Products/ojqcbo3dkgzfawztgfyu.jpg', 4, 4, 60, 699000, '2024-09-07 03:52:26', '2024-09-07 03:52:26'),
+(58, 8, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725681392/MWSPORT/Products/os3ianmyvykrm9lwlsqj.jpg', 4, 4, 50, 499000, '2024-09-07 03:56:19', '2024-09-07 03:56:19'),
+(59, 8, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725681413/MWSPORT/Products/kxcbxriclulpascac2eh.jpg', 7, 4, 50, 599000, '2024-09-07 03:56:39', '2024-09-07 03:56:39'),
+(60, 7, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682030/MWSPORT/Products/ggabb1fzoulyljv5tfly.jpg', 4, 1, 50, 499000, '2024-09-07 04:06:57', '2024-09-07 04:06:57'),
+(61, 7, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682195/MWSPORT/Products/v1kauiiomo27vp4faw9q.jpg', 1, 1, 50, 299000, '2024-09-07 04:09:42', '2024-09-07 04:09:42'),
+(63, 6, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682372/MWSPORT/Products/x1xsi6wwg7h6ls46gbcr.jpg', 2, 4, 50, 599000, '2024-09-07 04:12:39', '2024-09-07 04:12:39'),
+(64, 6, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682397/MWSPORT/Products/plxtlnei1larhd75tvwm.jpg', 4, 4, 50, 699000, '2024-09-07 04:13:03', '2024-09-07 04:13:03'),
+(65, 6, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682426/MWSPORT/Products/ricnyfebqwtvj2zfwrxo.jpg', 7, 3, 40, 499000, '2024-09-07 04:13:32', '2024-09-07 04:13:32'),
+(66, 5, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682581/MWSPORT/Products/ultfjpqafgo6iobtuwbw.jpg', 7, 3, 50, 499000, '2024-09-07 04:16:08', '2024-09-07 04:16:08'),
+(67, 5, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682602/MWSPORT/Products/hoqpxqqwwj6snyw2vmvg.jpg', 1, 1, 50, 599000, '2024-09-07 04:16:28', '2024-09-07 04:16:28'),
+(68, 5, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682624/MWSPORT/Products/gsna22bpgmlfmgs2enz1.jpg', 5, 4, 40, 499000, '2024-09-07 04:16:51', '2024-09-07 04:16:51'),
+(69, 4, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682790/MWSPORT/Products/i6dvadubqmpleazozqwp.jpg', 2, 1, 50, 499000, '2024-09-07 04:19:37', '2024-09-07 04:19:37'),
+(70, 4, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682820/MWSPORT/Products/zb71koke47lgfobgvqgi.jpg', 6, 4, 50, 599000, '2024-09-07 04:20:07', '2024-09-07 04:20:07'),
+(71, 3, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725682985/MWSPORT/Products/vd77ld6jxo9t9zfcd1gy.jpg', 1, 1, 40, 120000, '2024-09-07 04:22:52', '2024-09-07 04:22:52'),
+(72, 3, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725683057/MWSPORT/Products/jzqqlfyxa2ichybqbfbz.jpg', 7, 1, 50, 299000, '2024-09-07 04:24:04', '2024-09-07 04:24:04'),
+(73, 2, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725683219/MWSPORT/Products/b5hcg0c8uhl45bloskdo.jpg', 1, 1, 50, 299000, '2024-09-07 04:26:46', '2024-09-07 04:26:46'),
+(74, 2, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725683236/MWSPORT/Products/km8pxi7iw0ascsdfemo4.jpg', 2, 1, 40, 399000, '2024-09-07 04:27:03', '2024-09-07 04:27:03'),
+(75, 1, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725683369/MWSPORT/Products/lujlyt4zfjvkuu4m0np2.jpg', 7, 1, 40, 199000, '2024-09-07 04:29:15', '2024-09-07 04:29:15'),
+(76, 1, 'https://res.cloudinary.com/djwiv368z/image/upload/v1725683396/MWSPORT/Products/f7518pc11suoeiqjulit.jpg', 8, 4, 40, 299000, '2024-09-07 04:29:43', '2024-09-07 04:29:43');
 
 -- --------------------------------------------------------
 
@@ -1110,20 +1165,20 @@ CREATE TABLE `sub_categories` (
 --
 
 INSERT INTO `sub_categories` (`id`, `name`, `slug`, `description`, `parent_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'Thời trang nam', 'thoi-trang', '', 1, NULL, '2024-07-26 14:19:49', '2024-07-26 19:11:40'),
+(1, 'Thời trang nam', 'thoi-trang', '', 1, '2024-09-07 03:03:34', '2024-07-26 14:19:49', '2024-09-07 03:03:34'),
 (6, 'Áo Thun', 'ao-thun', '', 1, NULL, '2024-07-28 21:30:26', '2024-07-28 21:30:26'),
-(7, 'Áo Sơ Mi', 'ao-so-mi', '', 1, NULL, '2024-07-28 21:31:32', '2024-07-28 21:31:32'),
-(8, 'Áo Khoác', 'ao-khoac', '', 1, NULL, '2024-07-28 21:31:59', '2024-07-28 21:31:59'),
-(9, 'Quần Đùi', 'quan-dui', '', 1, NULL, '2024-07-28 21:32:30', '2024-07-28 21:32:30'),
-(10, 'Áo Polo', 'ao-polo', '', 1, NULL, '2024-07-28 21:32:55', '2024-07-28 21:32:55'),
-(11, 'Quần Jean', 'quan-jean', '', 1, NULL, '2024-07-28 21:38:18', '2024-07-28 21:38:18'),
-(12, 'Quần Dài', 'quan-dai', '', 1, NULL, '2024-07-28 21:38:31', '2024-07-28 21:38:31'),
+(7, 'Áo Thi Đấu', 'ao-thi-dau', '', 1, NULL, '2024-07-28 21:31:32', '2024-09-07 03:03:59'),
+(8, 'Bundesliga', 'Bundesliga', '', 1, NULL, '2024-07-28 21:31:59', '2024-09-07 03:58:00'),
+(9, 'Quần thể thao', 'quan-the-thao', '', 1, NULL, '2024-07-28 21:32:30', '2024-09-07 04:22:25'),
+(10, 'Primer League', 'Primer-League', '', 1, NULL, '2024-07-28 21:32:55', '2024-09-07 03:04:32'),
+(11, 'Laliga', 'Laliga', '', 1, NULL, '2024-07-28 21:38:18', '2024-09-07 03:04:50'),
+(12, 'SeriesA', 'SeriesA', '', 1, NULL, '2024-07-28 21:38:31', '2024-09-07 03:05:34'),
 (21, 'Giày Thể Thao', 'giay-the-thao', '', 2, NULL, '2024-07-28 22:00:18', '2024-07-28 22:01:04'),
-(22, 'Xăng Đan', 'xang-dan', '', 2, NULL, '2024-07-28 22:01:35', '2024-07-28 22:01:35'),
-(23, 'Dép Đi Trong Nhà', 'dep-di-trong-nha', '', 2, NULL, '2024-07-28 22:02:01', '2024-07-28 22:02:01'),
-(24, 'Giày Tây', 'giay-tay', '', 2, NULL, '2024-07-28 22:02:17', '2024-07-28 22:02:17'),
-(25, 'Bốt', 'bot', '', 2, NULL, '2024-07-28 22:02:33', '2024-07-28 22:02:33'),
-(26, 'Dép', 'dep', '', 2, NULL, '2024-07-28 22:05:09', '2024-07-28 22:05:09');
+(22, 'Giày cao cổ', 'Giày cao cổ', '', 2, NULL, '2024-07-28 22:01:35', '2024-09-07 03:06:36'),
+(23, 'Dép Đi Trong Nhà', 'dep-di-trong-nha', '', 2, '2024-09-07 03:06:45', '2024-07-28 22:02:01', '2024-09-07 03:06:45'),
+(24, 'Giày Bóng đá', 'Giày Bóng đá', '', 2, NULL, '2024-07-28 22:02:17', '2024-09-07 03:07:31'),
+(25, 'Giày Chạy bộ', 'Giày Chạy bộ', '', 2, NULL, '2024-07-28 22:02:33', '2024-09-07 03:07:47'),
+(26, 'Giày Leo núi (Trekking)', 'Giày Leo núi (Trekking)', '', 2, NULL, '2024-07-28 22:05:09', '2024-09-07 03:07:59');
 
 -- --------------------------------------------------------
 
@@ -1185,7 +1240,9 @@ INSERT INTO `user_voucher` (`id`, `user_id`, `voucher_id`, `created_at`, `update
 (6, 20, 2, '2024-08-29 02:53:39', '2024-08-29 02:53:39'),
 (7, 20, 2, '2024-08-29 02:53:39', '2024-08-29 02:53:39'),
 (8, 20, 6, '2024-08-29 02:53:43', '2024-08-29 02:53:43'),
-(9, 20, 9, '2024-08-29 02:53:45', '2024-08-29 02:53:45');
+(9, 20, 9, '2024-08-29 02:53:45', '2024-08-29 02:53:45'),
+(10, 20, 7, '2024-09-05 08:16:40', '2024-09-05 08:16:40'),
+(11, 20, 7, '2024-09-05 08:16:40', '2024-09-05 08:16:40');
 
 -- --------------------------------------------------------
 
@@ -1212,12 +1269,12 @@ CREATE TABLE `vouchers` (
 --
 
 INSERT INTO `vouchers` (`id`, `code`, `discount`, `discount_type`, `starts_at`, `expires_at`, `usage_count`, `quantity`, `product_id`, `created_at`, `updated_at`) VALUES
-(1, 'mm23', 30, 'fixed', '2024-08-15', '2024-08-16', 0, 0, 1, '2024-08-15 03:10:32', '2024-08-15 04:01:06'),
+(1, 'mm23', 30, 'fixed', '2024-08-15', '2024-08-16', 0, 100, 1, '2024-08-15 03:10:32', '2024-09-05 08:06:58'),
 (2, 'mo01', 10, 'percentage', '2024-08-16', '2029-10-10', 6, 18, NULL, '2024-08-15 03:34:22', '2024-09-02 13:13:48'),
 (4, 'sp', 400, 'fixed', '2024-08-17', '2024-08-23', 10, 0, NULL, '2024-08-15 03:53:42', '2024-08-21 09:21:42'),
 (5, 'santo', 555, 'fixed', '2024-08-16', '2024-08-31', 2, -2, NULL, '2024-08-16 02:39:29', '2024-08-20 08:27:03'),
-(6, 'm66686', 100000, 'fixed', '2024-08-16', '2024-08-25', 4, 7, 21, '2024-08-16 03:03:03', '2024-08-20 09:52:04'),
-(7, 'hihi', 20, 'percentage', '2024-08-20', '2024-08-22', 1, -1, NULL, '2024-08-19 02:25:35', '2024-08-19 02:39:10'),
+(6, 'm66686', 100000, 'fixed', '2024-08-16', '2025-08-25', 4, 70, 21, '2024-08-16 03:03:03', '2024-09-05 08:07:18'),
+(7, 'hihi', 20, 'percentage', '2024-08-20', '2024-11-21', 2, 999, NULL, '2024-08-19 02:25:35', '2024-09-05 08:17:09'),
 (8, 'premier league', 20, 'percentage', '2024-08-19', '2024-08-30', 11, 19, NULL, '2024-08-19 02:34:13', '2024-08-30 09:05:42'),
 (9, 'asd', 20, 'percentage', '2024-08-20', '2024-08-31', 1, 10, 21, '2024-08-20 09:20:29', '2024-08-30 09:06:10');
 
@@ -1436,7 +1493,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1454,13 +1511,13 @@ ALTER TABLE `chats`
 -- AUTO_INCREMENT for table `clients_notifications`
 --
 ALTER TABLE `clients_notifications`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `colors`
 --
 ALTER TABLE `colors`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1478,19 +1535,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 
 --
 -- AUTO_INCREMENT for table `order_updates`
@@ -1514,7 +1571,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `product_variants`
 --
 ALTER TABLE `product_variants`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `ratings`
@@ -1550,7 +1607,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_voucher`
 --
 ALTER TABLE `user_voucher`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `vouchers`

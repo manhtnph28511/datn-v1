@@ -33,15 +33,7 @@ class HomeController extends Controller
         return view('clients.pages.home', compact('products'));
     }
 
-    public function searchByPrice(Request $request)
-    {
-       
-        $minPrice = $request->input('min_price');
-        $maxPrice = $request->input('max_price');
-        
-        $products = Product::whereBetween('price', [$minPrice, $maxPrice])->get();
-        return view('clients.pages.home', compact('products'));
-    }
+    
 
 
 

@@ -30,7 +30,7 @@
 
     <section id="product1" class="section-p1 p-shop">
         <div class="p-category">
-            <h4>Danh mục sản phẩm</h4>
+            <h4>Danh mục sản phẩm </h4>
             <ul class="category-list">
                 <li><a href="#">Bán chạy nhất</a></li>
                 <li><a href="#">Hàng mới về</a></li>

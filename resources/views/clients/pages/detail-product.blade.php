@@ -62,12 +62,12 @@
             @endif
 
 
-            <h6><a href="{{ route('home-client') }}" class="text-gray-700">Home</a> / {{ $product->subCate->name }}</h6>
+            <h6><a href="{{ route('home-client') }}" class="text-gray-700">Home</a>/ {{ $product->subCate?->name ?? 'Không có danh mục' }}</h6>
             <h4>{{ $product->name }}</h4>
             <input type="hidden" value="{{ $product->id }}" name="pro_id">
 
            
-            <p id="product-price">Giá: {{ number_format($product->price, 2, '.', ',') }}</p>
+            <p id="product-price">Giá: {{ number_format($product->price) }}</p>
 
 
            

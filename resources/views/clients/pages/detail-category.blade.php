@@ -36,16 +36,15 @@
                 @endif
             </div>
         </div>
-        @include('clients.layouts.form-search-product')
+        <div class="form" style="margin:0px 0 0 -70px">
+            @livewire('home-search-product')
+        </div>
     </section>
 
     <section id="product1" class="section-p1 p-shop">
         <div class="p-category">
             <h4>Danh mục sản phẩm</h4>
             <ul class="category-list">
-                <li><a href="#">Bán chạy nhất</a></li>
-                <li><a href="#">Hàng mới về</a></li>
-                <li><a href="#">Hàng giảm giá</a></li>
                 <li>
                     @foreach($subCate as $sCate)
                         <ul class="nav_menu">
@@ -54,50 +53,97 @@
                             </li>
                         </ul>
                     @endforeach
-
-                </li>
-                <li>
-                    Top 10 hàng yêu thích
-                    <ul>
-                        <li class="hot_pro">
-                            <a href="#">
-                                <div class="hot_pro--img"><img src="{{ asset('assets/imgs/products/f1.jpg')  }}" alt="">
-                                </div>
-                                <span>Áo sơ mi</span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
         </div>
         <div class="pro-container">
             @foreach($productToCate as $prToCate)
-                <div class="pro">
-                    <a href="{{route('home.site.product.show',['id' => $prToCate->id,'slug' => $prToCate->slug])."?cate=$prToCate->cate_id"}}">
-                        <img src="{{ $prToCate->image }}" alt="">
-                    </a>
-                    <div class="des">
-                        <span>{{ $prToCate->cateName  }}/{{ $prToCate->subCateName  }}</span>
-                        <h5>
-                            <a href="{{route('home.site.product.show',['id' => $prToCate->id,'slug' => $prToCate->slug])}}"
-                               class="text-decoration-none text-body-secondary">{{ $prToCate->name }}</a></h5>
-
-                        <div class="star">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                @if($prToCate->id)
+                    <div class="pro">
+                        <a href="{{ route('home.site.product.show', ['id' => $prToCate->id]) }}">
+                            <img src="{{ $prToCate->image }}" alt="">
+                        </a>
+                        <div class="des">
+                            <span>{{ $prToCate->cateName }}/{{ $prToCate->subCateName }}</span>
+                            <h5>
+                                <a href="{{ route('home.site.product.show', ['id' => $prToCate->id]) }}"
+                                   class="text-decoration-none text-body-secondary">{{ $prToCate->name }}</a></h5>
+        
+                         <div class="star">
+                        @if ($prToCate->ratings->isNotEmpty())
+                            @php
+                                $averageRating = $prToCate->ratings->avg('rating');
+                                $roundedRating = round($averageRating, 1);
+                            @endphp
+                            @for ($i = 1; $i <= 5; $i++)
+                                <i class="fas fa-star {{ $i <= $roundedRating ? 'filled' : '' }}"></i>
+                            @endfor
+                            <span>{{ number_format($roundedRating, 1) }} Sao</span>
+                        @else
+                            <p>Chưa có đánh giá nào</p>
+                        @endif
+                    </div> 
+                                
+                            <h4>{{ number_format($prToCate->price) }}</h4>
                         </div>
-                        <h4>{{ number_format($prToCate->price)  }}</h4>
                     </div>
-                    <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-                </div>
+                @endif
             @endforeach
         </div>
+        
+        
     </section>
     <div class="mb-3">
-        {{--        {{ $products->links('admin.layouts.pagination')  }}--}}
     </div>
     @include('clients.layouts.form-feedback')
 @endsection
+
+<style>
+    .pro-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; 
+    justify-content: space-between;
+}
+
+.pro {
+    border: 1px solid #ddd; 
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff; 
+    border-radius: 8px; 
+    overflow: hidden; 
+    height: 360px; 
+    width: 100%; 
+    max-width: 200px; 
+}
+
+.pro img {
+    width: 100%; 
+    height: 200px; 
+    object-fit: cover; 
+    display: block; 
+}
+
+
+.pro .star {
+    color: #FFD700; 
+}
+
+.pro .star .fa-star {
+    font-size: 14px; 
+    margin-right: 2px; 
+}
+
+.pro .des h5 {
+    font-size: 16px;
+    color: #333; 
+    margin: 0;
+}
+
+.pro .des h4 {
+    font-size: 18px;
+    color: #333; 
+    margin: 5px 0 0; 
+}
+</style>

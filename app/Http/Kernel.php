@@ -69,4 +69,7 @@ class Kernel extends HttpKernel
         'addToCart' => \App\Http\Middleware\AddToCart::class,
         'rating' => \App\Http\Middleware\RatingMiddleware::class,
     ];
+    protected $routeMiddleware = [
+        'isAdmin' => \App\Http\Middleware\AdminMiddleware::class,
+    ];
 }

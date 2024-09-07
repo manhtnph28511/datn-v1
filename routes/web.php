@@ -279,7 +279,7 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
 
 Route::get('/', [HomeController::class, 'home'])->name('home-client');
 Route::post('/search/name', [HomeController::class, 'searchByName'])->name('home-client.search.name');
-Route::post('/search/price', [HomeController::class, 'searchByPrice'])->name('home-client.search.price');
+
 
 
 
@@ -296,18 +296,22 @@ Route::controller(SiteController::class)->group(function () {
 });
 
 
+
+
 // Product
 Route::controller(HomeProductController::class)->group(function () {
-    Route::get('product/{id}/{slug?}', 'showProduct')->name('home.site.product.show');
+    Route::get('product/{id}', 'showProduct')->name('home.site.product.show');
     Route::get('shop-page', 'shop')->name('home.site.product.shop');
+    Route::post('searchByPrice', 'searchByPrice')->name('home.site.product.searchByPrice');
     Route::get('product-from-sub-cate/{id}', 'productFromSubCate')->name('home.site.product.proFromSubCate');
-    //Search product
     Route::post('search-query', 'searchProductHome')->name('home.site.product.search');
+
 });
 
 // Category
 Route::controller(HomeCategoryController::class)->group(function () {
     Route::get('cate-detail/{id}', 'detailCate')->name('home.site.cate.detail');
+    
 });
 
 // Rating

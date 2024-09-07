@@ -36,7 +36,6 @@ public function showProduct($id, Request $request)
 
     $product->increment('view');
 
-    // Trả về view cùng với dữ liệu
     return view('clients.pages.detail-product', [
         'product' => $product,
         'sizes' => $sizes,
@@ -49,10 +48,9 @@ public function showProduct($id, Request $request)
 
 
 
-    // shop-page
     public function shop()
     {
-        $products = Product::paginate(4);
+        $products = Product::paginate(8);
         $cates = Category::all();
         $carts = DB::table('carts')
             ->leftJoin('users', 'users.id', '=', 'carts.user_id')
@@ -60,22 +58,32 @@ public function showProduct($id, Request $request)
             ->leftJoin('sizes', 'sizes.id', '=', 'carts.size_id')
             ->where('user_id', '=', Auth::user()?->id)
             ->select('carts.*', 'products.id as pro_id', 'products.name as proName', 'products.image', 'users.name as username')->get();
-        return view('clients.pages.shop', compact('products', 'cates', 'carts'));
+
+        $topProducts = Product::orderBy('view', 'desc')->take(10)->get();
+
+        return view('clients.pages.shop', compact('products', 'cates', 'carts','topProducts'));
     }
 
+    
 
     public function productFromSubCate($id)
     {
         $subCate = SubCategory::all();
-        $proFromSubCate = Product::where('cate_id', '=', $id)->get();
+        $proFromSubCate = Product::with(['subCategory', 'ratings']) 
+        ->where('cate_id', $id)
+        ->get();
+
+        
         $carts = DB::table('carts')
             ->leftJoin('users', 'users.id', '=', 'carts.user_id')
             ->leftJoin('products', 'products.id', '=', 'carts.pro_id')
             ->leftJoin('sizes', 'sizes.id', '=', 'carts.size_id')
             ->where('user_id', '=', Auth::user()?->id)
-            ->select('carts.*', 'products.id as pro_id', 'products.name as proName', 'products.image', 'users.name as username')->get();
+            ->select('carts.*', 'products.id as pro_id', 'products.name as proName', 'products.image', 'users.name as username')
+            ->get();
         return view('clients.pages.detail-pro-from-subcate', compact('proFromSubCate', 'subCate', 'carts'));
     }
+    
 
     //search product
     public function searchProductHome(Request $request)
@@ -85,4 +93,28 @@ public function showProduct($id, Request $request)
         $productBySearch = Product::where('name', 'LIKE', "%$name%")->get();
         return view('clients.pages.view-product-search', compact('productBySearch', 'subCate'));
     }
+
+
+    public function searchByPrice(Request $request)
+{
+    $minPrice = $request->input('min_price');
+    $maxPrice = $request->input('max_price');
+    
+    $products = Product::whereBetween('price', [$minPrice, $maxPrice])->paginate(8);
+
+    $cates = Category::all();
+    $carts = DB::table('carts')
+        ->leftJoin('users', 'users.id', '=', 'carts.user_id')
+        ->leftJoin('products', 'products.id', '=', 'carts.pro_id')
+        ->leftJoin('sizes', 'sizes.id', '=', 'carts.size_id')
+        ->where('carts.user_id', '=', Auth::user()?->id)
+        ->select('carts.*', 'products.id as pro_id', 'products.name as proName', 'products.image', 'users.name as username')
+        ->get();
+
+    $topProducts = Product::orderBy('view', 'desc')->take(10)->get();
+
+    return view('clients.pages.shop', compact('products', 'carts','cates',));
+}
+
+
 }

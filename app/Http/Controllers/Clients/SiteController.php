@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 
 class SiteController extends Controller
 {
@@ -16,6 +17,6 @@ class SiteController extends Controller
     public function contact() {
         return view('clients.pages.contact');
     }
-    // 
+    
 
 }

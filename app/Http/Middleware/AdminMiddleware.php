@@ -16,14 +16,21 @@ class AdminMiddleware
      */
     // app/Http/Middleware/CheckAdmin.php
 
-public function handle($request, Closure $next)
-{
-    if (Auth::check() && Auth::user()->role === 1) {
+    public function handle($request, Closure $next)
+    {
+       
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để tiếp tục.');
+        }
+
+       
+        if (Auth::user()->role !== 1) {
+            return redirect()->route('home-client')->with('error', 'Bạn không có quyền truy cập vào trang này.');
+        }
+
+      
         return $next($request);
     }
-
-    return redirect()->route('home-client')->with('error', 'Bạn không có quyền truy cập.');
-}
 
 
 }

@@ -2,12 +2,12 @@
     <a href="{{ route('home-client') }}" class="logo"><img src="{{ asset('assets/imgs/logo2.png') }}" alt=""></a>
     <div class="">
         <ul id="navbar">
-            <li><a class="" href="{{ route('home-client') }}">Home</a></li>
-            <li><a href="{{ route('home.site.product.shop')  }}">Shop</a></li>
-            <li><a href="{{ route('clients.blogs.index') }}">Blog</a></li>
-            <li><a href="{{ route('home.site.about')  }}">About</a></li>
-            <li><a href="{{ route('home.site.contact')  }}">Contact</a></li>
-            <li><a href="{{ route('clients.vouchers.index') }}">Xem Voucher</a>
+            <li><a class="" href="{{ route('home-client') }}">Trang chủ</a></li>
+            <li><a href="{{ route('home.site.product.shop')  }}">Cửa hàng</a></li>
+            <li><a href="{{ route('clients.blogs.index') }}">Bài viết</a></li>
+            <li><a href="{{ route('home.site.about')  }}">về chúng tôi</a></li>
+            <li><a href="{{ route('home.site.contact')  }}">Địa chỉ</a></li>
+            <li><a href="{{ route('clients.vouchers.index') }}">Mã giảm giá</a>
             </li>
             @auth
             <li><a href="{{ route('clients.chats.index', ['userId' => auth()->user()->id]) }}">Chat với admin</a></li>
