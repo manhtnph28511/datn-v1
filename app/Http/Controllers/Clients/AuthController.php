@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Mail\PasswordUpdated;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Clients\Auth\AuthRequest;
@@ -43,7 +44,7 @@ class AuthController extends Controller
                 toast('Đăng nhập thành công!', 'success');
                 return redirect()->route('home-client');
             }
-            toast('Đăng nhập không thành công', 'info');
+            toast('Đăng nhập không thành công ,tài khoản hoặc mật khẩu không đúng', 'info');
             return back();
         }
         return view('clients.pages.auth.login');
@@ -125,6 +126,9 @@ class AuthController extends Controller
 
         $user->password = Hash::make($request->password);
         $user->save();
+
+
+        Mail::to($user->email)->send(new PasswordUpdated($user));
 
         return redirect()->route('account.login')
                          ->with('success', 'Cập nhật mật khẩu thành công');
