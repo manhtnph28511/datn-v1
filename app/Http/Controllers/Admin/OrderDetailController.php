@@ -2,9 +2,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Exports\OrderExport;
 use App\Models\OrderDetail;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderDetailController extends Controller
 {
@@ -58,6 +60,21 @@ class OrderDetailController extends Controller
             ->get(); // Sử dụng get() thay vì paginate()
     
         return view('admin.pages.orderdetails.show', compact('orderDetails'));
+    }
+
+
+    public function exportStatistics(Request $request)
+    {
+
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+    $orders = Order::with('orderDetails')
+        ->whereBetween('created_at', [$startDate, $endDate])
+        ->get();
+
+        // Gọi export và truyền dữ liệu vào
+        return Excel::download(new OrderExport($orders), 'order_statistics.xlsx');
     }
     
     

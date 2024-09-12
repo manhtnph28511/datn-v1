@@ -30,6 +30,8 @@
                     </select>
                 
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Tìm kiếm</button>
+
+                    <button type="submit" class="btn btn-success" formaction="{{ route('admin.exportStatistics') }}">Xuất Excel</button>
                 </form>
                 
 

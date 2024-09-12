@@ -84,6 +84,8 @@ Route::name('account.')->prefix('tai-khoan')->controller(AuthController::class)-
 Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
    
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+    
+
    
 
     //Product Module
@@ -183,6 +185,7 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
     Route::name('admin.')->prefix('orderdetail')->controller(OrderDetailController::class)->group(function () {
         Route::get('order-details', 'index')->name('orderdetail.index');
         Route::get('order-details/{id}', 'show')->name('orderdetail.show');
+        Route::get('/export-statistics', [OrderDetailController::class, 'exportStatistics'])->name('exportStatistics');
 
     });
 

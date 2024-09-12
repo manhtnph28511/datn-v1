@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Exports\OrderExport;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardController extends Controller
 {
@@ -34,11 +36,20 @@ class DashboardController extends Controller
                 ->selectRaw('COUNT(*) as order_count')
                 ->groupBy('user_id')
                 ->orderBy('order_count', 'desc');
+
             if ($startDate && $endDate) {
                 $topCustomerQuery->whereBetween('created_at', [$startDate, $endDate]);
             }
-            $topCustomer = $topCustomerQuery->first();
-            $topCustomerName = $topCustomer ? User::find($topCustomer->user_id)->name : 'N/A';
+
+            $topCustomers = $topCustomerQuery->take(5)->get();
+            $topCustomerNames = [];
+
+            foreach ($topCustomers as $topCustomer) {
+                $user = User::find($topCustomer->user_id);
+                if ($user) {
+                    $topCustomerNames[] = $user->name;
+                }
+            }
     
 
 
@@ -55,17 +66,25 @@ class DashboardController extends Controller
 
             // Sản phẩm bán nhiều nhất
             $topProductQuery = OrderDetail::select('pro_id')
-                ->selectRaw('SUM(quantity) as total_quantity')
-                ->groupBy('pro_id')
-                ->orderBy('total_quantity', 'desc');
-            if ($startDate && $endDate) {
-                $topProductQuery->whereHas('order', function ($query) use ($startDate, $endDate) {
-                    $query->whereBetween('created_at', [$startDate, $endDate]);
-                });
+            ->selectRaw('SUM(quantity) as total_quantity')
+            ->groupBy('pro_id')
+            ->orderBy('total_quantity', 'desc');
+        
+        if ($startDate && $endDate) {
+            $topProductQuery->whereHas('order', function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            });
+        }
+        
+        $topProducts = $topProductQuery->take(5)->get();
+        $topProductNames = [];
+        
+        foreach ($topProducts as $topProduct) {
+            $product = Product::find($topProduct->pro_id);
+            if ($product) {
+                $topProductNames[] = $product->name;
             }
-            $topProduct = $topProductQuery->first();
-            $topProductName = $topProduct ? Product::find($topProduct->pro_id)->name : 'N/A';
-
+        }
 
 
 
@@ -94,19 +113,32 @@ class DashboardController extends Controller
         $topRatedProductName = $topRatedProduct ? $topRatedProduct->name : 'N/A';
         $topRatedProductRating = $topRatedProduct ? number_format($topRatedProduct->avg_rating, 2) : 'N/A';
             
-            return view('admin.pages.dashboard', [
-                'totalOrders' => $totalOrders,
-                'topCustomerName' => $topCustomerName,
-                'totalRevenue' => $totalRevenue,
-                'topProductName' => $topProductName,
-                'startDate' => $startDate,
-                'endDate' => $endDate,
-                'topViewedProductName' => $topViewedProductName,
-                'topViewedProductViews' => $topViewedProductViews,
-                'topRatedProductName' => $topRatedProductName,
-                'topRatedProductRating' => $topRatedProductRating,
-            ]);
+        return view('admin.pages.dashboard', [
+            'totalOrders' => $totalOrders,
+            'topCustomerNames' => $topCustomerNames,
+            'totalRevenue' => $totalRevenue,
+            'topProductNames' => $topProductNames, // Đảm bảo truyền biến này vào view
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'topViewedProductName' => $topViewedProductName,
+            'topViewedProductViews' => $topViewedProductViews,
+            'topRatedProductName' => $topRatedProductName,
+            'topRatedProductRating' => $topRatedProductRating,
+        ]);
         }
+        public function exportStatistics(Request $request)
+        {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+        
+            $orders = Order::with('orderDetails')
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->get();
+
+            return Excel::download(new OrderExport($orders), 'order_statistics.xlsx');
+        }
+        
+        
     }
 
 
