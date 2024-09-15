@@ -45,10 +45,11 @@ class Product extends Model
     {
         return $this->belongsTo(Size::class);
     }
-    public function product_variants()
-    {
-        return $this->hasMany(ProductVariant::class, 'product_id');
-    }
+    public function productVariants()
+{
+    return $this->hasMany(ProductVariant::class, 'product_id');
+}
+
 
     public function brand()
     {

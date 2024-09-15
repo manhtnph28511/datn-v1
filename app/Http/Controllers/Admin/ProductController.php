@@ -62,8 +62,8 @@ class ProductController extends Controller
             $data['slug'] = Str::slug($request->get('name'));
             if($request->hasFile('image')) {
                 $data['image'] = Cloudinary::upload($request->file('image')->getRealPath(),array(
-                    'upload_preset' => 'mwsports',  // Tên của Upload Preset
-                    'folder' => 'MWSPORT/Products',  // Thư mục để lưu ảnh
+                    'upload_preset' => 'mwsports',  
+                    'folder' => 'MWSPORT/Products',  
                     'overwrite' => true,
                     'resource_type' => 'image',
                 ))->getSecurePath();
@@ -122,18 +122,27 @@ class ProductController extends Controller
         return view('admin.pages.products.edit-form', compact('product', 'colors', 'sizes', 'cates', 'brands', 'sttProduct'));
     }
 
-    public function softDelete($id)
-    {
-        $isSuccess = Product::destroy($id);
-        return checkEndDisplayMsg($isSuccess, 'success', 'Thành công', 'Xóa thành công', 'admin.product.index');
-    }
 
     public function destroy($id)
-    {
-//        $product = Product::onlyTrashed()->where('id',$id)->first();
-        $isSuccess = Product::where('id',$id)->forceDelete();
-        return checkEndDisplayMsg($isSuccess, 'success', 'Thành công', 'Xóa thành công', 'admin.product.index');
+{
+    $product = Product::find($id);
+
+    if (!$product) {
+        return redirect()->route('admin.product.index')->with('error', 'Sản phẩm không tồn tại');
     }
+
+    
+    $product->productVariants()->delete();  
+
+    
+    $isSuccess = $product->forceDelete();
+
+    return redirect()->route('admin.product.index')->with('success', 'Xóa thành công');
+}
+
+
+    
+
 
 
     public function search(Request $request)

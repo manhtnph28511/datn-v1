@@ -11,14 +11,19 @@ class SubCategory extends Model
     use HasFactory,SoftDeletes;
 
     protected $table = 'sub_categories';
-    protected $fillable = ['name','slug','description','parent_id'];
+    protected $fillable = ['name','slug','description','categories_id'];
 
     public function getCateName() {
-        return Category::find($this->parent_id);
+        return Category::find($this->categories_id);
     }
    public function products()
     {
         return $this->hasMany(Product::class, 'cate_id', 'id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'categories_id'); 
     }
 }
 

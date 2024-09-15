@@ -15,11 +15,6 @@ class BrandController extends Controller
         return view('admin.pages.brands.index', compact('brands'));
     }
 
-    public function trash()
-    {
-        $brands = Brand::onlyTrashed()->get();
-        return view('admin.pages.brands.trash-list', compact('brands'));
-    }
 
 
     public function create()
@@ -54,22 +49,11 @@ class BrandController extends Controller
         return view('admin.pages.brands.edit-form', compact('brand'));
     }
 
-    public function softDelete($id)
-    {
-        $isSuccess = Brand::destroy($id);
-        return checkEndDisplayMsg($isSuccess, 'success', 'Success', 'Xóa thành công', 'admin.brand.index');
-    }
-
-    public function restore($id)
-    {
-        $isSuccess = Brand::onlyTrashed()->whereId($id)->restore();
-        return checkEndDisplayMsg($isSuccess, 'success', 'Success', 'Hoàn tác thành công', 'admin.brand.index');
-    }
 
     public function destroy($id)
     {
         $isSuccess = Brand::whereId($id)->forceDelete();
-        return checkEndDisplayMsg($isSuccess, 'success', 'Success', 'Xóa thành công', 'admin.brand.trash');
+        return checkEndDisplayMsg($isSuccess, 'success', 'Success', 'Xóa thành công', 'admin.brand.index');
     }
 
     public function search(Request $request)

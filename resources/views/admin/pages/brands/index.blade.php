@@ -7,11 +7,6 @@
                     <a href="{{ route('admin.brand.create') }}"
                         class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-2 rounded-full">+ Thương
                         hiệu</a>
-                    <a class="bg-[#f687b3] hover:bg-[#f687b3] text-white font-bold py-2 px-4 rounded-full"
-                        href="{{ route('admin.brand.trash') }}">
-                        Thùng rác
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
                 </div>
 
                   {{-- Form tìm kiếm --}}
@@ -54,7 +49,7 @@
                                                 Cập nhật
                                                 <i class="fa-solid fa-pen"></i>
                                             </a>
-                                            <form action="{{ route('admin.brand.softDelete', $brand->id) }}" method="POST">
+                                            <form action="{{ route('admin.brand.destroy', $brand->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button

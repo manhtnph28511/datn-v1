@@ -9,66 +9,98 @@ use Illuminate\Http\Request;
 
 class SubCateController extends Controller
 {
-
-    public function trashFashion() {
-        $subCates = SubCategory::onlyTrashed()->get();
-        return view('admin.pages.categories.sub-cate.fashions.trash-list',compact('subCates'));
-    }
-    public function trashBeauty() {
-        $subCates = SubCategory::onlyTrashed()->get();
-        return view('admin.pages.categories.sub-cate.beauty.trash-list',compact('subCates'));
-    }
-    public function trashAccessory() {
-        $subCates = SubCategory::onlyTrashed()->get();
-        return view('admin.pages.categories.sub-cate.accessory.trash-list',compact('subCates'));
-    }
-
-
-    public function restore($id) {
-        $isSuccess = SubCategory::onlyTrashed()->whereId($id)->restore();
-        return checkEndDisplayMsg($isSuccess,'success','Thành công','Hoàn tác thành công','admin.category.index');
-    }
-
-    public function store(Request $request) {
-        $cates = Category::all();
-        if($request->method() === 'POST') {
-//            dd($request->all());
-            $isSuccess = SubCategory::create([
-                'name' => $request->name,
-                'slug' => $request->slug ?? '',
-                'description' => $request->description ?? '',
-                'parent_id' => $request->parent_id
-            ]);
-            return checkEndDisplayMsg($isSuccess,'success','Thành công','Thêm mới thành công','admin.category.index');
-        }
-        return view('admin.pages.categories.sub-cate.create-form',compact('cates'));
-    }
-
-    public function update(Request $request,$id) {
-        $subCate = SubCategory::find($id);
-        $cates = Category::all();
-        if($request->method() === 'POST') {
-            $isSuccess = SubCategory::whereId($id)->update([
-                'name' => $request->name,
-                'slug' => $request->slug ?? '',
-                'parent_id' => $request->parent_id,
-                'description' => $request->description ?? ''
-            ]);
-            return checkEndDisplayMsg($isSuccess,'success','Thành công','Cập nhật thành công','admin.category.index');
-        }
-        return view('admin.pages.categories.sub-cate.edit-form',['subCate' => $subCate,'cates' => $cates]);
+    public function index($categories_id)
+    {
+       
+        $category = Category::findOrFail($categories_id);
+    
+        
+        $subCategories = SubCategory::where('categories_id', $categories_id)->get();
+    
+        return view('admin.pages.sub-cate.index', [
+            'subCategories' => $subCategories,
+            'categoryName' => $category->name, 
+            'categories_id' => $categories_id,
+        ]);
     }
 
 
-    public function softDelete($id) {
-        $isSuccess = SubCategory::destroy($id);
-        return checkEndDisplayMsg($isSuccess,'success','Thành công','Xóa thành công','admin.category.index');
+    public function create($categories_id)
+    {
+       
+        $category = Category::find($categories_id);
+
+        return view('admin.pages.sub-cate.create-form', [
+            'categories_id' => $categories_id,
+            'category' => $category
+        ]);
     }
 
+    
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:sub_categories',
+            'description' => 'nullable|string',
+            'categories_id' => 'required|exists:categories,id', 
+        ]);
 
-    public function destroy($id) {
-        $isSuccess = SubCategory::whereId($id)->forceDelete();
-        return checkEndDisplayMsg($isSuccess,'success','Thành công','Xóa thành công','admin.category.index');
+        
+        SubCategory::create([
+            'name' => $request->input('name'),
+            'slug' => $request->input('slug'),
+            'description' => $request->input('description'),
+            'categories_id' => $request->input('categories_id'),
+        ]);
+
+
+        return redirect()->route('admin.subcate.index', ['categories_id' => $request->input('categories_id')])
+            ->with('success', 'Danh mục con đã được tạo thành công.');
+    }
+
+    public function show($id)
+    {
+        $subCategory = SubCategory::with('category')->findOrFail($id);
+        return view('admin.pages.sub-cate.show', compact('subCategory'));
+    }
+    
+
+    public function edit($id)
+    {
+        $subCategory = SubCategory::findOrFail($id);
+        return view('admin.pages.sub-cate.edit-form', ['subCategory' => $subCategory]);
+    }
+
+    // Xử lý cập nhật danh mục con
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:sub_categories,slug,' . $id,
+            'description' => 'nullable|string'
+        ]);
+
+        $subCategory = SubCategory::findOrFail($id);
+        $subCategory->update($request->all());
+
+        return redirect()->route('admin.subcate.index', ['categories_id' => $subCategory->categories_id])
+            ->with('success', 'Danh mục con đã được cập nhật thành công.');
+    }
+
+    
+    
+
+   
+
+
+    public function destroy($id)
+    {
+        $subCategory = SubCategory::findOrFail($id);
+        $subCategory->delete();
+
+        return redirect()->route('admin.subcate.index', ['categories_id' => $subCategory->categories_id])
+            ->with('success', 'Danh mục con đã được xóa thành công.');
     }
 
 }

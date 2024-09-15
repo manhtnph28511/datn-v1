@@ -29,6 +29,18 @@ class BlogController extends Controller
     return view('admin.pages.blogs.index', compact('blogs'));
 }
 
+public function show($id)
+{
+    $blog = Blog::find($id); 
+
+  
+    if (!$blog) {
+        return redirect()->route('admin.pages.blogs.index')->with('error', 'Bài viết không tồn tại!');
+    }
+
+    return view('admin.pages.blogs.show', compact('blog')); 
+}
+
 
 
     public function create()

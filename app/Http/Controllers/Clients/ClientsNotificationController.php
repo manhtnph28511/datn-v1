@@ -64,6 +64,7 @@ class ClientsNotificationController extends Controller
         }
         return back();
     }
+
     public function confirmReceived($id)
     {
       
@@ -91,6 +92,7 @@ class ClientsNotificationController extends Controller
     
         return redirect()->back()->with('status', 'Cảm ơn bạn đã xác nhận');
     }
+
 
     public function cancelOrder($id)
     {
@@ -149,7 +151,7 @@ class ClientsNotificationController extends Controller
     $selectedSizeId = $orderDetail->size_id;
     $selectedColorId = $orderDetail->color_id;
 
-    // Trả về view với thông tin chi tiết sản phẩm để đánh giá
+    
     return view('clients.pages.detail-product', [
         'orderDetail' => $orderDetail,
         'product' => $product,

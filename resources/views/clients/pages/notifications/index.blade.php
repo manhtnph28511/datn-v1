@@ -23,6 +23,42 @@
                     <td class="px-6 py-4">{{ $message }}</td>
                     <td class="px-6 py-4">{{ $notification->created_at->format('d/m/Y H:i') }}</td>
 
+
+                    @if (trim($type) === 'đã đặt hàng')
+                        <td class="px-6 py-4">
+                            <form action="{{ route('clients.notifications.cancelOrder', $notification->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Hủy đơn</button>
+                            </form>
+                            
+                        </td>
+                    @endif
+
+
+                    @if (trim($message) === 'Đơn hàng của bạn đã được giao cho người nhận.')
+                        <td class="px-6 py-4">
+                            <form action="{{ route('clients.notifications.confirmReceived', $notification->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Đã nhận</button>
+                            </form>
+                        </td>
+                    @endif
+
+
+
+
+                    @if (trim($message) === 'Chúng tôi đã nhận thấy 1 số hành động lại từ tài khoản của bạn nên đã tạm thời khóa nó . Vui lòng liên hệ qua trang chat')
+                    <td class="px-6 py-4">
+                        <form action="{{ route('clients.chats.index', ['userId' => auth()->user()->id]) }}" method="GET">
+                            @csrf
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Chat với admin</button>
+                        </form>
+                    </td>
+                   @endif
+
+
+                   
+
                     <!-- Kiểm tra thông báo "Đơn hàng đã giao thành công" -->
                     @if ($message === 'Đơn hàng của bạn đã được giao hàng thành công.')
                     <td class="px-6 py-4">

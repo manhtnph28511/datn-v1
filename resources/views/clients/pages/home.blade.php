@@ -135,8 +135,8 @@
             <p>Get email updates about our latest shop and <span>special offers.</span></p>
         </div>
         <div class="form">
-            <input type="text" placeholder="Your email address">
-            <button class="normal">Sign Up</button>
+            {{-- <input type="text" placeholder="Your email address">
+            <button class="normal">Sign Up</button> --}}
         </div>
     </section>
 @endsection

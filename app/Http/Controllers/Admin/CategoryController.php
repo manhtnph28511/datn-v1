@@ -18,12 +18,9 @@ class CategoryController extends Controller
         return view('admin.pages.categories.index', ['cates' => $cates, 'subCates' => $subCates]);
     }
 
-    public function trash()
-    {
-        $cates = Category::onlyTrashed()->paginate(5);
-        return view('admin.pages.categories.trash-list', compact('cates'));
+    public function create(){
+        return view('admin.pages.categories.create-form');
     }
-
 
     public function store(CategoryRequest $request)
     {
@@ -38,11 +35,13 @@ class CategoryController extends Controller
         return view('admin.pages.categories.create-form');
     }
 
-    public function restore($id)
-    {
-        $isSuccess = Category::onlyTrashed()->whereId($id)->restore();
-        return checkEndDisplayMsg($isSuccess, 'success', 'Success', 'Hoàn tác thành công', 'admin.category.trash');
-    }
+
+    public function show($id)
+{
+    $category = Category::find($id);
+    return view('admin.pages.categories.show', compact('category'));
+}
+
 
     public function update(Request $request, $id)
     {
@@ -58,15 +57,21 @@ class CategoryController extends Controller
         return view('admin.pages.categories.edit-form', compact('cate'));
     }
 
-    public function softDelete($id)
-    {
-        $isSuccess = Category::destroy($id);
-        return checkEndDisplayMsg($isSuccess, 'success', 'Thành công', 'Xóa thành công', 'admin.category.index');
-    }
 
     public function destroy($id)
     {
-        $isSuccess = Category::whereId($id)->forceDelete();
-        return checkEndDisplayMsg($isSuccess, 'success', 'Thành công', 'Xóa thành công', 'admin.category.trash');
+        $category = Category::find($id);
+
+        if (!$category) {
+            return redirect()->route('admin.category.index')->with('error', 'Danh mục không tồn tại');
+        }
+
+       
+        $category->subCategories()->delete();
+
+      
+        $isSuccess = $category->forceDelete();
+
+        return redirect()->route('admin.category.index')->with('success', 'Xóa thành công');
     }
 }

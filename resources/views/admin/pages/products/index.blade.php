@@ -7,11 +7,6 @@
                     <a href="{{ route('admin.product.store') }}"
                         class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-2 rounded-full">+
                         Sản phẩm</a>
-                    <a class="bg-[#f687b3] hover:bg-[#f687b3] text-white font-bold py-2 px-4 rounded-full"
-                        href="{{ route('admin.product.trash') }}">
-                        Thùng rác
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
                 </div>
 
 
@@ -72,12 +67,7 @@
                             {{ $pro->quantity  }}
                         </th>
                                 
-{{--                         
-                            </th>
-                                <th scope="row"
-                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white truncate">
-                                {{ $pro->name }}
-                            </th> --}}
+
                                     <td class="px-6 py-4 flex gap-x-4">
                                         <a href="{{ route('admin.product.show', $pro->id) }}"
                                             class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full">
@@ -93,7 +83,7 @@
                                             <!-- Nút để đến trang quản lý biến thể -->
                                             <a href="{{ route('admin.variant.index', ['product_id' => $pro->id]) }}" class="text-blue-500">Quản lý biến thể</a>
                                         
-                                        <form action="{{ route('admin.product.softDelete', $pro->id) }}" method="POST">
+                                        <form action="{{ route('admin.product.destroy', $pro->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button

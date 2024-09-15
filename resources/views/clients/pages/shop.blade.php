@@ -88,7 +88,7 @@
         </div>
         <div class="pro-container">
             @foreach($products as $pro)
-                <div class="pro" style="height:360px">
+                <div class="pro" style="height:410px">
                     <a href="{{route('home.site.product.show',['id' => $pro->id,'slug' => $pro->slug])."?cate=$pro->cate_id"}}">
                         <img src="{{ $pro->image }}" alt="" style="height=80px" >
                     </a>
@@ -104,6 +104,7 @@
                         <a href="{{route('home.site.product.show',['id' => $pro->id,'slug' => $pro->slug])}}">
                             <h5>{{ $pro->name  }}</h5>
                         </a>
+                        <h4>{{ number_format($pro->price)  }}</h4>
                         <div class="star">
                                 @if ($pro->ratings->isNotEmpty())
                                     @php
@@ -118,7 +119,7 @@
                                     <p>Chưa có đánh giá nào</p>
                                 @endif
                         </div>
-                        <h4>{{ number_format($pro->price)  }}</h4>
+                        
                     </div>
                 </div>
             @endforeach
@@ -126,6 +127,7 @@
     </section>
     <div class="flex justify-center mb-6">
         {{ $products->links('admin.layouts.pagination')  }}
+        {{-- {{ $products->appends(request()->query())->links() }} --}}
     </div>
     @include('clients.layouts.form-feedback')
 @endsection

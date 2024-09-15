@@ -99,8 +99,9 @@ public function showProduct($id, Request $request)
 {
     $minPrice = $request->input('min_price');
     $maxPrice = $request->input('max_price');
-    
+
     $products = Product::whereBetween('price', [$minPrice, $maxPrice])->paginate(8);
+    
 
     $cates = Category::all();
     $carts = DB::table('carts')
@@ -113,8 +114,12 @@ public function showProduct($id, Request $request)
 
     $topProducts = Product::orderBy('view', 'desc')->take(10)->get();
 
-    return view('clients.pages.shop', compact('products', 'carts','cates',));
+    return view('clients.pages.shop', compact('products', 'carts', 'cates', 'topProducts'));
 }
+
+
+
+
 
 
 }

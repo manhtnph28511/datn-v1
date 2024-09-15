@@ -70,6 +70,8 @@
                                        
                                         <td class="border-b px-6 py-4 text-sm text-gray-700">{{ Str::limit($blog->content, 50) }}</td>
                                         <td class="border-b px-6 py-4 text-sm text-gray-700">
+                                            <a href="{{ route('admin.blogs.show', $blog->id) }}"
+                                                class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded-md text-xs">Xem</a>
                                             <a href="{{ route('admin.blogs.edit', $blog->id) }}"
                                                 class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-1 px-3 rounded-md text-xs">Sửa</a>
                                             <form action="{{ route('admin.blogs.destroy', $blog->id) }}" method="POST" class="inline">

@@ -91,14 +91,10 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
     //Product Module
     Route::name('admin.')->prefix('san-pham')->controller(ProductController::class)->group(function () {
         Route::get('/', 'index')->name('product.index');
-        Route::get('danh-sach-san-pham-da-xoa', 'trash')->name('product.trash');
         Route::match(['GET', 'POST'], 'them-moi', 'store')->name('product.store');
-       
         Route::get('/show{id}', [ProductController::class, 'show'])->name('product.show');
         Route::match(['GET', 'POST'], 'cap-nhat/{id}', 'update')->name('product.update');
-        Route::delete('xoa-mem/{id}', 'softDelete')->name('product.softDelete');
         Route::delete('xoa/{id}', 'destroy')->name('product.destroy');
-        Route::get('khoi-khuc/{id}', 'restore')->name('product.restore');
         Route::get('search', 'search')->name('product.search');
     });
 
@@ -120,12 +116,9 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
     //Brand Module
     Route::name('admin.')->prefix('thuong-hieu')->controller(BrandController::class)->group(function () {
         Route::get('/', [BrandController::class, 'index'])->name('brand.index');
-        Route::get('thuong-hieu-da-xoa', [BrandController::class, 'trash'])->name('brand.trash');
         Route::get('them-moi', [BrandController::class, 'create'])->name('brand.create'); 
         Route::post('them-moi', [BrandController::class, 'store'])->name('brand.store'); 
         Route::match(['GET', 'POST'], 'cap-nhat/{id}', 'update')->name('brand.update');
-        Route::get('khoi-phuc/{id}', 'restore')->name('brand.restore');
-        Route::delete('xoa-mem/{id}', 'softDelete')->name('brand.softDelete');
         Route::delete('xoa/{id}', 'destroy')->name('brand.destroy');
         Route::get('search', 'search')->name('brand.search');
     });
@@ -133,26 +126,26 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
     // Categories Module
     Route::name('admin.')->prefix('danh-muc')->controller(CategoryController::class)->group(function () {
         Route::get('/', 'index')->name('category.index');
-        Route::get('danh-muc-da-xoa', 'trash')->name('category.trash');
-        Route::get('khoi-phuc/{id}', 'restore')->name('category.restore');
-        Route::match(['GET', 'POST'], 'them-moi', 'store')->name('category.store');
+        Route::get('them-moi', 'create')->name('category.create');  
+        Route::post('them-moi', 'store')->name('category.store');
+        Route::get('chi-tiet/{id}', 'show')->name('category.show');
         Route::match(['GET', 'POST'], 'cap-nhat/{id}', 'update')->name('category.update');
-        Route::delete('xoa-mem/{id}', 'softDelete')->name('category.softDelete');
         Route::delete('xoa/{id}', 'destroy')->name('category.destroy');
-
-
-        // Sub Category Module
-        Route::prefix('danh-muc-con')->controller(SubCateController::class)->group(function () {
-            Route::get('trash-fashion', 'trashFashion')->name('cate.subcate.trashFashion');
-            Route::get('trash-beauty', 'trashBeauty')->name('cate.subcate.trashBeauty');
-            Route::get('trash-accessory', 'trashAccessory')->name('cate.subcate.trashAccessory');
-            Route::get('restore/{id}', 'restore')->name('cate.subcate.restore');
-            Route::match(['GET', 'POST'], 'them-moi', 'store')->name('cate.subcate.store');
-            Route::match(['GET', 'POST'], 'cap-nhat/{id}', 'update')->name('cate.subcate.update');
-            Route::delete('soft-delete/{id}', 'softDelete')->name('cate.subcate.softDelete');
-            Route::delete('delete/{id}', 'softDelete')->name('cate.subcate.destroy');
-        });
+       
     });
+
+    Route::name('admin.')->prefix('danh-muc-con')->controller(SubCateController::class)->group(function () {
+        Route::get('danh-muc/{categories_id}/index', 'index')->name('subcate.index');
+        Route::get('danh-muc-con/create/{categories_id}', 'create')->name('subcate.create-form');
+        Route::post('danh-muc-con', 'store')->name('subcate.store');
+        Route::get('danh-muc-con/{id}/show',  'show')->name('subcate.show');
+        Route::get('danh-muc-con/edit/{id}', 'edit')->name('subcate.edit');
+        Route::put('danh-muc-con/update/{id}', 'update')->name('subcate.update');
+        Route::delete('danh-muc-con/destroy/{id}', 'destroy')->name('subcate.destroy');
+    });
+    
+    
+
 
 
 //status_products
@@ -166,6 +159,8 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::delete('destroy/{id}', 'destroy')->name('status.destroy');
     });
 
+
+    //bài viết
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('blogs', BlogController::class);
     });
@@ -236,7 +231,7 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
     });
 
 
-
+//thông báo
     Route::name('admin.')->prefix('notifications')->controller(NotificationController::class)->group(function () {
         Route::get('/', 'showNotifications')->name('notifications.index');
         Route::post('/notifications/{notification}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');
@@ -244,6 +239,8 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
 
     });
 
+
+    //voucher
     Route::name('admin.')->prefix('vouchers')->controller(VoucherController::class)->group(function () {
         Route::get('/', 'index')->name('vouchers.index');
         Route::get('/create', 'create')->name('vouchers.create');
@@ -253,6 +250,8 @@ Route::prefix('dashboard')->middleware('isAdmin')->group(function () {
         Route::delete('vouchers/{id}', 'destroy')->name('vouchers.destroy');
     });
 
+
+    //chat
     Route::name('admin.')->prefix('chats')->controller(ChatController::class)->group(function () {
         Route::get('/chats/{userId?}', [ChatController::class, 'index'])->name('chats.index');
         Route::get('/show/{userId}', [ChatController::class, 'show'])->name('chats.show');
@@ -305,7 +304,10 @@ Route::controller(SiteController::class)->group(function () {
 Route::controller(HomeProductController::class)->group(function () {
     Route::get('product/{id}', 'showProduct')->name('home.site.product.show');
     Route::get('shop-page', 'shop')->name('home.site.product.shop');
-    Route::post('searchByPrice', 'searchByPrice')->name('home.site.product.searchByPrice');
+    // Route::get('searchByPrice',  'getSearchByPrice')->name('home.site.product.getSearchByPrice');
+    // Route::post('searchByPrice', 'searchByPrice')->name('home.site.product.searchByPrice');
+    Route::match(['get', 'post'], 'searchByPrice', [HomeProductController::class, 'searchByPrice'])->name('home.site.product.searchByPrice');
+
     Route::get('product-from-sub-cate/{id}', 'productFromSubCate')->name('home.site.product.proFromSubCate');
     Route::post('search-query', 'searchProductHome')->name('home.site.product.search');
 

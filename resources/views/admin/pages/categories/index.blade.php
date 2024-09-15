@@ -3,30 +3,15 @@
     <div class="dash-content">
         <div class="activity">
             <div class="py10">
-                <label for="underline_select" class="sr-only">Underline select</label>
-                <select id="underline_select"
-                    class="select block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                    <option selected value="default">Chọn danh mục</option>
-                    <option value="thoitrang" id="thoitrang">Thời trang</option>
-                    <option value="giaydep" id="giaydep">Giày Dép</option>
-                </select>
+
             </div>
             <div class="py-[100px]">
-                {{-- Box default --}}
                 <div class="block box-default">
                     <div class="flex justify-end mb-4">
-                        {{-- <a href="{{ route('admin.category.store')  }}"
+                        <a href="{{ route('admin.category.create')  }}"
                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-2 rounded-full">+
-                            New
-                            Category</a> --}}
-                        <a href="{{ route('admin.cate.subcate.store') }}"
-                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-2 rounded-full">+ Danh
-                            mục</a>
-                        <a class="bg-[#f687b3] hover:bg-[#f687b3] text-white font-bold py-2 px-4 rounded-full"
-                            href="{{ route('admin.category.trash') }}">
-                            Thùng rác
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
+                          Thêm danh mục
+                         </a>
                     </div>
                     <div class="relative overflow-x-auto">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -64,62 +49,35 @@
                                                 Cập nhật
                                                 <i class="fa-solid fa-pen"></i>
                                             </a>
-                                            <form action="{{ route('admin.category.softDelete', $cate->id) }}"
-                                                method="POST">
+                                            <a href="{{ route('admin.subcate.index', ['categories_id' => $cate->id]) }}"
+                                                class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full">
+                                                Xem danh mục con
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
+                                            <a href="{{ route('admin.category.show', $cate->id) }}"
+                                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
+                                                Xem chi tiết
+                                                <i class="fa-solid fa-info-circle"></i>
+                                            </a>
+                                            <form action="{{ route('admin.category.destroy', $cate->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button
-                                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
-                                                    Xóa
+                                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
+                                                    Xóa danh mục
                                                     <i class="fa-solid fa-xmark"></i>
                                                 </button>
                                             </form>
                                         </td>
+                                        
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-                {{-- end box default --}}
-
-                {{-- box thời trang --}}
-                @include('admin.pages.categories.sub-cate.fashions.index')
-                {{-- end box thời trang --}}
-
-                {{-- box phụ kiện, trang sức --}}
-                @include('admin.pages.categories.sub-cate.accessory.index')
-                {{-- end box phụ kiện, trang sức --}}
-
-                {{-- box sắc đẹp --}}
-                @include('admin.pages.categories.sub-cate.beauty.index')
-                {{-- end box sắc đẹp --}}
             </div>
             {{ $cates->links('admin.layouts.pagination') }}
         </div>
     </div>
-    @push('script')
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-        <script>
-            $(".select").on("change", function() {
-                const _select = $('.select').val();
-                if (_select === 'thoitrang') {
-                    $('.box-style').show();
-                    $('.box-assets').hide();
-                    $('.box-beautiful').hide();
-                    $('.box-default').hide();
-                } else if (_select === 'giaydep') {
-                    $('.box-style').hide();
-                    $('.box-assets').show();
-                    $('.box-beautiful').hide();
-                    $('.box-default').hide();
-                } else {
-                    $('.box-style').hide();
-                    $('.box-assets').hide();
-                    $('.box-beautiful').hide();
-                    $('.box-default').show();
-                }
-            });
-        </script>
-    @endpush
 @endsection
+
