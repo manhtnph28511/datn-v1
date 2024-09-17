@@ -132,7 +132,7 @@ class ProductController extends Controller
     }
 
     
-    $product->productVariants()->delete();  
+    $product->product_variants()->delete();  
 
     
     $isSuccess = $product->forceDelete();

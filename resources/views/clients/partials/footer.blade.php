@@ -1,10 +1,11 @@
 <footer class="section-p1">
     <div class="col">
-        <img class="logo" src="{{ asset('assets/imgs/logo2.png') }}" alt="" >
-        <h4>Contact</h4>
-        <p><strong>Address:</strong> 562 Wellington Road, Street 32, San Francisco</p>
-        <p><strong>Phone:</strong> +01 2222 365 /(+91) 01 2345 6789</p>
-        <p><strong>Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
+        <img class="logofooter" src="{{ asset('assets/imgs/logo2.png') }}" alt="" >
+        <h4>Liên hệ</h4>
+        <p><strong>Địa chỉ:</strong> 
+            113 Hùng Vương, Điện Biên, Ba Đình, Hà Nội, Việt Nam</p>
+        <p><strong>Điện thoại:</strong> +84 987654321</p>
+        <p><strong>Giờ làm việc:</strong> 08:00 - 17:00, Thứ Hai - Thứ Bảy</p>
         <div class="follow">
             <div class="icon">
                 <i class="fab fa-facebook-f"></i>
@@ -17,26 +18,26 @@
     </div>
 
     <div class="col">
-        <h4>About</h4>
-        <a href="#">About us</a>
-        <a href="#">Delivery Information</a>
-        <a href="#">Pricacy Policy</a>
-        <a href="#">Terms & Conditions</a>
-        <a href="#">Contact us</a>
+        <h4>Liên hệ</h4>
+        <a href="#">Về chúng tôi</a>
+        <a href="#">Thông tin giao hàng</a>
+        <a href="#">Chính sách giá</a>
+        <a href="#">Điều khoản & Điều kiện</a>
+        <a href="#">Liên hệ với chúng tôi</a>
     </div>
 
     <div class="col">
-        <h4>My Account</h4>
-        <a href="#">Sign In</a>
-        <a href="#">View Cart</a>
-        <a href="#">My Wishlist</a>
-        <a href="#">Track My Order</a>
-        <a href="#">Help</a>
+        <a href="{{route('clients.profile')}}">Tài khoản của tôi</a>
+        <a href="{{ route('account.login') }}">Đăng nhập</a>
+        <a href="{{ route('home.cart') }}">Xem giỏ hàng</a>
+        <a href="{{ route('clients.users.wishlists') }}">Danh sách yêu thích của tôi</a>
+        <a href="{{route('order.track')}}">Theo dõi đơn hàng của tôi</a>
+        <a href="#">Trợ giúp</a>
     </div>
 
     <div class="col install">
-        <h4>Install App</h4>
-        <p>From App Store or Google Play</p>
+        <h4>XEM TRANG WEB</h4>
+        <p>Google chrome or Microsoft Edge</p>
         <div class="row">
             <img src="{{ asset('assets/imgs/pay/app.jpg') }}" alt="">
             <img src="{{ asset('assets/imgs/pay/play.jpg') }}" alt="">
@@ -46,3 +47,10 @@
     </div>
 </footer>
 <script src="{{ asset('assets/js/clients/home-script.js')  }}"></script>
+
+<style>
+    .logofooter>img{
+        width: 120px;
+        height: 10px;
+    }
+</style>

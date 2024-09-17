@@ -21,14 +21,14 @@
                     <tr class="pro-box">
                         <td>INV{{ $row->id }}</td>
                         <td>{{ \Carbon\Carbon::parse($row->created_at)->format('d-m-Y H:i:s') }}</td>
-                        <td>{{ number_format($row->total_price) }}{{ number_format($row->total_price) }}đ</td>
+                        <td>{{ number_format($row->total_price) }}đ</td>
                         <td>{{ number_format($row->total_quantity) }}</td>
                         <td>{{ ($row->payment) }}</td>                     
                         <td>
                             <a href="{{ route('order.track', ['code' => $row->id]) }}" class="view-invoice fs-xs me-2"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theo dõi đơn hàng"><i
                                     class="fas fa-truck text-dark"></i></a>
-                            <a href="asc" class="view-invoice fs-xs"
+                            <a href="{{ route('order.show', ['id' => $row->id]) }}" class="view-invoice fs-xs"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Xem hoá đơn"><i
                                     class="fas fa-eye"></i>
                             </a>

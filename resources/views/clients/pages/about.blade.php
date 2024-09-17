@@ -2,8 +2,8 @@
 @section('title') About @endsection
 @section('app')
     <section id="page-header" class="about-header">
-        <h2>#KnowUs</h2>
-        <p>Lorem ipsum dolor sit amet, consectertur</p>
+        <h2>Bạn có biết?</h2>
+        <p>Giới thiệu về chúng tôi</p>
     </section>
     <section id="about-head" class="section-p1">
         <img src="{{ asset('assets/imgs/about/a6.jpg')  }}" alt="">
@@ -48,5 +48,13 @@
             <h6>Hỗ trợ 24.7</h6>
         </div>
     </section>
-    @include('clients.layouts.form-feedback')
+    <section id="newletter" class="section-p1">
+        <div class="newtext">
+            <h4>Sản phẩm chất lượng</h4>
+            <p>Đăng kí ngay và mua sắm nào <span>Nhận nhiều ưu đãi</span></p>
+        </div>
+        <div class="form">
+        </div>
+    </section>
+   
 @endsection

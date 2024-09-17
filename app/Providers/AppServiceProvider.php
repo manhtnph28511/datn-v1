@@ -28,7 +28,8 @@ class AppServiceProvider extends ServiceProvider
             $view->with('unreadNotificationsCount', $unreadNotificationsCount);
         });
         View::composer('*', function ($view) {
-            $clientUnreadNotificationsCount = session('clientUnreadNotificationsCount', 0);
+            $notificationController = app(ClientsNotificationController::class);
+            $clientUnreadNotificationsCount = $notificationController->getClientUnreadNotificationsCount();
             $view->with('clientUnreadNotificationsCount', $clientUnreadNotificationsCount);
         });
     }

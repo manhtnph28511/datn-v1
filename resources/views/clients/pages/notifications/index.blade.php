@@ -18,31 +18,38 @@
                     $data = json_decode($notification->data);
                     $message = $data->message ?? 'Không có tin nhắn';
                     $orderId = $data->order_id ?? null;
+                    $type = $notification->type;
+                    $hideForm = in_array(trim($type), ['shipping_update', 'account_update']);
                 @endphp
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <td class="px-6 py-4">{{ $message }}</td>
                     <td class="px-6 py-4">{{ $notification->created_at->format('d/m/Y H:i') }}</td>
 
 
-                    @if (trim($type) === 'đã đặt hàng')
-                        <td class="px-6 py-4">
-                            <form action="{{ route('clients.notifications.cancelOrder', $notification->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Hủy đơn</button>
-                            </form>
-                            
-                        </td>
-                    @endif
+
+                    
+                    @if (trim($notification->type) === 'đã đặt hàng')
+                    <td class="px-6 py-4 cancel" data-order-id="{{ $notification->order_id }}">
+                        <form action="{{ route('clients.notifications.cancelOrder', $notification->id) }}" method="POST" class="cancel-form">
+                            @csrf
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Hủy đơn</button>
+                        </form>
+                    </td>
+                @elseif (trim($notification->type) === 'shipping_update')
+                    <div class="shipping-update" data-order-id="{{ $notification->order_id }}"></div>
+                @endif
+              
+                
+
+                
 
 
-                    @if (trim($message) === 'Đơn hàng của bạn đã được giao cho người nhận.')
-                        <td class="px-6 py-4">
-                            <form action="{{ route('clients.notifications.confirmReceived', $notification->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Đã nhận</button>
-                            </form>
-                        </td>
-                    @endif
+                
+                  
+
+
+
+                  
 
 
 
@@ -59,10 +66,9 @@
 
                    
 
-                    <!-- Kiểm tra thông báo "Đơn hàng đã giao thành công" -->
+                   
                     @if ($message === 'Đơn hàng của bạn đã được giao hàng thành công.')
                     <td class="px-6 py-4">
-                        <!-- Hiển thị nút đánh giá cho tất cả sản phẩm -->
                         @if ($orderId)
                             @php
                                 $orderDetails = \App\Models\OrderDetail::where('order_id', $orderId)->get();
@@ -98,11 +104,22 @@
         </div>
     @endif
 </div>
+
+
+
+
+
 @endsection
 
 <style>
    
+   .cancel-form {
+    display: block; 
+   }
 
+.hidden {
+    display: none;
+}
 .button-container {
     margin-top: 1rem; 
 }

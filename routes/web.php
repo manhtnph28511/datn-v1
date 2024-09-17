@@ -304,8 +304,6 @@ Route::controller(SiteController::class)->group(function () {
 Route::controller(HomeProductController::class)->group(function () {
     Route::get('product/{id}', 'showProduct')->name('home.site.product.show');
     Route::get('shop-page', 'shop')->name('home.site.product.shop');
-    // Route::get('searchByPrice',  'getSearchByPrice')->name('home.site.product.getSearchByPrice');
-    // Route::post('searchByPrice', 'searchByPrice')->name('home.site.product.searchByPrice');
     Route::match(['get', 'post'], 'searchByPrice', [HomeProductController::class, 'searchByPrice'])->name('home.site.product.searchByPrice');
 
     Route::get('product-from-sub-cate/{id}', 'productFromSubCate')->name('home.site.product.proFromSubCate');
@@ -363,6 +361,7 @@ Route::middleware('auth')->name('order.')->prefix('order')->controller(ClientsOr
     # order tracking
     Route::get('/track', 'track')->name('track');
     #review
+    Route::get('/{id}', 'show')->name('show'); 
 });
 
 
@@ -372,7 +371,6 @@ Route::name('clients.')->prefix('notification')->controller(ClientsNotificationC
     Route::get('/notifications', 'index')->name('notifications.index');
     
     Route::delete('/notifications/{id}', 'delete')->name('notifications.delete');
-    Route::post('/notifications/{id}/confirm-received', 'confirmReceived')->name('notifications.confirmReceived');
     Route::post('/notifications/{id}/cancel-order', 'cancelOrder')->name('notifications.cancelOrder');
   
     Route::get('/product/review/{orderId}/{productId}', [ClientsNotificationController::class, 'review'])->name('product.review');

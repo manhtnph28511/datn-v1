@@ -36,14 +36,14 @@
         
             @foreach ($carts as $index => $cart)
             <td>
-                @if(Str::startsWith($cart->image_variant, 'http')) <!-- Kiểm tra nếu URL bắt đầu bằng http (Cloudinary) -->
+                @if(Str::startsWith($cart->image_variant, 'http')) 
                     <img src="{{ $cart->image_variant }}" alt="Ảnh sản phẩm từ Cloudinary" class="cart-image">
                 @else
                     <img src="{{ asset('storage/' . $cart->image_variant) }}" alt="Ảnh sản phẩm từ Storage" class="cart-image">
                 @endif
             </td>
             
-                <td class="w-[222px]">{{ $cart->proName }}</td>
+                <td class="w-[222px] table-cell-name">{{ $cart->proName }}</td>
                 <td>{{ number_format($cart->price) }} VNĐ</td>
                 <td>{{ $cart->quantity }}</td>
                 <td>{{ number_format($cart->quantity * $cart->price) }} VNĐ</td>
@@ -207,7 +207,12 @@
     vertical-align: top;
 }
 
-
+.table-cell-name {
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
+    word-break: break-word; 
+    white-space: normal; 
+}
 .voucher-form form {
     display: flex;
     flex-direction: column; 

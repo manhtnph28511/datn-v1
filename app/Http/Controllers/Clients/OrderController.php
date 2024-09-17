@@ -101,4 +101,10 @@ class OrderController extends Controller
         }
         return $view;
     }
+    public function show($id)
+{
+    $order = Order::with(['orderDetails.product', 'orderDetails.size', 'orderDetails.color'])
+        ->findOrFail($id);
+    return view('clients.pages.orders.show', compact('order')); 
+}
 }

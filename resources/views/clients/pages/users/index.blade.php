@@ -9,9 +9,8 @@
         <div class="profile-links">
             <ul>
                 <li><a href="{{route('clients.profile')}}">Cập nhật tài khoản</a></li>
-                <li><a href="">Danh sách yêu thích</a></li>
                 <li><a href="{{ route('clients.users.vouchers') }}">Voucher của bạn</a></li>
-                <li><a href="{{route('order.history')}}">Kịch sử mua hàng</a></li>
+                <li><a href="{{route('order.history')}}">Lịch sử mua hàng</a></li>
                 <li><a href="{{route('order.track')}}">Theo dõi đơn hàng</a></li>
                 <li><a href="{{ route('clients.users.wishlists') }}">Xem danh sách yêu thích</a></li>
                 <li><a href="{{ route('clients.ratings.index') }}">Xem đánh giá của bạn</a></li>

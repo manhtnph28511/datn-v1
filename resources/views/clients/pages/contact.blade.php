@@ -4,31 +4,35 @@
 
 @section('app')
     <section id="page-header" class="about-header">     
-        <h2>#let's_talk</h2>
-        <p>LEAVE A MESSAGE, We love to hear from you!</p>
+        <h2>#xin chào</h2>
+        <p>Liên hệ với chúng tôi</p>
     </section>
     
     <section id="contact-details" class="section-p1">
         <div class="details">
-            <span>GET IN TOUCH</span>
-            <h2>Visit one of our agency locations or contact us today</h2>
-            <h3>Head Office</h3>
+            <span>
+                LIÊN HỆ</span>
+            <h2>
+                Hãy ghé thăm một trong các địa điểm đại lý của chúng tôi hoặc liên hệ với chúng tôi ngay hôm nay</h2>
+            <h3>Trụ sở chính</h3>
             <div>
                 <li>
                     <i class="fa-solid fa-map"></i>
-                    <p>56 Glassford Street Glasgow G1 1UL New York</p>
+                    <p>
+                        113 Hùng Vương, Điện Biên, Ba Đình, Hà Nội, Việt Nam</p>
                 </li>
                 <li>
                     <i class="far fa-envelope"></i>
-                    <p>Contact@example.com</p>
+                    <p>manhsteam060903@gmail.com
+                    </p>
                 </li>
                 <li>
                     <i class="fa-solid fa-phone"></i>
-                    <p>Contact@example.com</p>
+                    <p>0987654321</p>
                 </li>
                 <li>
                     <i class="far fa-clock"></i>
-                    <p>Monday to Saturday:9.00am to 16pm</p>
+                    <p>Mở cửa từ thứ 2 đến thứ 7 ,8:00-17:00</p>
                 </li>
             </div>
         </div>
@@ -37,31 +41,14 @@
         </div>
     </section>
 
-    <section id="form-details" class="section-p1">
-        <form action="">
-            <span>LEAVE A MESSAGE</span>
-            <h2>We love to hear from you</h2>
-            <input type="text" placeholder="Your Name" required>
-            <input type="text" placeholder="E-mail" required>
-            <input type="text" placeholder="Subject" required>
-            <textarea name="" id="" cols="30" rows="10" placeholder="Your Message"></textarea>
-            <button class="normal">Submit</button>
-        </form>
-        <div class="people">
-            <div>
-                <img src="{{ asset('assets/imgs/people/1.png')  }}" alt="">
-                <p><span>John Doe</span> Senior Marketing Manager <br> Phone: +000 123 000 77 88 <br> Email: contact@example.com</p>
+        <section id="newletter" class="section-p1">
+            <div class="newtext">
+                <h4>Sản phẩm chất lượng</h4>
+                <p>Đăng kí ngay và mua sắm nào <span>Nhận nhiều ưu đãi</span></p>
             </div>
-            <div>
-                <img src="{{ asset('assets/imgs/people/2.png')  }}" alt="">
-                <p><span>William Smith</span> Senior Marketing Manager <br> Phone: +000 123 000 77 88 <br> Email: contact@example.com</p>
+            <div class="form">
             </div>
-            <div>
-                <img src="{{ asset('assets/imgs/people/3.png')  }}" alt="">
-                <p><span>Emma Stone</span> Senior Marketing Manager <br> Phone: +000 123 000 77 88 <br> Email: contact@example.com</p>
-            </div>
-        </div>
-    </section>
+        </section>
+   
 
-    @include('clients.layouts.form-feedback')
 @endsection

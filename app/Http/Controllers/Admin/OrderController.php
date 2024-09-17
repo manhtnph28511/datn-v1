@@ -91,8 +91,8 @@ class OrderController extends Controller
             $statusMessageClients = 'đang trên đường đến điểm đến';
             break;
         case 'OUTFORDELIVERY':
-            $statusMessage = 'đã được giao cho người nhận';
-            $statusMessageClients = 'đã được giao cho người nhận';
+            $statusMessage = 'đã được giao ';
+            $statusMessageClients = 'đã được giao ';
             break;
         case 'DELAYED':
             $statusMessage = 'đã bị trễ hẹn trong quá trình vận chuyển';

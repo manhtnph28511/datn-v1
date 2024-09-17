@@ -159,6 +159,12 @@ class CartController extends Controller
 
     public function updateCart(Request $request)
 {
+    $user = auth()->user();
+
+    // Kiểm tra trạng thái của người dùng
+    if ($user->status == 0) {
+        return redirect()->back()->withErrors(['error' => 'Tài khoản của bạn đã bị khóa. Bạn không thể thực hiện mua hàng. Hãy chat với admin để mở khóa trước!']);
+    }
 
 
     
@@ -247,6 +253,13 @@ class CartController extends Controller
     // Check out
     public function checkout()
     {
+        $user = auth()->user();
+
+    // Kiểm tra trạng thái của người dùng
+    if ($user->status == 0) {
+        return redirect()->back()->withErrors(['error' => 'Tài khoản của bạn đã bị khóa. Bạn không thể thực hiện mua hàng. Hãy chat với admin để mở khóa trước!']);
+    }
+
         if (Auth::check()) {
             $userId = Auth::user()->id;
             $carts = DB::table('carts')
@@ -613,8 +626,8 @@ public function checkoutStep(Request $request)
         ClientsNotification::create([
             'user_id'=> auth()->user()->id,
             'type' => 'đã đặt hàng',
-            'order_id' => $order->id,
             'data' => json_encode([
+                'order_id' => $order->id,
                 'message' => 'Đã đặt hàng! Đơn hàng #' . $order->id . 'Vui lòng chờ xác nhận',
                 'order_details' => [
                     'username' => $order->username,
@@ -629,8 +642,8 @@ public function checkoutStep(Request $request)
 
         Notification::create([
             'type' => 'đã đặt hàng',
-            'order_id' => $order->id,
             'data' => json_encode([
+                'order_id' => $order->id,
                 'message' => 'Có đơn hàng mới! Đơn hàng #' . $order->id,
                 'order_details' => [
                     'username' => $order->username,

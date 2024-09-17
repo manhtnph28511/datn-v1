@@ -2,8 +2,8 @@
 @section('app')
 
     <section id="page-header">
-        <h2>#stayhome</h2>
-        <p>Save more with coupons&up to 70%off!</p>
+        <h2>#xin chào</h2>
+        <p>Đây là trang mua sắm!</p>
     </section>
 
     <section id="cart-wrap">
@@ -90,5 +90,5 @@
     <div class="mb-3">
         {{--        {{ $products->links('admin.layouts.pagination')  }}--}}
     </div>
-    @include('clients.layouts.form-feedback')
+    {{-- @include('clients.layouts.form-feedback') --}}
 @endsection

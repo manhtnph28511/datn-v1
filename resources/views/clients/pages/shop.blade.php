@@ -129,7 +129,7 @@
         {{ $products->links('admin.layouts.pagination')  }}
         {{-- {{ $products->appends(request()->query())->links() }} --}}
     </div>
-    @include('clients.layouts.form-feedback')
+    {{-- @include('clients.layouts.form-feedback') --}}
 @endsection
 
 

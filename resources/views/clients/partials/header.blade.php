@@ -5,7 +5,7 @@
             <li><a class="" href="{{ route('home-client') }}">Trang chủ</a></li>
             <li><a href="{{ route('home.site.product.shop')  }}">Cửa hàng</a></li>
             <li><a href="{{ route('clients.blogs.index') }}">Bài viết</a></li>
-            <li><a href="{{ route('home.site.about')  }}">về chúng tôi</a></li>
+            <li><a href="{{ route('home.site.about')  }}">Về chúng tôi</a></li>
             <li><a href="{{ route('home.site.contact')  }}">Địa chỉ</a></li>
             <li><a href="{{ route('clients.vouchers.index') }}">Mã giảm giá</a>
             </li>
@@ -42,6 +42,7 @@
                     
                     
                     
+                    
                     <a href="{{ route('clients.index') }}">
                         <img src="{{ Auth::user()->avatar }}" alt="" class="object-contain w-[30px] rounded ">
                     </a>
@@ -52,8 +53,8 @@
                 </div>
             @endif
         @else
-            <a href="{{ route('account.login') }}">Log In</a>
-            <a href="{{ route('account.register') }}">Sign Up</a>
+            <a href="{{ route('account.login') }}">Đăng nhập </a>
+            <a href="{{ route('account.register') }}">Đăng kí</a>
         @endif
     </div>
 

@@ -15,7 +15,7 @@
         #progress-bar li.tt-step {
             list-style-type: none;
             display: table-cell;
-            width: 25%;
+            width: 20%;
             float: left;
             position: relative;
             text-align: center
@@ -77,6 +77,17 @@
             color: #22c55e;
             font-weight: 700
         }
+        #progress-bar li.tt-step-cancel {
+            color: #f87171;
+        }
+
+        #progress-bar li.tt-step-cancel:before {
+            border-color: #f87171;
+            background-color: #f87171;
+            color: #fff;
+            content: "✗";
+            font-family: "FontAwesome";
+        }
     </style>
 @endsection
 @section('app')
@@ -113,11 +124,13 @@
                                 $order->shipment_status == 'EXCEPTION' ||
                                 $order->shipment_status == 'OUTFORDELIVERY' ||
                                 $order->shipment_status == 'DELIVERED' 
-                                // $order->shipment_status == 'RETURNED'
                                 ) tt-step-done @elseif ($order->shipment_status == 'SHIPPED') active @endif">
                         Đã được vận chuyển</li>
                     <li class="fs-xs tt-step @if ($order->shipment_status == 'DELIVERED') tt-step-done @endif">
                         Giao hàng thành công</li>
+                    <li class="fs-xs tt-step1 @if ($order->shipment_status == 'CANCEL') tt-step-cancel @else @endif">
+                        Đơn hàng bị hủy</li>
+                    
                 </ol>
 
                 <div class="table-responsive-md mt-5">

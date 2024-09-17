@@ -5,8 +5,8 @@
 @section('app')
 
     <section id="page-header">
-        <h2>#stayhome</h2>
-        <p>Save more with coupons&up to 70%off!</p>
+        <h2>#xin chào</h2>
+        <p>Nhận nhiều phần quà hấp dẫn</p>
     </section>
 
     <section id="cart-wrap">
@@ -101,7 +101,7 @@
     </section>
     <div class="mb-3">
     </div>
-    @include('clients.layouts.form-feedback')
+    {{-- @include('clients.layouts.form-feedback') --}}
 @endsection
 
 

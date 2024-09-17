@@ -15,7 +15,7 @@ class HomeCategoryController extends Controller
    
     public function detailCate($id)
 {
-    $subCate = SubCategory::where('parent_id', '=', $id)->get();
+    $subCate = SubCategory::where('categories_id', '=', $id)->get();
     
    $productToCate = Product::select(
             'sub_categories.name as subCateName',
@@ -27,7 +27,7 @@ class HomeCategoryController extends Controller
             DB::raw('COALESCE(AVG(ratings.rating), 0) as avg_rating')
         )
         ->leftJoin('sub_categories', 'sub_categories.id', '=', 'products.cate_id')
-        ->leftJoin('categories', 'categories.id', '=', 'sub_categories.parent_id')
+        ->leftJoin('categories', 'categories.id', '=', 'sub_categories.categories_id')
         ->leftJoin('ratings', 'ratings.product_id', '=', 'products.id')
         ->where('categories.id', $id)
         ->groupBy(
